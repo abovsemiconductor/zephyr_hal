@@ -1,0 +1,75 @@
+/**
+ *******************************************************************************
+ * @file        hpl_nmi_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for NMI
+ *
+ * Copyright 2022 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HPL HPL (Hardware Private Layer)
+ * @{
+ * @defgroup    HPL_NMI NMI 
+ * @{
+ * - A Non-Maskable Interrupt (NMI) is an special system interrupt.
+ * - The NMI is a capable of generating NMI interrupt instead of normal interrupt of some peripherals.
+ *
+ * <B> [ NMI version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A31xxxx series\n Cortex-M0+</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>F</center> <td> 01.00.00 <td> A31G11x, A31G12x
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A31G31x
+ * <tr><td> <center>V</center> <td> 01.00.01 <td> A31G21x
+ * <tr><td> <center>V</center> <td> 01.00.02 <td> A31G22x
+ * <tr><td> <center>V</center> <td> 01.00.03 <td> A31G32x
+ * <tr><td> <center>V</center> <td> 01.00.04 <td> A31T21x
+ * <tr><td> <center>F</center> <td> 01.01.00 <td> A31L21x, A31L22x
+ * <tr><td> <center>V</center> <td> 04.00.00 <td> A31C14x
+ * <tr><td> <center>F</center> <td> 02.00.00 <td> A31G33x A31G34x
+ * <tr><td> <center>F</center> <td> 01.00.01 <td> A31S13x
+ * </table>
+ *     <td> <center><B>A33xxxx series\n Cortex-M3</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 02.00.01 <td> A33M11x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+ *     <td> <center><B>A34xxxx series\n Cortex-M4</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 02.00.00 <td> A34M41x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

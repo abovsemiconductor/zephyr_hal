@@ -1,0 +1,71 @@
+/**
+ *******************************************************************************
+ * @file        hal_spi_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for SPI
+ *
+ * Copyright 2022 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_SPI SPI
+ * @{
+ * - Serial Peripheral Interface (SPI) is a synchronous serial communication interface specification used for short-distance communication using the four wires bleow.
+ *  -# SS : chip select
+ *  -# SCK : serial clock
+ *  -# MOSI : master out slave in
+ *  -# MISO : master in slave out
+ * - Master/slave mode and full-duplex communication are supported  
+ *
+ * <B> [ SPI version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A31xxxx series\n Cortex-M0+</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A31G21x, A31T21x
+ * <tr><td> <center>V</center> <td> 01.00.01 <td> A31G32x, A31G22x
+ * <tr><td> <center>F</center> <td> 01.00.00 <td> A31L21x, A31L12x, A31S13x, A31G34x
+ * <tr><td> <center>F</center> <td> 01.00.01 <td> A31L22x
+ * <tr><td> <center>F</center> <td> 01.00.02 <td> A31G33x
+ * </table>
+ *     <td> <center><B>A33xxxx series\n Cortex-M3</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.02 <td> A33G52x, A33G53x
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A33M11x
+ * </table>
+ *     <td> <center><B>A34xxxx series\n Cortex-M4</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A34M41x, A34M42x, A34L71x
+ * <tr><td> <center>V</center> <td> 01.01.00 <td> A34G43x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

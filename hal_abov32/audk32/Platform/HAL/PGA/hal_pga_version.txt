@@ -1,0 +1,43 @@
+/**
+ *******************************************************************************
+ * @file        hal_pga_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for PGA
+ *
+ * Copyright 2022 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_PGA PGA
+ * @{
+ * - Programmable Gain Amplifier (PGA) is used to amplify an insufficient signal level of an analog input to the sufficient level.
+ * 
+ * <B> [PGA version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A34xxxx series\n Cortex-M4</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A34M41x
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

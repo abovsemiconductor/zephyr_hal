@@ -1,0 +1,7606 @@
+
+/****************************************************************************************************//**
+ * @file     A31T21x.h
+ *
+ * @brief    CMSIS Cortex-M0PLUS Peripheral Access Layer Header File for
+ *           A31T21x from ABOV Semiconductor Co., Ltd..
+ *
+ * @version  V1.0
+ * @date     20. February 2024
+ *
+ * @note     Generated with SVDConv V2.85b 
+ *           from CMSIS SVD File 'a31t21x.svd' Version 1.0,
+ *
+ * @par      ARM Limited (ARM) is supplying this software for use with Cortex-M
+ *           processor based microcontroller, but can be equally used for other
+ *           suitable processor architectures. This file can be freely distributed.
+ *           Modifications to this file shall be clearly marked.
+ *           
+ *           THIS SOFTWARE IS PROVIDED "AS IS". NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ *           OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ *           MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ *           ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+ *           CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER. 
+ *
+ *******************************************************************************************************/
+
+
+
+/** @addtogroup ABOV Semiconductor Co., Ltd.
+  * @{
+  */
+
+/** @addtogroup A31T21x
+  * @{
+  */
+
+#ifndef A31T21X_H
+#define A31T21X_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+/* -------------------------  Interrupt Number Definition  ------------------------ */
+
+typedef enum {
+/* -----------------  Cortex-M0PLUS Processor Exceptions Numbers  ----------------- */
+  Reset_IRQn                    = -15,              /*!<   1  Reset Vector, invoked on Power up and warm reset                 */
+  NonMaskableInt_IRQn           = -14,              /*!<   2  Non maskable Interrupt, cannot be stopped or preempted           */
+  HardFault_IRQn                = -13,              /*!<   3  Hard Fault, all classes of Fault                                 */
+  SVCall_IRQn                   =  -5,              /*!<  11  System Service Call via SVC instruction                          */
+  DebugMonitor_IRQn             =  -4,              /*!<  12  Debug Monitor                                                    */
+  SysTick_IRQn                  =  -1,              /*!<  15  System Tick Timer                                                */
+/* ---------------------  A31T21x Specific Interrupt Numbers  --------------------- */
+  LVI_IRQn                      =   0,              /*!<   0  LVI                                                              */
+  SYSCLKFAIL_IRQn               =   1,              /*!<   1  SYSCLKFAIL                                                       */
+  WDT_IRQn                      =   2,              /*!<   2  WDT                                                              */
+  GPIOAB_IRQn                   =   3,              /*!<   3  GPIOAB                                                           */
+  GPIOCD_IRQn                   =   4,              /*!<   4  GPIOCD                                                           */
+  GPIOE_IRQn                    =   5,              /*!<   5  GPIOE                                                            */
+  GPIOF_IRQn                    =   6,              /*!<   6  GPIOF                                                            */
+  TIMER10_IRQn                  =   7,              /*!<   7  TIMER10                                                          */
+  TIMER11_IRQn                  =   8,              /*!<   8  TIMER11                                                          */
+  TIMER12_IRQn                  =   9,              /*!<   9  TIMER12                                                          */
+  I2C0_IRQn                     =  10,              /*!<  10  I2C0                                                             */
+  USART10_IRQn                  =  11,              /*!<  11  USART10                                                          */
+  WT_IRQn                       =  12,              /*!<  12  WT                                                               */
+  TIMER30_IRQn                  =  13,              /*!<  13  TIMER30                                                          */
+  I2C1_IRQn                     =  14,              /*!<  14  I2C1                                                             */
+  TIMER20_IRQn                  =  15,              /*!<  15  TIMER20                                                          */
+  TIMER21_IRQn                  =  16,              /*!<  16  TIMER21                                                          */
+  USART11_IRQn                  =  17,              /*!<  17  USART11                                                          */
+  ADC_IRQn                      =  18,              /*!<  18  ADC                                                              */
+  UART0_IRQn                    =  19,              /*!<  19  UART0                                                            */
+  UART1_IRQn                    =  20,              /*!<  20  UART1                                                            */
+  TIMER13_IRQn                  =  21,              /*!<  21  TIMER13                                                          */
+  SPI20_IRQn                    =  25,              /*!<  25  SPI20                                                            */
+  SPI21_IRQn                    =  26,              /*!<  26  SPI21                                                            */
+  TSENSE_IRQn                   =  27,              /*!<  27  TSENSE                                                           */
+  LED_IRQn                      =  28,              /*!<  28  LED                                                              */
+  TOUCH_IRQn                    =  29,              /*!<  29  TOUCH                                                            */
+  CRC_IRQn                      =  31               /*!<  31  CRC                                                              */
+} IRQn_Type;
+
+
+/** @addtogroup Configuration_of_CMSIS
+  * @{
+  */
+
+
+/* ================================================================================ */
+/* ================      Processor and Core Peripheral Section     ================ */
+/* ================================================================================ */
+
+/* ----------------Configuration of the Cortex-M0PLUS Processor and Core Peripherals---------------- */
+#define __CM0PLUS_REV                 0x0001        /*!< Cortex-M0PLUS Core Revision                                           */
+#define __MPU_PRESENT                  0            /*!< MPU present or not                                                    */
+#define __NVIC_PRIO_BITS               2            /*!< Number of Bits used for Priority Levels                               */
+#define __Vendor_SysTickConfig         0            /*!< Set to 1 if different SysTick Config is used                          */
+#define __VTOR_PRESENT                 1            /*!< Set to 1 if CPU supports Vector Table Offset Register                 */
+/** @} */ /* End of group Configuration_of_CMSIS */
+
+#include "core_cm0plus.h"                           /*!< Cortex-M0PLUS processor and core peripherals                          */
+#include "system_a31xxxx.h"                         /*!< a31xxxx System                                                        */
+
+
+/* ================================================================================ */
+/* ================       Device Specific Peripheral Section       ================ */
+/* ================================================================================ */
+
+
+/** @addtogroup Device_Peripheral_Registers
+  * @{
+  */
+
+
+/* -------------------  Start of section using anonymous unions  ------------------ */
+#if defined(__CC_ARM)
+  #pragma push
+  #pragma anon_unions
+#elif defined(__ICCARM__)
+  #pragma language=extended
+#elif defined(__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined(__TMS470__)
+/* anonymous unions are enabled by default */
+#elif defined(__TASKING__)
+  #pragma warning 586
+#else
+  #warning Not supported compiler type
+#endif
+
+
+
+/* ================================================================================ */
+/* ================                       SCU                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief System Control Unit (SCU)
+  */
+
+typedef struct {                                    /*!< SCU Structure                                                         */
+  __I  uint32_t  RESERVED;
+  __IO uint32_t  SMR;                               /*!< System Mode Register                                                  */
+  __IO uint32_t  SCR;                               /*!< System Control Register                                               */
+  __I  uint32_t  RESERVED1;
+  __IO uint32_t  WUER;                              /*!< Wake up source enable register                                        */
+  __I  uint32_t  WUSR;                              /*!< Wake up source status register                                        */
+  __IO uint32_t  RSER;                              /*!< Reset source enable register                                          */
+  __IO uint32_t  RSSR;                              /*!< Reset source status register                                          */
+  __IO uint32_t  PRER1;                             /*!< Peripheral reset enable register 1                                    */
+  __IO uint32_t  PRER2;                             /*!< Peripheral reset enable register 2                                    */
+  __IO uint32_t  PER1;                              /*!< Peripheral enable register 1                                          */
+  __IO uint32_t  PER2;                              /*!< Peripheral enable register 2                                          */
+  __IO uint32_t  PCER1;                             /*!< Peripheral clock enable register 1                                    */
+  __IO uint32_t  PCER2;                             /*!< Peripheral clock enable register 2                                    */
+  __IO uint32_t  PPCLKSR;                           /*!< Peripheral clock selection register                                   */
+  __I  uint32_t  RESERVED2;
+  __IO uint32_t  CSCR;                              /*!< Clock Source Control register                                         */
+  __IO uint32_t  SCCR;                              /*!< System Clock Control register                                         */
+  __IO uint32_t  CMR;                               /*!< Clock Monitoring register                                             */
+  __IO uint32_t  NMIR;                              /*!< NMI control register                                                  */
+  __IO uint32_t  COR;                               /*!< Clock Output Control register                                         */
+  __I  uint32_t  RESERVED3[3];
+  __IO uint32_t  PLLCON;                            /*!< PLL Control register                                                  */
+  __IO uint32_t  VDCCON;                            /*!< VDC Control register                                                  */
+  __IO uint32_t  TIRCCON;                           /*!< On chip Internal IRC for Touch control register                       */
+  __IO uint32_t  LSICON;                            /*!< LSI Control Register                                                  */
+  __I  uint32_t  RESERVED4[4];
+  __IO uint32_t  EOSCR;                             /*!< External Oscillator control register                                  */
+  __IO uint32_t  EMODR;                             /*!< External mode pin read register                                       */
+  __IO uint32_t  RSTDBCR;                           /*!< Pin Reset Debounce Control Register                                   */
+  __I  uint32_t  RESERVED5;
+  __IO uint32_t  MCCR1;                             /*!< Miscellaneous Clock Control Register 1                                */
+  __IO uint32_t  MCCR2;                             /*!< Miscellaneous Clock Control Register 2                                */
+  __IO uint32_t  MCCR3;                             /*!< Miscellaneous Clock Control Register 3                                */
+  __IO uint32_t  MCCR4;                             /*!< Miscellaneous Clock Control Register 4                                */
+  __IO uint32_t  MCCR5;                             /*!< Miscellaneous Clock Control Register 5                                */
+  __IO uint32_t  MCCR6;                             /*!< Miscellaneous Clock Control Register 6                                */
+} SCU_Type;
+
+
+/* ================================================================================ */
+/* ================                      SCUCC                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief CHIP CONFIGURATION (SCUCC)
+  */
+
+typedef struct {                                    /*!< SCUCC Structure                                                       */
+  __I  uint32_t  VENDORID;                          /*!< Vendor Identification Register                                        */
+  __I  uint32_t  CHIPID;                            /*!< Chip Identification Register                                          */
+  __I  uint32_t  REVNR;                             /*!< Revision Number Register                                              */
+} SCUCC_Type;
+
+
+/* ================================================================================ */
+/* ================                      SCULV                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief LOW VOLTAGE INDICATOR(LVI) AND LOW VOLTAGE RESET(LVR) (SCULV)
+  */
+
+typedef struct {                                    /*!< SCULV Structure                                                       */
+  __IO uint32_t  LVICR;                             /*!< Low Voltage Indicator Control Register                                */
+  __IO uint32_t  LVRCR;                             /*!< Low Voltage Reset Control Register                                    */
+  __IO uint32_t  LVRCNFIG;                          /*!< Configuration for Low Voltage Reset                                   */
+} SCULV_Type;
+
+
+/* ================================================================================ */
+/* ================                      PORT                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief General Port A (PORT)
+  */
+
+typedef struct {                                    /*!< PORT Structure                                                        */
+  __IO uint32_t  MOD;                               /*!< Port n Mode Register                                                  */
+  __IO uint32_t  TYP;                               /*!< Port n Output Type Selection Register                                 */
+  __IO uint32_t  AFSR1;                             /*!< Port n Alternative Function Selection Register 1                      */
+  __IO uint32_t  AFSR2;                             /*!< Port n Alternative Function Selection Register 2                      */
+  __IO uint32_t  PUPD;                              /*!< Port n Pull-up/down Resistor Selection Register                       */
+  __I  uint32_t  INDR;                              /*!< Port n Input Data Register                                            */
+  __IO uint32_t  OUTDR;                             /*!< Port n Output Data Register                                           */
+  __O  uint32_t  BSR;                               /*!< Port n Output Bit Set Register                                        */
+  __O  uint32_t  BCR;                               /*!< Port n Output Bit Clear Register                                      */
+  __IO uint32_t  OUTDMSK;                           /*!< Port n Output Data Mask Register                                      */
+  __IO uint32_t  DBCR;                              /*!< Port n Debounce Control Register                                      */
+  __IO uint32_t  IER;                               /*!< Port n interrupt enable register                                      */
+  __IO uint32_t  ISR;                               /*!< Port n interrupt status register                                      */
+  __IO uint32_t  ICR;                               /*!< Port n interrupt control register                                     */
+} PORT_Type;
+
+
+/* ================================================================================ */
+/* ================                       PCU                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Port Control Mode Enable Register (PCU)
+  */
+
+typedef struct {                                    /*!< PCU Structure                                                         */
+  __I  uint32_t  RESERVED[60];
+  __O  uint32_t  PORTEN;                            /*!< Port Access Enable 0x15->0x51                                         */
+} PCU_Type;
+
+
+/* ================================================================================ */
+/* ================                       FMC                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief FLASH MEMORY CONTROLLER (FMC)
+  */
+
+typedef struct {                                    /*!< FMC Structure                                                         */
+  __I  uint32_t  RESERVED;
+  __IO uint32_t  MR;                                /*!< Flash Memory Mode Select register                                     */
+  __IO uint32_t  CR;                                /*!< Flash Memory Control register                                         */
+  __IO uint32_t  AR;                                /*!< Flash Memory Address register                                         */
+  __IO uint32_t  DR;                                /*!< Flash Memory Data register                                            */
+  __I  uint32_t  RESERVED1;
+  __IO uint32_t  BUSY;                              /*!< Flash Write Busy Status Register                                      */
+  __I  uint32_t  RESERVED2;
+  __I  uint32_t  CRC;                               /*!< Flash CRC-CCITT check value                                           */
+  __I  uint32_t  RESERVED3[3];
+  __IO uint32_t  CFG;                               /*!< Flash Memory Config Register                                          */
+  __IO uint32_t  WPROT;                             /*!< Write Protection Register                                             */
+  __I  uint32_t  RESERVED4;
+  __IO uint32_t  LOCK;                              /*!< Flash LOCK register                                                   */
+  __I  uint32_t  RESERVED5[6];
+  __I  uint32_t  HWID;                              /*!< Flash Size option check register                                      */
+} FMC_Type;
+
+
+/* ================================================================================ */
+/* ================                      DMA0                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Direct Memory Access (DMA0)
+  */
+
+typedef struct {                                    /*!< DMA0 Structure                                                        */
+  __IO uint32_t  CR;                                /*!< DMA Channel n Control Register                                        */
+  __IO uint32_t  SR;                                /*!< DMA Channel n Status Register                                         */
+  __IO uint32_t  PAR;                               /*!< DMA Channel n Peripheral Address                                      */
+  __IO uint32_t  MAR;                               /*!< DMA Channel n Memory Address                                          */
+} DMA0_Type;
+
+
+/* ================================================================================ */
+/* ================                       WDT                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief WATCH-DOG TIMER (WDT)
+  */
+
+typedef struct {                                    /*!< WDT Structure                                                         */
+  __IO uint32_t  CR;                                /*!< Watch-dog Timer Control Register                                      */
+  __IO uint32_t  SR;                                /*!< Watch-dog Timer Status Register                                       */
+  __IO uint32_t  DR;                                /*!< Watch-dog Timer Data Register                                         */
+  __I  uint32_t  CNT;                               /*!< Watch-dog Timer Counter Register                                      */
+  __IO uint32_t  WINDR;                             /*!< Watch-dog Timer Window Data Register (Note: Once any value is
+                                                         written to this window data register, the register can't be
+                                                          changed until a system reset.)                                       */
+  __O  uint32_t  CNTR;                              /*!< Watch-dog Timer Counter Reload Register                               */
+} WDT_Type;
+
+
+/* ================================================================================ */
+/* ================                       WT                       ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief WATCH TIMER (WT)
+  */
+
+typedef struct {                                    /*!< WT Structure                                                          */
+  __IO uint32_t  CR;                                /*!< Watch Timer Control Register                                          */
+  __IO uint32_t  DR;                                /*!< Watch Timer Data Register                                             */
+  __I  uint32_t  CNT;                               /*!< Watch Timer Counter Register                                          */
+} WT_Type;
+
+
+/* ================================================================================ */
+/* ================                     TIMER1n                    ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief TIMER COUNTER 10/11/12 (TIMER1n)
+  */
+
+typedef struct {                                    /*!< TIMER1n Structure                                                     */
+  __IO uint32_t  CR;                                /*!< Timer/Counter n Control Register                                      */
+  __IO uint32_t  ADR;                               /*!< Timer/Counter n A Data Register                                       */
+  __IO uint32_t  BDR;                               /*!< Timer/Counter n B Data Register                                       */
+  __I  uint32_t  CAPDR;                             /*!< Timer/Counter n Capture Data Register                                 */
+  __IO uint32_t  PREDR;                             /*!< Timer/Counter n Prescaler Data Register                               */
+  __I  uint32_t  CNT;                               /*!< Timer/Counter n Counter Register                                      */
+} TIMER1n_Type;
+
+
+/* ================================================================================ */
+/* ================                     TIMER20                    ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief TIMER COUNTER 20/21 (TIMER20)
+  */
+
+typedef struct {                                    /*!< TIMER20 Structure                                                     */
+  __IO uint32_t  CR;                                /*!< Timer/Counter n Control Register                                      */
+  __IO uint32_t  ADR;                               /*!< Timer/Counter n A Data Register                                       */
+  __IO uint32_t  BDR;                               /*!< Timer/Counter n B Data Register                                       */
+  __I  uint32_t  CAPDR;                             /*!< Timer/Counter n Capture Data Register                                 */
+  __IO uint32_t  PREDR;                             /*!< Timer/Counter n Prescaler Data Register                               */
+  __I  uint32_t  CNT;                               /*!< Timer/Counter n Counter Register                                      */
+} TIMER20_Type;
+
+
+/* ================================================================================ */
+/* ================                     TIMER30                    ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief TIMER COUNTER 30 (TIMER30)
+  */
+
+typedef struct {                                    /*!< TIMER30 Structure                                                     */
+  __IO uint32_t  CR;                                /*!< Timer/Counter 30 Control Register                                     */
+  __IO uint32_t  PDR;                               /*!< Timer/Counter 30 Period Data Register                                 */
+  __IO uint32_t  ADR;                               /*!< Timer/Counter 30 A Data Register                                      */
+  __IO uint32_t  BDR;                               /*!< Timer/Counter 30 B Data Register                                      */
+  __IO uint32_t  CDR;                               /*!< Timer/Counter 30 C Data Register                                      */
+  __I  uint32_t  CAPDR;                             /*!< Timer/Counter 30 Capture Data Register                                */
+  __IO uint32_t  PREDR;                             /*!< Timer/Counter 30 Prescaler Data Register                              */
+  __I  uint32_t  CNT;                               /*!< Timer/Counter 30 Counter Register                                     */
+  __IO uint32_t  OUTCR;                             /*!< Timer/Counter 30 Output Control Register                              */
+  __IO uint32_t  DLY;                               /*!< Timer/Counter 30 PWM Output Delay Data Register                       */
+  __IO uint32_t  INTCR;                             /*!< Timer/Counter 30 Interrupt Control Register                           */
+  __IO uint32_t  INTFLAG;                           /*!< Timer/Counter 30 Interrupt Flag Register                              */
+  __IO uint32_t  HIZCR;                             /*!< Timer/Counter 30 High-Impedance Control Register                      */
+  __IO uint32_t  ADTCR;                             /*!< Timer/Counter 30 A/DC Trigger Control Register                        */
+  __IO uint32_t  ADTDR;                             /*!< Timer/Counter 30 A/DC Trigger Generator Data Register                 */
+} TIMER30_Type;
+
+
+/* ================================================================================ */
+/* ================                      USART                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief USART 10 (UART + SPI) (USART)
+  */
+
+typedef struct {                                    /*!< USART Structure                                                       */
+  __IO uint32_t  CR1;                               /*!< USARTn Control Register 1                                             */
+  __IO uint32_t  CR2;                               /*!< USARTn Control Register 2                                             */
+  __I  uint32_t  RESERVED;
+  __IO uint32_t  ST;                                /*!< USARTn Status Register                                                */
+  __IO uint32_t  BDR;                               /*!< USARTn Baud Rate Generation Register                                  */
+  __IO uint32_t  DR;                                /*!< USARTn Data Register                                                  */
+} USART_Type;
+
+
+/* ================================================================================ */
+/* ================                      UART                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief UNIVERSAL ASYNCHRONOUS RECEIVER/TRANSMITTER (UART)
+  */
+
+typedef struct {                                    /*!< UART Structure                                                        */
+  
+  union {
+    __O  uint32_t  THR;                             /*!< Transmit Data Hold Register                                           */
+    __I  uint32_t  RBR;                             /*!< Receive Buffer Register                                               */
+  };
+  __IO uint32_t  IER;                               /*!< UART Interrupt Enable Register                                        */
+  __IO uint32_t  IIR;                               /*!< UART Interrupt ID Register                                            */
+  __IO uint32_t  LCR;                               /*!< UART Line Control Register                                            */
+  __IO uint32_t  DCR;                               /*!< UART Data Control Register                                            */
+  __IO uint32_t  LSR;                               /*!< UART Line Status Register                                             */
+  __I  uint32_t  RESERVED[2];
+  __IO uint32_t  BDR;                               /*!< Baud rate Divisor Latch Register                                      */
+  __IO uint32_t  BFR;                               /*!< Baud rate Fraction Counter Register                                   */
+  __I  uint32_t  RESERVED1[2];
+  __IO uint32_t  IDTR;                              /*!< Inter-frame Delay Time Register                                       */
+} UART_Type;
+
+
+/* ================================================================================ */
+/* ================                       I2C                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief I2C 0 (I2C)
+  */
+
+typedef struct {                                    /*!< I2C Structure                                                         */
+  __IO uint32_t  CR;                                /*!< I2Cn Control Register                                                 */
+  __IO uint32_t  ST;                                /*!< I2Cn Status Register                                                  */
+  __IO uint32_t  SAR1;                              /*!< I2Cn Slave Address Register 1                                         */
+  __IO uint32_t  SAR2;                              /*!< I2Cn Slave Address Register 2                                         */
+  __IO uint32_t  DR;                                /*!< I2Cn Data Register                                                    */
+  __IO uint32_t  SDHR;                              /*!< I2Cn SDA Hold Time Register                                           */
+  __IO uint32_t  SCLR;                              /*!< I2Cn SCL Low Period Register                                          */
+  __IO uint32_t  SCHR;                              /*!< I2Cn SCL High Period Register                                         */
+  __IO uint32_t  SLTCR;                             /*!< I2Cn SCL low timeout control register                                 */
+  __IO uint32_t  SLTPDR;                            /*!< I2Cn SCL low timeout period data register                             */
+  __IO uint32_t  MBCR;                              /*!< I2Cn manual bus control register                                      */
+} I2C_Type;
+
+
+/* ================================================================================ */
+/* ================                      SPI20                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Serial Peripheral Interface Bus (SPI20)
+  */
+
+typedef struct {                                    /*!< SPI20 Structure                                                       */
+  
+  union {
+    __I  uint32_t  RDR;                             /*!< SPI n Received Data Register                                          */
+    __O  uint32_t  TDR;                             /*!< SPI2 n Transmit Data Register                                         */
+  };
+  __IO uint32_t  CR;                                /*!< SPI Control Register                                                  */
+  __IO uint32_t  SR;                                /*!< SPI n Status Register                                                 */
+  __IO uint32_t  BR;                                /*!< SPI n Baud Rate Register                                              */
+  __IO uint32_t  EN;                                /*!< SPI n Enable Register                                                 */
+  __IO uint32_t  LR;                                /*!< SPI n Delay Length Register                                           */
+} SPI20_Type;
+
+
+/* ================================================================================ */
+/* ================                       ADC                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief 12-BIT A/D CONVERTER (ADC)
+  */
+
+typedef struct {                                    /*!< ADC Structure                                                         */
+  __IO uint32_t  CR;                                /*!< A/D Converter Control Register                                        */
+  __I  uint32_t  DR;                                /*!< A/D Converter Data Register                                           */
+  __IO uint32_t  PREDR;                             /*!< A/D Converter Prescaler Data Register                                 */
+} ADC_Type;
+
+
+/* ================================================================================ */
+/* ================                      TOUCH                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief TOUCH (TOUCH)
+  */
+
+typedef struct {                                    /*!< TOUCH Structure                                                       */
+  __I  uint32_t  SUM_CH0_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH0_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH1_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH1_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH2_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH2_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH3_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH3_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH4_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH4_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH5_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH5_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH6_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH6_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH7_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH7_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH8_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH8_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH9_F0;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH9_F1;                        /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH10_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH10_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH11_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH11_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH12_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH12_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH13_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH13_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH14_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH14_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH15_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH15_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH16_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH16_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH17_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH17_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH18_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH18_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH19_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH19_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH20_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH20_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH21_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH21_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH22_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH22_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH23_F0;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __I  uint32_t  SUM_CH23_F1;                       /*!< Touch Sensor Channel 0~23 Sum Register                                */
+  __IO uint32_t  SCO0;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO1;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO2;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO3;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO4;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO5;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO6;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO7;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO8;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO9;                              /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO10;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO11;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO12;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO13;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO14;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO15;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO16;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO17;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO18;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO19;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO20;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO21;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO22;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  SCO23;                             /*!< Touch Sensor Offset Capacitor Selection Register for CH0~23           */
+  __IO uint32_t  CON;                               /*!< Touch Sensor Control Register                                         */
+  __IO uint32_t  MODE;                              /*!< Touch Sensor Mode Register                                            */
+  __IO uint32_t  SUM_CNT;                           /*!< Touch Sensor Sum Repeat Count Register                                */
+  __IO uint32_t  CH_SEL;                            /*!< Touch Sensor Channel Selection Register                               */
+  __IO uint32_t  S1_WIDTH;                          /*!< Touch Sensor Sum Repeat Count Register                                */
+  __IO uint32_t  SLP_CON;                           /*!< Touch Sensor Low Pass Filter Control Register                         */
+  __IO uint32_t  TRIM;                              /*!< Touch Sensor Trimming Register                                        */
+  __IO uint32_t  CLK_CFG;                           /*!< Touch Sensor Clock Configuration Register                             */
+  __IO uint32_t  TRIM_OSC;                          /*!< Touch Sensor RING Oscillator Trimming Selection Register              */
+  __IO uint32_t  DELTA_OSC;                         /*!< Touch Sensor RING Oscillator Delta Register                           */
+  __IO uint32_t  TLED;                              /*!< LED stable time Register                                              */
+  __IO uint32_t  VHS;                               /*!< Touch Sensor High Sense Voltage Register                              */
+  __IO uint32_t  VREF;                              /*!< Touch Sensor COMP Reference Voltage Register                          */
+  __I  uint32_t  RESERVED[3];
+  __IO uint32_t  SHLD_CON;                          /*!< Touch Sensor Shield Channel Control Register                          */
+} TOUCH_Type;
+
+
+/* ================================================================================ */
+/* ================                       LED                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief LED DRIVER/CONTROLLER (LED)
+  */
+
+typedef struct {                                    /*!< LED Structure                                                         */
+  __IO uint32_t  COMOE;                             /*!< COM Output Enable Register                                            */
+  __IO uint32_t  SEGOE;                             /*!< SEG Output Enable Register                                            */
+  __IO uint32_t  PRESD;                             /*!< LED Prescaler Data Register                                           */
+  __IO uint32_t  COMER;                             /*!< COM Enable Register                                                   */
+  __IO uint32_t  COMPWID;                           /*!< COM Pulse Width Control Register                                      */
+  __IO uint32_t  COMDIMM0;                          /*!< LED COM Dimming 0 Register                                            */
+  __IO uint32_t  COMDIMM1;                          /*!< LED COM Dimming 1 Register                                            */
+  __IO uint32_t  COMDIMM2;                          /*!< LED COM Dimming 2 Register                                            */
+  __IO uint32_t  COMDIMM3;                          /*!< LED COM Dimming 3 Register                                            */
+  __IO uint32_t  LEDPD;                             /*!< LED Period Data Register                                              */
+  __IO uint32_t  SR;                                /*!< LED STATUS Register                                                   */
+  __IO uint32_t  LEDCON3;                           /*!< LED Control 3 Register                                                */
+  __IO uint32_t  LEDCON2;                           /*!< LED Control 2 Register                                                */
+  __IO uint32_t  LEDCON1;                           /*!< LED Control 1 Register                                                */
+  __I  uint32_t  RESERVED[2];
+  __IO uint32_t  DISPRAM0;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM1;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM2;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM3;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM4;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM5;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM6;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM7;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM8;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM9;                          /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM10;                         /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM11;                         /*!< LED Display RAM                                                       */
+  __IO uint32_t  DISPRAM12;                         /*!< LED Display RAM                                                       */
+  __I  uint32_t  RESERVED1[3];
+  __IO uint32_t  LOGDE;                             /*!< LED Log-scale Dimming Enable Register                                 */
+  __IO uint32_t  COMDRIVE;                          /*!< LED COM additional driving Register                                   */
+  __IO uint32_t  PORTCTRL;                          /*!< LED Port Control Register                                             */
+  __IO uint32_t  DLYCNT;                            /*!< LED run signal Delay Count Register                                   */
+} LED_Type;
+
+
+/* ================================================================================ */
+/* ================                       LCD                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief LCD DRIVER/CONTROLLER (LCD)
+  */
+
+typedef struct {                                    /*!< LCD Structure                                                         */
+  __IO uint32_t  CR;                                /*!< LCD Driver Control Register                                           */
+  __IO uint32_t  BCCR;                              /*!< LCD Automatic Bias and Contrast Control Register. Notes: 1.
+                                                         The above LCD contrast step is based on 1/3 bias with 66kohm
+                                                          RLCD and on 1/4 bias with 50kohm RLCD 2. The "LCD driver contrast
+                                                          control" is disabled during the LCDABC bit (LCD automatic bias)
+                                                          is set to "1b".                                                      */
+  __IO uint32_t  BSSR;                              /*!< LCD source selection register                                         */
+  __I  uint32_t  RESERVED;
+  __IO uint8_t   DR0;                               /*!< LCD Display Data Register 0                                           */
+  __IO uint8_t   DR1;                               /*!< LCD Display Data Register 1                                           */
+  __IO uint8_t   DR2;                               /*!< LCD Display Data Register 2                                           */
+  __IO uint8_t   DR3;                               /*!< LCD Display Data Register 3                                           */
+  __IO uint8_t   DR4;                               /*!< LCD Display Data Register 4                                           */
+  __IO uint8_t   DR5;                               /*!< LCD Display Data Register 5                                           */
+  __IO uint8_t   DR6;                               /*!< LCD Display Data Register 6                                           */
+  __IO uint8_t   DR7;                               /*!< LCD Display Data Register 7                                           */
+  __IO uint8_t   DR8;                               /*!< LCD Display Data Register 8                                           */
+  __IO uint8_t   DR9;                               /*!< LCD Display Data Register 9                                           */
+  __IO uint8_t   DR10;                              /*!< LCD Display Data Register 10                                          */
+  __IO uint8_t   DR11;                              /*!< LCD Display Data Register 11                                          */
+  __IO uint8_t   DR12;                              /*!< LCD Display Data Register 12                                          */
+  __IO uint8_t   DR13;                              /*!< LCD Display Data Register 13                                          */
+  __IO uint8_t   DR14;                              /*!< LCD Display Data Register 14                                          */
+  __IO uint8_t   DR15;                              /*!< LCD Display Data Register 15                                          */
+  __IO uint8_t   DR16;                              /*!< LCD Display Data Register 16                                          */
+  __IO uint8_t   DR17;                              /*!< LCD Display Data Register 17                                          */
+  __IO uint8_t   DR18;                              /*!< LCD Display Data Register 18                                          */
+  __IO uint8_t   DR19;                              /*!< LCD Display Data Register 19                                          */
+  __IO uint8_t   DR20;                              /*!< LCD Display Data Register 20                                          */
+  __IO uint8_t   DR21;                              /*!< LCD Display Data Register 21                                          */
+  __IO uint8_t   DR22;                              /*!< LCD Display Data Register 22                                          */
+  __IO uint8_t   DR23;                              /*!< LCD Display Data Register 23                                          */
+  __IO uint8_t   DR24;                              /*!< LCD Display Data Register 24                                          */
+  __IO uint8_t   DR25;                              /*!< LCD Display Data Register 25                                          */
+  __IO uint8_t   DR26;                              /*!< LCD Display Data Register 26                                          */
+  __IO uint8_t   DR27;                              /*!< LCD Display Data Register 27                                          */
+  __IO uint8_t   DR28;                              /*!< LCD Display Data Register 28                                          */
+  __IO uint8_t   DR29;                              /*!< LCD Display Data Register 29                                          */
+  __IO uint8_t   DR30;                              /*!< LCD Display Data Register 30                                          */
+  __IO uint8_t   DR31;                              /*!< LCD Display Data Register 31                                          */
+} LCD_Type;
+
+
+/* ================================================================================ */
+/* ================                       CRC                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief CYCLIC REDUNDANCY CHECK AND CHECKSUM (CRC)
+  */
+
+typedef struct {                                    /*!< CRC Structure                                                         */
+  __IO uint32_t  CR;                                /*!< CRC/Checksum Control Register. Notes: 1. The CRCRLT register
+                                                         and the CRC/Checksum block should be initialized by writing
+                                                          "1b" to the RLTCLR bit before a new CRC/Checksum calculation.
+                                                          2. The CRCRUN bit should be set to "1b" last time after setting
+                                                          appropriate values to the registers. 3. On the user mode, it
+                                                          will be calculated every writing data to the CRCIN register
+                                                          during CRCRUN==1. 4. On the user mode with SARINC==0, the block
+                                                          is finished by writing "0b" to the CRCRUN bit. 4. It is prohibited
+                                                          writing any                                                          */
+  __IO uint32_t  IN;                                /*!< CRC/Checksum Input Data Register                                      */
+  __I  uint32_t  RLT;                               /*!< CRC/Checksum Result Data Register                                     */
+  __IO uint32_t  INIT;                              /*!< CRC/Checksum Initial Data Register                                    */
+} CRC_Type;
+
+
+/* ================================================================================ */
+/* ================                     TSENSE                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Temp Sensor (TSENSE)
+  */
+
+typedef struct {                                    /*!< TSENSE Structure                                                      */
+  __IO uint32_t  CR;                                /*!< Temp sensor control register                                          */
+  __IO uint32_t  RCCNT;                             /*!< Temp sensor reference clock counter register                          */
+  __I  uint32_t  SCCNT;                             /*!< Temp sensor sensing clock counter register                            */
+  __IO uint32_t  SR;                                /*!< Temp sensor status register                                           */
+} TSENSE_Type;
+
+
+/* --------------------  End of section using anonymous unions  ------------------- */
+#if defined(__CC_ARM)
+  #pragma pop
+#elif defined(__ICCARM__)
+  /* leave anonymous unions enabled */
+#elif defined(__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined(__TMS470__)
+  /* anonymous unions are enabled by default */
+#elif defined(__TASKING__)
+  #pragma warning restore
+#else
+  #warning Not supported compiler type
+#endif
+
+
+
+/* ================================================================================ */
+/* ================          struct 'SCU' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  SCU_SMR  ---------------------------------- */
+#define SCU_SMR_PREVMODE_Pos                  4                                                       /*!< SCU SMR: PREVMODE Position              */
+#define SCU_SMR_PREVMODE_Msk                  (0x03UL << SCU_SMR_PREVMODE_Pos)                        /*!< SCU SMR: PREVMODE Mask                  */
+#define SCU_SMR_VDCAON_Pos                    8                                                       /*!< SCU SMR: VDCAON Position                */
+#define SCU_SMR_VDCAON_Msk                    (0x01UL << SCU_SMR_VDCAON_Pos)                          /*!< SCU SMR: VDCAON Mask                    */
+#define SCU_SMR_BGRAON_Pos                    9                                                       /*!< SCU SMR: BGRAON Position                */
+#define SCU_SMR_BGRAON_Msk                    (0x01UL << SCU_SMR_BGRAON_Pos)                          /*!< SCU SMR: BGRAON Mask                    */
+#define SCU_SMR_LSIAON_Pos                    10                                                      /*!< SCU SMR: LSIAON Position                */
+#define SCU_SMR_LSIAON_Msk                    (0x01UL << SCU_SMR_LSIAON_Pos)                          /*!< SCU SMR: LSIAON Mask                    */
+
+/* -----------------------------------  SCU_SCR  ---------------------------------- */
+#define SCU_SCR_SWRST_Pos                     0                                                       /*!< SCU SCR: SWRST Position                 */
+#define SCU_SCR_SWRST_Msk                     (0x01UL << SCU_SCR_SWRST_Pos)                           /*!< SCU SCR: SWRST Mask                     */
+#define SCU_SCR_WTIDKY_Pos                    16                                                      /*!< SCU SCR: WTIDKY Position                */
+#define SCU_SCR_WTIDKY_Msk                    (0x0000ffffUL << SCU_SCR_WTIDKY_Pos)                    /*!< SCU SCR: WTIDKY Mask                    */
+
+/* ----------------------------------  SCU_WUER  ---------------------------------- */
+#define SCU_WUER_LVDWUE_Pos                   0                                                       /*!< SCU WUER: LVDWUE Position               */
+#define SCU_WUER_LVDWUE_Msk                   (0x01UL << SCU_WUER_LVDWUE_Pos)                         /*!< SCU WUER: LVDWUE Mask                   */
+#define SCU_WUER_WDTWUE_Pos                   1                                                       /*!< SCU WUER: WDTWUE Position               */
+#define SCU_WUER_WDTWUE_Msk                   (0x01UL << SCU_WUER_WDTWUE_Pos)                         /*!< SCU WUER: WDTWUE Mask                   */
+#define SCU_WUER_WTWUE_Pos                    2                                                       /*!< SCU WUER: WTWUE Position                */
+#define SCU_WUER_WTWUE_Msk                    (0x01UL << SCU_WUER_WTWUE_Pos)                          /*!< SCU WUER: WTWUE Mask                    */
+#define SCU_WUER_USART10WUE_Pos               3                                                       /*!< SCU WUER: USART10WUE Position           */
+#define SCU_WUER_USART10WUE_Msk               (0x01UL << SCU_WUER_USART10WUE_Pos)                     /*!< SCU WUER: USART10WUE Mask               */
+#define SCU_WUER_USART11WUE_Pos               4                                                       /*!< SCU WUER: USART11WUE Position           */
+#define SCU_WUER_USART11WUE_Msk               (0x01UL << SCU_WUER_USART11WUE_Pos)                     /*!< SCU WUER: USART11WUE Mask               */
+#define SCU_WUER_GPIOAWUE_Pos                 8                                                       /*!< SCU WUER: GPIOAWUE Position             */
+#define SCU_WUER_GPIOAWUE_Msk                 (0x01UL << SCU_WUER_GPIOAWUE_Pos)                       /*!< SCU WUER: GPIOAWUE Mask                 */
+#define SCU_WUER_GPIOBWUE_Pos                 9                                                       /*!< SCU WUER: GPIOBWUE Position             */
+#define SCU_WUER_GPIOBWUE_Msk                 (0x01UL << SCU_WUER_GPIOBWUE_Pos)                       /*!< SCU WUER: GPIOBWUE Mask                 */
+#define SCU_WUER_GPIOCWUE_Pos                 10                                                      /*!< SCU WUER: GPIOCWUE Position             */
+#define SCU_WUER_GPIOCWUE_Msk                 (0x01UL << SCU_WUER_GPIOCWUE_Pos)                       /*!< SCU WUER: GPIOCWUE Mask                 */
+#define SCU_WUER_GPIODWUE_Pos                 11                                                      /*!< SCU WUER: GPIODWUE Position             */
+#define SCU_WUER_GPIODWUE_Msk                 (0x01UL << SCU_WUER_GPIODWUE_Pos)                       /*!< SCU WUER: GPIODWUE Mask                 */
+#define SCU_WUER_GPIOEWUE_Pos                 12                                                      /*!< SCU WUER: GPIOEWUE Position             */
+#define SCU_WUER_GPIOEWUE_Msk                 (0x01UL << SCU_WUER_GPIOEWUE_Pos)                       /*!< SCU WUER: GPIOEWUE Mask                 */
+#define SCU_WUER_GPIOFWUE_Pos                 13                                                      /*!< SCU WUER: GPIOFWUE Position             */
+#define SCU_WUER_GPIOFWUE_Msk                 (0x01UL << SCU_WUER_GPIOFWUE_Pos)                       /*!< SCU WUER: GPIOFWUE Mask                 */
+
+/* ----------------------------------  SCU_WUSR  ---------------------------------- */
+#define SCU_WUSR_LVDWU_Pos                    0                                                       /*!< SCU WUSR: LVDWU Position                */
+#define SCU_WUSR_LVDWU_Msk                    (0x01UL << SCU_WUSR_LVDWU_Pos)                          /*!< SCU WUSR: LVDWU Mask                    */
+#define SCU_WUSR_WDTWU_Pos                    1                                                       /*!< SCU WUSR: WDTWU Position                */
+#define SCU_WUSR_WDTWU_Msk                    (0x01UL << SCU_WUSR_WDTWU_Pos)                          /*!< SCU WUSR: WDTWU Mask                    */
+#define SCU_WUSR_WTWU_Pos                     2                                                       /*!< SCU WUSR: WTWU Position                 */
+#define SCU_WUSR_WTWU_Msk                     (0x01UL << SCU_WUSR_WTWU_Pos)                           /*!< SCU WUSR: WTWU Mask                     */
+#define SCU_WUSR_USART10WU_Pos                3                                                       /*!< SCU WUSR: USART10WU Position            */
+#define SCU_WUSR_USART10WU_Msk                (0x01UL << SCU_WUSR_USART10WU_Pos)                      /*!< SCU WUSR: USART10WU Mask                */
+#define SCU_WUSR_USART11WU_Pos                4                                                       /*!< SCU WUSR: USART11WU Position            */
+#define SCU_WUSR_USART11WU_Msk                (0x01UL << SCU_WUSR_USART11WU_Pos)                      /*!< SCU WUSR: USART11WU Mask                */
+#define SCU_WUSR_GPIOAWU_Pos                  8                                                       /*!< SCU WUSR: GPIOAWU Position              */
+#define SCU_WUSR_GPIOAWU_Msk                  (0x01UL << SCU_WUSR_GPIOAWU_Pos)                        /*!< SCU WUSR: GPIOAWU Mask                  */
+#define SCU_WUSR_GPIOBWU_Pos                  9                                                       /*!< SCU WUSR: GPIOBWU Position              */
+#define SCU_WUSR_GPIOBWU_Msk                  (0x01UL << SCU_WUSR_GPIOBWU_Pos)                        /*!< SCU WUSR: GPIOBWU Mask                  */
+#define SCU_WUSR_GPIOCWU_Pos                  10                                                      /*!< SCU WUSR: GPIOCWU Position              */
+#define SCU_WUSR_GPIOCWU_Msk                  (0x01UL << SCU_WUSR_GPIOCWU_Pos)                        /*!< SCU WUSR: GPIOCWU Mask                  */
+#define SCU_WUSR_GPIODWU_Pos                  11                                                      /*!< SCU WUSR: GPIODWU Position              */
+#define SCU_WUSR_GPIODWU_Msk                  (0x01UL << SCU_WUSR_GPIODWU_Pos)                        /*!< SCU WUSR: GPIODWU Mask                  */
+#define SCU_WUSR_GPIOEWU_Pos                  12                                                      /*!< SCU WUSR: GPIOEWU Position              */
+#define SCU_WUSR_GPIOEWU_Msk                  (0x01UL << SCU_WUSR_GPIOEWU_Pos)                        /*!< SCU WUSR: GPIOEWU Mask                  */
+#define SCU_WUSR_GPIOFWU_Pos                  13                                                      /*!< SCU WUSR: GPIOFWU Position              */
+#define SCU_WUSR_GPIOFWU_Msk                  (0x01UL << SCU_WUSR_GPIOFWU_Pos)                        /*!< SCU WUSR: GPIOFWU Mask                  */
+
+/* ----------------------------------  SCU_RSER  ---------------------------------- */
+#define SCU_RSER_LVDRST_Pos                   0                                                       /*!< SCU RSER: LVDRST Position               */
+#define SCU_RSER_LVDRST_Msk                   (0x01UL << SCU_RSER_LVDRST_Pos)                         /*!< SCU RSER: LVDRST Mask                   */
+#define SCU_RSER_MOFRST_Pos                   1                                                       /*!< SCU RSER: MOFRST Position               */
+#define SCU_RSER_MOFRST_Msk                   (0x01UL << SCU_RSER_MOFRST_Pos)                         /*!< SCU RSER: MOFRST Mask                   */
+#define SCU_RSER_MCKFRST_Pos                  2                                                       /*!< SCU RSER: MCKFRST Position              */
+#define SCU_RSER_MCKFRST_Msk                  (0x01UL << SCU_RSER_MCKFRST_Pos)                        /*!< SCU RSER: MCKFRST Mask                  */
+#define SCU_RSER_WDTRST_Pos                   3                                                       /*!< SCU RSER: WDTRST Position               */
+#define SCU_RSER_WDTRST_Msk                   (0x01UL << SCU_RSER_WDTRST_Pos)                         /*!< SCU RSER: WDTRST Mask                   */
+#define SCU_RSER_SWRST_Pos                    4                                                       /*!< SCU RSER: SWRST Position                */
+#define SCU_RSER_SWRST_Msk                    (0x01UL << SCU_RSER_SWRST_Pos)                          /*!< SCU RSER: SWRST Mask                    */
+#define SCU_RSER_CPURST_Pos                   5                                                       /*!< SCU RSER: CPURST Position               */
+#define SCU_RSER_CPURST_Msk                   (0x01UL << SCU_RSER_CPURST_Pos)                         /*!< SCU RSER: CPURST Mask                   */
+#define SCU_RSER_PINRST_Pos                   6                                                       /*!< SCU RSER: PINRST Position               */
+#define SCU_RSER_PINRST_Msk                   (0x01UL << SCU_RSER_PINRST_Pos)                         /*!< SCU RSER: PINRST Mask                   */
+
+/* ----------------------------------  SCU_RSSR  ---------------------------------- */
+#define SCU_RSSR_LVDRST_Pos                   0                                                       /*!< SCU RSSR: LVDRST Position               */
+#define SCU_RSSR_LVDRST_Msk                   (0x01UL << SCU_RSSR_LVDRST_Pos)                         /*!< SCU RSSR: LVDRST Mask                   */
+#define SCU_RSSR_MOFRST_Pos                   1                                                       /*!< SCU RSSR: MOFRST Position               */
+#define SCU_RSSR_MOFRST_Msk                   (0x01UL << SCU_RSSR_MOFRST_Pos)                         /*!< SCU RSSR: MOFRST Mask                   */
+#define SCU_RSSR_MCKFRST_Pos                  2                                                       /*!< SCU RSSR: MCKFRST Position              */
+#define SCU_RSSR_MCKFRST_Msk                  (0x01UL << SCU_RSSR_MCKFRST_Pos)                        /*!< SCU RSSR: MCKFRST Mask                  */
+#define SCU_RSSR_WDTRST_Pos                   3                                                       /*!< SCU RSSR: WDTRST Position               */
+#define SCU_RSSR_WDTRST_Msk                   (0x01UL << SCU_RSSR_WDTRST_Pos)                         /*!< SCU RSSR: WDTRST Mask                   */
+#define SCU_RSSR_SWRST_Pos                    4                                                       /*!< SCU RSSR: SWRST Position                */
+#define SCU_RSSR_SWRST_Msk                    (0x01UL << SCU_RSSR_SWRST_Pos)                          /*!< SCU RSSR: SWRST Mask                    */
+#define SCU_RSSR_CPURST_Pos                   5                                                       /*!< SCU RSSR: CPURST Position               */
+#define SCU_RSSR_CPURST_Msk                   (0x01UL << SCU_RSSR_CPURST_Pos)                         /*!< SCU RSSR: CPURST Mask                   */
+#define SCU_RSSR_PINRST_Pos                   6                                                       /*!< SCU RSSR: PINRST Position               */
+#define SCU_RSSR_PINRST_Msk                   (0x01UL << SCU_RSSR_PINRST_Pos)                         /*!< SCU RSSR: PINRST Mask                   */
+#define SCU_RSSR_PORST_Pos                    7                                                       /*!< SCU RSSR: PORST Position                */
+#define SCU_RSSR_PORST_Msk                    (0x01UL << SCU_RSSR_PORST_Pos)                          /*!< SCU RSSR: PORST Mask                    */
+
+/* ----------------------------------  SCU_PRER1  --------------------------------- */
+#define SCU_PRER1_SCU_Pos                     0                                                       /*!< SCU PRER1: SCU Position                 */
+#define SCU_PRER1_SCU_Msk                     (0x01UL << SCU_PRER1_SCU_Pos)                           /*!< SCU PRER1: SCU Mask                     */
+#define SCU_PRER1_FMC_Pos                     1                                                       /*!< SCU PRER1: FMC Position                 */
+#define SCU_PRER1_FMC_Msk                     (0x01UL << SCU_PRER1_FMC_Pos)                           /*!< SCU PRER1: FMC Mask                     */
+#define SCU_PRER1_WDT_Pos                     2                                                       /*!< SCU PRER1: WDT Position                 */
+#define SCU_PRER1_WDT_Msk                     (0x01UL << SCU_PRER1_WDT_Pos)                           /*!< SCU PRER1: WDT Mask                     */
+#define SCU_PRER1_PCU_Pos                     3                                                       /*!< SCU PRER1: PCU Position                 */
+#define SCU_PRER1_PCU_Msk                     (0x01UL << SCU_PRER1_PCU_Pos)                           /*!< SCU PRER1: PCU Mask                     */
+#define SCU_PRER1_DMA_Pos                     4                                                       /*!< SCU PRER1: DMA Position                 */
+#define SCU_PRER1_DMA_Msk                     (0x01UL << SCU_PRER1_DMA_Pos)                           /*!< SCU PRER1: DMA Mask                     */
+#define SCU_PRER1_GPIOA_Pos                   8                                                       /*!< SCU PRER1: GPIOA Position               */
+#define SCU_PRER1_GPIOA_Msk                   (0x01UL << SCU_PRER1_GPIOA_Pos)                         /*!< SCU PRER1: GPIOA Mask                   */
+#define SCU_PRER1_GPIOB_Pos                   9                                                       /*!< SCU PRER1: GPIOB Position               */
+#define SCU_PRER1_GPIOB_Msk                   (0x01UL << SCU_PRER1_GPIOB_Pos)                         /*!< SCU PRER1: GPIOB Mask                   */
+#define SCU_PRER1_GPIOC_Pos                   10                                                      /*!< SCU PRER1: GPIOC Position               */
+#define SCU_PRER1_GPIOC_Msk                   (0x01UL << SCU_PRER1_GPIOC_Pos)                         /*!< SCU PRER1: GPIOC Mask                   */
+#define SCU_PRER1_GPIOD_Pos                   11                                                      /*!< SCU PRER1: GPIOD Position               */
+#define SCU_PRER1_GPIOD_Msk                   (0x01UL << SCU_PRER1_GPIOD_Pos)                         /*!< SCU PRER1: GPIOD Mask                   */
+#define SCU_PRER1_GPIOE_Pos                   12                                                      /*!< SCU PRER1: GPIOE Position               */
+#define SCU_PRER1_GPIOE_Msk                   (0x01UL << SCU_PRER1_GPIOE_Pos)                         /*!< SCU PRER1: GPIOE Mask                   */
+#define SCU_PRER1_GPIOF_Pos                   13                                                      /*!< SCU PRER1: GPIOF Position               */
+#define SCU_PRER1_GPIOF_Msk                   (0x01UL << SCU_PRER1_GPIOF_Pos)                         /*!< SCU PRER1: GPIOF Mask                   */
+#define SCU_PRER1_TIMER10_Pos                 16                                                      /*!< SCU PRER1: TIMER10 Position             */
+#define SCU_PRER1_TIMER10_Msk                 (0x01UL << SCU_PRER1_TIMER10_Pos)                       /*!< SCU PRER1: TIMER10 Mask                 */
+#define SCU_PRER1_TIMER11_Pos                 17                                                      /*!< SCU PRER1: TIMER11 Position             */
+#define SCU_PRER1_TIMER11_Msk                 (0x01UL << SCU_PRER1_TIMER11_Pos)                       /*!< SCU PRER1: TIMER11 Mask                 */
+#define SCU_PRER1_TIMER12_Pos                 18                                                      /*!< SCU PRER1: TIMER12 Position             */
+#define SCU_PRER1_TIMER12_Msk                 (0x01UL << SCU_PRER1_TIMER12_Pos)                       /*!< SCU PRER1: TIMER12 Mask                 */
+#define SCU_PRER1_TIMER13_Pos                 19                                                      /*!< SCU PRER1: TIMER13 Position             */
+#define SCU_PRER1_TIMER13_Msk                 (0x01UL << SCU_PRER1_TIMER13_Pos)                       /*!< SCU PRER1: TIMER13 Mask                 */
+#define SCU_PRER1_TIMER30_Pos                 24                                                      /*!< SCU PRER1: TIMER30 Position             */
+#define SCU_PRER1_TIMER30_Msk                 (0x01UL << SCU_PRER1_TIMER30_Pos)                       /*!< SCU PRER1: TIMER30 Mask                 */
+#define SCU_PRER1_TIMER20_Pos                 25                                                      /*!< SCU PRER1: TIMER20 Position             */
+#define SCU_PRER1_TIMER20_Msk                 (0x01UL << SCU_PRER1_TIMER20_Pos)                       /*!< SCU PRER1: TIMER20 Mask                 */
+#define SCU_PRER1_TIMER21_Pos                 26                                                      /*!< SCU PRER1: TIMER21 Position             */
+#define SCU_PRER1_TIMER21_Msk                 (0x01UL << SCU_PRER1_TIMER21_Pos)                       /*!< SCU PRER1: TIMER21 Mask                 */
+#define SCU_PRER1_WT_Pos                      31                                                      /*!< SCU PRER1: WT Position                  */
+#define SCU_PRER1_WT_Msk                      (0x01UL << SCU_PRER1_WT_Pos)                            /*!< SCU PRER1: WT Mask                      */
+
+/* ----------------------------------  SCU_PRER2  --------------------------------- */
+#define SCU_PRER2_I2C0_Pos                    4                                                       /*!< SCU PRER2: I2C0 Position                */
+#define SCU_PRER2_I2C0_Msk                    (0x01UL << SCU_PRER2_I2C0_Pos)                          /*!< SCU PRER2: I2C0 Mask                    */
+#define SCU_PRER2_I2C1_Pos                    5                                                       /*!< SCU PRER2: I2C1 Position                */
+#define SCU_PRER2_I2C1_Msk                    (0x01UL << SCU_PRER2_I2C1_Pos)                          /*!< SCU PRER2: I2C1 Mask                    */
+#define SCU_PRER2_USART10_Pos                 8                                                       /*!< SCU PRER2: USART10 Position             */
+#define SCU_PRER2_USART10_Msk                 (0x01UL << SCU_PRER2_USART10_Pos)                       /*!< SCU PRER2: USART10 Mask                 */
+#define SCU_PRER2_USART11_Pos                 9                                                       /*!< SCU PRER2: USART11 Position             */
+#define SCU_PRER2_USART11_Msk                 (0x01UL << SCU_PRER2_USART11_Pos)                       /*!< SCU PRER2: USART11 Mask                 */
+#define SCU_PRER2_UART0_Pos                   12                                                      /*!< SCU PRER2: UART0 Position               */
+#define SCU_PRER2_UART0_Msk                   (0x01UL << SCU_PRER2_UART0_Pos)                         /*!< SCU PRER2: UART0 Mask                   */
+#define SCU_PRER2_UART1_Pos                   13                                                      /*!< SCU PRER2: UART1 Position               */
+#define SCU_PRER2_UART1_Msk                   (0x01UL << SCU_PRER2_UART1_Pos)                         /*!< SCU PRER2: UART1 Mask                   */
+#define SCU_PRER2_SPI20_Pos                   14                                                      /*!< SCU PRER2: SPI20 Position               */
+#define SCU_PRER2_SPI20_Msk                   (0x01UL << SCU_PRER2_SPI20_Pos)                         /*!< SCU PRER2: SPI20 Mask                   */
+#define SCU_PRER2_SPI21_Pos                   15                                                      /*!< SCU PRER2: SPI21 Position               */
+#define SCU_PRER2_SPI21_Msk                   (0x01UL << SCU_PRER2_SPI21_Pos)                         /*!< SCU PRER2: SPI21 Mask                   */
+#define SCU_PRER2_ADC_Pos                     20                                                      /*!< SCU PRER2: ADC Position                 */
+#define SCU_PRER2_ADC_Msk                     (0x01UL << SCU_PRER2_ADC_Pos)                           /*!< SCU PRER2: ADC Mask                     */
+#define SCU_PRER2_TOUCH_Pos                   25                                                      /*!< SCU PRER2: TOUCH Position               */
+#define SCU_PRER2_TOUCH_Msk                   (0x01UL << SCU_PRER2_TOUCH_Pos)                         /*!< SCU PRER2: TOUCH Mask                   */
+#define SCU_PRER2_TSENSE_Pos                  27                                                      /*!< SCU PRER2: TSENSE Position              */
+#define SCU_PRER2_TSENSE_Msk                  (0x01UL << SCU_PRER2_TSENSE_Pos)                        /*!< SCU PRER2: TSENSE Mask                  */
+#define SCU_PRER2_LCD_Pos                     28                                                      /*!< SCU PRER2: LCD Position                 */
+#define SCU_PRER2_LCD_Msk                     (0x01UL << SCU_PRER2_LCD_Pos)                           /*!< SCU PRER2: LCD Mask                     */
+#define SCU_PRER2_LED_Pos                     29                                                      /*!< SCU PRER2: LED Position                 */
+#define SCU_PRER2_LED_Msk                     (0x01UL << SCU_PRER2_LED_Pos)                           /*!< SCU PRER2: LED Mask                     */
+#define SCU_PRER2_CRC_Pos                     31                                                      /*!< SCU PRER2: CRC Position                 */
+#define SCU_PRER2_CRC_Msk                     (0x01UL << SCU_PRER2_CRC_Pos)                           /*!< SCU PRER2: CRC Mask                     */
+
+/* ----------------------------------  SCU_PER1  ---------------------------------- */
+#define SCU_PER1_DMA_Pos                      4                                                       /*!< SCU PER1: DMA Position                  */
+#define SCU_PER1_DMA_Msk                      (0x01UL << SCU_PER1_DMA_Pos)                            /*!< SCU PER1: DMA Mask                      */
+#define SCU_PER1_GPIOA_Pos                    8                                                       /*!< SCU PER1: GPIOA Position                */
+#define SCU_PER1_GPIOA_Msk                    (0x01UL << SCU_PER1_GPIOA_Pos)                          /*!< SCU PER1: GPIOA Mask                    */
+#define SCU_PER1_GPIOB_Pos                    9                                                       /*!< SCU PER1: GPIOB Position                */
+#define SCU_PER1_GPIOB_Msk                    (0x01UL << SCU_PER1_GPIOB_Pos)                          /*!< SCU PER1: GPIOB Mask                    */
+#define SCU_PER1_GPIOC_Pos                    10                                                      /*!< SCU PER1: GPIOC Position                */
+#define SCU_PER1_GPIOC_Msk                    (0x01UL << SCU_PER1_GPIOC_Pos)                          /*!< SCU PER1: GPIOC Mask                    */
+#define SCU_PER1_GPIOD_Pos                    11                                                      /*!< SCU PER1: GPIOD Position                */
+#define SCU_PER1_GPIOD_Msk                    (0x01UL << SCU_PER1_GPIOD_Pos)                          /*!< SCU PER1: GPIOD Mask                    */
+#define SCU_PER1_GPIOE_Pos                    12                                                      /*!< SCU PER1: GPIOE Position                */
+#define SCU_PER1_GPIOE_Msk                    (0x01UL << SCU_PER1_GPIOE_Pos)                          /*!< SCU PER1: GPIOE Mask                    */
+#define SCU_PER1_GPIOF_Pos                    13                                                      /*!< SCU PER1: GPIOF Position                */
+#define SCU_PER1_GPIOF_Msk                    (0x01UL << SCU_PER1_GPIOF_Pos)                          /*!< SCU PER1: GPIOF Mask                    */
+#define SCU_PER1_TIMER10_Pos                  16                                                      /*!< SCU PER1: TIMER10 Position              */
+#define SCU_PER1_TIMER10_Msk                  (0x01UL << SCU_PER1_TIMER10_Pos)                        /*!< SCU PER1: TIMER10 Mask                  */
+#define SCU_PER1_TIMER11_Pos                  17                                                      /*!< SCU PER1: TIMER11 Position              */
+#define SCU_PER1_TIMER11_Msk                  (0x01UL << SCU_PER1_TIMER11_Pos)                        /*!< SCU PER1: TIMER11 Mask                  */
+#define SCU_PER1_TIMER12_Pos                  18                                                      /*!< SCU PER1: TIMER12 Position              */
+#define SCU_PER1_TIMER12_Msk                  (0x01UL << SCU_PER1_TIMER12_Pos)                        /*!< SCU PER1: TIMER12 Mask                  */
+#define SCU_PER1_TIMER13_Pos                  19                                                      /*!< SCU PER1: TIMER13 Position              */
+#define SCU_PER1_TIMER13_Msk                  (0x01UL << SCU_PER1_TIMER13_Pos)                        /*!< SCU PER1: TIMER13 Mask                  */
+#define SCU_PER1_TIMER30_Pos                  24                                                      /*!< SCU PER1: TIMER30 Position              */
+#define SCU_PER1_TIMER30_Msk                  (0x01UL << SCU_PER1_TIMER30_Pos)                        /*!< SCU PER1: TIMER30 Mask                  */
+#define SCU_PER1_TIMER20_Pos                  25                                                      /*!< SCU PER1: TIMER20 Position              */
+#define SCU_PER1_TIMER20_Msk                  (0x01UL << SCU_PER1_TIMER20_Pos)                        /*!< SCU PER1: TIMER20 Mask                  */
+#define SCU_PER1_TIMER21_Pos                  26                                                      /*!< SCU PER1: TIMER21 Position              */
+#define SCU_PER1_TIMER21_Msk                  (0x01UL << SCU_PER1_TIMER21_Pos)                        /*!< SCU PER1: TIMER21 Mask                  */
+#define SCU_PER1_WT_Pos                       31                                                      /*!< SCU PER1: WT Position                   */
+#define SCU_PER1_WT_Msk                       (0x01UL << SCU_PER1_WT_Pos)                             /*!< SCU PER1: WT Mask                       */
+
+/* ----------------------------------  SCU_PER2  ---------------------------------- */
+#define SCU_PER2_I2C0_Pos                     4                                                       /*!< SCU PER2: I2C0 Position                 */
+#define SCU_PER2_I2C0_Msk                     (0x01UL << SCU_PER2_I2C0_Pos)                           /*!< SCU PER2: I2C0 Mask                     */
+#define SCU_PER2_I2C1_Pos                     5                                                       /*!< SCU PER2: I2C1 Position                 */
+#define SCU_PER2_I2C1_Msk                     (0x01UL << SCU_PER2_I2C1_Pos)                           /*!< SCU PER2: I2C1 Mask                     */
+#define SCU_PER2_USART10_Pos                  8                                                       /*!< SCU PER2: USART10 Position              */
+#define SCU_PER2_USART10_Msk                  (0x01UL << SCU_PER2_USART10_Pos)                        /*!< SCU PER2: USART10 Mask                  */
+#define SCU_PER2_USART11_Pos                  9                                                       /*!< SCU PER2: USART11 Position              */
+#define SCU_PER2_USART11_Msk                  (0x01UL << SCU_PER2_USART11_Pos)                        /*!< SCU PER2: USART11 Mask                  */
+#define SCU_PER2_UART0_Pos                    12                                                      /*!< SCU PER2: UART0 Position                */
+#define SCU_PER2_UART0_Msk                    (0x01UL << SCU_PER2_UART0_Pos)                          /*!< SCU PER2: UART0 Mask                    */
+#define SCU_PER2_UART1_Pos                    13                                                      /*!< SCU PER2: UART1 Position                */
+#define SCU_PER2_UART1_Msk                    (0x01UL << SCU_PER2_UART1_Pos)                          /*!< SCU PER2: UART1 Mask                    */
+#define SCU_PER2_SPI20_Pos                    14                                                      /*!< SCU PER2: SPI20 Position                */
+#define SCU_PER2_SPI20_Msk                    (0x01UL << SCU_PER2_SPI20_Pos)                          /*!< SCU PER2: SPI20 Mask                    */
+#define SCU_PER2_SPI21_Pos                    15                                                      /*!< SCU PER2: SPI21 Position                */
+#define SCU_PER2_SPI21_Msk                    (0x01UL << SCU_PER2_SPI21_Pos)                          /*!< SCU PER2: SPI21 Mask                    */
+#define SCU_PER2_ADC_Pos                      20                                                      /*!< SCU PER2: ADC Position                  */
+#define SCU_PER2_ADC_Msk                      (0x01UL << SCU_PER2_ADC_Pos)                            /*!< SCU PER2: ADC Mask                      */
+#define SCU_PER2_TOUCH_Pos                    25                                                      /*!< SCU PER2: TOUCH Position                */
+#define SCU_PER2_TOUCH_Msk                    (0x01UL << SCU_PER2_TOUCH_Pos)                          /*!< SCU PER2: TOUCH Mask                    */
+#define SCU_PER2_TSENSE_Pos                   27                                                      /*!< SCU PER2: TSENSE Position               */
+#define SCU_PER2_TSENSE_Msk                   (0x01UL << SCU_PER2_TSENSE_Pos)                         /*!< SCU PER2: TSENSE Mask                   */
+#define SCU_PER2_LCD_Pos                      28                                                      /*!< SCU PER2: LCD Position                  */
+#define SCU_PER2_LCD_Msk                      (0x01UL << SCU_PER2_LCD_Pos)                            /*!< SCU PER2: LCD Mask                      */
+#define SCU_PER2_LED_Pos                      29                                                      /*!< SCU PER2: LED Position                  */
+#define SCU_PER2_LED_Msk                      (0x01UL << SCU_PER2_LED_Pos)                            /*!< SCU PER2: LED Mask                      */
+#define SCU_PER2_CRC_Pos                      31                                                      /*!< SCU PER2: CRC Position                  */
+#define SCU_PER2_CRC_Msk                      (0x01UL << SCU_PER2_CRC_Pos)                            /*!< SCU PER2: CRC Mask                      */
+
+/* ----------------------------------  SCU_PCER1  --------------------------------- */
+#define SCU_PCER1_DMA_Pos                     4                                                       /*!< SCU PCER1: DMA Position                 */
+#define SCU_PCER1_DMA_Msk                     (0x01UL << SCU_PCER1_DMA_Pos)                           /*!< SCU PCER1: DMA Mask                     */
+#define SCU_PCER1_GPIOA_Pos                   8                                                       /*!< SCU PCER1: GPIOA Position               */
+#define SCU_PCER1_GPIOA_Msk                   (0x01UL << SCU_PCER1_GPIOA_Pos)                         /*!< SCU PCER1: GPIOA Mask                   */
+#define SCU_PCER1_GPIOB_Pos                   9                                                       /*!< SCU PCER1: GPIOB Position               */
+#define SCU_PCER1_GPIOB_Msk                   (0x01UL << SCU_PCER1_GPIOB_Pos)                         /*!< SCU PCER1: GPIOB Mask                   */
+#define SCU_PCER1_GPIOC_Pos                   10                                                      /*!< SCU PCER1: GPIOC Position               */
+#define SCU_PCER1_GPIOC_Msk                   (0x01UL << SCU_PCER1_GPIOC_Pos)                         /*!< SCU PCER1: GPIOC Mask                   */
+#define SCU_PCER1_GPIOD_Pos                   11                                                      /*!< SCU PCER1: GPIOD Position               */
+#define SCU_PCER1_GPIOD_Msk                   (0x01UL << SCU_PCER1_GPIOD_Pos)                         /*!< SCU PCER1: GPIOD Mask                   */
+#define SCU_PCER1_GPIOE_Pos                   12                                                      /*!< SCU PCER1: GPIOE Position               */
+#define SCU_PCER1_GPIOE_Msk                   (0x01UL << SCU_PCER1_GPIOE_Pos)                         /*!< SCU PCER1: GPIOE Mask                   */
+#define SCU_PCER1_GPIOF_Pos                   13                                                      /*!< SCU PCER1: GPIOF Position               */
+#define SCU_PCER1_GPIOF_Msk                   (0x01UL << SCU_PCER1_GPIOF_Pos)                         /*!< SCU PCER1: GPIOF Mask                   */
+#define SCU_PCER1_TIMER10_Pos                 16                                                      /*!< SCU PCER1: TIMER10 Position             */
+#define SCU_PCER1_TIMER10_Msk                 (0x01UL << SCU_PCER1_TIMER10_Pos)                       /*!< SCU PCER1: TIMER10 Mask                 */
+#define SCU_PCER1_TIMER11_Pos                 17                                                      /*!< SCU PCER1: TIMER11 Position             */
+#define SCU_PCER1_TIMER11_Msk                 (0x01UL << SCU_PCER1_TIMER11_Pos)                       /*!< SCU PCER1: TIMER11 Mask                 */
+#define SCU_PCER1_TIMER12_Pos                 18                                                      /*!< SCU PCER1: TIMER12 Position             */
+#define SCU_PCER1_TIMER12_Msk                 (0x01UL << SCU_PCER1_TIMER12_Pos)                       /*!< SCU PCER1: TIMER12 Mask                 */
+#define SCU_PCER1_TIMER13_Pos                 19                                                      /*!< SCU PCER1: TIMER13 Position             */
+#define SCU_PCER1_TIMER13_Msk                 (0x01UL << SCU_PCER1_TIMER13_Pos)                       /*!< SCU PCER1: TIMER13 Mask                 */
+#define SCU_PCER1_TIMER30_Pos                 24                                                      /*!< SCU PCER1: TIMER30 Position             */
+#define SCU_PCER1_TIMER30_Msk                 (0x01UL << SCU_PCER1_TIMER30_Pos)                       /*!< SCU PCER1: TIMER30 Mask                 */
+#define SCU_PCER1_TIMER20_Pos                 25                                                      /*!< SCU PCER1: TIMER20 Position             */
+#define SCU_PCER1_TIMER20_Msk                 (0x01UL << SCU_PCER1_TIMER20_Pos)                       /*!< SCU PCER1: TIMER20 Mask                 */
+#define SCU_PCER1_TIMER21_Pos                 26                                                      /*!< SCU PCER1: TIMER21 Position             */
+#define SCU_PCER1_TIMER21_Msk                 (0x01UL << SCU_PCER1_TIMER21_Pos)                       /*!< SCU PCER1: TIMER21 Mask                 */
+#define SCU_PCER1_WT_Pos                      31                                                      /*!< SCU PCER1: WT Position                  */
+#define SCU_PCER1_WT_Msk                      (0x01UL << SCU_PCER1_WT_Pos)                            /*!< SCU PCER1: WT Mask                      */
+
+/* ----------------------------------  SCU_PCER2  --------------------------------- */
+#define SCU_PCER2_I2C0_Pos                    4                                                       /*!< SCU PCER2: I2C0 Position                */
+#define SCU_PCER2_I2C0_Msk                    (0x01UL << SCU_PCER2_I2C0_Pos)                          /*!< SCU PCER2: I2C0 Mask                    */
+#define SCU_PCER2_I2C1_Pos                    5                                                       /*!< SCU PCER2: I2C1 Position                */
+#define SCU_PCER2_I2C1_Msk                    (0x01UL << SCU_PCER2_I2C1_Pos)                          /*!< SCU PCER2: I2C1 Mask                    */
+#define SCU_PCER2_USART10_Pos                 8                                                       /*!< SCU PCER2: USART10 Position             */
+#define SCU_PCER2_USART10_Msk                 (0x01UL << SCU_PCER2_USART10_Pos)                       /*!< SCU PCER2: USART10 Mask                 */
+#define SCU_PCER2_USART11_Pos                 9                                                       /*!< SCU PCER2: USART11 Position             */
+#define SCU_PCER2_USART11_Msk                 (0x01UL << SCU_PCER2_USART11_Pos)                       /*!< SCU PCER2: USART11 Mask                 */
+#define SCU_PCER2_UART0_Pos                   12                                                      /*!< SCU PCER2: UART0 Position               */
+#define SCU_PCER2_UART0_Msk                   (0x01UL << SCU_PCER2_UART0_Pos)                         /*!< SCU PCER2: UART0 Mask                   */
+#define SCU_PCER2_UART1_Pos                   13                                                      /*!< SCU PCER2: UART1 Position               */
+#define SCU_PCER2_UART1_Msk                   (0x01UL << SCU_PCER2_UART1_Pos)                         /*!< SCU PCER2: UART1 Mask                   */
+#define SCU_PCER2_SPI20_Pos                   14                                                      /*!< SCU PCER2: SPI20 Position               */
+#define SCU_PCER2_SPI20_Msk                   (0x01UL << SCU_PCER2_SPI20_Pos)                         /*!< SCU PCER2: SPI20 Mask                   */
+#define SCU_PCER2_SPI21_Pos                   15                                                      /*!< SCU PCER2: SPI21 Position               */
+#define SCU_PCER2_SPI21_Msk                   (0x01UL << SCU_PCER2_SPI21_Pos)                         /*!< SCU PCER2: SPI21 Mask                   */
+#define SCU_PCER2_ADC_Pos                     20                                                      /*!< SCU PCER2: ADC Position                 */
+#define SCU_PCER2_ADC_Msk                     (0x01UL << SCU_PCER2_ADC_Pos)                           /*!< SCU PCER2: ADC Mask                     */
+#define SCU_PCER2_TOUCH_Pos                   25                                                      /*!< SCU PCER2: TOUCH Position               */
+#define SCU_PCER2_TOUCH_Msk                   (0x01UL << SCU_PCER2_TOUCH_Pos)                         /*!< SCU PCER2: TOUCH Mask                   */
+#define SCU_PCER2_TSENSE_Pos                  27                                                      /*!< SCU PCER2: TSENSE Position              */
+#define SCU_PCER2_TSENSE_Msk                  (0x01UL << SCU_PCER2_TSENSE_Pos)                        /*!< SCU PCER2: TSENSE Mask                  */
+#define SCU_PCER2_LCD_Pos                     28                                                      /*!< SCU PCER2: LCD Position                 */
+#define SCU_PCER2_LCD_Msk                     (0x01UL << SCU_PCER2_LCD_Pos)                           /*!< SCU PCER2: LCD Mask                     */
+#define SCU_PCER2_LED_Pos                     29                                                      /*!< SCU PCER2: LED Position                 */
+#define SCU_PCER2_LED_Msk                     (0x01UL << SCU_PCER2_LED_Pos)                           /*!< SCU PCER2: LED Mask                     */
+#define SCU_PCER2_CRC_Pos                     31                                                      /*!< SCU PCER2: CRC Position                 */
+#define SCU_PCER2_CRC_Msk                     (0x01UL << SCU_PCER2_CRC_Pos)                           /*!< SCU PCER2: CRC Mask                     */
+
+/* ---------------------------------  SCU_PPCLKSR  -------------------------------- */
+#define SCU_PPCLKSR_WDTCLK_Pos                0                                                       /*!< SCU PPCLKSR: WDTCLK Position            */
+#define SCU_PPCLKSR_WDTCLK_Msk                (0x01UL << SCU_PPCLKSR_WDTCLK_Pos)                      /*!< SCU PPCLKSR: WDTCLK Mask                */
+#define SCU_PPCLKSR_WTCLK_Pos                 3                                                       /*!< SCU PPCLKSR: WTCLK Position             */
+#define SCU_PPCLKSR_WTCLK_Msk                 (0x03UL << SCU_PPCLKSR_WTCLK_Pos)                       /*!< SCU PPCLKSR: WTCLK Mask                 */
+#define SCU_PPCLKSR_LCDCLK_Pos                6                                                       /*!< SCU PPCLKSR: LCDCLK Position            */
+#define SCU_PPCLKSR_LCDCLK_Msk                (0x03UL << SCU_PPCLKSR_LCDCLK_Pos)                      /*!< SCU PPCLKSR: LCDCLK Mask                */
+#define SCU_PPCLKSR_LEDCLK_Pos                10                                                      /*!< SCU PPCLKSR: LEDCLK Position            */
+#define SCU_PPCLKSR_LEDCLK_Msk                (0x01UL << SCU_PPCLKSR_LEDCLK_Pos)                      /*!< SCU PPCLKSR: LEDCLK Mask                */
+#define SCU_PPCLKSR_T30CLK_Pos                17                                                      /*!< SCU PPCLKSR: T30CLK Position            */
+#define SCU_PPCLKSR_T30CLK_Msk                (0x01UL << SCU_PPCLKSR_T30CLK_Pos)                      /*!< SCU PPCLKSR: T30CLK Mask                */
+#define SCU_PPCLKSR_T20CLK_Pos                20                                                      /*!< SCU PPCLKSR: T20CLK Position            */
+#define SCU_PPCLKSR_T20CLK_Msk                (0x01UL << SCU_PPCLKSR_T20CLK_Pos)                      /*!< SCU PPCLKSR: T20CLK Mask                */
+#define SCU_PPCLKSR_T1xCLK_Pos                22                                                      /*!< SCU PPCLKSR: T1xCLK Position            */
+#define SCU_PPCLKSR_T1xCLK_Msk                (0x01UL << SCU_PPCLKSR_T1xCLK_Pos)                      /*!< SCU PPCLKSR: T1xCLK Mask                */
+
+/* ----------------------------------  SCU_CSCR  ---------------------------------- */
+#define SCU_CSCR_HSECON_Pos                   0                                                       /*!< SCU CSCR: HSECON Position               */
+#define SCU_CSCR_HSECON_Msk                   (0x0fUL << SCU_CSCR_HSECON_Pos)                         /*!< SCU CSCR: HSECON Mask                   */
+#define SCU_CSCR_HSICON_Pos                   4                                                       /*!< SCU CSCR: HSICON Position               */
+#define SCU_CSCR_HSICON_Msk                   (0x0fUL << SCU_CSCR_HSICON_Pos)                         /*!< SCU CSCR: HSICON Mask                   */
+#define SCU_CSCR_LSICON_Pos                   8                                                       /*!< SCU CSCR: LSICON Position               */
+#define SCU_CSCR_LSICON_Msk                   (0x0fUL << SCU_CSCR_LSICON_Pos)                         /*!< SCU CSCR: LSICON Mask                   */
+#define SCU_CSCR_LSECON_Pos                   12                                                      /*!< SCU CSCR: LSECON Position               */
+#define SCU_CSCR_LSECON_Msk                   (0x0fUL << SCU_CSCR_LSECON_Pos)                         /*!< SCU CSCR: LSECON Mask                   */
+#define SCU_CSCR_WTIDKY_Pos                   16                                                      /*!< SCU CSCR: WTIDKY Position               */
+#define SCU_CSCR_WTIDKY_Msk                   (0x0000ffffUL << SCU_CSCR_WTIDKY_Pos)                   /*!< SCU CSCR: WTIDKY Mask                   */
+
+/* ----------------------------------  SCU_SCCR  ---------------------------------- */
+#define SCU_SCCR_MCLKSEL_Pos                  0                                                       /*!< SCU SCCR: MCLKSEL Position              */
+#define SCU_SCCR_MCLKSEL_Msk                  (0x03UL << SCU_SCCR_MCLKSEL_Pos)                        /*!< SCU SCCR: MCLKSEL Mask                  */
+#define SCU_SCCR_PLLINCLKSEL_Pos              2                                                       /*!< SCU SCCR: PLLINCLKSEL Position          */
+#define SCU_SCCR_PLLINCLKSEL_Msk              (0x01UL << SCU_SCCR_PLLINCLKSEL_Pos)                    /*!< SCU SCCR: PLLINCLKSEL Mask              */
+#define SCU_SCCR_WTIDKY_Pos                   16                                                      /*!< SCU SCCR: WTIDKY Position               */
+#define SCU_SCCR_WTIDKY_Msk                   (0x0000ffffUL << SCU_SCCR_WTIDKY_Pos)                   /*!< SCU SCCR: WTIDKY Mask                   */
+
+/* -----------------------------------  SCU_CMR  ---------------------------------- */
+#define SCU_CMR_HSESTS_Pos                    0                                                       /*!< SCU CMR: HSESTS Position                */
+#define SCU_CMR_HSESTS_Msk                    (0x01UL << SCU_CMR_HSESTS_Pos)                          /*!< SCU CMR: HSESTS Mask                    */
+#define SCU_CMR_HSEFAIL_Pos                   1                                                       /*!< SCU CMR: HSEFAIL Position               */
+#define SCU_CMR_HSEFAIL_Msk                   (0x01UL << SCU_CMR_HSEFAIL_Pos)                         /*!< SCU CMR: HSEFAIL Mask                   */
+#define SCU_CMR_HSEIE_Pos                     2                                                       /*!< SCU CMR: HSEIE Position                 */
+#define SCU_CMR_HSEIE_Msk                     (0x01UL << SCU_CMR_HSEIE_Pos)                           /*!< SCU CMR: HSEIE Mask                     */
+#define SCU_CMR_HSEMNT_Pos                    3                                                       /*!< SCU CMR: HSEMNT Position                */
+#define SCU_CMR_HSEMNT_Msk                    (0x01UL << SCU_CMR_HSEMNT_Pos)                          /*!< SCU CMR: HSEMNT Mask                    */
+#define SCU_CMR_MCLKSTS_Pos                   4                                                       /*!< SCU CMR: MCLKSTS Position               */
+#define SCU_CMR_MCLKSTS_Msk                   (0x01UL << SCU_CMR_MCLKSTS_Pos)                         /*!< SCU CMR: MCLKSTS Mask                   */
+#define SCU_CMR_MCLKFAIL_Pos                  5                                                       /*!< SCU CMR: MCLKFAIL Position              */
+#define SCU_CMR_MCLKFAIL_Msk                  (0x01UL << SCU_CMR_MCLKFAIL_Pos)                        /*!< SCU CMR: MCLKFAIL Mask                  */
+#define SCU_CMR_MCLKIE_Pos                    6                                                       /*!< SCU CMR: MCLKIE Position                */
+#define SCU_CMR_MCLKIE_Msk                    (0x01UL << SCU_CMR_MCLKIE_Pos)                          /*!< SCU CMR: MCLKIE Mask                    */
+#define SCU_CMR_MCLKMNT_Pos                   7                                                       /*!< SCU CMR: MCLKMNT Position               */
+#define SCU_CMR_MCLKMNT_Msk                   (0x01UL << SCU_CMR_MCLKMNT_Pos)                         /*!< SCU CMR: MCLKMNT Mask                   */
+#define SCU_CMR_LSESTS_Pos                    8                                                       /*!< SCU CMR: LSESTS Position                */
+#define SCU_CMR_LSESTS_Msk                    (0x01UL << SCU_CMR_LSESTS_Pos)                          /*!< SCU CMR: LSESTS Mask                    */
+#define SCU_CMR_LSEFAIL_Pos                   9                                                       /*!< SCU CMR: LSEFAIL Position               */
+#define SCU_CMR_LSEFAIL_Msk                   (0x01UL << SCU_CMR_LSEFAIL_Pos)                         /*!< SCU CMR: LSEFAIL Mask                   */
+#define SCU_CMR_LSEIE_Pos                     10                                                      /*!< SCU CMR: LSEIE Position                 */
+#define SCU_CMR_LSEIE_Msk                     (0x01UL << SCU_CMR_LSEIE_Pos)                           /*!< SCU CMR: LSEIE Mask                     */
+#define SCU_CMR_LSEMNT_Pos                    11                                                      /*!< SCU CMR: LSEMNT Position                */
+#define SCU_CMR_LSEMNT_Msk                    (0x01UL << SCU_CMR_LSEMNT_Pos)                          /*!< SCU CMR: LSEMNT Mask                    */
+#define SCU_CMR_MCLKREC_Pos                   15                                                      /*!< SCU CMR: MCLKREC Position               */
+#define SCU_CMR_MCLKREC_Msk                   (0x01UL << SCU_CMR_MCLKREC_Pos)                         /*!< SCU CMR: MCLKREC Mask                   */
+
+/* ----------------------------------  SCU_NMIR  ---------------------------------- */
+#define SCU_NMIR_LVDEN_Pos                    0                                                       /*!< SCU NMIR: LVDEN Position                */
+#define SCU_NMIR_LVDEN_Msk                    (0x01UL << SCU_NMIR_LVDEN_Pos)                          /*!< SCU NMIR: LVDEN Mask                    */
+#define SCU_NMIR_MCLKFAILEN_Pos               1                                                       /*!< SCU NMIR: MCLKFAILEN Position           */
+#define SCU_NMIR_MCLKFAILEN_Msk               (0x01UL << SCU_NMIR_MCLKFAILEN_Pos)                     /*!< SCU NMIR: MCLKFAILEN Mask               */
+#define SCU_NMIR_WDTINTEN_Pos                 2                                                       /*!< SCU NMIR: WDTINTEN Position             */
+#define SCU_NMIR_WDTINTEN_Msk                 (0x01UL << SCU_NMIR_WDTINTEN_Pos)                       /*!< SCU NMIR: WDTINTEN Mask                 */
+#define SCU_NMIR_LVDSTS_Pos                   8                                                       /*!< SCU NMIR: LVDSTS Position               */
+#define SCU_NMIR_LVDSTS_Msk                   (0x01UL << SCU_NMIR_LVDSTS_Pos)                         /*!< SCU NMIR: LVDSTS Mask                   */
+#define SCU_NMIR_MCLKFAILSTS_Pos              9                                                       /*!< SCU NMIR: MCLKFAILSTS Position          */
+#define SCU_NMIR_MCLKFAILSTS_Msk              (0x01UL << SCU_NMIR_MCLKFAILSTS_Pos)                    /*!< SCU NMIR: MCLKFAILSTS Mask              */
+#define SCU_NMIR_WDTINTSTS_Pos                10                                                      /*!< SCU NMIR: WDTINTSTS Position            */
+#define SCU_NMIR_WDTINTSTS_Msk                (0x01UL << SCU_NMIR_WDTINTSTS_Pos)                      /*!< SCU NMIR: WDTINTSTS Mask                */
+#define SCU_NMIR_ACCESSCODE_Pos               16                                                      /*!< SCU NMIR: ACCESSCODE Position           */
+#define SCU_NMIR_ACCESSCODE_Msk               (0x0000ffffUL << SCU_NMIR_ACCESSCODE_Pos)               /*!< SCU NMIR: ACCESSCODE Mask               */
+
+/* -----------------------------------  SCU_COR  ---------------------------------- */
+#define SCU_COR_CLKODIV_Pos                   0                                                       /*!< SCU COR: CLKODIV Position               */
+#define SCU_COR_CLKODIV_Msk                   (0x0fUL << SCU_COR_CLKODIV_Pos)                         /*!< SCU COR: CLKODIV Mask                   */
+#define SCU_COR_CLKOEN_Pos                    4                                                       /*!< SCU COR: CLKOEN Position                */
+#define SCU_COR_CLKOEN_Msk                    (0x01UL << SCU_COR_CLKOEN_Pos)                          /*!< SCU COR: CLKOEN Mask                    */
+
+/* ---------------------------------  SCU_PLLCON  --------------------------------- */
+#define SCU_PLLCON_OUTDIV_Pos                 0                                                       /*!< SCU PLLCON: OUTDIV Position             */
+#define SCU_PLLCON_OUTDIV_Msk                 (0x07UL << SCU_PLLCON_OUTDIV_Pos)                       /*!< SCU PLLCON: OUTDIV Mask                 */
+#define SCU_PLLCON_POSTDIV2_Pos               4                                                       /*!< SCU PLLCON: POSTDIV2 Position           */
+#define SCU_PLLCON_POSTDIV2_Msk               (0x0fUL << SCU_PLLCON_POSTDIV2_Pos)                     /*!< SCU PLLCON: POSTDIV2 Mask               */
+#define SCU_PLLCON_POSTDIV1_Pos               8                                                       /*!< SCU PLLCON: POSTDIV1 Position           */
+#define SCU_PLLCON_POSTDIV1_Msk               (0x000000ffUL << SCU_PLLCON_POSTDIV1_Pos)               /*!< SCU PLLCON: POSTDIV1 Mask               */
+#define SCU_PLLCON_PREDIV_Pos                 16                                                      /*!< SCU PLLCON: PREDIV Position             */
+#define SCU_PLLCON_PREDIV_Msk                 (0x07UL << SCU_PLLCON_PREDIV_Pos)                       /*!< SCU PLLCON: PREDIV Mask                 */
+#define SCU_PLLCON_PLLMODE_Pos                20                                                      /*!< SCU PLLCON: PLLMODE Position            */
+#define SCU_PLLCON_PLLMODE_Msk                (0x01UL << SCU_PLLCON_PLLMODE_Pos)                      /*!< SCU PLLCON: PLLMODE Mask                */
+#define SCU_PLLCON_BYPASSB_Pos                21                                                      /*!< SCU PLLCON: BYPASSB Position            */
+#define SCU_PLLCON_BYPASSB_Msk                (0x01UL << SCU_PLLCON_BYPASSB_Pos)                      /*!< SCU PLLCON: BYPASSB Mask                */
+#define SCU_PLLCON_PLLEN_Pos                  22                                                      /*!< SCU PLLCON: PLLEN Position              */
+#define SCU_PLLCON_PLLEN_Msk                  (0x01UL << SCU_PLLCON_PLLEN_Pos)                        /*!< SCU PLLCON: PLLEN Mask                  */
+#define SCU_PLLCON_PLLRSTB_Pos                23                                                      /*!< SCU PLLCON: PLLRSTB Position            */
+#define SCU_PLLCON_PLLRSTB_Msk                (0x01UL << SCU_PLLCON_PLLRSTB_Pos)                      /*!< SCU PLLCON: PLLRSTB Mask                */
+#define SCU_PLLCON_TIMEOUT_Pos                30                                                      /*!< SCU PLLCON: TIMEOUT Position            */
+#define SCU_PLLCON_TIMEOUT_Msk                (0x01UL << SCU_PLLCON_TIMEOUT_Pos)                      /*!< SCU PLLCON: TIMEOUT Mask                */
+#define SCU_PLLCON_LOCK_Pos                   31                                                      /*!< SCU PLLCON: LOCK Position               */
+#define SCU_PLLCON_LOCK_Msk                   (0x01UL << SCU_PLLCON_LOCK_Pos)                         /*!< SCU PLLCON: LOCK Mask                   */
+
+/* ---------------------------------  SCU_VDCCON  --------------------------------- */
+#define SCU_VDCCON_VDCWDLY_Pos                0                                                       /*!< SCU VDCCON: VDCWDLY Position            */
+#define SCU_VDCCON_VDCWDLY_Msk                (0x7fUL << SCU_VDCCON_VDCWDLY_Pos)                      /*!< SCU VDCCON: VDCWDLY Mask                */
+#define SCU_VDCCON_VDCWDLY_WEN_Pos            8                                                       /*!< SCU VDCCON: VDCWDLY_WEN Position        */
+#define SCU_VDCCON_VDCWDLY_WEN_Msk            (0x01UL << SCU_VDCCON_VDCWDLY_WEN_Pos)                  /*!< SCU VDCCON: VDCWDLY_WEN Mask            */
+#define SCU_VDCCON_VDC15_LOCK_Pos             15                                                      /*!< SCU VDCCON: VDC15_LOCK Position         */
+#define SCU_VDCCON_VDC15_LOCK_Msk             (0x01UL << SCU_VDCCON_VDC15_LOCK_Pos)                   /*!< SCU VDCCON: VDC15_LOCK Mask             */
+#define SCU_VDCCON_VDC15_IDLE_Pos             16                                                      /*!< SCU VDCCON: VDC15_IDLE Position         */
+#define SCU_VDCCON_VDC15_IDLE_Msk             (0x01UL << SCU_VDCCON_VDC15_IDLE_Pos)                   /*!< SCU VDCCON: VDC15_IDLE Mask             */
+#define SCU_VDCCON_VDC15_STOP_Pos             17                                                      /*!< SCU VDCCON: VDC15_STOP Position         */
+#define SCU_VDCCON_VDC15_STOP_Msk             (0x01UL << SCU_VDCCON_VDC15_STOP_Pos)                   /*!< SCU VDCCON: VDC15_STOP Mask             */
+#define SCU_VDCCON_VDC15_PDBGR_Pos            19                                                      /*!< SCU VDCCON: VDC15_PDBGR Position        */
+#define SCU_VDCCON_VDC15_PDBGR_Msk            (0x01UL << SCU_VDCCON_VDC15_PDBGR_Pos)                  /*!< SCU VDCCON: VDC15_PDBGR Mask            */
+#define SCU_VDCCON_VDC15_WTIDKY_Pos           20                                                      /*!< SCU VDCCON: VDC15_WTIDKY Position       */
+#define SCU_VDCCON_VDC15_WTIDKY_Msk           (0x0fUL << SCU_VDCCON_VDC15_WTIDKY_Pos)                 /*!< SCU VDCCON: VDC15_WTIDKY Mask           */
+
+/* ---------------------------------  SCU_TIRCCON  -------------------------------- */
+#define SCU_TIRCCON_TIRCON_Pos                0                                                       /*!< SCU TIRCCON: TIRCON Position            */
+#define SCU_TIRCCON_TIRCON_Msk                (0x01UL << SCU_TIRCCON_TIRCON_Pos)                      /*!< SCU TIRCCON: TIRCON Mask                */
+
+/* ---------------------------------  SCU_LSICON  --------------------------------- */
+#define SCU_LSICON_SKIP_LS_Pos                0                                                       /*!< SCU LSICON: SKIP_LS Position            */
+#define SCU_LSICON_SKIP_LS_Msk                (0x01UL << SCU_LSICON_SKIP_LS_Pos)                      /*!< SCU LSICON: SKIP_LS Mask                */
+#define SCU_LSICON_EN_LDO_Pos                 1                                                       /*!< SCU LSICON: EN_LDO Position             */
+#define SCU_LSICON_EN_LDO_Msk                 (0x01UL << SCU_LSICON_EN_LDO_Pos)                       /*!< SCU LSICON: EN_LDO Mask                 */
+
+/* ----------------------------------  SCU_EOSCR  --------------------------------- */
+#define SCU_EOSCR_NCSKIP_Pos                  0                                                       /*!< SCU EOSCR: NCSKIP Position              */
+#define SCU_EOSCR_NCSKIP_Msk                  (0x01UL << SCU_EOSCR_NCSKIP_Pos)                        /*!< SCU EOSCR: NCSKIP Mask                  */
+#define SCU_EOSCR_NCOPT_Pos                   2                                                       /*!< SCU EOSCR: NCOPT Position               */
+#define SCU_EOSCR_NCOPT_Msk                   (0x03UL << SCU_EOSCR_NCOPT_Pos)                         /*!< SCU EOSCR: NCOPT Mask                   */
+#define SCU_EOSCR_ISE_Pos                     4                                                       /*!< SCU EOSCR: ISE Position                 */
+#define SCU_EOSCR_ISE_Msk                     (0x03UL << SCU_EOSCR_ISE_Pos)                           /*!< SCU EOSCR: ISE Mask                     */
+#define SCU_EOSCR_EMEN_Pos                    7                                                       /*!< SCU EOSCR: EMEN Position                */
+#define SCU_EOSCR_EMEN_Msk                    (0x01UL << SCU_EOSCR_EMEN_Pos)                          /*!< SCU EOSCR: EMEN Mask                    */
+#define SCU_EOSCR_ESNCBYPS_Pos                8                                                       /*!< SCU EOSCR: ESNCBYPS Position            */
+#define SCU_EOSCR_ESNCBYPS_Msk                (0x01UL << SCU_EOSCR_ESNCBYPS_Pos)                      /*!< SCU EOSCR: ESNCBYPS Mask                */
+#define SCU_EOSCR_ESISEL_Pos                  12                                                      /*!< SCU EOSCR: ESISEL Position              */
+#define SCU_EOSCR_ESISEL_Msk                  (0x03UL << SCU_EOSCR_ESISEL_Pos)                        /*!< SCU EOSCR: ESISEL Mask                  */
+#define SCU_EOSCR_ESEN_Pos                    15                                                      /*!< SCU EOSCR: ESEN Position                */
+#define SCU_EOSCR_ESEN_Msk                    (0x01UL << SCU_EOSCR_ESEN_Pos)                          /*!< SCU EOSCR: ESEN Mask                    */
+
+/* ----------------------------------  SCU_EMODR  --------------------------------- */
+#define SCU_EMODR_BOOT_Pos                    0                                                       /*!< SCU EMODR: BOOT Position                */
+#define SCU_EMODR_BOOT_Msk                    (0x01UL << SCU_EMODR_BOOT_Pos)                          /*!< SCU EMODR: BOOT Mask                    */
+
+/* ---------------------------------  SCU_RSTDBCR  -------------------------------- */
+#define SCU_RSTDBCR_EN_Pos                    0                                                       /*!< SCU RSTDBCR: EN Position                */
+#define SCU_RSTDBCR_EN_Msk                    (0x01UL << SCU_RSTDBCR_EN_Pos)                          /*!< SCU RSTDBCR: EN Mask                    */
+#define SCU_RSTDBCR_CLKCNT_Pos                8                                                       /*!< SCU RSTDBCR: CLKCNT Position            */
+#define SCU_RSTDBCR_CLKCNT_Msk                (0x3fUL << SCU_RSTDBCR_CLKCNT_Pos)                      /*!< SCU RSTDBCR: CLKCNT Mask                */
+#define SCU_RSTDBCR_WTIDKY_Pos                16                                                      /*!< SCU RSTDBCR: WTIDKY Position            */
+#define SCU_RSTDBCR_WTIDKY_Msk                (0x0000ffffUL << SCU_RSTDBCR_WTIDKY_Pos)                /*!< SCU RSTDBCR: WTIDKY Mask                */
+
+/* ----------------------------------  SCU_MCCR1  --------------------------------- */
+#define SCU_MCCR1_STDIV_Pos                   0                                                       /*!< SCU MCCR1: STDIV Position               */
+#define SCU_MCCR1_STDIV_Msk                   (0x000000ffUL << SCU_MCCR1_STDIV_Pos)                   /*!< SCU MCCR1: STDIV Mask                   */
+#define SCU_MCCR1_STCSEL_Pos                  8                                                       /*!< SCU MCCR1: STCSEL Position              */
+#define SCU_MCCR1_STCSEL_Msk                  (0x07UL << SCU_MCCR1_STCSEL_Pos)                        /*!< SCU MCCR1: STCSEL Mask                  */
+#define SCU_MCCR1_TEXT1DIV_Pos                16                                                      /*!< SCU MCCR1: TEXT1DIV Position            */
+#define SCU_MCCR1_TEXT1DIV_Msk                (0x000000ffUL << SCU_MCCR1_TEXT1DIV_Pos)                /*!< SCU MCCR1: TEXT1DIV Mask                */
+#define SCU_MCCR1_TEXT1CSEL_Pos               24                                                      /*!< SCU MCCR1: TEXT1CSEL Position           */
+#define SCU_MCCR1_TEXT1CSEL_Msk               (0x07UL << SCU_MCCR1_TEXT1CSEL_Pos)                     /*!< SCU MCCR1: TEXT1CSEL Mask               */
+
+/* ----------------------------------  SCU_MCCR2  --------------------------------- */
+#define SCU_MCCR2_TEXT2DIV_Pos                0                                                       /*!< SCU MCCR2: TEXT2DIV Position            */
+#define SCU_MCCR2_TEXT2DIV_Msk                (0x000000ffUL << SCU_MCCR2_TEXT2DIV_Pos)                /*!< SCU MCCR2: TEXT2DIV Mask                */
+#define SCU_MCCR2_TEXT2CSEL_Pos               8                                                       /*!< SCU MCCR2: TEXT2CSEL Position           */
+#define SCU_MCCR2_TEXT2CSEL_Msk               (0x07UL << SCU_MCCR2_TEXT2CSEL_Pos)                     /*!< SCU MCCR2: TEXT2CSEL Mask               */
+#define SCU_MCCR2_TEXT3DIV_Pos                16                                                      /*!< SCU MCCR2: TEXT3DIV Position            */
+#define SCU_MCCR2_TEXT3DIV_Msk                (0x000000ffUL << SCU_MCCR2_TEXT3DIV_Pos)                /*!< SCU MCCR2: TEXT3DIV Mask                */
+#define SCU_MCCR2_TEXT3CSEL_Pos               24                                                      /*!< SCU MCCR2: TEXT3CSEL Position           */
+#define SCU_MCCR2_TEXT3CSEL_Msk               (0x07UL << SCU_MCCR2_TEXT3CSEL_Pos)                     /*!< SCU MCCR2: TEXT3CSEL Mask               */
+
+/* ----------------------------------  SCU_MCCR3  --------------------------------- */
+#define SCU_MCCR3_WDTDIV_Pos                  0                                                       /*!< SCU MCCR3: WDTDIV Position              */
+#define SCU_MCCR3_WDTDIV_Msk                  (0x000000ffUL << SCU_MCCR3_WDTDIV_Pos)                  /*!< SCU MCCR3: WDTDIV Mask                  */
+#define SCU_MCCR3_WDTCSEL_Pos                 8                                                       /*!< SCU MCCR3: WDTCSEL Position             */
+#define SCU_MCCR3_WDTCSEL_Msk                 (0x07UL << SCU_MCCR3_WDTCSEL_Pos)                       /*!< SCU MCCR3: WDTCSEL Mask                 */
+#define SCU_MCCR3_WTEXTCDIV_Pos               16                                                      /*!< SCU MCCR3: WTEXTCDIV Position           */
+#define SCU_MCCR3_WTEXTCDIV_Msk               (0x000000ffUL << SCU_MCCR3_WTEXTCDIV_Pos)               /*!< SCU MCCR3: WTEXTCDIV Mask               */
+#define SCU_MCCR3_WTEXTCSEL_Pos               24                                                      /*!< SCU MCCR3: WTEXTCSEL Position           */
+#define SCU_MCCR3_WTEXTCSEL_Msk               (0x07UL << SCU_MCCR3_WTEXTCSEL_Pos)                     /*!< SCU MCCR3: WTEXTCSEL Mask               */
+
+/* ----------------------------------  SCU_MCCR4  --------------------------------- */
+#define SCU_MCCR4_PD0DIV_Pos                  0                                                       /*!< SCU MCCR4: PD0DIV Position              */
+#define SCU_MCCR4_PD0DIV_Msk                  (0x000000ffUL << SCU_MCCR4_PD0DIV_Pos)                  /*!< SCU MCCR4: PD0DIV Mask                  */
+#define SCU_MCCR4_PD0CSEL_Pos                 8                                                       /*!< SCU MCCR4: PD0CSEL Position             */
+#define SCU_MCCR4_PD0CSEL_Msk                 (0x07UL << SCU_MCCR4_PD0CSEL_Pos)                       /*!< SCU MCCR4: PD0CSEL Mask                 */
+#define SCU_MCCR4_PD1DIV_Pos                  16                                                      /*!< SCU MCCR4: PD1DIV Position              */
+#define SCU_MCCR4_PD1DIV_Msk                  (0x000000ffUL << SCU_MCCR4_PD1DIV_Pos)                  /*!< SCU MCCR4: PD1DIV Mask                  */
+#define SCU_MCCR4_PD1CSEL_Pos                 24                                                      /*!< SCU MCCR4: PD1CSEL Position             */
+#define SCU_MCCR4_PD1CSEL_Msk                 (0x07UL << SCU_MCCR4_PD1CSEL_Pos)                       /*!< SCU MCCR4: PD1CSEL Mask                 */
+
+/* ----------------------------------  SCU_MCCR5  --------------------------------- */
+#define SCU_MCCR5_LEDDIV_Pos                  0                                                       /*!< SCU MCCR5: LEDDIV Position              */
+#define SCU_MCCR5_LEDDIV_Msk                  (0x000000ffUL << SCU_MCCR5_LEDDIV_Pos)                  /*!< SCU MCCR5: LEDDIV Mask                  */
+#define SCU_MCCR5_LEDCSEL_Pos                 8                                                       /*!< SCU MCCR5: LEDCSEL Position             */
+#define SCU_MCCR5_LEDCSEL_Msk                 (0x07UL << SCU_MCCR5_LEDCSEL_Pos)                       /*!< SCU MCCR5: LEDCSEL Mask                 */
+#define SCU_MCCR5_LCDDIV_Pos                  16                                                      /*!< SCU MCCR5: LCDDIV Position              */
+#define SCU_MCCR5_LCDDIV_Msk                  (0x000000ffUL << SCU_MCCR5_LCDDIV_Pos)                  /*!< SCU MCCR5: LCDDIV Mask                  */
+#define SCU_MCCR5_LCDCSEL_Pos                 24                                                      /*!< SCU MCCR5: LCDCSEL Position             */
+#define SCU_MCCR5_LCDCSEL_Msk                 (0x07UL << SCU_MCCR5_LCDCSEL_Pos)                       /*!< SCU MCCR5: LCDCSEL Mask                 */
+
+/* ----------------------------------  SCU_MCCR6  --------------------------------- */
+#define SCU_MCCR6_LSI_TS_EN_Pos               11                                                      /*!< SCU MCCR6: LSI_TS_EN Position           */
+#define SCU_MCCR6_LSI_TS_EN_Msk               (0x01UL << SCU_MCCR6_LSI_TS_EN_Pos)                     /*!< SCU MCCR6: LSI_TS_EN Mask               */
+#define SCU_MCCR6_TS_CLK_SEL_Pos              12                                                      /*!< SCU MCCR6: TS_CLK_SEL Position          */
+#define SCU_MCCR6_TS_CLK_SEL_Msk              (0x03UL << SCU_MCCR6_TS_CLK_SEL_Pos)                    /*!< SCU MCCR6: TS_CLK_SEL Mask              */
+#define SCU_MCCR6_TS_REF_SEL_Pos              14                                                      /*!< SCU MCCR6: TS_REF_SEL Position          */
+#define SCU_MCCR6_TS_REF_SEL_Msk              (0x03UL << SCU_MCCR6_TS_REF_SEL_Pos)                    /*!< SCU MCCR6: TS_REF_SEL Mask              */
+
+
+/* ================================================================================ */
+/* ================         struct 'SCUCC' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -------------------------------  SCUCC_VENDORID  ------------------------------- */
+#define SCUCC_VENDORID_VENDID_Pos             0                                                       /*!< SCUCC VENDORID: VENDID Position         */
+#define SCUCC_VENDORID_VENDID_Msk             (0xffffffffUL << SCUCC_VENDORID_VENDID_Pos)             /*!< SCUCC VENDORID: VENDID Mask             */
+
+/* --------------------------------  SCUCC_CHIPID  -------------------------------- */
+#define SCUCC_CHIPID_CHIPID_Pos               0                                                       /*!< SCUCC CHIPID: CHIPID Position           */
+#define SCUCC_CHIPID_CHIPID_Msk               (0xffffffffUL << SCUCC_CHIPID_CHIPID_Pos)               /*!< SCUCC CHIPID: CHIPID Mask               */
+
+/* ---------------------------------  SCUCC_REVNR  -------------------------------- */
+#define SCUCC_REVNR_REVNO_Pos                 0                                                       /*!< SCUCC REVNR: REVNO Position             */
+#define SCUCC_REVNR_REVNO_Msk                 (0x000000ffUL << SCUCC_REVNR_REVNO_Pos)                 /*!< SCUCC REVNR: REVNO Mask                 */
+
+
+/* ================================================================================ */
+/* ================         struct 'SCULV' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  SCULV_LVICR  -------------------------------- */
+#define SCULV_LVICR_LVIVS_Pos                 0                                                       /*!< SCULV LVICR: LVIVS Position             */
+#define SCULV_LVICR_LVIVS_Msk                 (0x0fUL << SCULV_LVICR_LVIVS_Pos)                       /*!< SCULV LVICR: LVIVS Mask                 */
+#define SCULV_LVICR_LVIFLAG_Pos               4                                                       /*!< SCULV LVICR: LVIFLAG Position           */
+#define SCULV_LVICR_LVIFLAG_Msk               (0x01UL << SCULV_LVICR_LVIFLAG_Pos)                     /*!< SCULV LVICR: LVIFLAG Mask               */
+#define SCULV_LVICR_LVINTEN_Pos               5                                                       /*!< SCULV LVICR: LVINTEN Position           */
+#define SCULV_LVICR_LVINTEN_Msk               (0x01UL << SCULV_LVICR_LVINTEN_Pos)                     /*!< SCULV LVICR: LVINTEN Mask               */
+#define SCULV_LVICR_LVIEN_Pos                 7                                                       /*!< SCULV LVICR: LVIEN Position             */
+#define SCULV_LVICR_LVIEN_Msk                 (0x01UL << SCULV_LVICR_LVIEN_Pos)                       /*!< SCULV LVICR: LVIEN Mask                 */
+
+/* ---------------------------------  SCULV_LVRCR  -------------------------------- */
+#define SCULV_LVRCR_LVREN_Pos                 0                                                       /*!< SCULV LVRCR: LVREN Position             */
+#define SCULV_LVRCR_LVREN_Msk                 (0x000000ffUL << SCULV_LVRCR_LVREN_Pos)                 /*!< SCULV LVRCR: LVREN Mask                 */
+
+/* -------------------------------  SCULV_LVRCNFIG  ------------------------------- */
+#define SCULV_LVRCNFIG_LVRVS_Pos              0                                                       /*!< SCULV LVRCNFIG: LVRVS Position          */
+#define SCULV_LVRCNFIG_LVRVS_Msk              (0x0fUL << SCULV_LVRCNFIG_LVRVS_Pos)                    /*!< SCULV LVRCNFIG: LVRVS Mask              */
+#define SCULV_LVRCNFIG_LVRENM_Pos             8                                                       /*!< SCULV LVRCNFIG: LVRENM Position         */
+#define SCULV_LVRCNFIG_LVRENM_Msk             (0x000000ffUL << SCULV_LVRCNFIG_LVRENM_Pos)             /*!< SCULV LVRCNFIG: LVRENM Mask             */
+#define SCULV_LVRCNFIG_WTIDKY_Pos             16                                                      /*!< SCULV LVRCNFIG: WTIDKY Position         */
+#define SCULV_LVRCNFIG_WTIDKY_Msk             (0x0000ffffUL << SCULV_LVRCNFIG_WTIDKY_Pos)             /*!< SCULV LVRCNFIG: WTIDKY Mask             */
+
+
+/* ================================================================================ */
+/* ================          Group 'PORT' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  PORT_MOD  ---------------------------------- */
+#define PORT_MOD_MODE0_Pos                    0                                                       /*!< PORT MOD: MODE0 Position                */
+#define PORT_MOD_MODE0_Msk                    (0x03UL << PORT_MOD_MODE0_Pos)                          /*!< PORT MOD: MODE0 Mask                    */
+#define PORT_MOD_MODE1_Pos                    2                                                       /*!< PORT MOD: MODE1 Position                */
+#define PORT_MOD_MODE1_Msk                    (0x03UL << PORT_MOD_MODE1_Pos)                          /*!< PORT MOD: MODE1 Mask                    */
+#define PORT_MOD_MODE2_Pos                    4                                                       /*!< PORT MOD: MODE2 Position                */
+#define PORT_MOD_MODE2_Msk                    (0x03UL << PORT_MOD_MODE2_Pos)                          /*!< PORT MOD: MODE2 Mask                    */
+#define PORT_MOD_MODE3_Pos                    6                                                       /*!< PORT MOD: MODE3 Position                */
+#define PORT_MOD_MODE3_Msk                    (0x03UL << PORT_MOD_MODE3_Pos)                          /*!< PORT MOD: MODE3 Mask                    */
+#define PORT_MOD_MODE4_Pos                    8                                                       /*!< PORT MOD: MODE4 Position                */
+#define PORT_MOD_MODE4_Msk                    (0x03UL << PORT_MOD_MODE4_Pos)                          /*!< PORT MOD: MODE4 Mask                    */
+#define PORT_MOD_MODE5_Pos                    10                                                      /*!< PORT MOD: MODE5 Position                */
+#define PORT_MOD_MODE5_Msk                    (0x03UL << PORT_MOD_MODE5_Pos)                          /*!< PORT MOD: MODE5 Mask                    */
+#define PORT_MOD_MODE6_Pos                    12                                                      /*!< PORT MOD: MODE6 Position                */
+#define PORT_MOD_MODE6_Msk                    (0x03UL << PORT_MOD_MODE6_Pos)                          /*!< PORT MOD: MODE6 Mask                    */
+#define PORT_MOD_MODE7_Pos                    14                                                      /*!< PORT MOD: MODE7 Position                */
+#define PORT_MOD_MODE7_Msk                    (0x03UL << PORT_MOD_MODE7_Pos)                          /*!< PORT MOD: MODE7 Mask                    */
+#define PORT_MOD_MODE8_Pos                    16                                                      /*!< PORT MOD: MODE8 Position                */
+#define PORT_MOD_MODE8_Msk                    (0x03UL << PORT_MOD_MODE8_Pos)                          /*!< PORT MOD: MODE8 Mask                    */
+#define PORT_MOD_MODE9_Pos                    18                                                      /*!< PORT MOD: MODE9 Position                */
+#define PORT_MOD_MODE9_Msk                    (0x03UL << PORT_MOD_MODE9_Pos)                          /*!< PORT MOD: MODE9 Mask                    */
+#define PORT_MOD_MODE10_Pos                   20                                                      /*!< PORT MOD: MODE10 Position               */
+#define PORT_MOD_MODE10_Msk                   (0x03UL << PORT_MOD_MODE10_Pos)                         /*!< PORT MOD: MODE10 Mask                   */
+#define PORT_MOD_MODE11_Pos                   22                                                      /*!< PORT MOD: MODE11 Position               */
+#define PORT_MOD_MODE11_Msk                   (0x03UL << PORT_MOD_MODE11_Pos)                         /*!< PORT MOD: MODE11 Mask                   */
+#define PORT_MOD_MODE12_Pos                   24                                                      /*!< PORT MOD: MODE12 Position               */
+#define PORT_MOD_MODE12_Msk                   (0x03UL << PORT_MOD_MODE12_Pos)                         /*!< PORT MOD: MODE12 Mask                   */
+#define PORT_MOD_MODE13_Pos                   26                                                      /*!< PORT MOD: MODE13 Position               */
+#define PORT_MOD_MODE13_Msk                   (0x03UL << PORT_MOD_MODE13_Pos)                         /*!< PORT MOD: MODE13 Mask                   */
+#define PORT_MOD_MODE14_Pos                   28                                                      /*!< PORT MOD: MODE14 Position               */
+#define PORT_MOD_MODE14_Msk                   (0x03UL << PORT_MOD_MODE14_Pos)                         /*!< PORT MOD: MODE14 Mask                   */
+#define PORT_MOD_MODE15_Pos                   30                                                      /*!< PORT MOD: MODE15 Position               */
+#define PORT_MOD_MODE15_Msk                   (0x03UL << PORT_MOD_MODE15_Pos)                         /*!< PORT MOD: MODE15 Mask                   */
+
+/* ----------------------------------  PORT_TYP  ---------------------------------- */
+#define PORT_TYP_TYP0_Pos                     0                                                       /*!< PORT TYP: TYP0 Position                 */
+#define PORT_TYP_TYP0_Msk                     (0x01UL << PORT_TYP_TYP0_Pos)                           /*!< PORT TYP: TYP0 Mask                     */
+#define PORT_TYP_TYP1_Pos                     1                                                       /*!< PORT TYP: TYP1 Position                 */
+#define PORT_TYP_TYP1_Msk                     (0x01UL << PORT_TYP_TYP1_Pos)                           /*!< PORT TYP: TYP1 Mask                     */
+#define PORT_TYP_TYP2_Pos                     2                                                       /*!< PORT TYP: TYP2 Position                 */
+#define PORT_TYP_TYP2_Msk                     (0x01UL << PORT_TYP_TYP2_Pos)                           /*!< PORT TYP: TYP2 Mask                     */
+#define PORT_TYP_TYP3_Pos                     3                                                       /*!< PORT TYP: TYP3 Position                 */
+#define PORT_TYP_TYP3_Msk                     (0x01UL << PORT_TYP_TYP3_Pos)                           /*!< PORT TYP: TYP3 Mask                     */
+#define PORT_TYP_TYP4_Pos                     4                                                       /*!< PORT TYP: TYP4 Position                 */
+#define PORT_TYP_TYP4_Msk                     (0x01UL << PORT_TYP_TYP4_Pos)                           /*!< PORT TYP: TYP4 Mask                     */
+#define PORT_TYP_TYP5_Pos                     5                                                       /*!< PORT TYP: TYP5 Position                 */
+#define PORT_TYP_TYP5_Msk                     (0x01UL << PORT_TYP_TYP5_Pos)                           /*!< PORT TYP: TYP5 Mask                     */
+#define PORT_TYP_TYP6_Pos                     6                                                       /*!< PORT TYP: TYP6 Position                 */
+#define PORT_TYP_TYP6_Msk                     (0x01UL << PORT_TYP_TYP6_Pos)                           /*!< PORT TYP: TYP6 Mask                     */
+#define PORT_TYP_TYP7_Pos                     7                                                       /*!< PORT TYP: TYP7 Position                 */
+#define PORT_TYP_TYP7_Msk                     (0x01UL << PORT_TYP_TYP7_Pos)                           /*!< PORT TYP: TYP7 Mask                     */
+#define PORT_TYP_TYP8_Pos                     8                                                       /*!< PORT TYP: TYP8 Position                 */
+#define PORT_TYP_TYP8_Msk                     (0x01UL << PORT_TYP_TYP8_Pos)                           /*!< PORT TYP: TYP8 Mask                     */
+#define PORT_TYP_TYP9_Pos                     9                                                       /*!< PORT TYP: TYP9 Position                 */
+#define PORT_TYP_TYP9_Msk                     (0x01UL << PORT_TYP_TYP9_Pos)                           /*!< PORT TYP: TYP9 Mask                     */
+#define PORT_TYP_TYP10_Pos                    10                                                      /*!< PORT TYP: TYP10 Position                */
+#define PORT_TYP_TYP10_Msk                    (0x01UL << PORT_TYP_TYP10_Pos)                          /*!< PORT TYP: TYP10 Mask                    */
+#define PORT_TYP_TYP11_Pos                    11                                                      /*!< PORT TYP: TYP11 Position                */
+#define PORT_TYP_TYP11_Msk                    (0x01UL << PORT_TYP_TYP11_Pos)                          /*!< PORT TYP: TYP11 Mask                    */
+#define PORT_TYP_TYP12_Pos                    12                                                      /*!< PORT TYP: TYP12 Position                */
+#define PORT_TYP_TYP12_Msk                    (0x01UL << PORT_TYP_TYP12_Pos)                          /*!< PORT TYP: TYP12 Mask                    */
+#define PORT_TYP_TYP13_Pos                    13                                                      /*!< PORT TYP: TYP13 Position                */
+#define PORT_TYP_TYP13_Msk                    (0x01UL << PORT_TYP_TYP13_Pos)                          /*!< PORT TYP: TYP13 Mask                    */
+#define PORT_TYP_TYP14_Pos                    14                                                      /*!< PORT TYP: TYP14 Position                */
+#define PORT_TYP_TYP14_Msk                    (0x01UL << PORT_TYP_TYP14_Pos)                          /*!< PORT TYP: TYP14 Mask                    */
+#define PORT_TYP_TYP15_Pos                    15                                                      /*!< PORT TYP: TYP15 Position                */
+#define PORT_TYP_TYP15_Msk                    (0x01UL << PORT_TYP_TYP15_Pos)                          /*!< PORT TYP: TYP15 Mask                    */
+
+/* ---------------------------------  PORT_AFSR1  --------------------------------- */
+#define PORT_AFSR1_AFSB0_Pos                  0                                                       /*!< PORT AFSR1: AFSB0 Position              */
+#define PORT_AFSR1_AFSB0_Msk                  (0x0fUL << PORT_AFSR1_AFSB0_Pos)                        /*!< PORT AFSR1: AFSB0 Mask                  */
+#define PORT_AFSR1_AFSB1_Pos                  4                                                       /*!< PORT AFSR1: AFSB1 Position              */
+#define PORT_AFSR1_AFSB1_Msk                  (0x0fUL << PORT_AFSR1_AFSB1_Pos)                        /*!< PORT AFSR1: AFSB1 Mask                  */
+#define PORT_AFSR1_AFSB2_Pos                  8                                                       /*!< PORT AFSR1: AFSB2 Position              */
+#define PORT_AFSR1_AFSB2_Msk                  (0x0fUL << PORT_AFSR1_AFSB2_Pos)                        /*!< PORT AFSR1: AFSB2 Mask                  */
+#define PORT_AFSR1_AFSB3_Pos                  12                                                      /*!< PORT AFSR1: AFSB3 Position              */
+#define PORT_AFSR1_AFSB3_Msk                  (0x0fUL << PORT_AFSR1_AFSB3_Pos)                        /*!< PORT AFSR1: AFSB3 Mask                  */
+#define PORT_AFSR1_AFSB4_Pos                  16                                                      /*!< PORT AFSR1: AFSB4 Position              */
+#define PORT_AFSR1_AFSB4_Msk                  (0x0fUL << PORT_AFSR1_AFSB4_Pos)                        /*!< PORT AFSR1: AFSB4 Mask                  */
+#define PORT_AFSR1_AFSB5_Pos                  20                                                      /*!< PORT AFSR1: AFSB5 Position              */
+#define PORT_AFSR1_AFSB5_Msk                  (0x0fUL << PORT_AFSR1_AFSB5_Pos)                        /*!< PORT AFSR1: AFSB5 Mask                  */
+#define PORT_AFSR1_AFSB6_Pos                  24                                                      /*!< PORT AFSR1: AFSB6 Position              */
+#define PORT_AFSR1_AFSB6_Msk                  (0x0fUL << PORT_AFSR1_AFSB6_Pos)                        /*!< PORT AFSR1: AFSB6 Mask                  */
+#define PORT_AFSR1_AFSB7_Pos                  28                                                      /*!< PORT AFSR1: AFSB7 Position              */
+#define PORT_AFSR1_AFSB7_Msk                  (0x0fUL << PORT_AFSR1_AFSB7_Pos)                        /*!< PORT AFSR1: AFSB7 Mask                  */
+
+/* ---------------------------------  PORT_AFSR2  --------------------------------- */
+#define PORT_AFSR2_AFSB8_Pos                  0                                                       /*!< PORT AFSR2: AFSB8 Position              */
+#define PORT_AFSR2_AFSB8_Msk                  (0x0fUL << PORT_AFSR2_AFSB8_Pos)                        /*!< PORT AFSR2: AFSB8 Mask                  */
+#define PORT_AFSR2_AFSB9_Pos                  4                                                       /*!< PORT AFSR2: AFSB9 Position              */
+#define PORT_AFSR2_AFSB9_Msk                  (0x0fUL << PORT_AFSR2_AFSB9_Pos)                        /*!< PORT AFSR2: AFSB9 Mask                  */
+#define PORT_AFSR2_AFSB10_Pos                 8                                                       /*!< PORT AFSR2: AFSB10 Position             */
+#define PORT_AFSR2_AFSB10_Msk                 (0x0fUL << PORT_AFSR2_AFSB10_Pos)                       /*!< PORT AFSR2: AFSB10 Mask                 */
+#define PORT_AFSR2_AFSB11_Pos                 12                                                      /*!< PORT AFSR2: AFSB11 Position             */
+#define PORT_AFSR2_AFSB11_Msk                 (0x0fUL << PORT_AFSR2_AFSB11_Pos)                       /*!< PORT AFSR2: AFSB11 Mask                 */
+#define PORT_AFSR2_AFSB12_Pos                 16                                                      /*!< PORT AFSR2: AFSB12 Position             */
+#define PORT_AFSR2_AFSB12_Msk                 (0x0fUL << PORT_AFSR2_AFSB12_Pos)                       /*!< PORT AFSR2: AFSB12 Mask                 */
+#define PORT_AFSR2_AFSB13_Pos                 20                                                      /*!< PORT AFSR2: AFSB13 Position             */
+#define PORT_AFSR2_AFSB13_Msk                 (0x0fUL << PORT_AFSR2_AFSB13_Pos)                       /*!< PORT AFSR2: AFSB13 Mask                 */
+#define PORT_AFSR2_AFSB14_Pos                 24                                                      /*!< PORT AFSR2: AFSB14 Position             */
+#define PORT_AFSR2_AFSB14_Msk                 (0x0fUL << PORT_AFSR2_AFSB14_Pos)                       /*!< PORT AFSR2: AFSB14 Mask                 */
+#define PORT_AFSR2_AFSB15_Pos                 28                                                      /*!< PORT AFSR2: AFSB15 Position             */
+#define PORT_AFSR2_AFSB15_Msk                 (0x0fUL << PORT_AFSR2_AFSB15_Pos)                       /*!< PORT AFSR2: AFSB15 Mask                 */
+
+/* ----------------------------------  PORT_PUPD  --------------------------------- */
+#define PORT_PUPD_PUPD0_Pos                   0                                                       /*!< PORT PUPD: PUPD0 Position               */
+#define PORT_PUPD_PUPD0_Msk                   (0x03UL << PORT_PUPD_PUPD0_Pos)                         /*!< PORT PUPD: PUPD0 Mask                   */
+#define PORT_PUPD_PUPD1_Pos                   2                                                       /*!< PORT PUPD: PUPD1 Position               */
+#define PORT_PUPD_PUPD1_Msk                   (0x03UL << PORT_PUPD_PUPD1_Pos)                         /*!< PORT PUPD: PUPD1 Mask                   */
+#define PORT_PUPD_PUPD2_Pos                   4                                                       /*!< PORT PUPD: PUPD2 Position               */
+#define PORT_PUPD_PUPD2_Msk                   (0x03UL << PORT_PUPD_PUPD2_Pos)                         /*!< PORT PUPD: PUPD2 Mask                   */
+#define PORT_PUPD_PUPD3_Pos                   6                                                       /*!< PORT PUPD: PUPD3 Position               */
+#define PORT_PUPD_PUPD3_Msk                   (0x03UL << PORT_PUPD_PUPD3_Pos)                         /*!< PORT PUPD: PUPD3 Mask                   */
+#define PORT_PUPD_PUPD4_Pos                   8                                                       /*!< PORT PUPD: PUPD4 Position               */
+#define PORT_PUPD_PUPD4_Msk                   (0x03UL << PORT_PUPD_PUPD4_Pos)                         /*!< PORT PUPD: PUPD4 Mask                   */
+#define PORT_PUPD_PUPD5_Pos                   10                                                      /*!< PORT PUPD: PUPD5 Position               */
+#define PORT_PUPD_PUPD5_Msk                   (0x03UL << PORT_PUPD_PUPD5_Pos)                         /*!< PORT PUPD: PUPD5 Mask                   */
+#define PORT_PUPD_PUPD6_Pos                   12                                                      /*!< PORT PUPD: PUPD6 Position               */
+#define PORT_PUPD_PUPD6_Msk                   (0x03UL << PORT_PUPD_PUPD6_Pos)                         /*!< PORT PUPD: PUPD6 Mask                   */
+#define PORT_PUPD_PUPD7_Pos                   14                                                      /*!< PORT PUPD: PUPD7 Position               */
+#define PORT_PUPD_PUPD7_Msk                   (0x03UL << PORT_PUPD_PUPD7_Pos)                         /*!< PORT PUPD: PUPD7 Mask                   */
+#define PORT_PUPD_PUPD8_Pos                   16                                                      /*!< PORT PUPD: PUPD8 Position               */
+#define PORT_PUPD_PUPD8_Msk                   (0x03UL << PORT_PUPD_PUPD8_Pos)                         /*!< PORT PUPD: PUPD8 Mask                   */
+#define PORT_PUPD_PUPD9_Pos                   18                                                      /*!< PORT PUPD: PUPD9 Position               */
+#define PORT_PUPD_PUPD9_Msk                   (0x03UL << PORT_PUPD_PUPD9_Pos)                         /*!< PORT PUPD: PUPD9 Mask                   */
+#define PORT_PUPD_PUPD10_Pos                  20                                                      /*!< PORT PUPD: PUPD10 Position              */
+#define PORT_PUPD_PUPD10_Msk                  (0x03UL << PORT_PUPD_PUPD10_Pos)                        /*!< PORT PUPD: PUPD10 Mask                  */
+#define PORT_PUPD_PUPD11_Pos                  22                                                      /*!< PORT PUPD: PUPD11 Position              */
+#define PORT_PUPD_PUPD11_Msk                  (0x03UL << PORT_PUPD_PUPD11_Pos)                        /*!< PORT PUPD: PUPD11 Mask                  */
+#define PORT_PUPD_PUPD12_Pos                  24                                                      /*!< PORT PUPD: PUPD12 Position              */
+#define PORT_PUPD_PUPD12_Msk                  (0x03UL << PORT_PUPD_PUPD12_Pos)                        /*!< PORT PUPD: PUPD12 Mask                  */
+#define PORT_PUPD_PUPD13_Pos                  26                                                      /*!< PORT PUPD: PUPD13 Position              */
+#define PORT_PUPD_PUPD13_Msk                  (0x03UL << PORT_PUPD_PUPD13_Pos)                        /*!< PORT PUPD: PUPD13 Mask                  */
+#define PORT_PUPD_PUPD14_Pos                  28                                                      /*!< PORT PUPD: PUPD14 Position              */
+#define PORT_PUPD_PUPD14_Msk                  (0x03UL << PORT_PUPD_PUPD14_Pos)                        /*!< PORT PUPD: PUPD14 Mask                  */
+#define PORT_PUPD_PUPD15_Pos                  30                                                      /*!< PORT PUPD: PUPD15 Position              */
+#define PORT_PUPD_PUPD15_Msk                  (0x03UL << PORT_PUPD_PUPD15_Pos)                        /*!< PORT PUPD: PUPD15 Mask                  */
+
+/* ----------------------------------  PORT_INDR  --------------------------------- */
+#define PORT_INDR_INDR0_Pos                   0                                                       /*!< PORT INDR: INDR0 Position               */
+#define PORT_INDR_INDR0_Msk                   (0x01UL << PORT_INDR_INDR0_Pos)                         /*!< PORT INDR: INDR0 Mask                   */
+#define PORT_INDR_INDR1_Pos                   1                                                       /*!< PORT INDR: INDR1 Position               */
+#define PORT_INDR_INDR1_Msk                   (0x01UL << PORT_INDR_INDR1_Pos)                         /*!< PORT INDR: INDR1 Mask                   */
+#define PORT_INDR_INDR2_Pos                   2                                                       /*!< PORT INDR: INDR2 Position               */
+#define PORT_INDR_INDR2_Msk                   (0x01UL << PORT_INDR_INDR2_Pos)                         /*!< PORT INDR: INDR2 Mask                   */
+#define PORT_INDR_INDR3_Pos                   3                                                       /*!< PORT INDR: INDR3 Position               */
+#define PORT_INDR_INDR3_Msk                   (0x01UL << PORT_INDR_INDR3_Pos)                         /*!< PORT INDR: INDR3 Mask                   */
+#define PORT_INDR_INDR4_Pos                   4                                                       /*!< PORT INDR: INDR4 Position               */
+#define PORT_INDR_INDR4_Msk                   (0x01UL << PORT_INDR_INDR4_Pos)                         /*!< PORT INDR: INDR4 Mask                   */
+#define PORT_INDR_INDR5_Pos                   5                                                       /*!< PORT INDR: INDR5 Position               */
+#define PORT_INDR_INDR5_Msk                   (0x01UL << PORT_INDR_INDR5_Pos)                         /*!< PORT INDR: INDR5 Mask                   */
+#define PORT_INDR_INDR6_Pos                   6                                                       /*!< PORT INDR: INDR6 Position               */
+#define PORT_INDR_INDR6_Msk                   (0x01UL << PORT_INDR_INDR6_Pos)                         /*!< PORT INDR: INDR6 Mask                   */
+#define PORT_INDR_INDR7_Pos                   7                                                       /*!< PORT INDR: INDR7 Position               */
+#define PORT_INDR_INDR7_Msk                   (0x01UL << PORT_INDR_INDR7_Pos)                         /*!< PORT INDR: INDR7 Mask                   */
+#define PORT_INDR_INDR8_Pos                   8                                                       /*!< PORT INDR: INDR8 Position               */
+#define PORT_INDR_INDR8_Msk                   (0x01UL << PORT_INDR_INDR8_Pos)                         /*!< PORT INDR: INDR8 Mask                   */
+#define PORT_INDR_INDR9_Pos                   9                                                       /*!< PORT INDR: INDR9 Position               */
+#define PORT_INDR_INDR9_Msk                   (0x01UL << PORT_INDR_INDR9_Pos)                         /*!< PORT INDR: INDR9 Mask                   */
+#define PORT_INDR_INDR10_Pos                  10                                                      /*!< PORT INDR: INDR10 Position              */
+#define PORT_INDR_INDR10_Msk                  (0x01UL << PORT_INDR_INDR10_Pos)                        /*!< PORT INDR: INDR10 Mask                  */
+#define PORT_INDR_INDR11_Pos                  11                                                      /*!< PORT INDR: INDR11 Position              */
+#define PORT_INDR_INDR11_Msk                  (0x01UL << PORT_INDR_INDR11_Pos)                        /*!< PORT INDR: INDR11 Mask                  */
+#define PORT_INDR_INDR12_Pos                  12                                                      /*!< PORT INDR: INDR12 Position              */
+#define PORT_INDR_INDR12_Msk                  (0x01UL << PORT_INDR_INDR12_Pos)                        /*!< PORT INDR: INDR12 Mask                  */
+#define PORT_INDR_INDR13_Pos                  13                                                      /*!< PORT INDR: INDR13 Position              */
+#define PORT_INDR_INDR13_Msk                  (0x01UL << PORT_INDR_INDR13_Pos)                        /*!< PORT INDR: INDR13 Mask                  */
+#define PORT_INDR_INDR14_Pos                  14                                                      /*!< PORT INDR: INDR14 Position              */
+#define PORT_INDR_INDR14_Msk                  (0x01UL << PORT_INDR_INDR14_Pos)                        /*!< PORT INDR: INDR14 Mask                  */
+#define PORT_INDR_INDR15_Pos                  15                                                      /*!< PORT INDR: INDR15 Position              */
+#define PORT_INDR_INDR15_Msk                  (0x01UL << PORT_INDR_INDR15_Pos)                        /*!< PORT INDR: INDR15 Mask                  */
+
+/* ---------------------------------  PORT_OUTDR  --------------------------------- */
+#define PORT_OUTDR_OUTDR0_Pos                 0                                                       /*!< PORT OUTDR: OUTDR0 Position             */
+#define PORT_OUTDR_OUTDR0_Msk                 (0x01UL << PORT_OUTDR_OUTDR0_Pos)                       /*!< PORT OUTDR: OUTDR0 Mask                 */
+#define PORT_OUTDR_OUTDR1_Pos                 1                                                       /*!< PORT OUTDR: OUTDR1 Position             */
+#define PORT_OUTDR_OUTDR1_Msk                 (0x01UL << PORT_OUTDR_OUTDR1_Pos)                       /*!< PORT OUTDR: OUTDR1 Mask                 */
+#define PORT_OUTDR_OUTDR2_Pos                 2                                                       /*!< PORT OUTDR: OUTDR2 Position             */
+#define PORT_OUTDR_OUTDR2_Msk                 (0x01UL << PORT_OUTDR_OUTDR2_Pos)                       /*!< PORT OUTDR: OUTDR2 Mask                 */
+#define PORT_OUTDR_OUTDR3_Pos                 3                                                       /*!< PORT OUTDR: OUTDR3 Position             */
+#define PORT_OUTDR_OUTDR3_Msk                 (0x01UL << PORT_OUTDR_OUTDR3_Pos)                       /*!< PORT OUTDR: OUTDR3 Mask                 */
+#define PORT_OUTDR_OUTDR4_Pos                 4                                                       /*!< PORT OUTDR: OUTDR4 Position             */
+#define PORT_OUTDR_OUTDR4_Msk                 (0x01UL << PORT_OUTDR_OUTDR4_Pos)                       /*!< PORT OUTDR: OUTDR4 Mask                 */
+#define PORT_OUTDR_OUTDR5_Pos                 5                                                       /*!< PORT OUTDR: OUTDR5 Position             */
+#define PORT_OUTDR_OUTDR5_Msk                 (0x01UL << PORT_OUTDR_OUTDR5_Pos)                       /*!< PORT OUTDR: OUTDR5 Mask                 */
+#define PORT_OUTDR_OUTDR6_Pos                 6                                                       /*!< PORT OUTDR: OUTDR6 Position             */
+#define PORT_OUTDR_OUTDR6_Msk                 (0x01UL << PORT_OUTDR_OUTDR6_Pos)                       /*!< PORT OUTDR: OUTDR6 Mask                 */
+#define PORT_OUTDR_OUTDR7_Pos                 7                                                       /*!< PORT OUTDR: OUTDR7 Position             */
+#define PORT_OUTDR_OUTDR7_Msk                 (0x01UL << PORT_OUTDR_OUTDR7_Pos)                       /*!< PORT OUTDR: OUTDR7 Mask                 */
+#define PORT_OUTDR_OUTDR8_Pos                 8                                                       /*!< PORT OUTDR: OUTDR8 Position             */
+#define PORT_OUTDR_OUTDR8_Msk                 (0x01UL << PORT_OUTDR_OUTDR8_Pos)                       /*!< PORT OUTDR: OUTDR8 Mask                 */
+#define PORT_OUTDR_OUTDR9_Pos                 9                                                       /*!< PORT OUTDR: OUTDR9 Position             */
+#define PORT_OUTDR_OUTDR9_Msk                 (0x01UL << PORT_OUTDR_OUTDR9_Pos)                       /*!< PORT OUTDR: OUTDR9 Mask                 */
+#define PORT_OUTDR_OUTDR10_Pos                10                                                      /*!< PORT OUTDR: OUTDR10 Position            */
+#define PORT_OUTDR_OUTDR10_Msk                (0x01UL << PORT_OUTDR_OUTDR10_Pos)                      /*!< PORT OUTDR: OUTDR10 Mask                */
+#define PORT_OUTDR_OUTDR11_Pos                11                                                      /*!< PORT OUTDR: OUTDR11 Position            */
+#define PORT_OUTDR_OUTDR11_Msk                (0x01UL << PORT_OUTDR_OUTDR11_Pos)                      /*!< PORT OUTDR: OUTDR11 Mask                */
+#define PORT_OUTDR_OUTDR12_Pos                12                                                      /*!< PORT OUTDR: OUTDR12 Position            */
+#define PORT_OUTDR_OUTDR12_Msk                (0x01UL << PORT_OUTDR_OUTDR12_Pos)                      /*!< PORT OUTDR: OUTDR12 Mask                */
+#define PORT_OUTDR_OUTDR13_Pos                13                                                      /*!< PORT OUTDR: OUTDR13 Position            */
+#define PORT_OUTDR_OUTDR13_Msk                (0x01UL << PORT_OUTDR_OUTDR13_Pos)                      /*!< PORT OUTDR: OUTDR13 Mask                */
+#define PORT_OUTDR_OUTDR14_Pos                14                                                      /*!< PORT OUTDR: OUTDR14 Position            */
+#define PORT_OUTDR_OUTDR14_Msk                (0x01UL << PORT_OUTDR_OUTDR14_Pos)                      /*!< PORT OUTDR: OUTDR14 Mask                */
+#define PORT_OUTDR_OUTDR15_Pos                15                                                      /*!< PORT OUTDR: OUTDR15 Position            */
+#define PORT_OUTDR_OUTDR15_Msk                (0x01UL << PORT_OUTDR_OUTDR15_Pos)                      /*!< PORT OUTDR: OUTDR15 Mask                */
+
+/* ----------------------------------  PORT_BSR  ---------------------------------- */
+#define PORT_BSR_BSR0_Pos                     0                                                       /*!< PORT BSR: BSR0 Position                 */
+#define PORT_BSR_BSR0_Msk                     (0x01UL << PORT_BSR_BSR0_Pos)                           /*!< PORT BSR: BSR0 Mask                     */
+#define PORT_BSR_BSR1_Pos                     1                                                       /*!< PORT BSR: BSR1 Position                 */
+#define PORT_BSR_BSR1_Msk                     (0x01UL << PORT_BSR_BSR1_Pos)                           /*!< PORT BSR: BSR1 Mask                     */
+#define PORT_BSR_BSR2_Pos                     2                                                       /*!< PORT BSR: BSR2 Position                 */
+#define PORT_BSR_BSR2_Msk                     (0x01UL << PORT_BSR_BSR2_Pos)                           /*!< PORT BSR: BSR2 Mask                     */
+#define PORT_BSR_BSR3_Pos                     3                                                       /*!< PORT BSR: BSR3 Position                 */
+#define PORT_BSR_BSR3_Msk                     (0x01UL << PORT_BSR_BSR3_Pos)                           /*!< PORT BSR: BSR3 Mask                     */
+#define PORT_BSR_BSR4_Pos                     4                                                       /*!< PORT BSR: BSR4 Position                 */
+#define PORT_BSR_BSR4_Msk                     (0x01UL << PORT_BSR_BSR4_Pos)                           /*!< PORT BSR: BSR4 Mask                     */
+#define PORT_BSR_BSR5_Pos                     5                                                       /*!< PORT BSR: BSR5 Position                 */
+#define PORT_BSR_BSR5_Msk                     (0x01UL << PORT_BSR_BSR5_Pos)                           /*!< PORT BSR: BSR5 Mask                     */
+#define PORT_BSR_BSR6_Pos                     6                                                       /*!< PORT BSR: BSR6 Position                 */
+#define PORT_BSR_BSR6_Msk                     (0x01UL << PORT_BSR_BSR6_Pos)                           /*!< PORT BSR: BSR6 Mask                     */
+#define PORT_BSR_BSR7_Pos                     7                                                       /*!< PORT BSR: BSR7 Position                 */
+#define PORT_BSR_BSR7_Msk                     (0x01UL << PORT_BSR_BSR7_Pos)                           /*!< PORT BSR: BSR7 Mask                     */
+#define PORT_BSR_BSR8_Pos                     8                                                       /*!< PORT BSR: BSR8 Position                 */
+#define PORT_BSR_BSR8_Msk                     (0x01UL << PORT_BSR_BSR8_Pos)                           /*!< PORT BSR: BSR8 Mask                     */
+#define PORT_BSR_BSR9_Pos                     9                                                       /*!< PORT BSR: BSR9 Position                 */
+#define PORT_BSR_BSR9_Msk                     (0x01UL << PORT_BSR_BSR9_Pos)                           /*!< PORT BSR: BSR9 Mask                     */
+#define PORT_BSR_BSR10_Pos                    10                                                      /*!< PORT BSR: BSR10 Position                */
+#define PORT_BSR_BSR10_Msk                    (0x01UL << PORT_BSR_BSR10_Pos)                          /*!< PORT BSR: BSR10 Mask                    */
+#define PORT_BSR_BSR11_Pos                    11                                                      /*!< PORT BSR: BSR11 Position                */
+#define PORT_BSR_BSR11_Msk                    (0x01UL << PORT_BSR_BSR11_Pos)                          /*!< PORT BSR: BSR11 Mask                    */
+#define PORT_BSR_BSR12_Pos                    12                                                      /*!< PORT BSR: BSR12 Position                */
+#define PORT_BSR_BSR12_Msk                    (0x01UL << PORT_BSR_BSR12_Pos)                          /*!< PORT BSR: BSR12 Mask                    */
+#define PORT_BSR_BSR13_Pos                    13                                                      /*!< PORT BSR: BSR13 Position                */
+#define PORT_BSR_BSR13_Msk                    (0x01UL << PORT_BSR_BSR13_Pos)                          /*!< PORT BSR: BSR13 Mask                    */
+#define PORT_BSR_BSR14_Pos                    14                                                      /*!< PORT BSR: BSR14 Position                */
+#define PORT_BSR_BSR14_Msk                    (0x01UL << PORT_BSR_BSR14_Pos)                          /*!< PORT BSR: BSR14 Mask                    */
+#define PORT_BSR_BSR15_Pos                    15                                                      /*!< PORT BSR: BSR15 Position                */
+#define PORT_BSR_BSR15_Msk                    (0x01UL << PORT_BSR_BSR15_Pos)                          /*!< PORT BSR: BSR15 Mask                    */
+
+/* ----------------------------------  PORT_BCR  ---------------------------------- */
+#define PORT_BCR_BCR0_Pos                     0                                                       /*!< PORT BCR: BCR0 Position                 */
+#define PORT_BCR_BCR0_Msk                     (0x01UL << PORT_BCR_BCR0_Pos)                           /*!< PORT BCR: BCR0 Mask                     */
+#define PORT_BCR_BCR1_Pos                     1                                                       /*!< PORT BCR: BCR1 Position                 */
+#define PORT_BCR_BCR1_Msk                     (0x01UL << PORT_BCR_BCR1_Pos)                           /*!< PORT BCR: BCR1 Mask                     */
+#define PORT_BCR_BCR2_Pos                     2                                                       /*!< PORT BCR: BCR2 Position                 */
+#define PORT_BCR_BCR2_Msk                     (0x01UL << PORT_BCR_BCR2_Pos)                           /*!< PORT BCR: BCR2 Mask                     */
+#define PORT_BCR_BCR3_Pos                     3                                                       /*!< PORT BCR: BCR3 Position                 */
+#define PORT_BCR_BCR3_Msk                     (0x01UL << PORT_BCR_BCR3_Pos)                           /*!< PORT BCR: BCR3 Mask                     */
+#define PORT_BCR_BCR4_Pos                     4                                                       /*!< PORT BCR: BCR4 Position                 */
+#define PORT_BCR_BCR4_Msk                     (0x01UL << PORT_BCR_BCR4_Pos)                           /*!< PORT BCR: BCR4 Mask                     */
+#define PORT_BCR_BCR5_Pos                     5                                                       /*!< PORT BCR: BCR5 Position                 */
+#define PORT_BCR_BCR5_Msk                     (0x01UL << PORT_BCR_BCR5_Pos)                           /*!< PORT BCR: BCR5 Mask                     */
+#define PORT_BCR_BCR6_Pos                     6                                                       /*!< PORT BCR: BCR6 Position                 */
+#define PORT_BCR_BCR6_Msk                     (0x01UL << PORT_BCR_BCR6_Pos)                           /*!< PORT BCR: BCR6 Mask                     */
+#define PORT_BCR_BCR7_Pos                     7                                                       /*!< PORT BCR: BCR7 Position                 */
+#define PORT_BCR_BCR7_Msk                     (0x01UL << PORT_BCR_BCR7_Pos)                           /*!< PORT BCR: BCR7 Mask                     */
+#define PORT_BCR_BCR8_Pos                     8                                                       /*!< PORT BCR: BCR8 Position                 */
+#define PORT_BCR_BCR8_Msk                     (0x01UL << PORT_BCR_BCR8_Pos)                           /*!< PORT BCR: BCR8 Mask                     */
+#define PORT_BCR_BCR9_Pos                     9                                                       /*!< PORT BCR: BCR9 Position                 */
+#define PORT_BCR_BCR9_Msk                     (0x01UL << PORT_BCR_BCR9_Pos)                           /*!< PORT BCR: BCR9 Mask                     */
+#define PORT_BCR_BCR10_Pos                    10                                                      /*!< PORT BCR: BCR10 Position                */
+#define PORT_BCR_BCR10_Msk                    (0x01UL << PORT_BCR_BCR10_Pos)                          /*!< PORT BCR: BCR10 Mask                    */
+#define PORT_BCR_BCR11_Pos                    11                                                      /*!< PORT BCR: BCR11 Position                */
+#define PORT_BCR_BCR11_Msk                    (0x01UL << PORT_BCR_BCR11_Pos)                          /*!< PORT BCR: BCR11 Mask                    */
+#define PORT_BCR_BCR12_Pos                    12                                                      /*!< PORT BCR: BCR12 Position                */
+#define PORT_BCR_BCR12_Msk                    (0x01UL << PORT_BCR_BCR12_Pos)                          /*!< PORT BCR: BCR12 Mask                    */
+#define PORT_BCR_BCR13_Pos                    13                                                      /*!< PORT BCR: BCR13 Position                */
+#define PORT_BCR_BCR13_Msk                    (0x01UL << PORT_BCR_BCR13_Pos)                          /*!< PORT BCR: BCR13 Mask                    */
+#define PORT_BCR_BCR14_Pos                    14                                                      /*!< PORT BCR: BCR14 Position                */
+#define PORT_BCR_BCR14_Msk                    (0x01UL << PORT_BCR_BCR14_Pos)                          /*!< PORT BCR: BCR14 Mask                    */
+#define PORT_BCR_BCR15_Pos                    15                                                      /*!< PORT BCR: BCR15 Position                */
+#define PORT_BCR_BCR15_Msk                    (0x01UL << PORT_BCR_BCR15_Pos)                          /*!< PORT BCR: BCR15 Mask                    */
+
+/* --------------------------------  PORT_OUTDMSK  -------------------------------- */
+#define PORT_OUTDMSK_OUTDMSK0_Pos             0                                                       /*!< PORT OUTDMSK: OUTDMSK0 Position         */
+#define PORT_OUTDMSK_OUTDMSK0_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK0_Pos)                   /*!< PORT OUTDMSK: OUTDMSK0 Mask             */
+#define PORT_OUTDMSK_OUTDMSK1_Pos             1                                                       /*!< PORT OUTDMSK: OUTDMSK1 Position         */
+#define PORT_OUTDMSK_OUTDMSK1_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK1_Pos)                   /*!< PORT OUTDMSK: OUTDMSK1 Mask             */
+#define PORT_OUTDMSK_OUTDMSK2_Pos             2                                                       /*!< PORT OUTDMSK: OUTDMSK2 Position         */
+#define PORT_OUTDMSK_OUTDMSK2_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK2_Pos)                   /*!< PORT OUTDMSK: OUTDMSK2 Mask             */
+#define PORT_OUTDMSK_OUTDMSK3_Pos             3                                                       /*!< PORT OUTDMSK: OUTDMSK3 Position         */
+#define PORT_OUTDMSK_OUTDMSK3_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK3_Pos)                   /*!< PORT OUTDMSK: OUTDMSK3 Mask             */
+#define PORT_OUTDMSK_OUTDMSK4_Pos             4                                                       /*!< PORT OUTDMSK: OUTDMSK4 Position         */
+#define PORT_OUTDMSK_OUTDMSK4_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK4_Pos)                   /*!< PORT OUTDMSK: OUTDMSK4 Mask             */
+#define PORT_OUTDMSK_OUTDMSK5_Pos             5                                                       /*!< PORT OUTDMSK: OUTDMSK5 Position         */
+#define PORT_OUTDMSK_OUTDMSK5_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK5_Pos)                   /*!< PORT OUTDMSK: OUTDMSK5 Mask             */
+#define PORT_OUTDMSK_OUTDMSK6_Pos             6                                                       /*!< PORT OUTDMSK: OUTDMSK6 Position         */
+#define PORT_OUTDMSK_OUTDMSK6_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK6_Pos)                   /*!< PORT OUTDMSK: OUTDMSK6 Mask             */
+#define PORT_OUTDMSK_OUTDMSK7_Pos             7                                                       /*!< PORT OUTDMSK: OUTDMSK7 Position         */
+#define PORT_OUTDMSK_OUTDMSK7_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK7_Pos)                   /*!< PORT OUTDMSK: OUTDMSK7 Mask             */
+#define PORT_OUTDMSK_OUTDMSK8_Pos             8                                                       /*!< PORT OUTDMSK: OUTDMSK8 Position         */
+#define PORT_OUTDMSK_OUTDMSK8_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK8_Pos)                   /*!< PORT OUTDMSK: OUTDMSK8 Mask             */
+#define PORT_OUTDMSK_OUTDMSK9_Pos             9                                                       /*!< PORT OUTDMSK: OUTDMSK9 Position         */
+#define PORT_OUTDMSK_OUTDMSK9_Msk             (0x01UL << PORT_OUTDMSK_OUTDMSK9_Pos)                   /*!< PORT OUTDMSK: OUTDMSK9 Mask             */
+#define PORT_OUTDMSK_OUTDMSK10_Pos            10                                                      /*!< PORT OUTDMSK: OUTDMSK10 Position        */
+#define PORT_OUTDMSK_OUTDMSK10_Msk            (0x01UL << PORT_OUTDMSK_OUTDMSK10_Pos)                  /*!< PORT OUTDMSK: OUTDMSK10 Mask            */
+#define PORT_OUTDMSK_OUTDMSK11_Pos            11                                                      /*!< PORT OUTDMSK: OUTDMSK11 Position        */
+#define PORT_OUTDMSK_OUTDMSK11_Msk            (0x01UL << PORT_OUTDMSK_OUTDMSK11_Pos)                  /*!< PORT OUTDMSK: OUTDMSK11 Mask            */
+#define PORT_OUTDMSK_OUTDMSK12_Pos            12                                                      /*!< PORT OUTDMSK: OUTDMSK12 Position        */
+#define PORT_OUTDMSK_OUTDMSK12_Msk            (0x01UL << PORT_OUTDMSK_OUTDMSK12_Pos)                  /*!< PORT OUTDMSK: OUTDMSK12 Mask            */
+#define PORT_OUTDMSK_OUTDMSK13_Pos            13                                                      /*!< PORT OUTDMSK: OUTDMSK13 Position        */
+#define PORT_OUTDMSK_OUTDMSK13_Msk            (0x01UL << PORT_OUTDMSK_OUTDMSK13_Pos)                  /*!< PORT OUTDMSK: OUTDMSK13 Mask            */
+#define PORT_OUTDMSK_OUTDMSK14_Pos            14                                                      /*!< PORT OUTDMSK: OUTDMSK14 Position        */
+#define PORT_OUTDMSK_OUTDMSK14_Msk            (0x01UL << PORT_OUTDMSK_OUTDMSK14_Pos)                  /*!< PORT OUTDMSK: OUTDMSK14 Mask            */
+#define PORT_OUTDMSK_OUTDMSK15_Pos            15                                                      /*!< PORT OUTDMSK: OUTDMSK15 Position        */
+#define PORT_OUTDMSK_OUTDMSK15_Msk            (0x01UL << PORT_OUTDMSK_OUTDMSK15_Pos)                  /*!< PORT OUTDMSK: OUTDMSK15 Mask            */
+
+/* ----------------------------------  PORT_DBCR  --------------------------------- */
+#define PORT_DBCR_DBEN0_Pos                   0                                                       /*!< PORT DBCR: DBEN0 Position               */
+#define PORT_DBCR_DBEN0_Msk                   (0x01UL << PORT_DBCR_DBEN0_Pos)                         /*!< PORT DBCR: DBEN0 Mask                   */
+#define PORT_DBCR_DBEN1_Pos                   1                                                       /*!< PORT DBCR: DBEN1 Position               */
+#define PORT_DBCR_DBEN1_Msk                   (0x01UL << PORT_DBCR_DBEN1_Pos)                         /*!< PORT DBCR: DBEN1 Mask                   */
+#define PORT_DBCR_DBEN2_Pos                   2                                                       /*!< PORT DBCR: DBEN2 Position               */
+#define PORT_DBCR_DBEN2_Msk                   (0x01UL << PORT_DBCR_DBEN2_Pos)                         /*!< PORT DBCR: DBEN2 Mask                   */
+#define PORT_DBCR_DBEN3_Pos                   3                                                       /*!< PORT DBCR: DBEN3 Position               */
+#define PORT_DBCR_DBEN3_Msk                   (0x01UL << PORT_DBCR_DBEN3_Pos)                         /*!< PORT DBCR: DBEN3 Mask                   */
+#define PORT_DBCR_DBEN4_Pos                   4                                                       /*!< PORT DBCR: DBEN4 Position               */
+#define PORT_DBCR_DBEN4_Msk                   (0x01UL << PORT_DBCR_DBEN4_Pos)                         /*!< PORT DBCR: DBEN4 Mask                   */
+#define PORT_DBCR_DBEN5_Pos                   5                                                       /*!< PORT DBCR: DBEN5 Position               */
+#define PORT_DBCR_DBEN5_Msk                   (0x01UL << PORT_DBCR_DBEN5_Pos)                         /*!< PORT DBCR: DBEN5 Mask                   */
+#define PORT_DBCR_DBEN6_Pos                   6                                                       /*!< PORT DBCR: DBEN6 Position               */
+#define PORT_DBCR_DBEN6_Msk                   (0x01UL << PORT_DBCR_DBEN6_Pos)                         /*!< PORT DBCR: DBEN6 Mask                   */
+#define PORT_DBCR_DBEN7_Pos                   7                                                       /*!< PORT DBCR: DBEN7 Position               */
+#define PORT_DBCR_DBEN7_Msk                   (0x01UL << PORT_DBCR_DBEN7_Pos)                         /*!< PORT DBCR: DBEN7 Mask                   */
+#define PORT_DBCR_DBEN8_Pos                   8                                                       /*!< PORT DBCR: DBEN8 Position               */
+#define PORT_DBCR_DBEN8_Msk                   (0x01UL << PORT_DBCR_DBEN8_Pos)                         /*!< PORT DBCR: DBEN8 Mask                   */
+#define PORT_DBCR_DBEN9_Pos                   9                                                       /*!< PORT DBCR: DBEN9 Position               */
+#define PORT_DBCR_DBEN9_Msk                   (0x01UL << PORT_DBCR_DBEN9_Pos)                         /*!< PORT DBCR: DBEN9 Mask                   */
+#define PORT_DBCR_DBEN10_Pos                  10                                                      /*!< PORT DBCR: DBEN10 Position              */
+#define PORT_DBCR_DBEN10_Msk                  (0x01UL << PORT_DBCR_DBEN10_Pos)                        /*!< PORT DBCR: DBEN10 Mask                  */
+#define PORT_DBCR_DBEN11_Pos                  11                                                      /*!< PORT DBCR: DBEN11 Position              */
+#define PORT_DBCR_DBEN11_Msk                  (0x01UL << PORT_DBCR_DBEN11_Pos)                        /*!< PORT DBCR: DBEN11 Mask                  */
+#define PORT_DBCR_DBEN12_Pos                  12                                                      /*!< PORT DBCR: DBEN12 Position              */
+#define PORT_DBCR_DBEN12_Msk                  (0x01UL << PORT_DBCR_DBEN12_Pos)                        /*!< PORT DBCR: DBEN12 Mask                  */
+#define PORT_DBCR_DBEN13_Pos                  13                                                      /*!< PORT DBCR: DBEN13 Position              */
+#define PORT_DBCR_DBEN13_Msk                  (0x01UL << PORT_DBCR_DBEN13_Pos)                        /*!< PORT DBCR: DBEN13 Mask                  */
+#define PORT_DBCR_DBEN14_Pos                  14                                                      /*!< PORT DBCR: DBEN14 Position              */
+#define PORT_DBCR_DBEN14_Msk                  (0x01UL << PORT_DBCR_DBEN14_Pos)                        /*!< PORT DBCR: DBEN14 Mask                  */
+#define PORT_DBCR_DBEN15_Pos                  15                                                      /*!< PORT DBCR: DBEN15 Position              */
+#define PORT_DBCR_DBEN15_Msk                  (0x01UL << PORT_DBCR_DBEN15_Pos)                        /*!< PORT DBCR: DBEN15 Mask                  */
+
+/* ----------------------------------  PORT_IER  ---------------------------------- */
+#define PORT_IER_PIE0_Pos                     0                                                       /*!< PORT IER: PIE0 Position                 */
+#define PORT_IER_PIE0_Msk                     (0x03UL << PORT_IER_PIE0_Pos)                           /*!< PORT IER: PIE0 Mask                     */
+#define PORT_IER_PIE1_Pos                     2                                                       /*!< PORT IER: PIE1 Position                 */
+#define PORT_IER_PIE1_Msk                     (0x03UL << PORT_IER_PIE1_Pos)                           /*!< PORT IER: PIE1 Mask                     */
+#define PORT_IER_PIE2_Pos                     4                                                       /*!< PORT IER: PIE2 Position                 */
+#define PORT_IER_PIE2_Msk                     (0x03UL << PORT_IER_PIE2_Pos)                           /*!< PORT IER: PIE2 Mask                     */
+#define PORT_IER_PIE3_Pos                     6                                                       /*!< PORT IER: PIE3 Position                 */
+#define PORT_IER_PIE3_Msk                     (0x03UL << PORT_IER_PIE3_Pos)                           /*!< PORT IER: PIE3 Mask                     */
+#define PORT_IER_PIE4_Pos                     8                                                       /*!< PORT IER: PIE4 Position                 */
+#define PORT_IER_PIE4_Msk                     (0x03UL << PORT_IER_PIE4_Pos)                           /*!< PORT IER: PIE4 Mask                     */
+#define PORT_IER_PIE5_Pos                     10                                                      /*!< PORT IER: PIE5 Position                 */
+#define PORT_IER_PIE5_Msk                     (0x03UL << PORT_IER_PIE5_Pos)                           /*!< PORT IER: PIE5 Mask                     */
+#define PORT_IER_PIE6_Pos                     12                                                      /*!< PORT IER: PIE6 Position                 */
+#define PORT_IER_PIE6_Msk                     (0x03UL << PORT_IER_PIE6_Pos)                           /*!< PORT IER: PIE6 Mask                     */
+#define PORT_IER_PIE7_Pos                     14                                                      /*!< PORT IER: PIE7 Position                 */
+#define PORT_IER_PIE7_Msk                     (0x03UL << PORT_IER_PIE7_Pos)                           /*!< PORT IER: PIE7 Mask                     */
+#define PORT_IER_PIE8_Pos                     16                                                      /*!< PORT IER: PIE8 Position                 */
+#define PORT_IER_PIE8_Msk                     (0x03UL << PORT_IER_PIE8_Pos)                           /*!< PORT IER: PIE8 Mask                     */
+#define PORT_IER_PIE9_Pos                     18                                                      /*!< PORT IER: PIE9 Position                 */
+#define PORT_IER_PIE9_Msk                     (0x03UL << PORT_IER_PIE9_Pos)                           /*!< PORT IER: PIE9 Mask                     */
+#define PORT_IER_PIE10_Pos                    20                                                      /*!< PORT IER: PIE10 Position                */
+#define PORT_IER_PIE10_Msk                    (0x03UL << PORT_IER_PIE10_Pos)                          /*!< PORT IER: PIE10 Mask                    */
+#define PORT_IER_PIE11_Pos                    22                                                      /*!< PORT IER: PIE11 Position                */
+#define PORT_IER_PIE11_Msk                    (0x03UL << PORT_IER_PIE11_Pos)                          /*!< PORT IER: PIE11 Mask                    */
+#define PORT_IER_PIE12_Pos                    24                                                      /*!< PORT IER: PIE12 Position                */
+#define PORT_IER_PIE12_Msk                    (0x03UL << PORT_IER_PIE12_Pos)                          /*!< PORT IER: PIE12 Mask                    */
+#define PORT_IER_PIE13_Pos                    26                                                      /*!< PORT IER: PIE13 Position                */
+#define PORT_IER_PIE13_Msk                    (0x03UL << PORT_IER_PIE13_Pos)                          /*!< PORT IER: PIE13 Mask                    */
+#define PORT_IER_PIE14_Pos                    28                                                      /*!< PORT IER: PIE14 Position                */
+#define PORT_IER_PIE14_Msk                    (0x03UL << PORT_IER_PIE14_Pos)                          /*!< PORT IER: PIE14 Mask                    */
+#define PORT_IER_PIE15_Pos                    30                                                      /*!< PORT IER: PIE15 Position                */
+#define PORT_IER_PIE15_Msk                    (0x03UL << PORT_IER_PIE15_Pos)                          /*!< PORT IER: PIE15 Mask                    */
+
+/* ----------------------------------  PORT_ISR  ---------------------------------- */
+#define PORT_ISR_PIS0_Pos                     0                                                       /*!< PORT ISR: PIS0 Position                 */
+#define PORT_ISR_PIS0_Msk                     (0x03UL << PORT_ISR_PIS0_Pos)                           /*!< PORT ISR: PIS0 Mask                     */
+#define PORT_ISR_PIS1_Pos                     2                                                       /*!< PORT ISR: PIS1 Position                 */
+#define PORT_ISR_PIS1_Msk                     (0x03UL << PORT_ISR_PIS1_Pos)                           /*!< PORT ISR: PIS1 Mask                     */
+#define PORT_ISR_PIS2_Pos                     4                                                       /*!< PORT ISR: PIS2 Position                 */
+#define PORT_ISR_PIS2_Msk                     (0x03UL << PORT_ISR_PIS2_Pos)                           /*!< PORT ISR: PIS2 Mask                     */
+#define PORT_ISR_PIS3_Pos                     6                                                       /*!< PORT ISR: PIS3 Position                 */
+#define PORT_ISR_PIS3_Msk                     (0x03UL << PORT_ISR_PIS3_Pos)                           /*!< PORT ISR: PIS3 Mask                     */
+#define PORT_ISR_PIS4_Pos                     8                                                       /*!< PORT ISR: PIS4 Position                 */
+#define PORT_ISR_PIS4_Msk                     (0x03UL << PORT_ISR_PIS4_Pos)                           /*!< PORT ISR: PIS4 Mask                     */
+#define PORT_ISR_PIS5_Pos                     10                                                      /*!< PORT ISR: PIS5 Position                 */
+#define PORT_ISR_PIS5_Msk                     (0x03UL << PORT_ISR_PIS5_Pos)                           /*!< PORT ISR: PIS5 Mask                     */
+#define PORT_ISR_PIS6_Pos                     12                                                      /*!< PORT ISR: PIS6 Position                 */
+#define PORT_ISR_PIS6_Msk                     (0x03UL << PORT_ISR_PIS6_Pos)                           /*!< PORT ISR: PIS6 Mask                     */
+#define PORT_ISR_PIS7_Pos                     14                                                      /*!< PORT ISR: PIS7 Position                 */
+#define PORT_ISR_PIS7_Msk                     (0x03UL << PORT_ISR_PIS7_Pos)                           /*!< PORT ISR: PIS7 Mask                     */
+#define PORT_ISR_PIS8_Pos                     16                                                      /*!< PORT ISR: PIS8 Position                 */
+#define PORT_ISR_PIS8_Msk                     (0x03UL << PORT_ISR_PIS8_Pos)                           /*!< PORT ISR: PIS8 Mask                     */
+#define PORT_ISR_PIS9_Pos                     18                                                      /*!< PORT ISR: PIS9 Position                 */
+#define PORT_ISR_PIS9_Msk                     (0x03UL << PORT_ISR_PIS9_Pos)                           /*!< PORT ISR: PIS9 Mask                     */
+#define PORT_ISR_PIS10_Pos                    20                                                      /*!< PORT ISR: PIS10 Position                */
+#define PORT_ISR_PIS10_Msk                    (0x03UL << PORT_ISR_PIS10_Pos)                          /*!< PORT ISR: PIS10 Mask                    */
+#define PORT_ISR_PIS11_Pos                    22                                                      /*!< PORT ISR: PIS11 Position                */
+#define PORT_ISR_PIS11_Msk                    (0x03UL << PORT_ISR_PIS11_Pos)                          /*!< PORT ISR: PIS11 Mask                    */
+#define PORT_ISR_PIS12_Pos                    24                                                      /*!< PORT ISR: PIS12 Position                */
+#define PORT_ISR_PIS12_Msk                    (0x03UL << PORT_ISR_PIS12_Pos)                          /*!< PORT ISR: PIS12 Mask                    */
+#define PORT_ISR_PIS13_Pos                    26                                                      /*!< PORT ISR: PIS13 Position                */
+#define PORT_ISR_PIS13_Msk                    (0x03UL << PORT_ISR_PIS13_Pos)                          /*!< PORT ISR: PIS13 Mask                    */
+#define PORT_ISR_PIS14_Pos                    28                                                      /*!< PORT ISR: PIS14 Position                */
+#define PORT_ISR_PIS14_Msk                    (0x03UL << PORT_ISR_PIS14_Pos)                          /*!< PORT ISR: PIS14 Mask                    */
+#define PORT_ISR_PIS15_Pos                    30                                                      /*!< PORT ISR: PIS15 Position                */
+#define PORT_ISR_PIS15_Msk                    (0x03UL << PORT_ISR_PIS15_Pos)                          /*!< PORT ISR: PIS15 Mask                    */
+
+/* ----------------------------------  PORT_ICR  ---------------------------------- */
+#define PORT_ICR_PIC0_Pos                     0                                                       /*!< PORT ICR: PIC0 Position                 */
+#define PORT_ICR_PIC0_Msk                     (0x03UL << PORT_ICR_PIC0_Pos)                           /*!< PORT ICR: PIC0 Mask                     */
+#define PORT_ICR_PIC1_Pos                     2                                                       /*!< PORT ICR: PIC1 Position                 */
+#define PORT_ICR_PIC1_Msk                     (0x03UL << PORT_ICR_PIC1_Pos)                           /*!< PORT ICR: PIC1 Mask                     */
+#define PORT_ICR_PIC2_Pos                     4                                                       /*!< PORT ICR: PIC2 Position                 */
+#define PORT_ICR_PIC2_Msk                     (0x03UL << PORT_ICR_PIC2_Pos)                           /*!< PORT ICR: PIC2 Mask                     */
+#define PORT_ICR_PIC3_Pos                     6                                                       /*!< PORT ICR: PIC3 Position                 */
+#define PORT_ICR_PIC3_Msk                     (0x03UL << PORT_ICR_PIC3_Pos)                           /*!< PORT ICR: PIC3 Mask                     */
+#define PORT_ICR_PIC4_Pos                     8                                                       /*!< PORT ICR: PIC4 Position                 */
+#define PORT_ICR_PIC4_Msk                     (0x03UL << PORT_ICR_PIC4_Pos)                           /*!< PORT ICR: PIC4 Mask                     */
+#define PORT_ICR_PIC5_Pos                     10                                                      /*!< PORT ICR: PIC5 Position                 */
+#define PORT_ICR_PIC5_Msk                     (0x03UL << PORT_ICR_PIC5_Pos)                           /*!< PORT ICR: PIC5 Mask                     */
+#define PORT_ICR_PIC6_Pos                     12                                                      /*!< PORT ICR: PIC6 Position                 */
+#define PORT_ICR_PIC6_Msk                     (0x03UL << PORT_ICR_PIC6_Pos)                           /*!< PORT ICR: PIC6 Mask                     */
+#define PORT_ICR_PIC7_Pos                     14                                                      /*!< PORT ICR: PIC7 Position                 */
+#define PORT_ICR_PIC7_Msk                     (0x03UL << PORT_ICR_PIC7_Pos)                           /*!< PORT ICR: PIC7 Mask                     */
+#define PORT_ICR_PIC8_Pos                     16                                                      /*!< PORT ICR: PIC8 Position                 */
+#define PORT_ICR_PIC8_Msk                     (0x03UL << PORT_ICR_PIC8_Pos)                           /*!< PORT ICR: PIC8 Mask                     */
+#define PORT_ICR_PIC9_Pos                     18                                                      /*!< PORT ICR: PIC9 Position                 */
+#define PORT_ICR_PIC9_Msk                     (0x03UL << PORT_ICR_PIC9_Pos)                           /*!< PORT ICR: PIC9 Mask                     */
+#define PORT_ICR_PIC10_Pos                    20                                                      /*!< PORT ICR: PIC10 Position                */
+#define PORT_ICR_PIC10_Msk                    (0x03UL << PORT_ICR_PIC10_Pos)                          /*!< PORT ICR: PIC10 Mask                    */
+#define PORT_ICR_PIC11_Pos                    22                                                      /*!< PORT ICR: PIC11 Position                */
+#define PORT_ICR_PIC11_Msk                    (0x03UL << PORT_ICR_PIC11_Pos)                          /*!< PORT ICR: PIC11 Mask                    */
+#define PORT_ICR_PIC12_Pos                    24                                                      /*!< PORT ICR: PIC12 Position                */
+#define PORT_ICR_PIC12_Msk                    (0x03UL << PORT_ICR_PIC12_Pos)                          /*!< PORT ICR: PIC12 Mask                    */
+#define PORT_ICR_PIC13_Pos                    26                                                      /*!< PORT ICR: PIC13 Position                */
+#define PORT_ICR_PIC13_Msk                    (0x03UL << PORT_ICR_PIC13_Pos)                          /*!< PORT ICR: PIC13 Mask                    */
+#define PORT_ICR_PIC14_Pos                    28                                                      /*!< PORT ICR: PIC14 Position                */
+#define PORT_ICR_PIC14_Msk                    (0x03UL << PORT_ICR_PIC14_Pos)                          /*!< PORT ICR: PIC14 Mask                    */
+#define PORT_ICR_PIC15_Pos                    30                                                      /*!< PORT ICR: PIC15 Position                */
+#define PORT_ICR_PIC15_Msk                    (0x03UL << PORT_ICR_PIC15_Pos)                          /*!< PORT ICR: PIC15 Mask                    */
+
+
+/* ================================================================================ */
+/* ================           struct 'PA' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  PA_MOD  ----------------------------------- */
+#define PA_MOD_MODE0_Pos                      0                                                       /*!< PA MOD: MODE0 Position                  */
+#define PA_MOD_MODE0_Msk                      (0x03UL << PA_MOD_MODE0_Pos)                            /*!< PA MOD: MODE0 Mask                      */
+#define PA_MOD_MODE1_Pos                      2                                                       /*!< PA MOD: MODE1 Position                  */
+#define PA_MOD_MODE1_Msk                      (0x03UL << PA_MOD_MODE1_Pos)                            /*!< PA MOD: MODE1 Mask                      */
+#define PA_MOD_MODE2_Pos                      4                                                       /*!< PA MOD: MODE2 Position                  */
+#define PA_MOD_MODE2_Msk                      (0x03UL << PA_MOD_MODE2_Pos)                            /*!< PA MOD: MODE2 Mask                      */
+#define PA_MOD_MODE3_Pos                      6                                                       /*!< PA MOD: MODE3 Position                  */
+#define PA_MOD_MODE3_Msk                      (0x03UL << PA_MOD_MODE3_Pos)                            /*!< PA MOD: MODE3 Mask                      */
+#define PA_MOD_MODE4_Pos                      8                                                       /*!< PA MOD: MODE4 Position                  */
+#define PA_MOD_MODE4_Msk                      (0x03UL << PA_MOD_MODE4_Pos)                            /*!< PA MOD: MODE4 Mask                      */
+#define PA_MOD_MODE5_Pos                      10                                                      /*!< PA MOD: MODE5 Position                  */
+#define PA_MOD_MODE5_Msk                      (0x03UL << PA_MOD_MODE5_Pos)                            /*!< PA MOD: MODE5 Mask                      */
+#define PA_MOD_MODE6_Pos                      12                                                      /*!< PA MOD: MODE6 Position                  */
+#define PA_MOD_MODE6_Msk                      (0x03UL << PA_MOD_MODE6_Pos)                            /*!< PA MOD: MODE6 Mask                      */
+#define PA_MOD_MODE7_Pos                      14                                                      /*!< PA MOD: MODE7 Position                  */
+#define PA_MOD_MODE7_Msk                      (0x03UL << PA_MOD_MODE7_Pos)                            /*!< PA MOD: MODE7 Mask                      */
+#define PA_MOD_MODE8_Pos                      16                                                      /*!< PA MOD: MODE8 Position                  */
+#define PA_MOD_MODE8_Msk                      (0x03UL << PA_MOD_MODE8_Pos)                            /*!< PA MOD: MODE8 Mask                      */
+#define PA_MOD_MODE9_Pos                      18                                                      /*!< PA MOD: MODE9 Position                  */
+#define PA_MOD_MODE9_Msk                      (0x03UL << PA_MOD_MODE9_Pos)                            /*!< PA MOD: MODE9 Mask                      */
+#define PA_MOD_MODE10_Pos                     20                                                      /*!< PA MOD: MODE10 Position                 */
+#define PA_MOD_MODE10_Msk                     (0x03UL << PA_MOD_MODE10_Pos)                           /*!< PA MOD: MODE10 Mask                     */
+#define PA_MOD_MODE11_Pos                     22                                                      /*!< PA MOD: MODE11 Position                 */
+#define PA_MOD_MODE11_Msk                     (0x03UL << PA_MOD_MODE11_Pos)                           /*!< PA MOD: MODE11 Mask                     */
+#define PA_MOD_MODE12_Pos                     24                                                      /*!< PA MOD: MODE12 Position                 */
+#define PA_MOD_MODE12_Msk                     (0x03UL << PA_MOD_MODE12_Pos)                           /*!< PA MOD: MODE12 Mask                     */
+#define PA_MOD_MODE13_Pos                     26                                                      /*!< PA MOD: MODE13 Position                 */
+#define PA_MOD_MODE13_Msk                     (0x03UL << PA_MOD_MODE13_Pos)                           /*!< PA MOD: MODE13 Mask                     */
+#define PA_MOD_MODE14_Pos                     28                                                      /*!< PA MOD: MODE14 Position                 */
+#define PA_MOD_MODE14_Msk                     (0x03UL << PA_MOD_MODE14_Pos)                           /*!< PA MOD: MODE14 Mask                     */
+#define PA_MOD_MODE15_Pos                     30                                                      /*!< PA MOD: MODE15 Position                 */
+#define PA_MOD_MODE15_Msk                     (0x03UL << PA_MOD_MODE15_Pos)                           /*!< PA MOD: MODE15 Mask                     */
+
+/* -----------------------------------  PA_TYP  ----------------------------------- */
+#define PA_TYP_TYP0_Pos                       0                                                       /*!< PA TYP: TYP0 Position                   */
+#define PA_TYP_TYP0_Msk                       (0x01UL << PA_TYP_TYP0_Pos)                             /*!< PA TYP: TYP0 Mask                       */
+#define PA_TYP_TYP1_Pos                       1                                                       /*!< PA TYP: TYP1 Position                   */
+#define PA_TYP_TYP1_Msk                       (0x01UL << PA_TYP_TYP1_Pos)                             /*!< PA TYP: TYP1 Mask                       */
+#define PA_TYP_TYP2_Pos                       2                                                       /*!< PA TYP: TYP2 Position                   */
+#define PA_TYP_TYP2_Msk                       (0x01UL << PA_TYP_TYP2_Pos)                             /*!< PA TYP: TYP2 Mask                       */
+#define PA_TYP_TYP3_Pos                       3                                                       /*!< PA TYP: TYP3 Position                   */
+#define PA_TYP_TYP3_Msk                       (0x01UL << PA_TYP_TYP3_Pos)                             /*!< PA TYP: TYP3 Mask                       */
+#define PA_TYP_TYP4_Pos                       4                                                       /*!< PA TYP: TYP4 Position                   */
+#define PA_TYP_TYP4_Msk                       (0x01UL << PA_TYP_TYP4_Pos)                             /*!< PA TYP: TYP4 Mask                       */
+#define PA_TYP_TYP5_Pos                       5                                                       /*!< PA TYP: TYP5 Position                   */
+#define PA_TYP_TYP5_Msk                       (0x01UL << PA_TYP_TYP5_Pos)                             /*!< PA TYP: TYP5 Mask                       */
+#define PA_TYP_TYP6_Pos                       6                                                       /*!< PA TYP: TYP6 Position                   */
+#define PA_TYP_TYP6_Msk                       (0x01UL << PA_TYP_TYP6_Pos)                             /*!< PA TYP: TYP6 Mask                       */
+#define PA_TYP_TYP7_Pos                       7                                                       /*!< PA TYP: TYP7 Position                   */
+#define PA_TYP_TYP7_Msk                       (0x01UL << PA_TYP_TYP7_Pos)                             /*!< PA TYP: TYP7 Mask                       */
+#define PA_TYP_TYP8_Pos                       8                                                       /*!< PA TYP: TYP8 Position                   */
+#define PA_TYP_TYP8_Msk                       (0x01UL << PA_TYP_TYP8_Pos)                             /*!< PA TYP: TYP8 Mask                       */
+#define PA_TYP_TYP9_Pos                       9                                                       /*!< PA TYP: TYP9 Position                   */
+#define PA_TYP_TYP9_Msk                       (0x01UL << PA_TYP_TYP9_Pos)                             /*!< PA TYP: TYP9 Mask                       */
+#define PA_TYP_TYP10_Pos                      10                                                      /*!< PA TYP: TYP10 Position                  */
+#define PA_TYP_TYP10_Msk                      (0x01UL << PA_TYP_TYP10_Pos)                            /*!< PA TYP: TYP10 Mask                      */
+#define PA_TYP_TYP11_Pos                      11                                                      /*!< PA TYP: TYP11 Position                  */
+#define PA_TYP_TYP11_Msk                      (0x01UL << PA_TYP_TYP11_Pos)                            /*!< PA TYP: TYP11 Mask                      */
+#define PA_TYP_TYP12_Pos                      12                                                      /*!< PA TYP: TYP12 Position                  */
+#define PA_TYP_TYP12_Msk                      (0x01UL << PA_TYP_TYP12_Pos)                            /*!< PA TYP: TYP12 Mask                      */
+#define PA_TYP_TYP13_Pos                      13                                                      /*!< PA TYP: TYP13 Position                  */
+#define PA_TYP_TYP13_Msk                      (0x01UL << PA_TYP_TYP13_Pos)                            /*!< PA TYP: TYP13 Mask                      */
+#define PA_TYP_TYP14_Pos                      14                                                      /*!< PA TYP: TYP14 Position                  */
+#define PA_TYP_TYP14_Msk                      (0x01UL << PA_TYP_TYP14_Pos)                            /*!< PA TYP: TYP14 Mask                      */
+#define PA_TYP_TYP15_Pos                      15                                                      /*!< PA TYP: TYP15 Position                  */
+#define PA_TYP_TYP15_Msk                      (0x01UL << PA_TYP_TYP15_Pos)                            /*!< PA TYP: TYP15 Mask                      */
+
+/* ----------------------------------  PA_AFSR1  ---------------------------------- */
+#define PA_AFSR1_AFSB0_Pos                    0                                                       /*!< PA AFSR1: AFSB0 Position                */
+#define PA_AFSR1_AFSB0_Msk                    (0x0fUL << PA_AFSR1_AFSB0_Pos)                          /*!< PA AFSR1: AFSB0 Mask                    */
+#define PA_AFSR1_AFSB1_Pos                    4                                                       /*!< PA AFSR1: AFSB1 Position                */
+#define PA_AFSR1_AFSB1_Msk                    (0x0fUL << PA_AFSR1_AFSB1_Pos)                          /*!< PA AFSR1: AFSB1 Mask                    */
+#define PA_AFSR1_AFSB2_Pos                    8                                                       /*!< PA AFSR1: AFSB2 Position                */
+#define PA_AFSR1_AFSB2_Msk                    (0x0fUL << PA_AFSR1_AFSB2_Pos)                          /*!< PA AFSR1: AFSB2 Mask                    */
+#define PA_AFSR1_AFSB3_Pos                    12                                                      /*!< PA AFSR1: AFSB3 Position                */
+#define PA_AFSR1_AFSB3_Msk                    (0x0fUL << PA_AFSR1_AFSB3_Pos)                          /*!< PA AFSR1: AFSB3 Mask                    */
+#define PA_AFSR1_AFSB4_Pos                    16                                                      /*!< PA AFSR1: AFSB4 Position                */
+#define PA_AFSR1_AFSB4_Msk                    (0x0fUL << PA_AFSR1_AFSB4_Pos)                          /*!< PA AFSR1: AFSB4 Mask                    */
+#define PA_AFSR1_AFSB5_Pos                    20                                                      /*!< PA AFSR1: AFSB5 Position                */
+#define PA_AFSR1_AFSB5_Msk                    (0x0fUL << PA_AFSR1_AFSB5_Pos)                          /*!< PA AFSR1: AFSB5 Mask                    */
+#define PA_AFSR1_AFSB6_Pos                    24                                                      /*!< PA AFSR1: AFSB6 Position                */
+#define PA_AFSR1_AFSB6_Msk                    (0x0fUL << PA_AFSR1_AFSB6_Pos)                          /*!< PA AFSR1: AFSB6 Mask                    */
+#define PA_AFSR1_AFSB7_Pos                    28                                                      /*!< PA AFSR1: AFSB7 Position                */
+#define PA_AFSR1_AFSB7_Msk                    (0x0fUL << PA_AFSR1_AFSB7_Pos)                          /*!< PA AFSR1: AFSB7 Mask                    */
+
+/* ----------------------------------  PA_AFSR2  ---------------------------------- */
+#define PA_AFSR2_AFSB8_Pos                    0                                                       /*!< PA AFSR2: AFSB8 Position                */
+#define PA_AFSR2_AFSB8_Msk                    (0x0fUL << PA_AFSR2_AFSB8_Pos)                          /*!< PA AFSR2: AFSB8 Mask                    */
+#define PA_AFSR2_AFSB9_Pos                    4                                                       /*!< PA AFSR2: AFSB9 Position                */
+#define PA_AFSR2_AFSB9_Msk                    (0x0fUL << PA_AFSR2_AFSB9_Pos)                          /*!< PA AFSR2: AFSB9 Mask                    */
+#define PA_AFSR2_AFSB10_Pos                   8                                                       /*!< PA AFSR2: AFSB10 Position               */
+#define PA_AFSR2_AFSB10_Msk                   (0x0fUL << PA_AFSR2_AFSB10_Pos)                         /*!< PA AFSR2: AFSB10 Mask                   */
+#define PA_AFSR2_AFSB11_Pos                   12                                                      /*!< PA AFSR2: AFSB11 Position               */
+#define PA_AFSR2_AFSB11_Msk                   (0x0fUL << PA_AFSR2_AFSB11_Pos)                         /*!< PA AFSR2: AFSB11 Mask                   */
+#define PA_AFSR2_AFSB12_Pos                   16                                                      /*!< PA AFSR2: AFSB12 Position               */
+#define PA_AFSR2_AFSB12_Msk                   (0x0fUL << PA_AFSR2_AFSB12_Pos)                         /*!< PA AFSR2: AFSB12 Mask                   */
+#define PA_AFSR2_AFSB13_Pos                   20                                                      /*!< PA AFSR2: AFSB13 Position               */
+#define PA_AFSR2_AFSB13_Msk                   (0x0fUL << PA_AFSR2_AFSB13_Pos)                         /*!< PA AFSR2: AFSB13 Mask                   */
+#define PA_AFSR2_AFSB14_Pos                   24                                                      /*!< PA AFSR2: AFSB14 Position               */
+#define PA_AFSR2_AFSB14_Msk                   (0x0fUL << PA_AFSR2_AFSB14_Pos)                         /*!< PA AFSR2: AFSB14 Mask                   */
+#define PA_AFSR2_AFSB15_Pos                   28                                                      /*!< PA AFSR2: AFSB15 Position               */
+#define PA_AFSR2_AFSB15_Msk                   (0x0fUL << PA_AFSR2_AFSB15_Pos)                         /*!< PA AFSR2: AFSB15 Mask                   */
+
+/* -----------------------------------  PA_PUPD  ---------------------------------- */
+#define PA_PUPD_PUPD0_Pos                     0                                                       /*!< PA PUPD: PUPD0 Position                 */
+#define PA_PUPD_PUPD0_Msk                     (0x03UL << PA_PUPD_PUPD0_Pos)                           /*!< PA PUPD: PUPD0 Mask                     */
+#define PA_PUPD_PUPD1_Pos                     2                                                       /*!< PA PUPD: PUPD1 Position                 */
+#define PA_PUPD_PUPD1_Msk                     (0x03UL << PA_PUPD_PUPD1_Pos)                           /*!< PA PUPD: PUPD1 Mask                     */
+#define PA_PUPD_PUPD2_Pos                     4                                                       /*!< PA PUPD: PUPD2 Position                 */
+#define PA_PUPD_PUPD2_Msk                     (0x03UL << PA_PUPD_PUPD2_Pos)                           /*!< PA PUPD: PUPD2 Mask                     */
+#define PA_PUPD_PUPD3_Pos                     6                                                       /*!< PA PUPD: PUPD3 Position                 */
+#define PA_PUPD_PUPD3_Msk                     (0x03UL << PA_PUPD_PUPD3_Pos)                           /*!< PA PUPD: PUPD3 Mask                     */
+#define PA_PUPD_PUPD4_Pos                     8                                                       /*!< PA PUPD: PUPD4 Position                 */
+#define PA_PUPD_PUPD4_Msk                     (0x03UL << PA_PUPD_PUPD4_Pos)                           /*!< PA PUPD: PUPD4 Mask                     */
+#define PA_PUPD_PUPD5_Pos                     10                                                      /*!< PA PUPD: PUPD5 Position                 */
+#define PA_PUPD_PUPD5_Msk                     (0x03UL << PA_PUPD_PUPD5_Pos)                           /*!< PA PUPD: PUPD5 Mask                     */
+#define PA_PUPD_PUPD6_Pos                     12                                                      /*!< PA PUPD: PUPD6 Position                 */
+#define PA_PUPD_PUPD6_Msk                     (0x03UL << PA_PUPD_PUPD6_Pos)                           /*!< PA PUPD: PUPD6 Mask                     */
+#define PA_PUPD_PUPD7_Pos                     14                                                      /*!< PA PUPD: PUPD7 Position                 */
+#define PA_PUPD_PUPD7_Msk                     (0x03UL << PA_PUPD_PUPD7_Pos)                           /*!< PA PUPD: PUPD7 Mask                     */
+#define PA_PUPD_PUPD8_Pos                     16                                                      /*!< PA PUPD: PUPD8 Position                 */
+#define PA_PUPD_PUPD8_Msk                     (0x03UL << PA_PUPD_PUPD8_Pos)                           /*!< PA PUPD: PUPD8 Mask                     */
+#define PA_PUPD_PUPD9_Pos                     18                                                      /*!< PA PUPD: PUPD9 Position                 */
+#define PA_PUPD_PUPD9_Msk                     (0x03UL << PA_PUPD_PUPD9_Pos)                           /*!< PA PUPD: PUPD9 Mask                     */
+#define PA_PUPD_PUPD10_Pos                    20                                                      /*!< PA PUPD: PUPD10 Position                */
+#define PA_PUPD_PUPD10_Msk                    (0x03UL << PA_PUPD_PUPD10_Pos)                          /*!< PA PUPD: PUPD10 Mask                    */
+#define PA_PUPD_PUPD11_Pos                    22                                                      /*!< PA PUPD: PUPD11 Position                */
+#define PA_PUPD_PUPD11_Msk                    (0x03UL << PA_PUPD_PUPD11_Pos)                          /*!< PA PUPD: PUPD11 Mask                    */
+#define PA_PUPD_PUPD12_Pos                    24                                                      /*!< PA PUPD: PUPD12 Position                */
+#define PA_PUPD_PUPD12_Msk                    (0x03UL << PA_PUPD_PUPD12_Pos)                          /*!< PA PUPD: PUPD12 Mask                    */
+#define PA_PUPD_PUPD13_Pos                    26                                                      /*!< PA PUPD: PUPD13 Position                */
+#define PA_PUPD_PUPD13_Msk                    (0x03UL << PA_PUPD_PUPD13_Pos)                          /*!< PA PUPD: PUPD13 Mask                    */
+#define PA_PUPD_PUPD14_Pos                    28                                                      /*!< PA PUPD: PUPD14 Position                */
+#define PA_PUPD_PUPD14_Msk                    (0x03UL << PA_PUPD_PUPD14_Pos)                          /*!< PA PUPD: PUPD14 Mask                    */
+#define PA_PUPD_PUPD15_Pos                    30                                                      /*!< PA PUPD: PUPD15 Position                */
+#define PA_PUPD_PUPD15_Msk                    (0x03UL << PA_PUPD_PUPD15_Pos)                          /*!< PA PUPD: PUPD15 Mask                    */
+
+/* -----------------------------------  PA_INDR  ---------------------------------- */
+#define PA_INDR_INDR0_Pos                     0                                                       /*!< PA INDR: INDR0 Position                 */
+#define PA_INDR_INDR0_Msk                     (0x01UL << PA_INDR_INDR0_Pos)                           /*!< PA INDR: INDR0 Mask                     */
+#define PA_INDR_INDR1_Pos                     1                                                       /*!< PA INDR: INDR1 Position                 */
+#define PA_INDR_INDR1_Msk                     (0x01UL << PA_INDR_INDR1_Pos)                           /*!< PA INDR: INDR1 Mask                     */
+#define PA_INDR_INDR2_Pos                     2                                                       /*!< PA INDR: INDR2 Position                 */
+#define PA_INDR_INDR2_Msk                     (0x01UL << PA_INDR_INDR2_Pos)                           /*!< PA INDR: INDR2 Mask                     */
+#define PA_INDR_INDR3_Pos                     3                                                       /*!< PA INDR: INDR3 Position                 */
+#define PA_INDR_INDR3_Msk                     (0x01UL << PA_INDR_INDR3_Pos)                           /*!< PA INDR: INDR3 Mask                     */
+#define PA_INDR_INDR4_Pos                     4                                                       /*!< PA INDR: INDR4 Position                 */
+#define PA_INDR_INDR4_Msk                     (0x01UL << PA_INDR_INDR4_Pos)                           /*!< PA INDR: INDR4 Mask                     */
+#define PA_INDR_INDR5_Pos                     5                                                       /*!< PA INDR: INDR5 Position                 */
+#define PA_INDR_INDR5_Msk                     (0x01UL << PA_INDR_INDR5_Pos)                           /*!< PA INDR: INDR5 Mask                     */
+#define PA_INDR_INDR6_Pos                     6                                                       /*!< PA INDR: INDR6 Position                 */
+#define PA_INDR_INDR6_Msk                     (0x01UL << PA_INDR_INDR6_Pos)                           /*!< PA INDR: INDR6 Mask                     */
+#define PA_INDR_INDR7_Pos                     7                                                       /*!< PA INDR: INDR7 Position                 */
+#define PA_INDR_INDR7_Msk                     (0x01UL << PA_INDR_INDR7_Pos)                           /*!< PA INDR: INDR7 Mask                     */
+#define PA_INDR_INDR8_Pos                     8                                                       /*!< PA INDR: INDR8 Position                 */
+#define PA_INDR_INDR8_Msk                     (0x01UL << PA_INDR_INDR8_Pos)                           /*!< PA INDR: INDR8 Mask                     */
+#define PA_INDR_INDR9_Pos                     9                                                       /*!< PA INDR: INDR9 Position                 */
+#define PA_INDR_INDR9_Msk                     (0x01UL << PA_INDR_INDR9_Pos)                           /*!< PA INDR: INDR9 Mask                     */
+#define PA_INDR_INDR10_Pos                    10                                                      /*!< PA INDR: INDR10 Position                */
+#define PA_INDR_INDR10_Msk                    (0x01UL << PA_INDR_INDR10_Pos)                          /*!< PA INDR: INDR10 Mask                    */
+#define PA_INDR_INDR11_Pos                    11                                                      /*!< PA INDR: INDR11 Position                */
+#define PA_INDR_INDR11_Msk                    (0x01UL << PA_INDR_INDR11_Pos)                          /*!< PA INDR: INDR11 Mask                    */
+#define PA_INDR_INDR12_Pos                    12                                                      /*!< PA INDR: INDR12 Position                */
+#define PA_INDR_INDR12_Msk                    (0x01UL << PA_INDR_INDR12_Pos)                          /*!< PA INDR: INDR12 Mask                    */
+#define PA_INDR_INDR13_Pos                    13                                                      /*!< PA INDR: INDR13 Position                */
+#define PA_INDR_INDR13_Msk                    (0x01UL << PA_INDR_INDR13_Pos)                          /*!< PA INDR: INDR13 Mask                    */
+#define PA_INDR_INDR14_Pos                    14                                                      /*!< PA INDR: INDR14 Position                */
+#define PA_INDR_INDR14_Msk                    (0x01UL << PA_INDR_INDR14_Pos)                          /*!< PA INDR: INDR14 Mask                    */
+#define PA_INDR_INDR15_Pos                    15                                                      /*!< PA INDR: INDR15 Position                */
+#define PA_INDR_INDR15_Msk                    (0x01UL << PA_INDR_INDR15_Pos)                          /*!< PA INDR: INDR15 Mask                    */
+
+/* ----------------------------------  PA_OUTDR  ---------------------------------- */
+#define PA_OUTDR_OUTDR0_Pos                   0                                                       /*!< PA OUTDR: OUTDR0 Position               */
+#define PA_OUTDR_OUTDR0_Msk                   (0x01UL << PA_OUTDR_OUTDR0_Pos)                         /*!< PA OUTDR: OUTDR0 Mask                   */
+#define PA_OUTDR_OUTDR1_Pos                   1                                                       /*!< PA OUTDR: OUTDR1 Position               */
+#define PA_OUTDR_OUTDR1_Msk                   (0x01UL << PA_OUTDR_OUTDR1_Pos)                         /*!< PA OUTDR: OUTDR1 Mask                   */
+#define PA_OUTDR_OUTDR2_Pos                   2                                                       /*!< PA OUTDR: OUTDR2 Position               */
+#define PA_OUTDR_OUTDR2_Msk                   (0x01UL << PA_OUTDR_OUTDR2_Pos)                         /*!< PA OUTDR: OUTDR2 Mask                   */
+#define PA_OUTDR_OUTDR3_Pos                   3                                                       /*!< PA OUTDR: OUTDR3 Position               */
+#define PA_OUTDR_OUTDR3_Msk                   (0x01UL << PA_OUTDR_OUTDR3_Pos)                         /*!< PA OUTDR: OUTDR3 Mask                   */
+#define PA_OUTDR_OUTDR4_Pos                   4                                                       /*!< PA OUTDR: OUTDR4 Position               */
+#define PA_OUTDR_OUTDR4_Msk                   (0x01UL << PA_OUTDR_OUTDR4_Pos)                         /*!< PA OUTDR: OUTDR4 Mask                   */
+#define PA_OUTDR_OUTDR5_Pos                   5                                                       /*!< PA OUTDR: OUTDR5 Position               */
+#define PA_OUTDR_OUTDR5_Msk                   (0x01UL << PA_OUTDR_OUTDR5_Pos)                         /*!< PA OUTDR: OUTDR5 Mask                   */
+#define PA_OUTDR_OUTDR6_Pos                   6                                                       /*!< PA OUTDR: OUTDR6 Position               */
+#define PA_OUTDR_OUTDR6_Msk                   (0x01UL << PA_OUTDR_OUTDR6_Pos)                         /*!< PA OUTDR: OUTDR6 Mask                   */
+#define PA_OUTDR_OUTDR7_Pos                   7                                                       /*!< PA OUTDR: OUTDR7 Position               */
+#define PA_OUTDR_OUTDR7_Msk                   (0x01UL << PA_OUTDR_OUTDR7_Pos)                         /*!< PA OUTDR: OUTDR7 Mask                   */
+#define PA_OUTDR_OUTDR8_Pos                   8                                                       /*!< PA OUTDR: OUTDR8 Position               */
+#define PA_OUTDR_OUTDR8_Msk                   (0x01UL << PA_OUTDR_OUTDR8_Pos)                         /*!< PA OUTDR: OUTDR8 Mask                   */
+#define PA_OUTDR_OUTDR9_Pos                   9                                                       /*!< PA OUTDR: OUTDR9 Position               */
+#define PA_OUTDR_OUTDR9_Msk                   (0x01UL << PA_OUTDR_OUTDR9_Pos)                         /*!< PA OUTDR: OUTDR9 Mask                   */
+#define PA_OUTDR_OUTDR10_Pos                  10                                                      /*!< PA OUTDR: OUTDR10 Position              */
+#define PA_OUTDR_OUTDR10_Msk                  (0x01UL << PA_OUTDR_OUTDR10_Pos)                        /*!< PA OUTDR: OUTDR10 Mask                  */
+#define PA_OUTDR_OUTDR11_Pos                  11                                                      /*!< PA OUTDR: OUTDR11 Position              */
+#define PA_OUTDR_OUTDR11_Msk                  (0x01UL << PA_OUTDR_OUTDR11_Pos)                        /*!< PA OUTDR: OUTDR11 Mask                  */
+#define PA_OUTDR_OUTDR12_Pos                  12                                                      /*!< PA OUTDR: OUTDR12 Position              */
+#define PA_OUTDR_OUTDR12_Msk                  (0x01UL << PA_OUTDR_OUTDR12_Pos)                        /*!< PA OUTDR: OUTDR12 Mask                  */
+#define PA_OUTDR_OUTDR13_Pos                  13                                                      /*!< PA OUTDR: OUTDR13 Position              */
+#define PA_OUTDR_OUTDR13_Msk                  (0x01UL << PA_OUTDR_OUTDR13_Pos)                        /*!< PA OUTDR: OUTDR13 Mask                  */
+#define PA_OUTDR_OUTDR14_Pos                  14                                                      /*!< PA OUTDR: OUTDR14 Position              */
+#define PA_OUTDR_OUTDR14_Msk                  (0x01UL << PA_OUTDR_OUTDR14_Pos)                        /*!< PA OUTDR: OUTDR14 Mask                  */
+#define PA_OUTDR_OUTDR15_Pos                  15                                                      /*!< PA OUTDR: OUTDR15 Position              */
+#define PA_OUTDR_OUTDR15_Msk                  (0x01UL << PA_OUTDR_OUTDR15_Pos)                        /*!< PA OUTDR: OUTDR15 Mask                  */
+
+/* -----------------------------------  PA_BSR  ----------------------------------- */
+#define PA_BSR_BSR0_Pos                       0                                                       /*!< PA BSR: BSR0 Position                   */
+#define PA_BSR_BSR0_Msk                       (0x01UL << PA_BSR_BSR0_Pos)                             /*!< PA BSR: BSR0 Mask                       */
+#define PA_BSR_BSR1_Pos                       1                                                       /*!< PA BSR: BSR1 Position                   */
+#define PA_BSR_BSR1_Msk                       (0x01UL << PA_BSR_BSR1_Pos)                             /*!< PA BSR: BSR1 Mask                       */
+#define PA_BSR_BSR2_Pos                       2                                                       /*!< PA BSR: BSR2 Position                   */
+#define PA_BSR_BSR2_Msk                       (0x01UL << PA_BSR_BSR2_Pos)                             /*!< PA BSR: BSR2 Mask                       */
+#define PA_BSR_BSR3_Pos                       3                                                       /*!< PA BSR: BSR3 Position                   */
+#define PA_BSR_BSR3_Msk                       (0x01UL << PA_BSR_BSR3_Pos)                             /*!< PA BSR: BSR3 Mask                       */
+#define PA_BSR_BSR4_Pos                       4                                                       /*!< PA BSR: BSR4 Position                   */
+#define PA_BSR_BSR4_Msk                       (0x01UL << PA_BSR_BSR4_Pos)                             /*!< PA BSR: BSR4 Mask                       */
+#define PA_BSR_BSR5_Pos                       5                                                       /*!< PA BSR: BSR5 Position                   */
+#define PA_BSR_BSR5_Msk                       (0x01UL << PA_BSR_BSR5_Pos)                             /*!< PA BSR: BSR5 Mask                       */
+#define PA_BSR_BSR6_Pos                       6                                                       /*!< PA BSR: BSR6 Position                   */
+#define PA_BSR_BSR6_Msk                       (0x01UL << PA_BSR_BSR6_Pos)                             /*!< PA BSR: BSR6 Mask                       */
+#define PA_BSR_BSR7_Pos                       7                                                       /*!< PA BSR: BSR7 Position                   */
+#define PA_BSR_BSR7_Msk                       (0x01UL << PA_BSR_BSR7_Pos)                             /*!< PA BSR: BSR7 Mask                       */
+#define PA_BSR_BSR8_Pos                       8                                                       /*!< PA BSR: BSR8 Position                   */
+#define PA_BSR_BSR8_Msk                       (0x01UL << PA_BSR_BSR8_Pos)                             /*!< PA BSR: BSR8 Mask                       */
+#define PA_BSR_BSR9_Pos                       9                                                       /*!< PA BSR: BSR9 Position                   */
+#define PA_BSR_BSR9_Msk                       (0x01UL << PA_BSR_BSR9_Pos)                             /*!< PA BSR: BSR9 Mask                       */
+#define PA_BSR_BSR10_Pos                      10                                                      /*!< PA BSR: BSR10 Position                  */
+#define PA_BSR_BSR10_Msk                      (0x01UL << PA_BSR_BSR10_Pos)                            /*!< PA BSR: BSR10 Mask                      */
+#define PA_BSR_BSR11_Pos                      11                                                      /*!< PA BSR: BSR11 Position                  */
+#define PA_BSR_BSR11_Msk                      (0x01UL << PA_BSR_BSR11_Pos)                            /*!< PA BSR: BSR11 Mask                      */
+#define PA_BSR_BSR12_Pos                      12                                                      /*!< PA BSR: BSR12 Position                  */
+#define PA_BSR_BSR12_Msk                      (0x01UL << PA_BSR_BSR12_Pos)                            /*!< PA BSR: BSR12 Mask                      */
+#define PA_BSR_BSR13_Pos                      13                                                      /*!< PA BSR: BSR13 Position                  */
+#define PA_BSR_BSR13_Msk                      (0x01UL << PA_BSR_BSR13_Pos)                            /*!< PA BSR: BSR13 Mask                      */
+#define PA_BSR_BSR14_Pos                      14                                                      /*!< PA BSR: BSR14 Position                  */
+#define PA_BSR_BSR14_Msk                      (0x01UL << PA_BSR_BSR14_Pos)                            /*!< PA BSR: BSR14 Mask                      */
+#define PA_BSR_BSR15_Pos                      15                                                      /*!< PA BSR: BSR15 Position                  */
+#define PA_BSR_BSR15_Msk                      (0x01UL << PA_BSR_BSR15_Pos)                            /*!< PA BSR: BSR15 Mask                      */
+
+/* -----------------------------------  PA_BCR  ----------------------------------- */
+#define PA_BCR_BCR0_Pos                       0                                                       /*!< PA BCR: BCR0 Position                   */
+#define PA_BCR_BCR0_Msk                       (0x01UL << PA_BCR_BCR0_Pos)                             /*!< PA BCR: BCR0 Mask                       */
+#define PA_BCR_BCR1_Pos                       1                                                       /*!< PA BCR: BCR1 Position                   */
+#define PA_BCR_BCR1_Msk                       (0x01UL << PA_BCR_BCR1_Pos)                             /*!< PA BCR: BCR1 Mask                       */
+#define PA_BCR_BCR2_Pos                       2                                                       /*!< PA BCR: BCR2 Position                   */
+#define PA_BCR_BCR2_Msk                       (0x01UL << PA_BCR_BCR2_Pos)                             /*!< PA BCR: BCR2 Mask                       */
+#define PA_BCR_BCR3_Pos                       3                                                       /*!< PA BCR: BCR3 Position                   */
+#define PA_BCR_BCR3_Msk                       (0x01UL << PA_BCR_BCR3_Pos)                             /*!< PA BCR: BCR3 Mask                       */
+#define PA_BCR_BCR4_Pos                       4                                                       /*!< PA BCR: BCR4 Position                   */
+#define PA_BCR_BCR4_Msk                       (0x01UL << PA_BCR_BCR4_Pos)                             /*!< PA BCR: BCR4 Mask                       */
+#define PA_BCR_BCR5_Pos                       5                                                       /*!< PA BCR: BCR5 Position                   */
+#define PA_BCR_BCR5_Msk                       (0x01UL << PA_BCR_BCR5_Pos)                             /*!< PA BCR: BCR5 Mask                       */
+#define PA_BCR_BCR6_Pos                       6                                                       /*!< PA BCR: BCR6 Position                   */
+#define PA_BCR_BCR6_Msk                       (0x01UL << PA_BCR_BCR6_Pos)                             /*!< PA BCR: BCR6 Mask                       */
+#define PA_BCR_BCR7_Pos                       7                                                       /*!< PA BCR: BCR7 Position                   */
+#define PA_BCR_BCR7_Msk                       (0x01UL << PA_BCR_BCR7_Pos)                             /*!< PA BCR: BCR7 Mask                       */
+#define PA_BCR_BCR8_Pos                       8                                                       /*!< PA BCR: BCR8 Position                   */
+#define PA_BCR_BCR8_Msk                       (0x01UL << PA_BCR_BCR8_Pos)                             /*!< PA BCR: BCR8 Mask                       */
+#define PA_BCR_BCR9_Pos                       9                                                       /*!< PA BCR: BCR9 Position                   */
+#define PA_BCR_BCR9_Msk                       (0x01UL << PA_BCR_BCR9_Pos)                             /*!< PA BCR: BCR9 Mask                       */
+#define PA_BCR_BCR10_Pos                      10                                                      /*!< PA BCR: BCR10 Position                  */
+#define PA_BCR_BCR10_Msk                      (0x01UL << PA_BCR_BCR10_Pos)                            /*!< PA BCR: BCR10 Mask                      */
+#define PA_BCR_BCR11_Pos                      11                                                      /*!< PA BCR: BCR11 Position                  */
+#define PA_BCR_BCR11_Msk                      (0x01UL << PA_BCR_BCR11_Pos)                            /*!< PA BCR: BCR11 Mask                      */
+#define PA_BCR_BCR12_Pos                      12                                                      /*!< PA BCR: BCR12 Position                  */
+#define PA_BCR_BCR12_Msk                      (0x01UL << PA_BCR_BCR12_Pos)                            /*!< PA BCR: BCR12 Mask                      */
+#define PA_BCR_BCR13_Pos                      13                                                      /*!< PA BCR: BCR13 Position                  */
+#define PA_BCR_BCR13_Msk                      (0x01UL << PA_BCR_BCR13_Pos)                            /*!< PA BCR: BCR13 Mask                      */
+#define PA_BCR_BCR14_Pos                      14                                                      /*!< PA BCR: BCR14 Position                  */
+#define PA_BCR_BCR14_Msk                      (0x01UL << PA_BCR_BCR14_Pos)                            /*!< PA BCR: BCR14 Mask                      */
+#define PA_BCR_BCR15_Pos                      15                                                      /*!< PA BCR: BCR15 Position                  */
+#define PA_BCR_BCR15_Msk                      (0x01UL << PA_BCR_BCR15_Pos)                            /*!< PA BCR: BCR15 Mask                      */
+
+/* ---------------------------------  PA_OUTDMSK  --------------------------------- */
+#define PA_OUTDMSK_OUTDMSK0_Pos               0                                                       /*!< PA OUTDMSK: OUTDMSK0 Position           */
+#define PA_OUTDMSK_OUTDMSK0_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK0_Pos)                     /*!< PA OUTDMSK: OUTDMSK0 Mask               */
+#define PA_OUTDMSK_OUTDMSK1_Pos               1                                                       /*!< PA OUTDMSK: OUTDMSK1 Position           */
+#define PA_OUTDMSK_OUTDMSK1_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK1_Pos)                     /*!< PA OUTDMSK: OUTDMSK1 Mask               */
+#define PA_OUTDMSK_OUTDMSK2_Pos               2                                                       /*!< PA OUTDMSK: OUTDMSK2 Position           */
+#define PA_OUTDMSK_OUTDMSK2_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK2_Pos)                     /*!< PA OUTDMSK: OUTDMSK2 Mask               */
+#define PA_OUTDMSK_OUTDMSK3_Pos               3                                                       /*!< PA OUTDMSK: OUTDMSK3 Position           */
+#define PA_OUTDMSK_OUTDMSK3_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK3_Pos)                     /*!< PA OUTDMSK: OUTDMSK3 Mask               */
+#define PA_OUTDMSK_OUTDMSK4_Pos               4                                                       /*!< PA OUTDMSK: OUTDMSK4 Position           */
+#define PA_OUTDMSK_OUTDMSK4_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK4_Pos)                     /*!< PA OUTDMSK: OUTDMSK4 Mask               */
+#define PA_OUTDMSK_OUTDMSK5_Pos               5                                                       /*!< PA OUTDMSK: OUTDMSK5 Position           */
+#define PA_OUTDMSK_OUTDMSK5_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK5_Pos)                     /*!< PA OUTDMSK: OUTDMSK5 Mask               */
+#define PA_OUTDMSK_OUTDMSK6_Pos               6                                                       /*!< PA OUTDMSK: OUTDMSK6 Position           */
+#define PA_OUTDMSK_OUTDMSK6_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK6_Pos)                     /*!< PA OUTDMSK: OUTDMSK6 Mask               */
+#define PA_OUTDMSK_OUTDMSK7_Pos               7                                                       /*!< PA OUTDMSK: OUTDMSK7 Position           */
+#define PA_OUTDMSK_OUTDMSK7_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK7_Pos)                     /*!< PA OUTDMSK: OUTDMSK7 Mask               */
+#define PA_OUTDMSK_OUTDMSK8_Pos               8                                                       /*!< PA OUTDMSK: OUTDMSK8 Position           */
+#define PA_OUTDMSK_OUTDMSK8_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK8_Pos)                     /*!< PA OUTDMSK: OUTDMSK8 Mask               */
+#define PA_OUTDMSK_OUTDMSK9_Pos               9                                                       /*!< PA OUTDMSK: OUTDMSK9 Position           */
+#define PA_OUTDMSK_OUTDMSK9_Msk               (0x01UL << PA_OUTDMSK_OUTDMSK9_Pos)                     /*!< PA OUTDMSK: OUTDMSK9 Mask               */
+#define PA_OUTDMSK_OUTDMSK10_Pos              10                                                      /*!< PA OUTDMSK: OUTDMSK10 Position          */
+#define PA_OUTDMSK_OUTDMSK10_Msk              (0x01UL << PA_OUTDMSK_OUTDMSK10_Pos)                    /*!< PA OUTDMSK: OUTDMSK10 Mask              */
+#define PA_OUTDMSK_OUTDMSK11_Pos              11                                                      /*!< PA OUTDMSK: OUTDMSK11 Position          */
+#define PA_OUTDMSK_OUTDMSK11_Msk              (0x01UL << PA_OUTDMSK_OUTDMSK11_Pos)                    /*!< PA OUTDMSK: OUTDMSK11 Mask              */
+#define PA_OUTDMSK_OUTDMSK12_Pos              12                                                      /*!< PA OUTDMSK: OUTDMSK12 Position          */
+#define PA_OUTDMSK_OUTDMSK12_Msk              (0x01UL << PA_OUTDMSK_OUTDMSK12_Pos)                    /*!< PA OUTDMSK: OUTDMSK12 Mask              */
+#define PA_OUTDMSK_OUTDMSK13_Pos              13                                                      /*!< PA OUTDMSK: OUTDMSK13 Position          */
+#define PA_OUTDMSK_OUTDMSK13_Msk              (0x01UL << PA_OUTDMSK_OUTDMSK13_Pos)                    /*!< PA OUTDMSK: OUTDMSK13 Mask              */
+#define PA_OUTDMSK_OUTDMSK14_Pos              14                                                      /*!< PA OUTDMSK: OUTDMSK14 Position          */
+#define PA_OUTDMSK_OUTDMSK14_Msk              (0x01UL << PA_OUTDMSK_OUTDMSK14_Pos)                    /*!< PA OUTDMSK: OUTDMSK14 Mask              */
+#define PA_OUTDMSK_OUTDMSK15_Pos              15                                                      /*!< PA OUTDMSK: OUTDMSK15 Position          */
+#define PA_OUTDMSK_OUTDMSK15_Msk              (0x01UL << PA_OUTDMSK_OUTDMSK15_Pos)                    /*!< PA OUTDMSK: OUTDMSK15 Mask              */
+
+/* -----------------------------------  PA_DBCR  ---------------------------------- */
+#define PA_DBCR_DBEN0_Pos                     0                                                       /*!< PA DBCR: DBEN0 Position                 */
+#define PA_DBCR_DBEN0_Msk                     (0x01UL << PA_DBCR_DBEN0_Pos)                           /*!< PA DBCR: DBEN0 Mask                     */
+#define PA_DBCR_DBEN1_Pos                     1                                                       /*!< PA DBCR: DBEN1 Position                 */
+#define PA_DBCR_DBEN1_Msk                     (0x01UL << PA_DBCR_DBEN1_Pos)                           /*!< PA DBCR: DBEN1 Mask                     */
+#define PA_DBCR_DBEN2_Pos                     2                                                       /*!< PA DBCR: DBEN2 Position                 */
+#define PA_DBCR_DBEN2_Msk                     (0x01UL << PA_DBCR_DBEN2_Pos)                           /*!< PA DBCR: DBEN2 Mask                     */
+#define PA_DBCR_DBEN3_Pos                     3                                                       /*!< PA DBCR: DBEN3 Position                 */
+#define PA_DBCR_DBEN3_Msk                     (0x01UL << PA_DBCR_DBEN3_Pos)                           /*!< PA DBCR: DBEN3 Mask                     */
+#define PA_DBCR_DBEN4_Pos                     4                                                       /*!< PA DBCR: DBEN4 Position                 */
+#define PA_DBCR_DBEN4_Msk                     (0x01UL << PA_DBCR_DBEN4_Pos)                           /*!< PA DBCR: DBEN4 Mask                     */
+#define PA_DBCR_DBEN5_Pos                     5                                                       /*!< PA DBCR: DBEN5 Position                 */
+#define PA_DBCR_DBEN5_Msk                     (0x01UL << PA_DBCR_DBEN5_Pos)                           /*!< PA DBCR: DBEN5 Mask                     */
+#define PA_DBCR_DBEN6_Pos                     6                                                       /*!< PA DBCR: DBEN6 Position                 */
+#define PA_DBCR_DBEN6_Msk                     (0x01UL << PA_DBCR_DBEN6_Pos)                           /*!< PA DBCR: DBEN6 Mask                     */
+#define PA_DBCR_DBEN7_Pos                     7                                                       /*!< PA DBCR: DBEN7 Position                 */
+#define PA_DBCR_DBEN7_Msk                     (0x01UL << PA_DBCR_DBEN7_Pos)                           /*!< PA DBCR: DBEN7 Mask                     */
+#define PA_DBCR_DBEN8_Pos                     8                                                       /*!< PA DBCR: DBEN8 Position                 */
+#define PA_DBCR_DBEN8_Msk                     (0x01UL << PA_DBCR_DBEN8_Pos)                           /*!< PA DBCR: DBEN8 Mask                     */
+#define PA_DBCR_DBEN9_Pos                     9                                                       /*!< PA DBCR: DBEN9 Position                 */
+#define PA_DBCR_DBEN9_Msk                     (0x01UL << PA_DBCR_DBEN9_Pos)                           /*!< PA DBCR: DBEN9 Mask                     */
+#define PA_DBCR_DBEN10_Pos                    10                                                      /*!< PA DBCR: DBEN10 Position                */
+#define PA_DBCR_DBEN10_Msk                    (0x01UL << PA_DBCR_DBEN10_Pos)                          /*!< PA DBCR: DBEN10 Mask                    */
+#define PA_DBCR_DBEN11_Pos                    11                                                      /*!< PA DBCR: DBEN11 Position                */
+#define PA_DBCR_DBEN11_Msk                    (0x01UL << PA_DBCR_DBEN11_Pos)                          /*!< PA DBCR: DBEN11 Mask                    */
+#define PA_DBCR_DBEN12_Pos                    12                                                      /*!< PA DBCR: DBEN12 Position                */
+#define PA_DBCR_DBEN12_Msk                    (0x01UL << PA_DBCR_DBEN12_Pos)                          /*!< PA DBCR: DBEN12 Mask                    */
+#define PA_DBCR_DBEN13_Pos                    13                                                      /*!< PA DBCR: DBEN13 Position                */
+#define PA_DBCR_DBEN13_Msk                    (0x01UL << PA_DBCR_DBEN13_Pos)                          /*!< PA DBCR: DBEN13 Mask                    */
+#define PA_DBCR_DBEN14_Pos                    14                                                      /*!< PA DBCR: DBEN14 Position                */
+#define PA_DBCR_DBEN14_Msk                    (0x01UL << PA_DBCR_DBEN14_Pos)                          /*!< PA DBCR: DBEN14 Mask                    */
+#define PA_DBCR_DBEN15_Pos                    15                                                      /*!< PA DBCR: DBEN15 Position                */
+#define PA_DBCR_DBEN15_Msk                    (0x01UL << PA_DBCR_DBEN15_Pos)                          /*!< PA DBCR: DBEN15 Mask                    */
+
+/* -----------------------------------  PA_IER  ----------------------------------- */
+#define PA_IER_PIE0_Pos                       0                                                       /*!< PA IER: PIE0 Position                   */
+#define PA_IER_PIE0_Msk                       (0x03UL << PA_IER_PIE0_Pos)                             /*!< PA IER: PIE0 Mask                       */
+#define PA_IER_PIE1_Pos                       2                                                       /*!< PA IER: PIE1 Position                   */
+#define PA_IER_PIE1_Msk                       (0x03UL << PA_IER_PIE1_Pos)                             /*!< PA IER: PIE1 Mask                       */
+#define PA_IER_PIE2_Pos                       4                                                       /*!< PA IER: PIE2 Position                   */
+#define PA_IER_PIE2_Msk                       (0x03UL << PA_IER_PIE2_Pos)                             /*!< PA IER: PIE2 Mask                       */
+#define PA_IER_PIE3_Pos                       6                                                       /*!< PA IER: PIE3 Position                   */
+#define PA_IER_PIE3_Msk                       (0x03UL << PA_IER_PIE3_Pos)                             /*!< PA IER: PIE3 Mask                       */
+#define PA_IER_PIE4_Pos                       8                                                       /*!< PA IER: PIE4 Position                   */
+#define PA_IER_PIE4_Msk                       (0x03UL << PA_IER_PIE4_Pos)                             /*!< PA IER: PIE4 Mask                       */
+#define PA_IER_PIE5_Pos                       10                                                      /*!< PA IER: PIE5 Position                   */
+#define PA_IER_PIE5_Msk                       (0x03UL << PA_IER_PIE5_Pos)                             /*!< PA IER: PIE5 Mask                       */
+#define PA_IER_PIE6_Pos                       12                                                      /*!< PA IER: PIE6 Position                   */
+#define PA_IER_PIE6_Msk                       (0x03UL << PA_IER_PIE6_Pos)                             /*!< PA IER: PIE6 Mask                       */
+#define PA_IER_PIE7_Pos                       14                                                      /*!< PA IER: PIE7 Position                   */
+#define PA_IER_PIE7_Msk                       (0x03UL << PA_IER_PIE7_Pos)                             /*!< PA IER: PIE7 Mask                       */
+#define PA_IER_PIE8_Pos                       16                                                      /*!< PA IER: PIE8 Position                   */
+#define PA_IER_PIE8_Msk                       (0x03UL << PA_IER_PIE8_Pos)                             /*!< PA IER: PIE8 Mask                       */
+#define PA_IER_PIE9_Pos                       18                                                      /*!< PA IER: PIE9 Position                   */
+#define PA_IER_PIE9_Msk                       (0x03UL << PA_IER_PIE9_Pos)                             /*!< PA IER: PIE9 Mask                       */
+#define PA_IER_PIE10_Pos                      20                                                      /*!< PA IER: PIE10 Position                  */
+#define PA_IER_PIE10_Msk                      (0x03UL << PA_IER_PIE10_Pos)                            /*!< PA IER: PIE10 Mask                      */
+#define PA_IER_PIE11_Pos                      22                                                      /*!< PA IER: PIE11 Position                  */
+#define PA_IER_PIE11_Msk                      (0x03UL << PA_IER_PIE11_Pos)                            /*!< PA IER: PIE11 Mask                      */
+#define PA_IER_PIE12_Pos                      24                                                      /*!< PA IER: PIE12 Position                  */
+#define PA_IER_PIE12_Msk                      (0x03UL << PA_IER_PIE12_Pos)                            /*!< PA IER: PIE12 Mask                      */
+#define PA_IER_PIE13_Pos                      26                                                      /*!< PA IER: PIE13 Position                  */
+#define PA_IER_PIE13_Msk                      (0x03UL << PA_IER_PIE13_Pos)                            /*!< PA IER: PIE13 Mask                      */
+#define PA_IER_PIE14_Pos                      28                                                      /*!< PA IER: PIE14 Position                  */
+#define PA_IER_PIE14_Msk                      (0x03UL << PA_IER_PIE14_Pos)                            /*!< PA IER: PIE14 Mask                      */
+#define PA_IER_PIE15_Pos                      30                                                      /*!< PA IER: PIE15 Position                  */
+#define PA_IER_PIE15_Msk                      (0x03UL << PA_IER_PIE15_Pos)                            /*!< PA IER: PIE15 Mask                      */
+
+/* -----------------------------------  PA_ISR  ----------------------------------- */
+#define PA_ISR_PIS0_Pos                       0                                                       /*!< PA ISR: PIS0 Position                   */
+#define PA_ISR_PIS0_Msk                       (0x03UL << PA_ISR_PIS0_Pos)                             /*!< PA ISR: PIS0 Mask                       */
+#define PA_ISR_PIS1_Pos                       2                                                       /*!< PA ISR: PIS1 Position                   */
+#define PA_ISR_PIS1_Msk                       (0x03UL << PA_ISR_PIS1_Pos)                             /*!< PA ISR: PIS1 Mask                       */
+#define PA_ISR_PIS2_Pos                       4                                                       /*!< PA ISR: PIS2 Position                   */
+#define PA_ISR_PIS2_Msk                       (0x03UL << PA_ISR_PIS2_Pos)                             /*!< PA ISR: PIS2 Mask                       */
+#define PA_ISR_PIS3_Pos                       6                                                       /*!< PA ISR: PIS3 Position                   */
+#define PA_ISR_PIS3_Msk                       (0x03UL << PA_ISR_PIS3_Pos)                             /*!< PA ISR: PIS3 Mask                       */
+#define PA_ISR_PIS4_Pos                       8                                                       /*!< PA ISR: PIS4 Position                   */
+#define PA_ISR_PIS4_Msk                       (0x03UL << PA_ISR_PIS4_Pos)                             /*!< PA ISR: PIS4 Mask                       */
+#define PA_ISR_PIS5_Pos                       10                                                      /*!< PA ISR: PIS5 Position                   */
+#define PA_ISR_PIS5_Msk                       (0x03UL << PA_ISR_PIS5_Pos)                             /*!< PA ISR: PIS5 Mask                       */
+#define PA_ISR_PIS6_Pos                       12                                                      /*!< PA ISR: PIS6 Position                   */
+#define PA_ISR_PIS6_Msk                       (0x03UL << PA_ISR_PIS6_Pos)                             /*!< PA ISR: PIS6 Mask                       */
+#define PA_ISR_PIS7_Pos                       14                                                      /*!< PA ISR: PIS7 Position                   */
+#define PA_ISR_PIS7_Msk                       (0x03UL << PA_ISR_PIS7_Pos)                             /*!< PA ISR: PIS7 Mask                       */
+#define PA_ISR_PIS8_Pos                       16                                                      /*!< PA ISR: PIS8 Position                   */
+#define PA_ISR_PIS8_Msk                       (0x03UL << PA_ISR_PIS8_Pos)                             /*!< PA ISR: PIS8 Mask                       */
+#define PA_ISR_PIS9_Pos                       18                                                      /*!< PA ISR: PIS9 Position                   */
+#define PA_ISR_PIS9_Msk                       (0x03UL << PA_ISR_PIS9_Pos)                             /*!< PA ISR: PIS9 Mask                       */
+#define PA_ISR_PIS10_Pos                      20                                                      /*!< PA ISR: PIS10 Position                  */
+#define PA_ISR_PIS10_Msk                      (0x03UL << PA_ISR_PIS10_Pos)                            /*!< PA ISR: PIS10 Mask                      */
+#define PA_ISR_PIS11_Pos                      22                                                      /*!< PA ISR: PIS11 Position                  */
+#define PA_ISR_PIS11_Msk                      (0x03UL << PA_ISR_PIS11_Pos)                            /*!< PA ISR: PIS11 Mask                      */
+#define PA_ISR_PIS12_Pos                      24                                                      /*!< PA ISR: PIS12 Position                  */
+#define PA_ISR_PIS12_Msk                      (0x03UL << PA_ISR_PIS12_Pos)                            /*!< PA ISR: PIS12 Mask                      */
+#define PA_ISR_PIS13_Pos                      26                                                      /*!< PA ISR: PIS13 Position                  */
+#define PA_ISR_PIS13_Msk                      (0x03UL << PA_ISR_PIS13_Pos)                            /*!< PA ISR: PIS13 Mask                      */
+#define PA_ISR_PIS14_Pos                      28                                                      /*!< PA ISR: PIS14 Position                  */
+#define PA_ISR_PIS14_Msk                      (0x03UL << PA_ISR_PIS14_Pos)                            /*!< PA ISR: PIS14 Mask                      */
+#define PA_ISR_PIS15_Pos                      30                                                      /*!< PA ISR: PIS15 Position                  */
+#define PA_ISR_PIS15_Msk                      (0x03UL << PA_ISR_PIS15_Pos)                            /*!< PA ISR: PIS15 Mask                      */
+
+/* -----------------------------------  PA_ICR  ----------------------------------- */
+#define PA_ICR_PIC0_Pos                       0                                                       /*!< PA ICR: PIC0 Position                   */
+#define PA_ICR_PIC0_Msk                       (0x03UL << PA_ICR_PIC0_Pos)                             /*!< PA ICR: PIC0 Mask                       */
+#define PA_ICR_PIC1_Pos                       2                                                       /*!< PA ICR: PIC1 Position                   */
+#define PA_ICR_PIC1_Msk                       (0x03UL << PA_ICR_PIC1_Pos)                             /*!< PA ICR: PIC1 Mask                       */
+#define PA_ICR_PIC2_Pos                       4                                                       /*!< PA ICR: PIC2 Position                   */
+#define PA_ICR_PIC2_Msk                       (0x03UL << PA_ICR_PIC2_Pos)                             /*!< PA ICR: PIC2 Mask                       */
+#define PA_ICR_PIC3_Pos                       6                                                       /*!< PA ICR: PIC3 Position                   */
+#define PA_ICR_PIC3_Msk                       (0x03UL << PA_ICR_PIC3_Pos)                             /*!< PA ICR: PIC3 Mask                       */
+#define PA_ICR_PIC4_Pos                       8                                                       /*!< PA ICR: PIC4 Position                   */
+#define PA_ICR_PIC4_Msk                       (0x03UL << PA_ICR_PIC4_Pos)                             /*!< PA ICR: PIC4 Mask                       */
+#define PA_ICR_PIC5_Pos                       10                                                      /*!< PA ICR: PIC5 Position                   */
+#define PA_ICR_PIC5_Msk                       (0x03UL << PA_ICR_PIC5_Pos)                             /*!< PA ICR: PIC5 Mask                       */
+#define PA_ICR_PIC6_Pos                       12                                                      /*!< PA ICR: PIC6 Position                   */
+#define PA_ICR_PIC6_Msk                       (0x03UL << PA_ICR_PIC6_Pos)                             /*!< PA ICR: PIC6 Mask                       */
+#define PA_ICR_PIC7_Pos                       14                                                      /*!< PA ICR: PIC7 Position                   */
+#define PA_ICR_PIC7_Msk                       (0x03UL << PA_ICR_PIC7_Pos)                             /*!< PA ICR: PIC7 Mask                       */
+#define PA_ICR_PIC8_Pos                       16                                                      /*!< PA ICR: PIC8 Position                   */
+#define PA_ICR_PIC8_Msk                       (0x03UL << PA_ICR_PIC8_Pos)                             /*!< PA ICR: PIC8 Mask                       */
+#define PA_ICR_PIC9_Pos                       18                                                      /*!< PA ICR: PIC9 Position                   */
+#define PA_ICR_PIC9_Msk                       (0x03UL << PA_ICR_PIC9_Pos)                             /*!< PA ICR: PIC9 Mask                       */
+#define PA_ICR_PIC10_Pos                      20                                                      /*!< PA ICR: PIC10 Position                  */
+#define PA_ICR_PIC10_Msk                      (0x03UL << PA_ICR_PIC10_Pos)                            /*!< PA ICR: PIC10 Mask                      */
+#define PA_ICR_PIC11_Pos                      22                                                      /*!< PA ICR: PIC11 Position                  */
+#define PA_ICR_PIC11_Msk                      (0x03UL << PA_ICR_PIC11_Pos)                            /*!< PA ICR: PIC11 Mask                      */
+#define PA_ICR_PIC12_Pos                      24                                                      /*!< PA ICR: PIC12 Position                  */
+#define PA_ICR_PIC12_Msk                      (0x03UL << PA_ICR_PIC12_Pos)                            /*!< PA ICR: PIC12 Mask                      */
+#define PA_ICR_PIC13_Pos                      26                                                      /*!< PA ICR: PIC13 Position                  */
+#define PA_ICR_PIC13_Msk                      (0x03UL << PA_ICR_PIC13_Pos)                            /*!< PA ICR: PIC13 Mask                      */
+#define PA_ICR_PIC14_Pos                      28                                                      /*!< PA ICR: PIC14 Position                  */
+#define PA_ICR_PIC14_Msk                      (0x03UL << PA_ICR_PIC14_Pos)                            /*!< PA ICR: PIC14 Mask                      */
+#define PA_ICR_PIC15_Pos                      30                                                      /*!< PA ICR: PIC15 Position                  */
+#define PA_ICR_PIC15_Msk                      (0x03UL << PA_ICR_PIC15_Pos)                            /*!< PA ICR: PIC15 Mask                      */
+
+
+/* ================================================================================ */
+/* ================           struct 'PB' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  PB_MOD  ----------------------------------- */
+#define PB_MOD_MODE0_Pos                      0                                                       /*!< PB MOD: MODE0 Position                  */
+#define PB_MOD_MODE0_Msk                      (0x03UL << PB_MOD_MODE0_Pos)                            /*!< PB MOD: MODE0 Mask                      */
+#define PB_MOD_MODE1_Pos                      2                                                       /*!< PB MOD: MODE1 Position                  */
+#define PB_MOD_MODE1_Msk                      (0x03UL << PB_MOD_MODE1_Pos)                            /*!< PB MOD: MODE1 Mask                      */
+#define PB_MOD_MODE2_Pos                      4                                                       /*!< PB MOD: MODE2 Position                  */
+#define PB_MOD_MODE2_Msk                      (0x03UL << PB_MOD_MODE2_Pos)                            /*!< PB MOD: MODE2 Mask                      */
+#define PB_MOD_MODE3_Pos                      6                                                       /*!< PB MOD: MODE3 Position                  */
+#define PB_MOD_MODE3_Msk                      (0x03UL << PB_MOD_MODE3_Pos)                            /*!< PB MOD: MODE3 Mask                      */
+#define PB_MOD_MODE4_Pos                      8                                                       /*!< PB MOD: MODE4 Position                  */
+#define PB_MOD_MODE4_Msk                      (0x03UL << PB_MOD_MODE4_Pos)                            /*!< PB MOD: MODE4 Mask                      */
+#define PB_MOD_MODE5_Pos                      10                                                      /*!< PB MOD: MODE5 Position                  */
+#define PB_MOD_MODE5_Msk                      (0x03UL << PB_MOD_MODE5_Pos)                            /*!< PB MOD: MODE5 Mask                      */
+#define PB_MOD_MODE6_Pos                      12                                                      /*!< PB MOD: MODE6 Position                  */
+#define PB_MOD_MODE6_Msk                      (0x03UL << PB_MOD_MODE6_Pos)                            /*!< PB MOD: MODE6 Mask                      */
+#define PB_MOD_MODE7_Pos                      14                                                      /*!< PB MOD: MODE7 Position                  */
+#define PB_MOD_MODE7_Msk                      (0x03UL << PB_MOD_MODE7_Pos)                            /*!< PB MOD: MODE7 Mask                      */
+#define PB_MOD_MODE8_Pos                      16                                                      /*!< PB MOD: MODE8 Position                  */
+#define PB_MOD_MODE8_Msk                      (0x03UL << PB_MOD_MODE8_Pos)                            /*!< PB MOD: MODE8 Mask                      */
+#define PB_MOD_MODE9_Pos                      18                                                      /*!< PB MOD: MODE9 Position                  */
+#define PB_MOD_MODE9_Msk                      (0x03UL << PB_MOD_MODE9_Pos)                            /*!< PB MOD: MODE9 Mask                      */
+#define PB_MOD_MODE10_Pos                     20                                                      /*!< PB MOD: MODE10 Position                 */
+#define PB_MOD_MODE10_Msk                     (0x03UL << PB_MOD_MODE10_Pos)                           /*!< PB MOD: MODE10 Mask                     */
+#define PB_MOD_MODE11_Pos                     22                                                      /*!< PB MOD: MODE11 Position                 */
+#define PB_MOD_MODE11_Msk                     (0x03UL << PB_MOD_MODE11_Pos)                           /*!< PB MOD: MODE11 Mask                     */
+#define PB_MOD_MODE12_Pos                     24                                                      /*!< PB MOD: MODE12 Position                 */
+#define PB_MOD_MODE12_Msk                     (0x03UL << PB_MOD_MODE12_Pos)                           /*!< PB MOD: MODE12 Mask                     */
+#define PB_MOD_MODE13_Pos                     26                                                      /*!< PB MOD: MODE13 Position                 */
+#define PB_MOD_MODE13_Msk                     (0x03UL << PB_MOD_MODE13_Pos)                           /*!< PB MOD: MODE13 Mask                     */
+#define PB_MOD_MODE14_Pos                     28                                                      /*!< PB MOD: MODE14 Position                 */
+#define PB_MOD_MODE14_Msk                     (0x03UL << PB_MOD_MODE14_Pos)                           /*!< PB MOD: MODE14 Mask                     */
+#define PB_MOD_MODE15_Pos                     30                                                      /*!< PB MOD: MODE15 Position                 */
+#define PB_MOD_MODE15_Msk                     (0x03UL << PB_MOD_MODE15_Pos)                           /*!< PB MOD: MODE15 Mask                     */
+
+/* -----------------------------------  PB_TYP  ----------------------------------- */
+#define PB_TYP_TYP0_Pos                       0                                                       /*!< PB TYP: TYP0 Position                   */
+#define PB_TYP_TYP0_Msk                       (0x01UL << PB_TYP_TYP0_Pos)                             /*!< PB TYP: TYP0 Mask                       */
+#define PB_TYP_TYP1_Pos                       1                                                       /*!< PB TYP: TYP1 Position                   */
+#define PB_TYP_TYP1_Msk                       (0x01UL << PB_TYP_TYP1_Pos)                             /*!< PB TYP: TYP1 Mask                       */
+#define PB_TYP_TYP2_Pos                       2                                                       /*!< PB TYP: TYP2 Position                   */
+#define PB_TYP_TYP2_Msk                       (0x01UL << PB_TYP_TYP2_Pos)                             /*!< PB TYP: TYP2 Mask                       */
+#define PB_TYP_TYP3_Pos                       3                                                       /*!< PB TYP: TYP3 Position                   */
+#define PB_TYP_TYP3_Msk                       (0x01UL << PB_TYP_TYP3_Pos)                             /*!< PB TYP: TYP3 Mask                       */
+#define PB_TYP_TYP4_Pos                       4                                                       /*!< PB TYP: TYP4 Position                   */
+#define PB_TYP_TYP4_Msk                       (0x01UL << PB_TYP_TYP4_Pos)                             /*!< PB TYP: TYP4 Mask                       */
+#define PB_TYP_TYP5_Pos                       5                                                       /*!< PB TYP: TYP5 Position                   */
+#define PB_TYP_TYP5_Msk                       (0x01UL << PB_TYP_TYP5_Pos)                             /*!< PB TYP: TYP5 Mask                       */
+#define PB_TYP_TYP6_Pos                       6                                                       /*!< PB TYP: TYP6 Position                   */
+#define PB_TYP_TYP6_Msk                       (0x01UL << PB_TYP_TYP6_Pos)                             /*!< PB TYP: TYP6 Mask                       */
+#define PB_TYP_TYP7_Pos                       7                                                       /*!< PB TYP: TYP7 Position                   */
+#define PB_TYP_TYP7_Msk                       (0x01UL << PB_TYP_TYP7_Pos)                             /*!< PB TYP: TYP7 Mask                       */
+#define PB_TYP_TYP8_Pos                       8                                                       /*!< PB TYP: TYP8 Position                   */
+#define PB_TYP_TYP8_Msk                       (0x01UL << PB_TYP_TYP8_Pos)                             /*!< PB TYP: TYP8 Mask                       */
+#define PB_TYP_TYP9_Pos                       9                                                       /*!< PB TYP: TYP9 Position                   */
+#define PB_TYP_TYP9_Msk                       (0x01UL << PB_TYP_TYP9_Pos)                             /*!< PB TYP: TYP9 Mask                       */
+#define PB_TYP_TYP10_Pos                      10                                                      /*!< PB TYP: TYP10 Position                  */
+#define PB_TYP_TYP10_Msk                      (0x01UL << PB_TYP_TYP10_Pos)                            /*!< PB TYP: TYP10 Mask                      */
+#define PB_TYP_TYP11_Pos                      11                                                      /*!< PB TYP: TYP11 Position                  */
+#define PB_TYP_TYP11_Msk                      (0x01UL << PB_TYP_TYP11_Pos)                            /*!< PB TYP: TYP11 Mask                      */
+#define PB_TYP_TYP12_Pos                      12                                                      /*!< PB TYP: TYP12 Position                  */
+#define PB_TYP_TYP12_Msk                      (0x01UL << PB_TYP_TYP12_Pos)                            /*!< PB TYP: TYP12 Mask                      */
+#define PB_TYP_TYP13_Pos                      13                                                      /*!< PB TYP: TYP13 Position                  */
+#define PB_TYP_TYP13_Msk                      (0x01UL << PB_TYP_TYP13_Pos)                            /*!< PB TYP: TYP13 Mask                      */
+#define PB_TYP_TYP14_Pos                      14                                                      /*!< PB TYP: TYP14 Position                  */
+#define PB_TYP_TYP14_Msk                      (0x01UL << PB_TYP_TYP14_Pos)                            /*!< PB TYP: TYP14 Mask                      */
+#define PB_TYP_TYP15_Pos                      15                                                      /*!< PB TYP: TYP15 Position                  */
+#define PB_TYP_TYP15_Msk                      (0x01UL << PB_TYP_TYP15_Pos)                            /*!< PB TYP: TYP15 Mask                      */
+
+/* ----------------------------------  PB_AFSR1  ---------------------------------- */
+#define PB_AFSR1_AFSB0_Pos                    0                                                       /*!< PB AFSR1: AFSB0 Position                */
+#define PB_AFSR1_AFSB0_Msk                    (0x0fUL << PB_AFSR1_AFSB0_Pos)                          /*!< PB AFSR1: AFSB0 Mask                    */
+#define PB_AFSR1_AFSB1_Pos                    4                                                       /*!< PB AFSR1: AFSB1 Position                */
+#define PB_AFSR1_AFSB1_Msk                    (0x0fUL << PB_AFSR1_AFSB1_Pos)                          /*!< PB AFSR1: AFSB1 Mask                    */
+#define PB_AFSR1_AFSB2_Pos                    8                                                       /*!< PB AFSR1: AFSB2 Position                */
+#define PB_AFSR1_AFSB2_Msk                    (0x0fUL << PB_AFSR1_AFSB2_Pos)                          /*!< PB AFSR1: AFSB2 Mask                    */
+#define PB_AFSR1_AFSB3_Pos                    12                                                      /*!< PB AFSR1: AFSB3 Position                */
+#define PB_AFSR1_AFSB3_Msk                    (0x0fUL << PB_AFSR1_AFSB3_Pos)                          /*!< PB AFSR1: AFSB3 Mask                    */
+#define PB_AFSR1_AFSB4_Pos                    16                                                      /*!< PB AFSR1: AFSB4 Position                */
+#define PB_AFSR1_AFSB4_Msk                    (0x0fUL << PB_AFSR1_AFSB4_Pos)                          /*!< PB AFSR1: AFSB4 Mask                    */
+#define PB_AFSR1_AFSB5_Pos                    20                                                      /*!< PB AFSR1: AFSB5 Position                */
+#define PB_AFSR1_AFSB5_Msk                    (0x0fUL << PB_AFSR1_AFSB5_Pos)                          /*!< PB AFSR1: AFSB5 Mask                    */
+#define PB_AFSR1_AFSB6_Pos                    24                                                      /*!< PB AFSR1: AFSB6 Position                */
+#define PB_AFSR1_AFSB6_Msk                    (0x0fUL << PB_AFSR1_AFSB6_Pos)                          /*!< PB AFSR1: AFSB6 Mask                    */
+#define PB_AFSR1_AFSB7_Pos                    28                                                      /*!< PB AFSR1: AFSB7 Position                */
+#define PB_AFSR1_AFSB7_Msk                    (0x0fUL << PB_AFSR1_AFSB7_Pos)                          /*!< PB AFSR1: AFSB7 Mask                    */
+
+/* ----------------------------------  PB_AFSR2  ---------------------------------- */
+#define PB_AFSR2_AFSB8_Pos                    0                                                       /*!< PB AFSR2: AFSB8 Position                */
+#define PB_AFSR2_AFSB8_Msk                    (0x0fUL << PB_AFSR2_AFSB8_Pos)                          /*!< PB AFSR2: AFSB8 Mask                    */
+#define PB_AFSR2_AFSB9_Pos                    4                                                       /*!< PB AFSR2: AFSB9 Position                */
+#define PB_AFSR2_AFSB9_Msk                    (0x0fUL << PB_AFSR2_AFSB9_Pos)                          /*!< PB AFSR2: AFSB9 Mask                    */
+#define PB_AFSR2_AFSB10_Pos                   8                                                       /*!< PB AFSR2: AFSB10 Position               */
+#define PB_AFSR2_AFSB10_Msk                   (0x0fUL << PB_AFSR2_AFSB10_Pos)                         /*!< PB AFSR2: AFSB10 Mask                   */
+#define PB_AFSR2_AFSB11_Pos                   12                                                      /*!< PB AFSR2: AFSB11 Position               */
+#define PB_AFSR2_AFSB11_Msk                   (0x0fUL << PB_AFSR2_AFSB11_Pos)                         /*!< PB AFSR2: AFSB11 Mask                   */
+#define PB_AFSR2_AFSB12_Pos                   16                                                      /*!< PB AFSR2: AFSB12 Position               */
+#define PB_AFSR2_AFSB12_Msk                   (0x0fUL << PB_AFSR2_AFSB12_Pos)                         /*!< PB AFSR2: AFSB12 Mask                   */
+#define PB_AFSR2_AFSB13_Pos                   20                                                      /*!< PB AFSR2: AFSB13 Position               */
+#define PB_AFSR2_AFSB13_Msk                   (0x0fUL << PB_AFSR2_AFSB13_Pos)                         /*!< PB AFSR2: AFSB13 Mask                   */
+#define PB_AFSR2_AFSB14_Pos                   24                                                      /*!< PB AFSR2: AFSB14 Position               */
+#define PB_AFSR2_AFSB14_Msk                   (0x0fUL << PB_AFSR2_AFSB14_Pos)                         /*!< PB AFSR2: AFSB14 Mask                   */
+#define PB_AFSR2_AFSB15_Pos                   28                                                      /*!< PB AFSR2: AFSB15 Position               */
+#define PB_AFSR2_AFSB15_Msk                   (0x0fUL << PB_AFSR2_AFSB15_Pos)                         /*!< PB AFSR2: AFSB15 Mask                   */
+
+/* -----------------------------------  PB_PUPD  ---------------------------------- */
+#define PB_PUPD_PUPD0_Pos                     0                                                       /*!< PB PUPD: PUPD0 Position                 */
+#define PB_PUPD_PUPD0_Msk                     (0x03UL << PB_PUPD_PUPD0_Pos)                           /*!< PB PUPD: PUPD0 Mask                     */
+#define PB_PUPD_PUPD1_Pos                     2                                                       /*!< PB PUPD: PUPD1 Position                 */
+#define PB_PUPD_PUPD1_Msk                     (0x03UL << PB_PUPD_PUPD1_Pos)                           /*!< PB PUPD: PUPD1 Mask                     */
+#define PB_PUPD_PUPD2_Pos                     4                                                       /*!< PB PUPD: PUPD2 Position                 */
+#define PB_PUPD_PUPD2_Msk                     (0x03UL << PB_PUPD_PUPD2_Pos)                           /*!< PB PUPD: PUPD2 Mask                     */
+#define PB_PUPD_PUPD3_Pos                     6                                                       /*!< PB PUPD: PUPD3 Position                 */
+#define PB_PUPD_PUPD3_Msk                     (0x03UL << PB_PUPD_PUPD3_Pos)                           /*!< PB PUPD: PUPD3 Mask                     */
+#define PB_PUPD_PUPD4_Pos                     8                                                       /*!< PB PUPD: PUPD4 Position                 */
+#define PB_PUPD_PUPD4_Msk                     (0x03UL << PB_PUPD_PUPD4_Pos)                           /*!< PB PUPD: PUPD4 Mask                     */
+#define PB_PUPD_PUPD5_Pos                     10                                                      /*!< PB PUPD: PUPD5 Position                 */
+#define PB_PUPD_PUPD5_Msk                     (0x03UL << PB_PUPD_PUPD5_Pos)                           /*!< PB PUPD: PUPD5 Mask                     */
+#define PB_PUPD_PUPD6_Pos                     12                                                      /*!< PB PUPD: PUPD6 Position                 */
+#define PB_PUPD_PUPD6_Msk                     (0x03UL << PB_PUPD_PUPD6_Pos)                           /*!< PB PUPD: PUPD6 Mask                     */
+#define PB_PUPD_PUPD7_Pos                     14                                                      /*!< PB PUPD: PUPD7 Position                 */
+#define PB_PUPD_PUPD7_Msk                     (0x03UL << PB_PUPD_PUPD7_Pos)                           /*!< PB PUPD: PUPD7 Mask                     */
+#define PB_PUPD_PUPD8_Pos                     16                                                      /*!< PB PUPD: PUPD8 Position                 */
+#define PB_PUPD_PUPD8_Msk                     (0x03UL << PB_PUPD_PUPD8_Pos)                           /*!< PB PUPD: PUPD8 Mask                     */
+#define PB_PUPD_PUPD9_Pos                     18                                                      /*!< PB PUPD: PUPD9 Position                 */
+#define PB_PUPD_PUPD9_Msk                     (0x03UL << PB_PUPD_PUPD9_Pos)                           /*!< PB PUPD: PUPD9 Mask                     */
+#define PB_PUPD_PUPD10_Pos                    20                                                      /*!< PB PUPD: PUPD10 Position                */
+#define PB_PUPD_PUPD10_Msk                    (0x03UL << PB_PUPD_PUPD10_Pos)                          /*!< PB PUPD: PUPD10 Mask                    */
+#define PB_PUPD_PUPD11_Pos                    22                                                      /*!< PB PUPD: PUPD11 Position                */
+#define PB_PUPD_PUPD11_Msk                    (0x03UL << PB_PUPD_PUPD11_Pos)                          /*!< PB PUPD: PUPD11 Mask                    */
+#define PB_PUPD_PUPD12_Pos                    24                                                      /*!< PB PUPD: PUPD12 Position                */
+#define PB_PUPD_PUPD12_Msk                    (0x03UL << PB_PUPD_PUPD12_Pos)                          /*!< PB PUPD: PUPD12 Mask                    */
+#define PB_PUPD_PUPD13_Pos                    26                                                      /*!< PB PUPD: PUPD13 Position                */
+#define PB_PUPD_PUPD13_Msk                    (0x03UL << PB_PUPD_PUPD13_Pos)                          /*!< PB PUPD: PUPD13 Mask                    */
+#define PB_PUPD_PUPD14_Pos                    28                                                      /*!< PB PUPD: PUPD14 Position                */
+#define PB_PUPD_PUPD14_Msk                    (0x03UL << PB_PUPD_PUPD14_Pos)                          /*!< PB PUPD: PUPD14 Mask                    */
+#define PB_PUPD_PUPD15_Pos                    30                                                      /*!< PB PUPD: PUPD15 Position                */
+#define PB_PUPD_PUPD15_Msk                    (0x03UL << PB_PUPD_PUPD15_Pos)                          /*!< PB PUPD: PUPD15 Mask                    */
+
+/* -----------------------------------  PB_INDR  ---------------------------------- */
+#define PB_INDR_INDR0_Pos                     0                                                       /*!< PB INDR: INDR0 Position                 */
+#define PB_INDR_INDR0_Msk                     (0x01UL << PB_INDR_INDR0_Pos)                           /*!< PB INDR: INDR0 Mask                     */
+#define PB_INDR_INDR1_Pos                     1                                                       /*!< PB INDR: INDR1 Position                 */
+#define PB_INDR_INDR1_Msk                     (0x01UL << PB_INDR_INDR1_Pos)                           /*!< PB INDR: INDR1 Mask                     */
+#define PB_INDR_INDR2_Pos                     2                                                       /*!< PB INDR: INDR2 Position                 */
+#define PB_INDR_INDR2_Msk                     (0x01UL << PB_INDR_INDR2_Pos)                           /*!< PB INDR: INDR2 Mask                     */
+#define PB_INDR_INDR3_Pos                     3                                                       /*!< PB INDR: INDR3 Position                 */
+#define PB_INDR_INDR3_Msk                     (0x01UL << PB_INDR_INDR3_Pos)                           /*!< PB INDR: INDR3 Mask                     */
+#define PB_INDR_INDR4_Pos                     4                                                       /*!< PB INDR: INDR4 Position                 */
+#define PB_INDR_INDR4_Msk                     (0x01UL << PB_INDR_INDR4_Pos)                           /*!< PB INDR: INDR4 Mask                     */
+#define PB_INDR_INDR5_Pos                     5                                                       /*!< PB INDR: INDR5 Position                 */
+#define PB_INDR_INDR5_Msk                     (0x01UL << PB_INDR_INDR5_Pos)                           /*!< PB INDR: INDR5 Mask                     */
+#define PB_INDR_INDR6_Pos                     6                                                       /*!< PB INDR: INDR6 Position                 */
+#define PB_INDR_INDR6_Msk                     (0x01UL << PB_INDR_INDR6_Pos)                           /*!< PB INDR: INDR6 Mask                     */
+#define PB_INDR_INDR7_Pos                     7                                                       /*!< PB INDR: INDR7 Position                 */
+#define PB_INDR_INDR7_Msk                     (0x01UL << PB_INDR_INDR7_Pos)                           /*!< PB INDR: INDR7 Mask                     */
+#define PB_INDR_INDR8_Pos                     8                                                       /*!< PB INDR: INDR8 Position                 */
+#define PB_INDR_INDR8_Msk                     (0x01UL << PB_INDR_INDR8_Pos)                           /*!< PB INDR: INDR8 Mask                     */
+#define PB_INDR_INDR9_Pos                     9                                                       /*!< PB INDR: INDR9 Position                 */
+#define PB_INDR_INDR9_Msk                     (0x01UL << PB_INDR_INDR9_Pos)                           /*!< PB INDR: INDR9 Mask                     */
+#define PB_INDR_INDR10_Pos                    10                                                      /*!< PB INDR: INDR10 Position                */
+#define PB_INDR_INDR10_Msk                    (0x01UL << PB_INDR_INDR10_Pos)                          /*!< PB INDR: INDR10 Mask                    */
+#define PB_INDR_INDR11_Pos                    11                                                      /*!< PB INDR: INDR11 Position                */
+#define PB_INDR_INDR11_Msk                    (0x01UL << PB_INDR_INDR11_Pos)                          /*!< PB INDR: INDR11 Mask                    */
+#define PB_INDR_INDR12_Pos                    12                                                      /*!< PB INDR: INDR12 Position                */
+#define PB_INDR_INDR12_Msk                    (0x01UL << PB_INDR_INDR12_Pos)                          /*!< PB INDR: INDR12 Mask                    */
+#define PB_INDR_INDR13_Pos                    13                                                      /*!< PB INDR: INDR13 Position                */
+#define PB_INDR_INDR13_Msk                    (0x01UL << PB_INDR_INDR13_Pos)                          /*!< PB INDR: INDR13 Mask                    */
+#define PB_INDR_INDR14_Pos                    14                                                      /*!< PB INDR: INDR14 Position                */
+#define PB_INDR_INDR14_Msk                    (0x01UL << PB_INDR_INDR14_Pos)                          /*!< PB INDR: INDR14 Mask                    */
+#define PB_INDR_INDR15_Pos                    15                                                      /*!< PB INDR: INDR15 Position                */
+#define PB_INDR_INDR15_Msk                    (0x01UL << PB_INDR_INDR15_Pos)                          /*!< PB INDR: INDR15 Mask                    */
+
+/* ----------------------------------  PB_OUTDR  ---------------------------------- */
+#define PB_OUTDR_OUTDR0_Pos                   0                                                       /*!< PB OUTDR: OUTDR0 Position               */
+#define PB_OUTDR_OUTDR0_Msk                   (0x01UL << PB_OUTDR_OUTDR0_Pos)                         /*!< PB OUTDR: OUTDR0 Mask                   */
+#define PB_OUTDR_OUTDR1_Pos                   1                                                       /*!< PB OUTDR: OUTDR1 Position               */
+#define PB_OUTDR_OUTDR1_Msk                   (0x01UL << PB_OUTDR_OUTDR1_Pos)                         /*!< PB OUTDR: OUTDR1 Mask                   */
+#define PB_OUTDR_OUTDR2_Pos                   2                                                       /*!< PB OUTDR: OUTDR2 Position               */
+#define PB_OUTDR_OUTDR2_Msk                   (0x01UL << PB_OUTDR_OUTDR2_Pos)                         /*!< PB OUTDR: OUTDR2 Mask                   */
+#define PB_OUTDR_OUTDR3_Pos                   3                                                       /*!< PB OUTDR: OUTDR3 Position               */
+#define PB_OUTDR_OUTDR3_Msk                   (0x01UL << PB_OUTDR_OUTDR3_Pos)                         /*!< PB OUTDR: OUTDR3 Mask                   */
+#define PB_OUTDR_OUTDR4_Pos                   4                                                       /*!< PB OUTDR: OUTDR4 Position               */
+#define PB_OUTDR_OUTDR4_Msk                   (0x01UL << PB_OUTDR_OUTDR4_Pos)                         /*!< PB OUTDR: OUTDR4 Mask                   */
+#define PB_OUTDR_OUTDR5_Pos                   5                                                       /*!< PB OUTDR: OUTDR5 Position               */
+#define PB_OUTDR_OUTDR5_Msk                   (0x01UL << PB_OUTDR_OUTDR5_Pos)                         /*!< PB OUTDR: OUTDR5 Mask                   */
+#define PB_OUTDR_OUTDR6_Pos                   6                                                       /*!< PB OUTDR: OUTDR6 Position               */
+#define PB_OUTDR_OUTDR6_Msk                   (0x01UL << PB_OUTDR_OUTDR6_Pos)                         /*!< PB OUTDR: OUTDR6 Mask                   */
+#define PB_OUTDR_OUTDR7_Pos                   7                                                       /*!< PB OUTDR: OUTDR7 Position               */
+#define PB_OUTDR_OUTDR7_Msk                   (0x01UL << PB_OUTDR_OUTDR7_Pos)                         /*!< PB OUTDR: OUTDR7 Mask                   */
+#define PB_OUTDR_OUTDR8_Pos                   8                                                       /*!< PB OUTDR: OUTDR8 Position               */
+#define PB_OUTDR_OUTDR8_Msk                   (0x01UL << PB_OUTDR_OUTDR8_Pos)                         /*!< PB OUTDR: OUTDR8 Mask                   */
+#define PB_OUTDR_OUTDR9_Pos                   9                                                       /*!< PB OUTDR: OUTDR9 Position               */
+#define PB_OUTDR_OUTDR9_Msk                   (0x01UL << PB_OUTDR_OUTDR9_Pos)                         /*!< PB OUTDR: OUTDR9 Mask                   */
+#define PB_OUTDR_OUTDR10_Pos                  10                                                      /*!< PB OUTDR: OUTDR10 Position              */
+#define PB_OUTDR_OUTDR10_Msk                  (0x01UL << PB_OUTDR_OUTDR10_Pos)                        /*!< PB OUTDR: OUTDR10 Mask                  */
+#define PB_OUTDR_OUTDR11_Pos                  11                                                      /*!< PB OUTDR: OUTDR11 Position              */
+#define PB_OUTDR_OUTDR11_Msk                  (0x01UL << PB_OUTDR_OUTDR11_Pos)                        /*!< PB OUTDR: OUTDR11 Mask                  */
+#define PB_OUTDR_OUTDR12_Pos                  12                                                      /*!< PB OUTDR: OUTDR12 Position              */
+#define PB_OUTDR_OUTDR12_Msk                  (0x01UL << PB_OUTDR_OUTDR12_Pos)                        /*!< PB OUTDR: OUTDR12 Mask                  */
+#define PB_OUTDR_OUTDR13_Pos                  13                                                      /*!< PB OUTDR: OUTDR13 Position              */
+#define PB_OUTDR_OUTDR13_Msk                  (0x01UL << PB_OUTDR_OUTDR13_Pos)                        /*!< PB OUTDR: OUTDR13 Mask                  */
+#define PB_OUTDR_OUTDR14_Pos                  14                                                      /*!< PB OUTDR: OUTDR14 Position              */
+#define PB_OUTDR_OUTDR14_Msk                  (0x01UL << PB_OUTDR_OUTDR14_Pos)                        /*!< PB OUTDR: OUTDR14 Mask                  */
+#define PB_OUTDR_OUTDR15_Pos                  15                                                      /*!< PB OUTDR: OUTDR15 Position              */
+#define PB_OUTDR_OUTDR15_Msk                  (0x01UL << PB_OUTDR_OUTDR15_Pos)                        /*!< PB OUTDR: OUTDR15 Mask                  */
+
+/* -----------------------------------  PB_BSR  ----------------------------------- */
+#define PB_BSR_BSR0_Pos                       0                                                       /*!< PB BSR: BSR0 Position                   */
+#define PB_BSR_BSR0_Msk                       (0x01UL << PB_BSR_BSR0_Pos)                             /*!< PB BSR: BSR0 Mask                       */
+#define PB_BSR_BSR1_Pos                       1                                                       /*!< PB BSR: BSR1 Position                   */
+#define PB_BSR_BSR1_Msk                       (0x01UL << PB_BSR_BSR1_Pos)                             /*!< PB BSR: BSR1 Mask                       */
+#define PB_BSR_BSR2_Pos                       2                                                       /*!< PB BSR: BSR2 Position                   */
+#define PB_BSR_BSR2_Msk                       (0x01UL << PB_BSR_BSR2_Pos)                             /*!< PB BSR: BSR2 Mask                       */
+#define PB_BSR_BSR3_Pos                       3                                                       /*!< PB BSR: BSR3 Position                   */
+#define PB_BSR_BSR3_Msk                       (0x01UL << PB_BSR_BSR3_Pos)                             /*!< PB BSR: BSR3 Mask                       */
+#define PB_BSR_BSR4_Pos                       4                                                       /*!< PB BSR: BSR4 Position                   */
+#define PB_BSR_BSR4_Msk                       (0x01UL << PB_BSR_BSR4_Pos)                             /*!< PB BSR: BSR4 Mask                       */
+#define PB_BSR_BSR5_Pos                       5                                                       /*!< PB BSR: BSR5 Position                   */
+#define PB_BSR_BSR5_Msk                       (0x01UL << PB_BSR_BSR5_Pos)                             /*!< PB BSR: BSR5 Mask                       */
+#define PB_BSR_BSR6_Pos                       6                                                       /*!< PB BSR: BSR6 Position                   */
+#define PB_BSR_BSR6_Msk                       (0x01UL << PB_BSR_BSR6_Pos)                             /*!< PB BSR: BSR6 Mask                       */
+#define PB_BSR_BSR7_Pos                       7                                                       /*!< PB BSR: BSR7 Position                   */
+#define PB_BSR_BSR7_Msk                       (0x01UL << PB_BSR_BSR7_Pos)                             /*!< PB BSR: BSR7 Mask                       */
+#define PB_BSR_BSR8_Pos                       8                                                       /*!< PB BSR: BSR8 Position                   */
+#define PB_BSR_BSR8_Msk                       (0x01UL << PB_BSR_BSR8_Pos)                             /*!< PB BSR: BSR8 Mask                       */
+#define PB_BSR_BSR9_Pos                       9                                                       /*!< PB BSR: BSR9 Position                   */
+#define PB_BSR_BSR9_Msk                       (0x01UL << PB_BSR_BSR9_Pos)                             /*!< PB BSR: BSR9 Mask                       */
+#define PB_BSR_BSR10_Pos                      10                                                      /*!< PB BSR: BSR10 Position                  */
+#define PB_BSR_BSR10_Msk                      (0x01UL << PB_BSR_BSR10_Pos)                            /*!< PB BSR: BSR10 Mask                      */
+#define PB_BSR_BSR11_Pos                      11                                                      /*!< PB BSR: BSR11 Position                  */
+#define PB_BSR_BSR11_Msk                      (0x01UL << PB_BSR_BSR11_Pos)                            /*!< PB BSR: BSR11 Mask                      */
+#define PB_BSR_BSR12_Pos                      12                                                      /*!< PB BSR: BSR12 Position                  */
+#define PB_BSR_BSR12_Msk                      (0x01UL << PB_BSR_BSR12_Pos)                            /*!< PB BSR: BSR12 Mask                      */
+#define PB_BSR_BSR13_Pos                      13                                                      /*!< PB BSR: BSR13 Position                  */
+#define PB_BSR_BSR13_Msk                      (0x01UL << PB_BSR_BSR13_Pos)                            /*!< PB BSR: BSR13 Mask                      */
+#define PB_BSR_BSR14_Pos                      14                                                      /*!< PB BSR: BSR14 Position                  */
+#define PB_BSR_BSR14_Msk                      (0x01UL << PB_BSR_BSR14_Pos)                            /*!< PB BSR: BSR14 Mask                      */
+#define PB_BSR_BSR15_Pos                      15                                                      /*!< PB BSR: BSR15 Position                  */
+#define PB_BSR_BSR15_Msk                      (0x01UL << PB_BSR_BSR15_Pos)                            /*!< PB BSR: BSR15 Mask                      */
+
+/* -----------------------------------  PB_BCR  ----------------------------------- */
+#define PB_BCR_BCR0_Pos                       0                                                       /*!< PB BCR: BCR0 Position                   */
+#define PB_BCR_BCR0_Msk                       (0x01UL << PB_BCR_BCR0_Pos)                             /*!< PB BCR: BCR0 Mask                       */
+#define PB_BCR_BCR1_Pos                       1                                                       /*!< PB BCR: BCR1 Position                   */
+#define PB_BCR_BCR1_Msk                       (0x01UL << PB_BCR_BCR1_Pos)                             /*!< PB BCR: BCR1 Mask                       */
+#define PB_BCR_BCR2_Pos                       2                                                       /*!< PB BCR: BCR2 Position                   */
+#define PB_BCR_BCR2_Msk                       (0x01UL << PB_BCR_BCR2_Pos)                             /*!< PB BCR: BCR2 Mask                       */
+#define PB_BCR_BCR3_Pos                       3                                                       /*!< PB BCR: BCR3 Position                   */
+#define PB_BCR_BCR3_Msk                       (0x01UL << PB_BCR_BCR3_Pos)                             /*!< PB BCR: BCR3 Mask                       */
+#define PB_BCR_BCR4_Pos                       4                                                       /*!< PB BCR: BCR4 Position                   */
+#define PB_BCR_BCR4_Msk                       (0x01UL << PB_BCR_BCR4_Pos)                             /*!< PB BCR: BCR4 Mask                       */
+#define PB_BCR_BCR5_Pos                       5                                                       /*!< PB BCR: BCR5 Position                   */
+#define PB_BCR_BCR5_Msk                       (0x01UL << PB_BCR_BCR5_Pos)                             /*!< PB BCR: BCR5 Mask                       */
+#define PB_BCR_BCR6_Pos                       6                                                       /*!< PB BCR: BCR6 Position                   */
+#define PB_BCR_BCR6_Msk                       (0x01UL << PB_BCR_BCR6_Pos)                             /*!< PB BCR: BCR6 Mask                       */
+#define PB_BCR_BCR7_Pos                       7                                                       /*!< PB BCR: BCR7 Position                   */
+#define PB_BCR_BCR7_Msk                       (0x01UL << PB_BCR_BCR7_Pos)                             /*!< PB BCR: BCR7 Mask                       */
+#define PB_BCR_BCR8_Pos                       8                                                       /*!< PB BCR: BCR8 Position                   */
+#define PB_BCR_BCR8_Msk                       (0x01UL << PB_BCR_BCR8_Pos)                             /*!< PB BCR: BCR8 Mask                       */
+#define PB_BCR_BCR9_Pos                       9                                                       /*!< PB BCR: BCR9 Position                   */
+#define PB_BCR_BCR9_Msk                       (0x01UL << PB_BCR_BCR9_Pos)                             /*!< PB BCR: BCR9 Mask                       */
+#define PB_BCR_BCR10_Pos                      10                                                      /*!< PB BCR: BCR10 Position                  */
+#define PB_BCR_BCR10_Msk                      (0x01UL << PB_BCR_BCR10_Pos)                            /*!< PB BCR: BCR10 Mask                      */
+#define PB_BCR_BCR11_Pos                      11                                                      /*!< PB BCR: BCR11 Position                  */
+#define PB_BCR_BCR11_Msk                      (0x01UL << PB_BCR_BCR11_Pos)                            /*!< PB BCR: BCR11 Mask                      */
+#define PB_BCR_BCR12_Pos                      12                                                      /*!< PB BCR: BCR12 Position                  */
+#define PB_BCR_BCR12_Msk                      (0x01UL << PB_BCR_BCR12_Pos)                            /*!< PB BCR: BCR12 Mask                      */
+#define PB_BCR_BCR13_Pos                      13                                                      /*!< PB BCR: BCR13 Position                  */
+#define PB_BCR_BCR13_Msk                      (0x01UL << PB_BCR_BCR13_Pos)                            /*!< PB BCR: BCR13 Mask                      */
+#define PB_BCR_BCR14_Pos                      14                                                      /*!< PB BCR: BCR14 Position                  */
+#define PB_BCR_BCR14_Msk                      (0x01UL << PB_BCR_BCR14_Pos)                            /*!< PB BCR: BCR14 Mask                      */
+#define PB_BCR_BCR15_Pos                      15                                                      /*!< PB BCR: BCR15 Position                  */
+#define PB_BCR_BCR15_Msk                      (0x01UL << PB_BCR_BCR15_Pos)                            /*!< PB BCR: BCR15 Mask                      */
+
+/* ---------------------------------  PB_OUTDMSK  --------------------------------- */
+#define PB_OUTDMSK_OUTDMSK0_Pos               0                                                       /*!< PB OUTDMSK: OUTDMSK0 Position           */
+#define PB_OUTDMSK_OUTDMSK0_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK0_Pos)                     /*!< PB OUTDMSK: OUTDMSK0 Mask               */
+#define PB_OUTDMSK_OUTDMSK1_Pos               1                                                       /*!< PB OUTDMSK: OUTDMSK1 Position           */
+#define PB_OUTDMSK_OUTDMSK1_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK1_Pos)                     /*!< PB OUTDMSK: OUTDMSK1 Mask               */
+#define PB_OUTDMSK_OUTDMSK2_Pos               2                                                       /*!< PB OUTDMSK: OUTDMSK2 Position           */
+#define PB_OUTDMSK_OUTDMSK2_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK2_Pos)                     /*!< PB OUTDMSK: OUTDMSK2 Mask               */
+#define PB_OUTDMSK_OUTDMSK3_Pos               3                                                       /*!< PB OUTDMSK: OUTDMSK3 Position           */
+#define PB_OUTDMSK_OUTDMSK3_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK3_Pos)                     /*!< PB OUTDMSK: OUTDMSK3 Mask               */
+#define PB_OUTDMSK_OUTDMSK4_Pos               4                                                       /*!< PB OUTDMSK: OUTDMSK4 Position           */
+#define PB_OUTDMSK_OUTDMSK4_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK4_Pos)                     /*!< PB OUTDMSK: OUTDMSK4 Mask               */
+#define PB_OUTDMSK_OUTDMSK5_Pos               5                                                       /*!< PB OUTDMSK: OUTDMSK5 Position           */
+#define PB_OUTDMSK_OUTDMSK5_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK5_Pos)                     /*!< PB OUTDMSK: OUTDMSK5 Mask               */
+#define PB_OUTDMSK_OUTDMSK6_Pos               6                                                       /*!< PB OUTDMSK: OUTDMSK6 Position           */
+#define PB_OUTDMSK_OUTDMSK6_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK6_Pos)                     /*!< PB OUTDMSK: OUTDMSK6 Mask               */
+#define PB_OUTDMSK_OUTDMSK7_Pos               7                                                       /*!< PB OUTDMSK: OUTDMSK7 Position           */
+#define PB_OUTDMSK_OUTDMSK7_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK7_Pos)                     /*!< PB OUTDMSK: OUTDMSK7 Mask               */
+#define PB_OUTDMSK_OUTDMSK8_Pos               8                                                       /*!< PB OUTDMSK: OUTDMSK8 Position           */
+#define PB_OUTDMSK_OUTDMSK8_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK8_Pos)                     /*!< PB OUTDMSK: OUTDMSK8 Mask               */
+#define PB_OUTDMSK_OUTDMSK9_Pos               9                                                       /*!< PB OUTDMSK: OUTDMSK9 Position           */
+#define PB_OUTDMSK_OUTDMSK9_Msk               (0x01UL << PB_OUTDMSK_OUTDMSK9_Pos)                     /*!< PB OUTDMSK: OUTDMSK9 Mask               */
+#define PB_OUTDMSK_OUTDMSK10_Pos              10                                                      /*!< PB OUTDMSK: OUTDMSK10 Position          */
+#define PB_OUTDMSK_OUTDMSK10_Msk              (0x01UL << PB_OUTDMSK_OUTDMSK10_Pos)                    /*!< PB OUTDMSK: OUTDMSK10 Mask              */
+#define PB_OUTDMSK_OUTDMSK11_Pos              11                                                      /*!< PB OUTDMSK: OUTDMSK11 Position          */
+#define PB_OUTDMSK_OUTDMSK11_Msk              (0x01UL << PB_OUTDMSK_OUTDMSK11_Pos)                    /*!< PB OUTDMSK: OUTDMSK11 Mask              */
+#define PB_OUTDMSK_OUTDMSK12_Pos              12                                                      /*!< PB OUTDMSK: OUTDMSK12 Position          */
+#define PB_OUTDMSK_OUTDMSK12_Msk              (0x01UL << PB_OUTDMSK_OUTDMSK12_Pos)                    /*!< PB OUTDMSK: OUTDMSK12 Mask              */
+#define PB_OUTDMSK_OUTDMSK13_Pos              13                                                      /*!< PB OUTDMSK: OUTDMSK13 Position          */
+#define PB_OUTDMSK_OUTDMSK13_Msk              (0x01UL << PB_OUTDMSK_OUTDMSK13_Pos)                    /*!< PB OUTDMSK: OUTDMSK13 Mask              */
+#define PB_OUTDMSK_OUTDMSK14_Pos              14                                                      /*!< PB OUTDMSK: OUTDMSK14 Position          */
+#define PB_OUTDMSK_OUTDMSK14_Msk              (0x01UL << PB_OUTDMSK_OUTDMSK14_Pos)                    /*!< PB OUTDMSK: OUTDMSK14 Mask              */
+#define PB_OUTDMSK_OUTDMSK15_Pos              15                                                      /*!< PB OUTDMSK: OUTDMSK15 Position          */
+#define PB_OUTDMSK_OUTDMSK15_Msk              (0x01UL << PB_OUTDMSK_OUTDMSK15_Pos)                    /*!< PB OUTDMSK: OUTDMSK15 Mask              */
+
+/* -----------------------------------  PB_DBCR  ---------------------------------- */
+#define PB_DBCR_DBEN0_Pos                     0                                                       /*!< PB DBCR: DBEN0 Position                 */
+#define PB_DBCR_DBEN0_Msk                     (0x01UL << PB_DBCR_DBEN0_Pos)                           /*!< PB DBCR: DBEN0 Mask                     */
+#define PB_DBCR_DBEN1_Pos                     1                                                       /*!< PB DBCR: DBEN1 Position                 */
+#define PB_DBCR_DBEN1_Msk                     (0x01UL << PB_DBCR_DBEN1_Pos)                           /*!< PB DBCR: DBEN1 Mask                     */
+#define PB_DBCR_DBEN2_Pos                     2                                                       /*!< PB DBCR: DBEN2 Position                 */
+#define PB_DBCR_DBEN2_Msk                     (0x01UL << PB_DBCR_DBEN2_Pos)                           /*!< PB DBCR: DBEN2 Mask                     */
+#define PB_DBCR_DBEN3_Pos                     3                                                       /*!< PB DBCR: DBEN3 Position                 */
+#define PB_DBCR_DBEN3_Msk                     (0x01UL << PB_DBCR_DBEN3_Pos)                           /*!< PB DBCR: DBEN3 Mask                     */
+#define PB_DBCR_DBEN4_Pos                     4                                                       /*!< PB DBCR: DBEN4 Position                 */
+#define PB_DBCR_DBEN4_Msk                     (0x01UL << PB_DBCR_DBEN4_Pos)                           /*!< PB DBCR: DBEN4 Mask                     */
+#define PB_DBCR_DBEN5_Pos                     5                                                       /*!< PB DBCR: DBEN5 Position                 */
+#define PB_DBCR_DBEN5_Msk                     (0x01UL << PB_DBCR_DBEN5_Pos)                           /*!< PB DBCR: DBEN5 Mask                     */
+#define PB_DBCR_DBEN6_Pos                     6                                                       /*!< PB DBCR: DBEN6 Position                 */
+#define PB_DBCR_DBEN6_Msk                     (0x01UL << PB_DBCR_DBEN6_Pos)                           /*!< PB DBCR: DBEN6 Mask                     */
+#define PB_DBCR_DBEN7_Pos                     7                                                       /*!< PB DBCR: DBEN7 Position                 */
+#define PB_DBCR_DBEN7_Msk                     (0x01UL << PB_DBCR_DBEN7_Pos)                           /*!< PB DBCR: DBEN7 Mask                     */
+#define PB_DBCR_DBEN8_Pos                     8                                                       /*!< PB DBCR: DBEN8 Position                 */
+#define PB_DBCR_DBEN8_Msk                     (0x01UL << PB_DBCR_DBEN8_Pos)                           /*!< PB DBCR: DBEN8 Mask                     */
+#define PB_DBCR_DBEN9_Pos                     9                                                       /*!< PB DBCR: DBEN9 Position                 */
+#define PB_DBCR_DBEN9_Msk                     (0x01UL << PB_DBCR_DBEN9_Pos)                           /*!< PB DBCR: DBEN9 Mask                     */
+#define PB_DBCR_DBEN10_Pos                    10                                                      /*!< PB DBCR: DBEN10 Position                */
+#define PB_DBCR_DBEN10_Msk                    (0x01UL << PB_DBCR_DBEN10_Pos)                          /*!< PB DBCR: DBEN10 Mask                    */
+#define PB_DBCR_DBEN11_Pos                    11                                                      /*!< PB DBCR: DBEN11 Position                */
+#define PB_DBCR_DBEN11_Msk                    (0x01UL << PB_DBCR_DBEN11_Pos)                          /*!< PB DBCR: DBEN11 Mask                    */
+#define PB_DBCR_DBEN12_Pos                    12                                                      /*!< PB DBCR: DBEN12 Position                */
+#define PB_DBCR_DBEN12_Msk                    (0x01UL << PB_DBCR_DBEN12_Pos)                          /*!< PB DBCR: DBEN12 Mask                    */
+#define PB_DBCR_DBEN13_Pos                    13                                                      /*!< PB DBCR: DBEN13 Position                */
+#define PB_DBCR_DBEN13_Msk                    (0x01UL << PB_DBCR_DBEN13_Pos)                          /*!< PB DBCR: DBEN13 Mask                    */
+#define PB_DBCR_DBEN14_Pos                    14                                                      /*!< PB DBCR: DBEN14 Position                */
+#define PB_DBCR_DBEN14_Msk                    (0x01UL << PB_DBCR_DBEN14_Pos)                          /*!< PB DBCR: DBEN14 Mask                    */
+#define PB_DBCR_DBEN15_Pos                    15                                                      /*!< PB DBCR: DBEN15 Position                */
+#define PB_DBCR_DBEN15_Msk                    (0x01UL << PB_DBCR_DBEN15_Pos)                          /*!< PB DBCR: DBEN15 Mask                    */
+
+/* -----------------------------------  PB_IER  ----------------------------------- */
+#define PB_IER_PIE0_Pos                       0                                                       /*!< PB IER: PIE0 Position                   */
+#define PB_IER_PIE0_Msk                       (0x03UL << PB_IER_PIE0_Pos)                             /*!< PB IER: PIE0 Mask                       */
+#define PB_IER_PIE1_Pos                       2                                                       /*!< PB IER: PIE1 Position                   */
+#define PB_IER_PIE1_Msk                       (0x03UL << PB_IER_PIE1_Pos)                             /*!< PB IER: PIE1 Mask                       */
+#define PB_IER_PIE2_Pos                       4                                                       /*!< PB IER: PIE2 Position                   */
+#define PB_IER_PIE2_Msk                       (0x03UL << PB_IER_PIE2_Pos)                             /*!< PB IER: PIE2 Mask                       */
+#define PB_IER_PIE3_Pos                       6                                                       /*!< PB IER: PIE3 Position                   */
+#define PB_IER_PIE3_Msk                       (0x03UL << PB_IER_PIE3_Pos)                             /*!< PB IER: PIE3 Mask                       */
+#define PB_IER_PIE4_Pos                       8                                                       /*!< PB IER: PIE4 Position                   */
+#define PB_IER_PIE4_Msk                       (0x03UL << PB_IER_PIE4_Pos)                             /*!< PB IER: PIE4 Mask                       */
+#define PB_IER_PIE5_Pos                       10                                                      /*!< PB IER: PIE5 Position                   */
+#define PB_IER_PIE5_Msk                       (0x03UL << PB_IER_PIE5_Pos)                             /*!< PB IER: PIE5 Mask                       */
+#define PB_IER_PIE6_Pos                       12                                                      /*!< PB IER: PIE6 Position                   */
+#define PB_IER_PIE6_Msk                       (0x03UL << PB_IER_PIE6_Pos)                             /*!< PB IER: PIE6 Mask                       */
+#define PB_IER_PIE7_Pos                       14                                                      /*!< PB IER: PIE7 Position                   */
+#define PB_IER_PIE7_Msk                       (0x03UL << PB_IER_PIE7_Pos)                             /*!< PB IER: PIE7 Mask                       */
+#define PB_IER_PIE8_Pos                       16                                                      /*!< PB IER: PIE8 Position                   */
+#define PB_IER_PIE8_Msk                       (0x03UL << PB_IER_PIE8_Pos)                             /*!< PB IER: PIE8 Mask                       */
+#define PB_IER_PIE9_Pos                       18                                                      /*!< PB IER: PIE9 Position                   */
+#define PB_IER_PIE9_Msk                       (0x03UL << PB_IER_PIE9_Pos)                             /*!< PB IER: PIE9 Mask                       */
+#define PB_IER_PIE10_Pos                      20                                                      /*!< PB IER: PIE10 Position                  */
+#define PB_IER_PIE10_Msk                      (0x03UL << PB_IER_PIE10_Pos)                            /*!< PB IER: PIE10 Mask                      */
+#define PB_IER_PIE11_Pos                      22                                                      /*!< PB IER: PIE11 Position                  */
+#define PB_IER_PIE11_Msk                      (0x03UL << PB_IER_PIE11_Pos)                            /*!< PB IER: PIE11 Mask                      */
+#define PB_IER_PIE12_Pos                      24                                                      /*!< PB IER: PIE12 Position                  */
+#define PB_IER_PIE12_Msk                      (0x03UL << PB_IER_PIE12_Pos)                            /*!< PB IER: PIE12 Mask                      */
+#define PB_IER_PIE13_Pos                      26                                                      /*!< PB IER: PIE13 Position                  */
+#define PB_IER_PIE13_Msk                      (0x03UL << PB_IER_PIE13_Pos)                            /*!< PB IER: PIE13 Mask                      */
+#define PB_IER_PIE14_Pos                      28                                                      /*!< PB IER: PIE14 Position                  */
+#define PB_IER_PIE14_Msk                      (0x03UL << PB_IER_PIE14_Pos)                            /*!< PB IER: PIE14 Mask                      */
+#define PB_IER_PIE15_Pos                      30                                                      /*!< PB IER: PIE15 Position                  */
+#define PB_IER_PIE15_Msk                      (0x03UL << PB_IER_PIE15_Pos)                            /*!< PB IER: PIE15 Mask                      */
+
+/* -----------------------------------  PB_ISR  ----------------------------------- */
+#define PB_ISR_PIS0_Pos                       0                                                       /*!< PB ISR: PIS0 Position                   */
+#define PB_ISR_PIS0_Msk                       (0x03UL << PB_ISR_PIS0_Pos)                             /*!< PB ISR: PIS0 Mask                       */
+#define PB_ISR_PIS1_Pos                       2                                                       /*!< PB ISR: PIS1 Position                   */
+#define PB_ISR_PIS1_Msk                       (0x03UL << PB_ISR_PIS1_Pos)                             /*!< PB ISR: PIS1 Mask                       */
+#define PB_ISR_PIS2_Pos                       4                                                       /*!< PB ISR: PIS2 Position                   */
+#define PB_ISR_PIS2_Msk                       (0x03UL << PB_ISR_PIS2_Pos)                             /*!< PB ISR: PIS2 Mask                       */
+#define PB_ISR_PIS3_Pos                       6                                                       /*!< PB ISR: PIS3 Position                   */
+#define PB_ISR_PIS3_Msk                       (0x03UL << PB_ISR_PIS3_Pos)                             /*!< PB ISR: PIS3 Mask                       */
+#define PB_ISR_PIS4_Pos                       8                                                       /*!< PB ISR: PIS4 Position                   */
+#define PB_ISR_PIS4_Msk                       (0x03UL << PB_ISR_PIS4_Pos)                             /*!< PB ISR: PIS4 Mask                       */
+#define PB_ISR_PIS5_Pos                       10                                                      /*!< PB ISR: PIS5 Position                   */
+#define PB_ISR_PIS5_Msk                       (0x03UL << PB_ISR_PIS5_Pos)                             /*!< PB ISR: PIS5 Mask                       */
+#define PB_ISR_PIS6_Pos                       12                                                      /*!< PB ISR: PIS6 Position                   */
+#define PB_ISR_PIS6_Msk                       (0x03UL << PB_ISR_PIS6_Pos)                             /*!< PB ISR: PIS6 Mask                       */
+#define PB_ISR_PIS7_Pos                       14                                                      /*!< PB ISR: PIS7 Position                   */
+#define PB_ISR_PIS7_Msk                       (0x03UL << PB_ISR_PIS7_Pos)                             /*!< PB ISR: PIS7 Mask                       */
+#define PB_ISR_PIS8_Pos                       16                                                      /*!< PB ISR: PIS8 Position                   */
+#define PB_ISR_PIS8_Msk                       (0x03UL << PB_ISR_PIS8_Pos)                             /*!< PB ISR: PIS8 Mask                       */
+#define PB_ISR_PIS9_Pos                       18                                                      /*!< PB ISR: PIS9 Position                   */
+#define PB_ISR_PIS9_Msk                       (0x03UL << PB_ISR_PIS9_Pos)                             /*!< PB ISR: PIS9 Mask                       */
+#define PB_ISR_PIS10_Pos                      20                                                      /*!< PB ISR: PIS10 Position                  */
+#define PB_ISR_PIS10_Msk                      (0x03UL << PB_ISR_PIS10_Pos)                            /*!< PB ISR: PIS10 Mask                      */
+#define PB_ISR_PIS11_Pos                      22                                                      /*!< PB ISR: PIS11 Position                  */
+#define PB_ISR_PIS11_Msk                      (0x03UL << PB_ISR_PIS11_Pos)                            /*!< PB ISR: PIS11 Mask                      */
+#define PB_ISR_PIS12_Pos                      24                                                      /*!< PB ISR: PIS12 Position                  */
+#define PB_ISR_PIS12_Msk                      (0x03UL << PB_ISR_PIS12_Pos)                            /*!< PB ISR: PIS12 Mask                      */
+#define PB_ISR_PIS13_Pos                      26                                                      /*!< PB ISR: PIS13 Position                  */
+#define PB_ISR_PIS13_Msk                      (0x03UL << PB_ISR_PIS13_Pos)                            /*!< PB ISR: PIS13 Mask                      */
+#define PB_ISR_PIS14_Pos                      28                                                      /*!< PB ISR: PIS14 Position                  */
+#define PB_ISR_PIS14_Msk                      (0x03UL << PB_ISR_PIS14_Pos)                            /*!< PB ISR: PIS14 Mask                      */
+#define PB_ISR_PIS15_Pos                      30                                                      /*!< PB ISR: PIS15 Position                  */
+#define PB_ISR_PIS15_Msk                      (0x03UL << PB_ISR_PIS15_Pos)                            /*!< PB ISR: PIS15 Mask                      */
+
+/* -----------------------------------  PB_ICR  ----------------------------------- */
+#define PB_ICR_PIC0_Pos                       0                                                       /*!< PB ICR: PIC0 Position                   */
+#define PB_ICR_PIC0_Msk                       (0x03UL << PB_ICR_PIC0_Pos)                             /*!< PB ICR: PIC0 Mask                       */
+#define PB_ICR_PIC1_Pos                       2                                                       /*!< PB ICR: PIC1 Position                   */
+#define PB_ICR_PIC1_Msk                       (0x03UL << PB_ICR_PIC1_Pos)                             /*!< PB ICR: PIC1 Mask                       */
+#define PB_ICR_PIC2_Pos                       4                                                       /*!< PB ICR: PIC2 Position                   */
+#define PB_ICR_PIC2_Msk                       (0x03UL << PB_ICR_PIC2_Pos)                             /*!< PB ICR: PIC2 Mask                       */
+#define PB_ICR_PIC3_Pos                       6                                                       /*!< PB ICR: PIC3 Position                   */
+#define PB_ICR_PIC3_Msk                       (0x03UL << PB_ICR_PIC3_Pos)                             /*!< PB ICR: PIC3 Mask                       */
+#define PB_ICR_PIC4_Pos                       8                                                       /*!< PB ICR: PIC4 Position                   */
+#define PB_ICR_PIC4_Msk                       (0x03UL << PB_ICR_PIC4_Pos)                             /*!< PB ICR: PIC4 Mask                       */
+#define PB_ICR_PIC5_Pos                       10                                                      /*!< PB ICR: PIC5 Position                   */
+#define PB_ICR_PIC5_Msk                       (0x03UL << PB_ICR_PIC5_Pos)                             /*!< PB ICR: PIC5 Mask                       */
+#define PB_ICR_PIC6_Pos                       12                                                      /*!< PB ICR: PIC6 Position                   */
+#define PB_ICR_PIC6_Msk                       (0x03UL << PB_ICR_PIC6_Pos)                             /*!< PB ICR: PIC6 Mask                       */
+#define PB_ICR_PIC7_Pos                       14                                                      /*!< PB ICR: PIC7 Position                   */
+#define PB_ICR_PIC7_Msk                       (0x03UL << PB_ICR_PIC7_Pos)                             /*!< PB ICR: PIC7 Mask                       */
+#define PB_ICR_PIC8_Pos                       16                                                      /*!< PB ICR: PIC8 Position                   */
+#define PB_ICR_PIC8_Msk                       (0x03UL << PB_ICR_PIC8_Pos)                             /*!< PB ICR: PIC8 Mask                       */
+#define PB_ICR_PIC9_Pos                       18                                                      /*!< PB ICR: PIC9 Position                   */
+#define PB_ICR_PIC9_Msk                       (0x03UL << PB_ICR_PIC9_Pos)                             /*!< PB ICR: PIC9 Mask                       */
+#define PB_ICR_PIC10_Pos                      20                                                      /*!< PB ICR: PIC10 Position                  */
+#define PB_ICR_PIC10_Msk                      (0x03UL << PB_ICR_PIC10_Pos)                            /*!< PB ICR: PIC10 Mask                      */
+#define PB_ICR_PIC11_Pos                      22                                                      /*!< PB ICR: PIC11 Position                  */
+#define PB_ICR_PIC11_Msk                      (0x03UL << PB_ICR_PIC11_Pos)                            /*!< PB ICR: PIC11 Mask                      */
+#define PB_ICR_PIC12_Pos                      24                                                      /*!< PB ICR: PIC12 Position                  */
+#define PB_ICR_PIC12_Msk                      (0x03UL << PB_ICR_PIC12_Pos)                            /*!< PB ICR: PIC12 Mask                      */
+#define PB_ICR_PIC13_Pos                      26                                                      /*!< PB ICR: PIC13 Position                  */
+#define PB_ICR_PIC13_Msk                      (0x03UL << PB_ICR_PIC13_Pos)                            /*!< PB ICR: PIC13 Mask                      */
+#define PB_ICR_PIC14_Pos                      28                                                      /*!< PB ICR: PIC14 Position                  */
+#define PB_ICR_PIC14_Msk                      (0x03UL << PB_ICR_PIC14_Pos)                            /*!< PB ICR: PIC14 Mask                      */
+#define PB_ICR_PIC15_Pos                      30                                                      /*!< PB ICR: PIC15 Position                  */
+#define PB_ICR_PIC15_Msk                      (0x03UL << PB_ICR_PIC15_Pos)                            /*!< PB ICR: PIC15 Mask                      */
+
+
+/* ================================================================================ */
+/* ================           struct 'PC' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  PC_MOD  ----------------------------------- */
+#define PC_MOD_MODE0_Pos                      0                                                       /*!< PC MOD: MODE0 Position                  */
+#define PC_MOD_MODE0_Msk                      (0x03UL << PC_MOD_MODE0_Pos)                            /*!< PC MOD: MODE0 Mask                      */
+#define PC_MOD_MODE1_Pos                      2                                                       /*!< PC MOD: MODE1 Position                  */
+#define PC_MOD_MODE1_Msk                      (0x03UL << PC_MOD_MODE1_Pos)                            /*!< PC MOD: MODE1 Mask                      */
+#define PC_MOD_MODE2_Pos                      4                                                       /*!< PC MOD: MODE2 Position                  */
+#define PC_MOD_MODE2_Msk                      (0x03UL << PC_MOD_MODE2_Pos)                            /*!< PC MOD: MODE2 Mask                      */
+#define PC_MOD_MODE3_Pos                      6                                                       /*!< PC MOD: MODE3 Position                  */
+#define PC_MOD_MODE3_Msk                      (0x03UL << PC_MOD_MODE3_Pos)                            /*!< PC MOD: MODE3 Mask                      */
+#define PC_MOD_MODE4_Pos                      8                                                       /*!< PC MOD: MODE4 Position                  */
+#define PC_MOD_MODE4_Msk                      (0x03UL << PC_MOD_MODE4_Pos)                            /*!< PC MOD: MODE4 Mask                      */
+#define PC_MOD_MODE5_Pos                      10                                                      /*!< PC MOD: MODE5 Position                  */
+#define PC_MOD_MODE5_Msk                      (0x03UL << PC_MOD_MODE5_Pos)                            /*!< PC MOD: MODE5 Mask                      */
+#define PC_MOD_MODE6_Pos                      12                                                      /*!< PC MOD: MODE6 Position                  */
+#define PC_MOD_MODE6_Msk                      (0x03UL << PC_MOD_MODE6_Pos)                            /*!< PC MOD: MODE6 Mask                      */
+#define PC_MOD_MODE7_Pos                      14                                                      /*!< PC MOD: MODE7 Position                  */
+#define PC_MOD_MODE7_Msk                      (0x03UL << PC_MOD_MODE7_Pos)                            /*!< PC MOD: MODE7 Mask                      */
+#define PC_MOD_MODE8_Pos                      16                                                      /*!< PC MOD: MODE8 Position                  */
+#define PC_MOD_MODE8_Msk                      (0x03UL << PC_MOD_MODE8_Pos)                            /*!< PC MOD: MODE8 Mask                      */
+#define PC_MOD_MODE9_Pos                      18                                                      /*!< PC MOD: MODE9 Position                  */
+#define PC_MOD_MODE9_Msk                      (0x03UL << PC_MOD_MODE9_Pos)                            /*!< PC MOD: MODE9 Mask                      */
+#define PC_MOD_MODE10_Pos                     20                                                      /*!< PC MOD: MODE10 Position                 */
+#define PC_MOD_MODE10_Msk                     (0x03UL << PC_MOD_MODE10_Pos)                           /*!< PC MOD: MODE10 Mask                     */
+#define PC_MOD_MODE11_Pos                     22                                                      /*!< PC MOD: MODE11 Position                 */
+#define PC_MOD_MODE11_Msk                     (0x03UL << PC_MOD_MODE11_Pos)                           /*!< PC MOD: MODE11 Mask                     */
+#define PC_MOD_MODE12_Pos                     24                                                      /*!< PC MOD: MODE12 Position                 */
+#define PC_MOD_MODE12_Msk                     (0x03UL << PC_MOD_MODE12_Pos)                           /*!< PC MOD: MODE12 Mask                     */
+#define PC_MOD_MODE13_Pos                     26                                                      /*!< PC MOD: MODE13 Position                 */
+#define PC_MOD_MODE13_Msk                     (0x03UL << PC_MOD_MODE13_Pos)                           /*!< PC MOD: MODE13 Mask                     */
+#define PC_MOD_MODE14_Pos                     28                                                      /*!< PC MOD: MODE14 Position                 */
+#define PC_MOD_MODE14_Msk                     (0x03UL << PC_MOD_MODE14_Pos)                           /*!< PC MOD: MODE14 Mask                     */
+#define PC_MOD_MODE15_Pos                     30                                                      /*!< PC MOD: MODE15 Position                 */
+#define PC_MOD_MODE15_Msk                     (0x03UL << PC_MOD_MODE15_Pos)                           /*!< PC MOD: MODE15 Mask                     */
+
+/* -----------------------------------  PC_TYP  ----------------------------------- */
+#define PC_TYP_TYP0_Pos                       0                                                       /*!< PC TYP: TYP0 Position                   */
+#define PC_TYP_TYP0_Msk                       (0x01UL << PC_TYP_TYP0_Pos)                             /*!< PC TYP: TYP0 Mask                       */
+#define PC_TYP_TYP1_Pos                       1                                                       /*!< PC TYP: TYP1 Position                   */
+#define PC_TYP_TYP1_Msk                       (0x01UL << PC_TYP_TYP1_Pos)                             /*!< PC TYP: TYP1 Mask                       */
+#define PC_TYP_TYP2_Pos                       2                                                       /*!< PC TYP: TYP2 Position                   */
+#define PC_TYP_TYP2_Msk                       (0x01UL << PC_TYP_TYP2_Pos)                             /*!< PC TYP: TYP2 Mask                       */
+#define PC_TYP_TYP3_Pos                       3                                                       /*!< PC TYP: TYP3 Position                   */
+#define PC_TYP_TYP3_Msk                       (0x01UL << PC_TYP_TYP3_Pos)                             /*!< PC TYP: TYP3 Mask                       */
+#define PC_TYP_TYP4_Pos                       4                                                       /*!< PC TYP: TYP4 Position                   */
+#define PC_TYP_TYP4_Msk                       (0x01UL << PC_TYP_TYP4_Pos)                             /*!< PC TYP: TYP4 Mask                       */
+#define PC_TYP_TYP5_Pos                       5                                                       /*!< PC TYP: TYP5 Position                   */
+#define PC_TYP_TYP5_Msk                       (0x01UL << PC_TYP_TYP5_Pos)                             /*!< PC TYP: TYP5 Mask                       */
+#define PC_TYP_TYP6_Pos                       6                                                       /*!< PC TYP: TYP6 Position                   */
+#define PC_TYP_TYP6_Msk                       (0x01UL << PC_TYP_TYP6_Pos)                             /*!< PC TYP: TYP6 Mask                       */
+#define PC_TYP_TYP7_Pos                       7                                                       /*!< PC TYP: TYP7 Position                   */
+#define PC_TYP_TYP7_Msk                       (0x01UL << PC_TYP_TYP7_Pos)                             /*!< PC TYP: TYP7 Mask                       */
+#define PC_TYP_TYP8_Pos                       8                                                       /*!< PC TYP: TYP8 Position                   */
+#define PC_TYP_TYP8_Msk                       (0x01UL << PC_TYP_TYP8_Pos)                             /*!< PC TYP: TYP8 Mask                       */
+#define PC_TYP_TYP9_Pos                       9                                                       /*!< PC TYP: TYP9 Position                   */
+#define PC_TYP_TYP9_Msk                       (0x01UL << PC_TYP_TYP9_Pos)                             /*!< PC TYP: TYP9 Mask                       */
+#define PC_TYP_TYP10_Pos                      10                                                      /*!< PC TYP: TYP10 Position                  */
+#define PC_TYP_TYP10_Msk                      (0x01UL << PC_TYP_TYP10_Pos)                            /*!< PC TYP: TYP10 Mask                      */
+#define PC_TYP_TYP11_Pos                      11                                                      /*!< PC TYP: TYP11 Position                  */
+#define PC_TYP_TYP11_Msk                      (0x01UL << PC_TYP_TYP11_Pos)                            /*!< PC TYP: TYP11 Mask                      */
+#define PC_TYP_TYP12_Pos                      12                                                      /*!< PC TYP: TYP12 Position                  */
+#define PC_TYP_TYP12_Msk                      (0x01UL << PC_TYP_TYP12_Pos)                            /*!< PC TYP: TYP12 Mask                      */
+#define PC_TYP_TYP13_Pos                      13                                                      /*!< PC TYP: TYP13 Position                  */
+#define PC_TYP_TYP13_Msk                      (0x01UL << PC_TYP_TYP13_Pos)                            /*!< PC TYP: TYP13 Mask                      */
+#define PC_TYP_TYP14_Pos                      14                                                      /*!< PC TYP: TYP14 Position                  */
+#define PC_TYP_TYP14_Msk                      (0x01UL << PC_TYP_TYP14_Pos)                            /*!< PC TYP: TYP14 Mask                      */
+#define PC_TYP_TYP15_Pos                      15                                                      /*!< PC TYP: TYP15 Position                  */
+#define PC_TYP_TYP15_Msk                      (0x01UL << PC_TYP_TYP15_Pos)                            /*!< PC TYP: TYP15 Mask                      */
+
+/* ----------------------------------  PC_AFSR1  ---------------------------------- */
+#define PC_AFSR1_AFSB0_Pos                    0                                                       /*!< PC AFSR1: AFSB0 Position                */
+#define PC_AFSR1_AFSB0_Msk                    (0x0fUL << PC_AFSR1_AFSB0_Pos)                          /*!< PC AFSR1: AFSB0 Mask                    */
+#define PC_AFSR1_AFSB1_Pos                    4                                                       /*!< PC AFSR1: AFSB1 Position                */
+#define PC_AFSR1_AFSB1_Msk                    (0x0fUL << PC_AFSR1_AFSB1_Pos)                          /*!< PC AFSR1: AFSB1 Mask                    */
+#define PC_AFSR1_AFSB2_Pos                    8                                                       /*!< PC AFSR1: AFSB2 Position                */
+#define PC_AFSR1_AFSB2_Msk                    (0x0fUL << PC_AFSR1_AFSB2_Pos)                          /*!< PC AFSR1: AFSB2 Mask                    */
+#define PC_AFSR1_AFSB3_Pos                    12                                                      /*!< PC AFSR1: AFSB3 Position                */
+#define PC_AFSR1_AFSB3_Msk                    (0x0fUL << PC_AFSR1_AFSB3_Pos)                          /*!< PC AFSR1: AFSB3 Mask                    */
+#define PC_AFSR1_AFSB4_Pos                    16                                                      /*!< PC AFSR1: AFSB4 Position                */
+#define PC_AFSR1_AFSB4_Msk                    (0x0fUL << PC_AFSR1_AFSB4_Pos)                          /*!< PC AFSR1: AFSB4 Mask                    */
+#define PC_AFSR1_AFSB5_Pos                    20                                                      /*!< PC AFSR1: AFSB5 Position                */
+#define PC_AFSR1_AFSB5_Msk                    (0x0fUL << PC_AFSR1_AFSB5_Pos)                          /*!< PC AFSR1: AFSB5 Mask                    */
+#define PC_AFSR1_AFSB6_Pos                    24                                                      /*!< PC AFSR1: AFSB6 Position                */
+#define PC_AFSR1_AFSB6_Msk                    (0x0fUL << PC_AFSR1_AFSB6_Pos)                          /*!< PC AFSR1: AFSB6 Mask                    */
+#define PC_AFSR1_AFSB7_Pos                    28                                                      /*!< PC AFSR1: AFSB7 Position                */
+#define PC_AFSR1_AFSB7_Msk                    (0x0fUL << PC_AFSR1_AFSB7_Pos)                          /*!< PC AFSR1: AFSB7 Mask                    */
+
+/* ----------------------------------  PC_AFSR2  ---------------------------------- */
+#define PC_AFSR2_AFSB8_Pos                    0                                                       /*!< PC AFSR2: AFSB8 Position                */
+#define PC_AFSR2_AFSB8_Msk                    (0x0fUL << PC_AFSR2_AFSB8_Pos)                          /*!< PC AFSR2: AFSB8 Mask                    */
+#define PC_AFSR2_AFSB9_Pos                    4                                                       /*!< PC AFSR2: AFSB9 Position                */
+#define PC_AFSR2_AFSB9_Msk                    (0x0fUL << PC_AFSR2_AFSB9_Pos)                          /*!< PC AFSR2: AFSB9 Mask                    */
+#define PC_AFSR2_AFSB10_Pos                   8                                                       /*!< PC AFSR2: AFSB10 Position               */
+#define PC_AFSR2_AFSB10_Msk                   (0x0fUL << PC_AFSR2_AFSB10_Pos)                         /*!< PC AFSR2: AFSB10 Mask                   */
+#define PC_AFSR2_AFSB11_Pos                   12                                                      /*!< PC AFSR2: AFSB11 Position               */
+#define PC_AFSR2_AFSB11_Msk                   (0x0fUL << PC_AFSR2_AFSB11_Pos)                         /*!< PC AFSR2: AFSB11 Mask                   */
+#define PC_AFSR2_AFSB12_Pos                   16                                                      /*!< PC AFSR2: AFSB12 Position               */
+#define PC_AFSR2_AFSB12_Msk                   (0x0fUL << PC_AFSR2_AFSB12_Pos)                         /*!< PC AFSR2: AFSB12 Mask                   */
+#define PC_AFSR2_AFSB13_Pos                   20                                                      /*!< PC AFSR2: AFSB13 Position               */
+#define PC_AFSR2_AFSB13_Msk                   (0x0fUL << PC_AFSR2_AFSB13_Pos)                         /*!< PC AFSR2: AFSB13 Mask                   */
+#define PC_AFSR2_AFSB14_Pos                   24                                                      /*!< PC AFSR2: AFSB14 Position               */
+#define PC_AFSR2_AFSB14_Msk                   (0x0fUL << PC_AFSR2_AFSB14_Pos)                         /*!< PC AFSR2: AFSB14 Mask                   */
+#define PC_AFSR2_AFSB15_Pos                   28                                                      /*!< PC AFSR2: AFSB15 Position               */
+#define PC_AFSR2_AFSB15_Msk                   (0x0fUL << PC_AFSR2_AFSB15_Pos)                         /*!< PC AFSR2: AFSB15 Mask                   */
+
+/* -----------------------------------  PC_PUPD  ---------------------------------- */
+#define PC_PUPD_PUPD0_Pos                     0                                                       /*!< PC PUPD: PUPD0 Position                 */
+#define PC_PUPD_PUPD0_Msk                     (0x03UL << PC_PUPD_PUPD0_Pos)                           /*!< PC PUPD: PUPD0 Mask                     */
+#define PC_PUPD_PUPD1_Pos                     2                                                       /*!< PC PUPD: PUPD1 Position                 */
+#define PC_PUPD_PUPD1_Msk                     (0x03UL << PC_PUPD_PUPD1_Pos)                           /*!< PC PUPD: PUPD1 Mask                     */
+#define PC_PUPD_PUPD2_Pos                     4                                                       /*!< PC PUPD: PUPD2 Position                 */
+#define PC_PUPD_PUPD2_Msk                     (0x03UL << PC_PUPD_PUPD2_Pos)                           /*!< PC PUPD: PUPD2 Mask                     */
+#define PC_PUPD_PUPD3_Pos                     6                                                       /*!< PC PUPD: PUPD3 Position                 */
+#define PC_PUPD_PUPD3_Msk                     (0x03UL << PC_PUPD_PUPD3_Pos)                           /*!< PC PUPD: PUPD3 Mask                     */
+#define PC_PUPD_PUPD4_Pos                     8                                                       /*!< PC PUPD: PUPD4 Position                 */
+#define PC_PUPD_PUPD4_Msk                     (0x03UL << PC_PUPD_PUPD4_Pos)                           /*!< PC PUPD: PUPD4 Mask                     */
+#define PC_PUPD_PUPD5_Pos                     10                                                      /*!< PC PUPD: PUPD5 Position                 */
+#define PC_PUPD_PUPD5_Msk                     (0x03UL << PC_PUPD_PUPD5_Pos)                           /*!< PC PUPD: PUPD5 Mask                     */
+#define PC_PUPD_PUPD6_Pos                     12                                                      /*!< PC PUPD: PUPD6 Position                 */
+#define PC_PUPD_PUPD6_Msk                     (0x03UL << PC_PUPD_PUPD6_Pos)                           /*!< PC PUPD: PUPD6 Mask                     */
+#define PC_PUPD_PUPD7_Pos                     14                                                      /*!< PC PUPD: PUPD7 Position                 */
+#define PC_PUPD_PUPD7_Msk                     (0x03UL << PC_PUPD_PUPD7_Pos)                           /*!< PC PUPD: PUPD7 Mask                     */
+#define PC_PUPD_PUPD8_Pos                     16                                                      /*!< PC PUPD: PUPD8 Position                 */
+#define PC_PUPD_PUPD8_Msk                     (0x03UL << PC_PUPD_PUPD8_Pos)                           /*!< PC PUPD: PUPD8 Mask                     */
+#define PC_PUPD_PUPD9_Pos                     18                                                      /*!< PC PUPD: PUPD9 Position                 */
+#define PC_PUPD_PUPD9_Msk                     (0x03UL << PC_PUPD_PUPD9_Pos)                           /*!< PC PUPD: PUPD9 Mask                     */
+#define PC_PUPD_PUPD10_Pos                    20                                                      /*!< PC PUPD: PUPD10 Position                */
+#define PC_PUPD_PUPD10_Msk                    (0x03UL << PC_PUPD_PUPD10_Pos)                          /*!< PC PUPD: PUPD10 Mask                    */
+#define PC_PUPD_PUPD11_Pos                    22                                                      /*!< PC PUPD: PUPD11 Position                */
+#define PC_PUPD_PUPD11_Msk                    (0x03UL << PC_PUPD_PUPD11_Pos)                          /*!< PC PUPD: PUPD11 Mask                    */
+#define PC_PUPD_PUPD12_Pos                    24                                                      /*!< PC PUPD: PUPD12 Position                */
+#define PC_PUPD_PUPD12_Msk                    (0x03UL << PC_PUPD_PUPD12_Pos)                          /*!< PC PUPD: PUPD12 Mask                    */
+#define PC_PUPD_PUPD13_Pos                    26                                                      /*!< PC PUPD: PUPD13 Position                */
+#define PC_PUPD_PUPD13_Msk                    (0x03UL << PC_PUPD_PUPD13_Pos)                          /*!< PC PUPD: PUPD13 Mask                    */
+#define PC_PUPD_PUPD14_Pos                    28                                                      /*!< PC PUPD: PUPD14 Position                */
+#define PC_PUPD_PUPD14_Msk                    (0x03UL << PC_PUPD_PUPD14_Pos)                          /*!< PC PUPD: PUPD14 Mask                    */
+#define PC_PUPD_PUPD15_Pos                    30                                                      /*!< PC PUPD: PUPD15 Position                */
+#define PC_PUPD_PUPD15_Msk                    (0x03UL << PC_PUPD_PUPD15_Pos)                          /*!< PC PUPD: PUPD15 Mask                    */
+
+/* -----------------------------------  PC_INDR  ---------------------------------- */
+#define PC_INDR_INDR0_Pos                     0                                                       /*!< PC INDR: INDR0 Position                 */
+#define PC_INDR_INDR0_Msk                     (0x01UL << PC_INDR_INDR0_Pos)                           /*!< PC INDR: INDR0 Mask                     */
+#define PC_INDR_INDR1_Pos                     1                                                       /*!< PC INDR: INDR1 Position                 */
+#define PC_INDR_INDR1_Msk                     (0x01UL << PC_INDR_INDR1_Pos)                           /*!< PC INDR: INDR1 Mask                     */
+#define PC_INDR_INDR2_Pos                     2                                                       /*!< PC INDR: INDR2 Position                 */
+#define PC_INDR_INDR2_Msk                     (0x01UL << PC_INDR_INDR2_Pos)                           /*!< PC INDR: INDR2 Mask                     */
+#define PC_INDR_INDR3_Pos                     3                                                       /*!< PC INDR: INDR3 Position                 */
+#define PC_INDR_INDR3_Msk                     (0x01UL << PC_INDR_INDR3_Pos)                           /*!< PC INDR: INDR3 Mask                     */
+#define PC_INDR_INDR4_Pos                     4                                                       /*!< PC INDR: INDR4 Position                 */
+#define PC_INDR_INDR4_Msk                     (0x01UL << PC_INDR_INDR4_Pos)                           /*!< PC INDR: INDR4 Mask                     */
+#define PC_INDR_INDR5_Pos                     5                                                       /*!< PC INDR: INDR5 Position                 */
+#define PC_INDR_INDR5_Msk                     (0x01UL << PC_INDR_INDR5_Pos)                           /*!< PC INDR: INDR5 Mask                     */
+#define PC_INDR_INDR6_Pos                     6                                                       /*!< PC INDR: INDR6 Position                 */
+#define PC_INDR_INDR6_Msk                     (0x01UL << PC_INDR_INDR6_Pos)                           /*!< PC INDR: INDR6 Mask                     */
+#define PC_INDR_INDR7_Pos                     7                                                       /*!< PC INDR: INDR7 Position                 */
+#define PC_INDR_INDR7_Msk                     (0x01UL << PC_INDR_INDR7_Pos)                           /*!< PC INDR: INDR7 Mask                     */
+#define PC_INDR_INDR8_Pos                     8                                                       /*!< PC INDR: INDR8 Position                 */
+#define PC_INDR_INDR8_Msk                     (0x01UL << PC_INDR_INDR8_Pos)                           /*!< PC INDR: INDR8 Mask                     */
+#define PC_INDR_INDR9_Pos                     9                                                       /*!< PC INDR: INDR9 Position                 */
+#define PC_INDR_INDR9_Msk                     (0x01UL << PC_INDR_INDR9_Pos)                           /*!< PC INDR: INDR9 Mask                     */
+#define PC_INDR_INDR10_Pos                    10                                                      /*!< PC INDR: INDR10 Position                */
+#define PC_INDR_INDR10_Msk                    (0x01UL << PC_INDR_INDR10_Pos)                          /*!< PC INDR: INDR10 Mask                    */
+#define PC_INDR_INDR11_Pos                    11                                                      /*!< PC INDR: INDR11 Position                */
+#define PC_INDR_INDR11_Msk                    (0x01UL << PC_INDR_INDR11_Pos)                          /*!< PC INDR: INDR11 Mask                    */
+#define PC_INDR_INDR12_Pos                    12                                                      /*!< PC INDR: INDR12 Position                */
+#define PC_INDR_INDR12_Msk                    (0x01UL << PC_INDR_INDR12_Pos)                          /*!< PC INDR: INDR12 Mask                    */
+#define PC_INDR_INDR13_Pos                    13                                                      /*!< PC INDR: INDR13 Position                */
+#define PC_INDR_INDR13_Msk                    (0x01UL << PC_INDR_INDR13_Pos)                          /*!< PC INDR: INDR13 Mask                    */
+#define PC_INDR_INDR14_Pos                    14                                                      /*!< PC INDR: INDR14 Position                */
+#define PC_INDR_INDR14_Msk                    (0x01UL << PC_INDR_INDR14_Pos)                          /*!< PC INDR: INDR14 Mask                    */
+#define PC_INDR_INDR15_Pos                    15                                                      /*!< PC INDR: INDR15 Position                */
+#define PC_INDR_INDR15_Msk                    (0x01UL << PC_INDR_INDR15_Pos)                          /*!< PC INDR: INDR15 Mask                    */
+
+/* ----------------------------------  PC_OUTDR  ---------------------------------- */
+#define PC_OUTDR_OUTDR0_Pos                   0                                                       /*!< PC OUTDR: OUTDR0 Position               */
+#define PC_OUTDR_OUTDR0_Msk                   (0x01UL << PC_OUTDR_OUTDR0_Pos)                         /*!< PC OUTDR: OUTDR0 Mask                   */
+#define PC_OUTDR_OUTDR1_Pos                   1                                                       /*!< PC OUTDR: OUTDR1 Position               */
+#define PC_OUTDR_OUTDR1_Msk                   (0x01UL << PC_OUTDR_OUTDR1_Pos)                         /*!< PC OUTDR: OUTDR1 Mask                   */
+#define PC_OUTDR_OUTDR2_Pos                   2                                                       /*!< PC OUTDR: OUTDR2 Position               */
+#define PC_OUTDR_OUTDR2_Msk                   (0x01UL << PC_OUTDR_OUTDR2_Pos)                         /*!< PC OUTDR: OUTDR2 Mask                   */
+#define PC_OUTDR_OUTDR3_Pos                   3                                                       /*!< PC OUTDR: OUTDR3 Position               */
+#define PC_OUTDR_OUTDR3_Msk                   (0x01UL << PC_OUTDR_OUTDR3_Pos)                         /*!< PC OUTDR: OUTDR3 Mask                   */
+#define PC_OUTDR_OUTDR4_Pos                   4                                                       /*!< PC OUTDR: OUTDR4 Position               */
+#define PC_OUTDR_OUTDR4_Msk                   (0x01UL << PC_OUTDR_OUTDR4_Pos)                         /*!< PC OUTDR: OUTDR4 Mask                   */
+#define PC_OUTDR_OUTDR5_Pos                   5                                                       /*!< PC OUTDR: OUTDR5 Position               */
+#define PC_OUTDR_OUTDR5_Msk                   (0x01UL << PC_OUTDR_OUTDR5_Pos)                         /*!< PC OUTDR: OUTDR5 Mask                   */
+#define PC_OUTDR_OUTDR6_Pos                   6                                                       /*!< PC OUTDR: OUTDR6 Position               */
+#define PC_OUTDR_OUTDR6_Msk                   (0x01UL << PC_OUTDR_OUTDR6_Pos)                         /*!< PC OUTDR: OUTDR6 Mask                   */
+#define PC_OUTDR_OUTDR7_Pos                   7                                                       /*!< PC OUTDR: OUTDR7 Position               */
+#define PC_OUTDR_OUTDR7_Msk                   (0x01UL << PC_OUTDR_OUTDR7_Pos)                         /*!< PC OUTDR: OUTDR7 Mask                   */
+#define PC_OUTDR_OUTDR8_Pos                   8                                                       /*!< PC OUTDR: OUTDR8 Position               */
+#define PC_OUTDR_OUTDR8_Msk                   (0x01UL << PC_OUTDR_OUTDR8_Pos)                         /*!< PC OUTDR: OUTDR8 Mask                   */
+#define PC_OUTDR_OUTDR9_Pos                   9                                                       /*!< PC OUTDR: OUTDR9 Position               */
+#define PC_OUTDR_OUTDR9_Msk                   (0x01UL << PC_OUTDR_OUTDR9_Pos)                         /*!< PC OUTDR: OUTDR9 Mask                   */
+#define PC_OUTDR_OUTDR10_Pos                  10                                                      /*!< PC OUTDR: OUTDR10 Position              */
+#define PC_OUTDR_OUTDR10_Msk                  (0x01UL << PC_OUTDR_OUTDR10_Pos)                        /*!< PC OUTDR: OUTDR10 Mask                  */
+#define PC_OUTDR_OUTDR11_Pos                  11                                                      /*!< PC OUTDR: OUTDR11 Position              */
+#define PC_OUTDR_OUTDR11_Msk                  (0x01UL << PC_OUTDR_OUTDR11_Pos)                        /*!< PC OUTDR: OUTDR11 Mask                  */
+#define PC_OUTDR_OUTDR12_Pos                  12                                                      /*!< PC OUTDR: OUTDR12 Position              */
+#define PC_OUTDR_OUTDR12_Msk                  (0x01UL << PC_OUTDR_OUTDR12_Pos)                        /*!< PC OUTDR: OUTDR12 Mask                  */
+#define PC_OUTDR_OUTDR13_Pos                  13                                                      /*!< PC OUTDR: OUTDR13 Position              */
+#define PC_OUTDR_OUTDR13_Msk                  (0x01UL << PC_OUTDR_OUTDR13_Pos)                        /*!< PC OUTDR: OUTDR13 Mask                  */
+#define PC_OUTDR_OUTDR14_Pos                  14                                                      /*!< PC OUTDR: OUTDR14 Position              */
+#define PC_OUTDR_OUTDR14_Msk                  (0x01UL << PC_OUTDR_OUTDR14_Pos)                        /*!< PC OUTDR: OUTDR14 Mask                  */
+#define PC_OUTDR_OUTDR15_Pos                  15                                                      /*!< PC OUTDR: OUTDR15 Position              */
+#define PC_OUTDR_OUTDR15_Msk                  (0x01UL << PC_OUTDR_OUTDR15_Pos)                        /*!< PC OUTDR: OUTDR15 Mask                  */
+
+/* -----------------------------------  PC_BSR  ----------------------------------- */
+#define PC_BSR_BSR0_Pos                       0                                                       /*!< PC BSR: BSR0 Position                   */
+#define PC_BSR_BSR0_Msk                       (0x01UL << PC_BSR_BSR0_Pos)                             /*!< PC BSR: BSR0 Mask                       */
+#define PC_BSR_BSR1_Pos                       1                                                       /*!< PC BSR: BSR1 Position                   */
+#define PC_BSR_BSR1_Msk                       (0x01UL << PC_BSR_BSR1_Pos)                             /*!< PC BSR: BSR1 Mask                       */
+#define PC_BSR_BSR2_Pos                       2                                                       /*!< PC BSR: BSR2 Position                   */
+#define PC_BSR_BSR2_Msk                       (0x01UL << PC_BSR_BSR2_Pos)                             /*!< PC BSR: BSR2 Mask                       */
+#define PC_BSR_BSR3_Pos                       3                                                       /*!< PC BSR: BSR3 Position                   */
+#define PC_BSR_BSR3_Msk                       (0x01UL << PC_BSR_BSR3_Pos)                             /*!< PC BSR: BSR3 Mask                       */
+#define PC_BSR_BSR4_Pos                       4                                                       /*!< PC BSR: BSR4 Position                   */
+#define PC_BSR_BSR4_Msk                       (0x01UL << PC_BSR_BSR4_Pos)                             /*!< PC BSR: BSR4 Mask                       */
+#define PC_BSR_BSR5_Pos                       5                                                       /*!< PC BSR: BSR5 Position                   */
+#define PC_BSR_BSR5_Msk                       (0x01UL << PC_BSR_BSR5_Pos)                             /*!< PC BSR: BSR5 Mask                       */
+#define PC_BSR_BSR6_Pos                       6                                                       /*!< PC BSR: BSR6 Position                   */
+#define PC_BSR_BSR6_Msk                       (0x01UL << PC_BSR_BSR6_Pos)                             /*!< PC BSR: BSR6 Mask                       */
+#define PC_BSR_BSR7_Pos                       7                                                       /*!< PC BSR: BSR7 Position                   */
+#define PC_BSR_BSR7_Msk                       (0x01UL << PC_BSR_BSR7_Pos)                             /*!< PC BSR: BSR7 Mask                       */
+#define PC_BSR_BSR8_Pos                       8                                                       /*!< PC BSR: BSR8 Position                   */
+#define PC_BSR_BSR8_Msk                       (0x01UL << PC_BSR_BSR8_Pos)                             /*!< PC BSR: BSR8 Mask                       */
+#define PC_BSR_BSR9_Pos                       9                                                       /*!< PC BSR: BSR9 Position                   */
+#define PC_BSR_BSR9_Msk                       (0x01UL << PC_BSR_BSR9_Pos)                             /*!< PC BSR: BSR9 Mask                       */
+#define PC_BSR_BSR10_Pos                      10                                                      /*!< PC BSR: BSR10 Position                  */
+#define PC_BSR_BSR10_Msk                      (0x01UL << PC_BSR_BSR10_Pos)                            /*!< PC BSR: BSR10 Mask                      */
+#define PC_BSR_BSR11_Pos                      11                                                      /*!< PC BSR: BSR11 Position                  */
+#define PC_BSR_BSR11_Msk                      (0x01UL << PC_BSR_BSR11_Pos)                            /*!< PC BSR: BSR11 Mask                      */
+#define PC_BSR_BSR12_Pos                      12                                                      /*!< PC BSR: BSR12 Position                  */
+#define PC_BSR_BSR12_Msk                      (0x01UL << PC_BSR_BSR12_Pos)                            /*!< PC BSR: BSR12 Mask                      */
+#define PC_BSR_BSR13_Pos                      13                                                      /*!< PC BSR: BSR13 Position                  */
+#define PC_BSR_BSR13_Msk                      (0x01UL << PC_BSR_BSR13_Pos)                            /*!< PC BSR: BSR13 Mask                      */
+#define PC_BSR_BSR14_Pos                      14                                                      /*!< PC BSR: BSR14 Position                  */
+#define PC_BSR_BSR14_Msk                      (0x01UL << PC_BSR_BSR14_Pos)                            /*!< PC BSR: BSR14 Mask                      */
+#define PC_BSR_BSR15_Pos                      15                                                      /*!< PC BSR: BSR15 Position                  */
+#define PC_BSR_BSR15_Msk                      (0x01UL << PC_BSR_BSR15_Pos)                            /*!< PC BSR: BSR15 Mask                      */
+
+/* -----------------------------------  PC_BCR  ----------------------------------- */
+#define PC_BCR_BCR0_Pos                       0                                                       /*!< PC BCR: BCR0 Position                   */
+#define PC_BCR_BCR0_Msk                       (0x01UL << PC_BCR_BCR0_Pos)                             /*!< PC BCR: BCR0 Mask                       */
+#define PC_BCR_BCR1_Pos                       1                                                       /*!< PC BCR: BCR1 Position                   */
+#define PC_BCR_BCR1_Msk                       (0x01UL << PC_BCR_BCR1_Pos)                             /*!< PC BCR: BCR1 Mask                       */
+#define PC_BCR_BCR2_Pos                       2                                                       /*!< PC BCR: BCR2 Position                   */
+#define PC_BCR_BCR2_Msk                       (0x01UL << PC_BCR_BCR2_Pos)                             /*!< PC BCR: BCR2 Mask                       */
+#define PC_BCR_BCR3_Pos                       3                                                       /*!< PC BCR: BCR3 Position                   */
+#define PC_BCR_BCR3_Msk                       (0x01UL << PC_BCR_BCR3_Pos)                             /*!< PC BCR: BCR3 Mask                       */
+#define PC_BCR_BCR4_Pos                       4                                                       /*!< PC BCR: BCR4 Position                   */
+#define PC_BCR_BCR4_Msk                       (0x01UL << PC_BCR_BCR4_Pos)                             /*!< PC BCR: BCR4 Mask                       */
+#define PC_BCR_BCR5_Pos                       5                                                       /*!< PC BCR: BCR5 Position                   */
+#define PC_BCR_BCR5_Msk                       (0x01UL << PC_BCR_BCR5_Pos)                             /*!< PC BCR: BCR5 Mask                       */
+#define PC_BCR_BCR6_Pos                       6                                                       /*!< PC BCR: BCR6 Position                   */
+#define PC_BCR_BCR6_Msk                       (0x01UL << PC_BCR_BCR6_Pos)                             /*!< PC BCR: BCR6 Mask                       */
+#define PC_BCR_BCR7_Pos                       7                                                       /*!< PC BCR: BCR7 Position                   */
+#define PC_BCR_BCR7_Msk                       (0x01UL << PC_BCR_BCR7_Pos)                             /*!< PC BCR: BCR7 Mask                       */
+#define PC_BCR_BCR8_Pos                       8                                                       /*!< PC BCR: BCR8 Position                   */
+#define PC_BCR_BCR8_Msk                       (0x01UL << PC_BCR_BCR8_Pos)                             /*!< PC BCR: BCR8 Mask                       */
+#define PC_BCR_BCR9_Pos                       9                                                       /*!< PC BCR: BCR9 Position                   */
+#define PC_BCR_BCR9_Msk                       (0x01UL << PC_BCR_BCR9_Pos)                             /*!< PC BCR: BCR9 Mask                       */
+#define PC_BCR_BCR10_Pos                      10                                                      /*!< PC BCR: BCR10 Position                  */
+#define PC_BCR_BCR10_Msk                      (0x01UL << PC_BCR_BCR10_Pos)                            /*!< PC BCR: BCR10 Mask                      */
+#define PC_BCR_BCR11_Pos                      11                                                      /*!< PC BCR: BCR11 Position                  */
+#define PC_BCR_BCR11_Msk                      (0x01UL << PC_BCR_BCR11_Pos)                            /*!< PC BCR: BCR11 Mask                      */
+#define PC_BCR_BCR12_Pos                      12                                                      /*!< PC BCR: BCR12 Position                  */
+#define PC_BCR_BCR12_Msk                      (0x01UL << PC_BCR_BCR12_Pos)                            /*!< PC BCR: BCR12 Mask                      */
+#define PC_BCR_BCR13_Pos                      13                                                      /*!< PC BCR: BCR13 Position                  */
+#define PC_BCR_BCR13_Msk                      (0x01UL << PC_BCR_BCR13_Pos)                            /*!< PC BCR: BCR13 Mask                      */
+#define PC_BCR_BCR14_Pos                      14                                                      /*!< PC BCR: BCR14 Position                  */
+#define PC_BCR_BCR14_Msk                      (0x01UL << PC_BCR_BCR14_Pos)                            /*!< PC BCR: BCR14 Mask                      */
+#define PC_BCR_BCR15_Pos                      15                                                      /*!< PC BCR: BCR15 Position                  */
+#define PC_BCR_BCR15_Msk                      (0x01UL << PC_BCR_BCR15_Pos)                            /*!< PC BCR: BCR15 Mask                      */
+
+/* ---------------------------------  PC_OUTDMSK  --------------------------------- */
+#define PC_OUTDMSK_OUTDMSK0_Pos               0                                                       /*!< PC OUTDMSK: OUTDMSK0 Position           */
+#define PC_OUTDMSK_OUTDMSK0_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK0_Pos)                     /*!< PC OUTDMSK: OUTDMSK0 Mask               */
+#define PC_OUTDMSK_OUTDMSK1_Pos               1                                                       /*!< PC OUTDMSK: OUTDMSK1 Position           */
+#define PC_OUTDMSK_OUTDMSK1_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK1_Pos)                     /*!< PC OUTDMSK: OUTDMSK1 Mask               */
+#define PC_OUTDMSK_OUTDMSK2_Pos               2                                                       /*!< PC OUTDMSK: OUTDMSK2 Position           */
+#define PC_OUTDMSK_OUTDMSK2_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK2_Pos)                     /*!< PC OUTDMSK: OUTDMSK2 Mask               */
+#define PC_OUTDMSK_OUTDMSK3_Pos               3                                                       /*!< PC OUTDMSK: OUTDMSK3 Position           */
+#define PC_OUTDMSK_OUTDMSK3_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK3_Pos)                     /*!< PC OUTDMSK: OUTDMSK3 Mask               */
+#define PC_OUTDMSK_OUTDMSK4_Pos               4                                                       /*!< PC OUTDMSK: OUTDMSK4 Position           */
+#define PC_OUTDMSK_OUTDMSK4_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK4_Pos)                     /*!< PC OUTDMSK: OUTDMSK4 Mask               */
+#define PC_OUTDMSK_OUTDMSK5_Pos               5                                                       /*!< PC OUTDMSK: OUTDMSK5 Position           */
+#define PC_OUTDMSK_OUTDMSK5_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK5_Pos)                     /*!< PC OUTDMSK: OUTDMSK5 Mask               */
+#define PC_OUTDMSK_OUTDMSK6_Pos               6                                                       /*!< PC OUTDMSK: OUTDMSK6 Position           */
+#define PC_OUTDMSK_OUTDMSK6_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK6_Pos)                     /*!< PC OUTDMSK: OUTDMSK6 Mask               */
+#define PC_OUTDMSK_OUTDMSK7_Pos               7                                                       /*!< PC OUTDMSK: OUTDMSK7 Position           */
+#define PC_OUTDMSK_OUTDMSK7_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK7_Pos)                     /*!< PC OUTDMSK: OUTDMSK7 Mask               */
+#define PC_OUTDMSK_OUTDMSK8_Pos               8                                                       /*!< PC OUTDMSK: OUTDMSK8 Position           */
+#define PC_OUTDMSK_OUTDMSK8_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK8_Pos)                     /*!< PC OUTDMSK: OUTDMSK8 Mask               */
+#define PC_OUTDMSK_OUTDMSK9_Pos               9                                                       /*!< PC OUTDMSK: OUTDMSK9 Position           */
+#define PC_OUTDMSK_OUTDMSK9_Msk               (0x01UL << PC_OUTDMSK_OUTDMSK9_Pos)                     /*!< PC OUTDMSK: OUTDMSK9 Mask               */
+#define PC_OUTDMSK_OUTDMSK10_Pos              10                                                      /*!< PC OUTDMSK: OUTDMSK10 Position          */
+#define PC_OUTDMSK_OUTDMSK10_Msk              (0x01UL << PC_OUTDMSK_OUTDMSK10_Pos)                    /*!< PC OUTDMSK: OUTDMSK10 Mask              */
+#define PC_OUTDMSK_OUTDMSK11_Pos              11                                                      /*!< PC OUTDMSK: OUTDMSK11 Position          */
+#define PC_OUTDMSK_OUTDMSK11_Msk              (0x01UL << PC_OUTDMSK_OUTDMSK11_Pos)                    /*!< PC OUTDMSK: OUTDMSK11 Mask              */
+#define PC_OUTDMSK_OUTDMSK12_Pos              12                                                      /*!< PC OUTDMSK: OUTDMSK12 Position          */
+#define PC_OUTDMSK_OUTDMSK12_Msk              (0x01UL << PC_OUTDMSK_OUTDMSK12_Pos)                    /*!< PC OUTDMSK: OUTDMSK12 Mask              */
+#define PC_OUTDMSK_OUTDMSK13_Pos              13                                                      /*!< PC OUTDMSK: OUTDMSK13 Position          */
+#define PC_OUTDMSK_OUTDMSK13_Msk              (0x01UL << PC_OUTDMSK_OUTDMSK13_Pos)                    /*!< PC OUTDMSK: OUTDMSK13 Mask              */
+#define PC_OUTDMSK_OUTDMSK14_Pos              14                                                      /*!< PC OUTDMSK: OUTDMSK14 Position          */
+#define PC_OUTDMSK_OUTDMSK14_Msk              (0x01UL << PC_OUTDMSK_OUTDMSK14_Pos)                    /*!< PC OUTDMSK: OUTDMSK14 Mask              */
+#define PC_OUTDMSK_OUTDMSK15_Pos              15                                                      /*!< PC OUTDMSK: OUTDMSK15 Position          */
+#define PC_OUTDMSK_OUTDMSK15_Msk              (0x01UL << PC_OUTDMSK_OUTDMSK15_Pos)                    /*!< PC OUTDMSK: OUTDMSK15 Mask              */
+
+/* -----------------------------------  PC_DBCR  ---------------------------------- */
+#define PC_DBCR_DBEN0_Pos                     0                                                       /*!< PC DBCR: DBEN0 Position                 */
+#define PC_DBCR_DBEN0_Msk                     (0x01UL << PC_DBCR_DBEN0_Pos)                           /*!< PC DBCR: DBEN0 Mask                     */
+#define PC_DBCR_DBEN1_Pos                     1                                                       /*!< PC DBCR: DBEN1 Position                 */
+#define PC_DBCR_DBEN1_Msk                     (0x01UL << PC_DBCR_DBEN1_Pos)                           /*!< PC DBCR: DBEN1 Mask                     */
+#define PC_DBCR_DBEN2_Pos                     2                                                       /*!< PC DBCR: DBEN2 Position                 */
+#define PC_DBCR_DBEN2_Msk                     (0x01UL << PC_DBCR_DBEN2_Pos)                           /*!< PC DBCR: DBEN2 Mask                     */
+#define PC_DBCR_DBEN3_Pos                     3                                                       /*!< PC DBCR: DBEN3 Position                 */
+#define PC_DBCR_DBEN3_Msk                     (0x01UL << PC_DBCR_DBEN3_Pos)                           /*!< PC DBCR: DBEN3 Mask                     */
+#define PC_DBCR_DBEN4_Pos                     4                                                       /*!< PC DBCR: DBEN4 Position                 */
+#define PC_DBCR_DBEN4_Msk                     (0x01UL << PC_DBCR_DBEN4_Pos)                           /*!< PC DBCR: DBEN4 Mask                     */
+#define PC_DBCR_DBEN5_Pos                     5                                                       /*!< PC DBCR: DBEN5 Position                 */
+#define PC_DBCR_DBEN5_Msk                     (0x01UL << PC_DBCR_DBEN5_Pos)                           /*!< PC DBCR: DBEN5 Mask                     */
+#define PC_DBCR_DBEN6_Pos                     6                                                       /*!< PC DBCR: DBEN6 Position                 */
+#define PC_DBCR_DBEN6_Msk                     (0x01UL << PC_DBCR_DBEN6_Pos)                           /*!< PC DBCR: DBEN6 Mask                     */
+#define PC_DBCR_DBEN7_Pos                     7                                                       /*!< PC DBCR: DBEN7 Position                 */
+#define PC_DBCR_DBEN7_Msk                     (0x01UL << PC_DBCR_DBEN7_Pos)                           /*!< PC DBCR: DBEN7 Mask                     */
+#define PC_DBCR_DBEN8_Pos                     8                                                       /*!< PC DBCR: DBEN8 Position                 */
+#define PC_DBCR_DBEN8_Msk                     (0x01UL << PC_DBCR_DBEN8_Pos)                           /*!< PC DBCR: DBEN8 Mask                     */
+#define PC_DBCR_DBEN9_Pos                     9                                                       /*!< PC DBCR: DBEN9 Position                 */
+#define PC_DBCR_DBEN9_Msk                     (0x01UL << PC_DBCR_DBEN9_Pos)                           /*!< PC DBCR: DBEN9 Mask                     */
+#define PC_DBCR_DBEN10_Pos                    10                                                      /*!< PC DBCR: DBEN10 Position                */
+#define PC_DBCR_DBEN10_Msk                    (0x01UL << PC_DBCR_DBEN10_Pos)                          /*!< PC DBCR: DBEN10 Mask                    */
+#define PC_DBCR_DBEN11_Pos                    11                                                      /*!< PC DBCR: DBEN11 Position                */
+#define PC_DBCR_DBEN11_Msk                    (0x01UL << PC_DBCR_DBEN11_Pos)                          /*!< PC DBCR: DBEN11 Mask                    */
+#define PC_DBCR_DBEN12_Pos                    12                                                      /*!< PC DBCR: DBEN12 Position                */
+#define PC_DBCR_DBEN12_Msk                    (0x01UL << PC_DBCR_DBEN12_Pos)                          /*!< PC DBCR: DBEN12 Mask                    */
+#define PC_DBCR_DBEN13_Pos                    13                                                      /*!< PC DBCR: DBEN13 Position                */
+#define PC_DBCR_DBEN13_Msk                    (0x01UL << PC_DBCR_DBEN13_Pos)                          /*!< PC DBCR: DBEN13 Mask                    */
+#define PC_DBCR_DBEN14_Pos                    14                                                      /*!< PC DBCR: DBEN14 Position                */
+#define PC_DBCR_DBEN14_Msk                    (0x01UL << PC_DBCR_DBEN14_Pos)                          /*!< PC DBCR: DBEN14 Mask                    */
+#define PC_DBCR_DBEN15_Pos                    15                                                      /*!< PC DBCR: DBEN15 Position                */
+#define PC_DBCR_DBEN15_Msk                    (0x01UL << PC_DBCR_DBEN15_Pos)                          /*!< PC DBCR: DBEN15 Mask                    */
+
+/* -----------------------------------  PC_IER  ----------------------------------- */
+#define PC_IER_PIE0_Pos                       0                                                       /*!< PC IER: PIE0 Position                   */
+#define PC_IER_PIE0_Msk                       (0x03UL << PC_IER_PIE0_Pos)                             /*!< PC IER: PIE0 Mask                       */
+#define PC_IER_PIE1_Pos                       2                                                       /*!< PC IER: PIE1 Position                   */
+#define PC_IER_PIE1_Msk                       (0x03UL << PC_IER_PIE1_Pos)                             /*!< PC IER: PIE1 Mask                       */
+#define PC_IER_PIE2_Pos                       4                                                       /*!< PC IER: PIE2 Position                   */
+#define PC_IER_PIE2_Msk                       (0x03UL << PC_IER_PIE2_Pos)                             /*!< PC IER: PIE2 Mask                       */
+#define PC_IER_PIE3_Pos                       6                                                       /*!< PC IER: PIE3 Position                   */
+#define PC_IER_PIE3_Msk                       (0x03UL << PC_IER_PIE3_Pos)                             /*!< PC IER: PIE3 Mask                       */
+#define PC_IER_PIE4_Pos                       8                                                       /*!< PC IER: PIE4 Position                   */
+#define PC_IER_PIE4_Msk                       (0x03UL << PC_IER_PIE4_Pos)                             /*!< PC IER: PIE4 Mask                       */
+#define PC_IER_PIE5_Pos                       10                                                      /*!< PC IER: PIE5 Position                   */
+#define PC_IER_PIE5_Msk                       (0x03UL << PC_IER_PIE5_Pos)                             /*!< PC IER: PIE5 Mask                       */
+#define PC_IER_PIE6_Pos                       12                                                      /*!< PC IER: PIE6 Position                   */
+#define PC_IER_PIE6_Msk                       (0x03UL << PC_IER_PIE6_Pos)                             /*!< PC IER: PIE6 Mask                       */
+#define PC_IER_PIE7_Pos                       14                                                      /*!< PC IER: PIE7 Position                   */
+#define PC_IER_PIE7_Msk                       (0x03UL << PC_IER_PIE7_Pos)                             /*!< PC IER: PIE7 Mask                       */
+#define PC_IER_PIE8_Pos                       16                                                      /*!< PC IER: PIE8 Position                   */
+#define PC_IER_PIE8_Msk                       (0x03UL << PC_IER_PIE8_Pos)                             /*!< PC IER: PIE8 Mask                       */
+#define PC_IER_PIE9_Pos                       18                                                      /*!< PC IER: PIE9 Position                   */
+#define PC_IER_PIE9_Msk                       (0x03UL << PC_IER_PIE9_Pos)                             /*!< PC IER: PIE9 Mask                       */
+#define PC_IER_PIE10_Pos                      20                                                      /*!< PC IER: PIE10 Position                  */
+#define PC_IER_PIE10_Msk                      (0x03UL << PC_IER_PIE10_Pos)                            /*!< PC IER: PIE10 Mask                      */
+#define PC_IER_PIE11_Pos                      22                                                      /*!< PC IER: PIE11 Position                  */
+#define PC_IER_PIE11_Msk                      (0x03UL << PC_IER_PIE11_Pos)                            /*!< PC IER: PIE11 Mask                      */
+#define PC_IER_PIE12_Pos                      24                                                      /*!< PC IER: PIE12 Position                  */
+#define PC_IER_PIE12_Msk                      (0x03UL << PC_IER_PIE12_Pos)                            /*!< PC IER: PIE12 Mask                      */
+#define PC_IER_PIE13_Pos                      26                                                      /*!< PC IER: PIE13 Position                  */
+#define PC_IER_PIE13_Msk                      (0x03UL << PC_IER_PIE13_Pos)                            /*!< PC IER: PIE13 Mask                      */
+#define PC_IER_PIE14_Pos                      28                                                      /*!< PC IER: PIE14 Position                  */
+#define PC_IER_PIE14_Msk                      (0x03UL << PC_IER_PIE14_Pos)                            /*!< PC IER: PIE14 Mask                      */
+#define PC_IER_PIE15_Pos                      30                                                      /*!< PC IER: PIE15 Position                  */
+#define PC_IER_PIE15_Msk                      (0x03UL << PC_IER_PIE15_Pos)                            /*!< PC IER: PIE15 Mask                      */
+
+/* -----------------------------------  PC_ISR  ----------------------------------- */
+#define PC_ISR_PIS0_Pos                       0                                                       /*!< PC ISR: PIS0 Position                   */
+#define PC_ISR_PIS0_Msk                       (0x03UL << PC_ISR_PIS0_Pos)                             /*!< PC ISR: PIS0 Mask                       */
+#define PC_ISR_PIS1_Pos                       2                                                       /*!< PC ISR: PIS1 Position                   */
+#define PC_ISR_PIS1_Msk                       (0x03UL << PC_ISR_PIS1_Pos)                             /*!< PC ISR: PIS1 Mask                       */
+#define PC_ISR_PIS2_Pos                       4                                                       /*!< PC ISR: PIS2 Position                   */
+#define PC_ISR_PIS2_Msk                       (0x03UL << PC_ISR_PIS2_Pos)                             /*!< PC ISR: PIS2 Mask                       */
+#define PC_ISR_PIS3_Pos                       6                                                       /*!< PC ISR: PIS3 Position                   */
+#define PC_ISR_PIS3_Msk                       (0x03UL << PC_ISR_PIS3_Pos)                             /*!< PC ISR: PIS3 Mask                       */
+#define PC_ISR_PIS4_Pos                       8                                                       /*!< PC ISR: PIS4 Position                   */
+#define PC_ISR_PIS4_Msk                       (0x03UL << PC_ISR_PIS4_Pos)                             /*!< PC ISR: PIS4 Mask                       */
+#define PC_ISR_PIS5_Pos                       10                                                      /*!< PC ISR: PIS5 Position                   */
+#define PC_ISR_PIS5_Msk                       (0x03UL << PC_ISR_PIS5_Pos)                             /*!< PC ISR: PIS5 Mask                       */
+#define PC_ISR_PIS6_Pos                       12                                                      /*!< PC ISR: PIS6 Position                   */
+#define PC_ISR_PIS6_Msk                       (0x03UL << PC_ISR_PIS6_Pos)                             /*!< PC ISR: PIS6 Mask                       */
+#define PC_ISR_PIS7_Pos                       14                                                      /*!< PC ISR: PIS7 Position                   */
+#define PC_ISR_PIS7_Msk                       (0x03UL << PC_ISR_PIS7_Pos)                             /*!< PC ISR: PIS7 Mask                       */
+#define PC_ISR_PIS8_Pos                       16                                                      /*!< PC ISR: PIS8 Position                   */
+#define PC_ISR_PIS8_Msk                       (0x03UL << PC_ISR_PIS8_Pos)                             /*!< PC ISR: PIS8 Mask                       */
+#define PC_ISR_PIS9_Pos                       18                                                      /*!< PC ISR: PIS9 Position                   */
+#define PC_ISR_PIS9_Msk                       (0x03UL << PC_ISR_PIS9_Pos)                             /*!< PC ISR: PIS9 Mask                       */
+#define PC_ISR_PIS10_Pos                      20                                                      /*!< PC ISR: PIS10 Position                  */
+#define PC_ISR_PIS10_Msk                      (0x03UL << PC_ISR_PIS10_Pos)                            /*!< PC ISR: PIS10 Mask                      */
+#define PC_ISR_PIS11_Pos                      22                                                      /*!< PC ISR: PIS11 Position                  */
+#define PC_ISR_PIS11_Msk                      (0x03UL << PC_ISR_PIS11_Pos)                            /*!< PC ISR: PIS11 Mask                      */
+#define PC_ISR_PIS12_Pos                      24                                                      /*!< PC ISR: PIS12 Position                  */
+#define PC_ISR_PIS12_Msk                      (0x03UL << PC_ISR_PIS12_Pos)                            /*!< PC ISR: PIS12 Mask                      */
+#define PC_ISR_PIS13_Pos                      26                                                      /*!< PC ISR: PIS13 Position                  */
+#define PC_ISR_PIS13_Msk                      (0x03UL << PC_ISR_PIS13_Pos)                            /*!< PC ISR: PIS13 Mask                      */
+#define PC_ISR_PIS14_Pos                      28                                                      /*!< PC ISR: PIS14 Position                  */
+#define PC_ISR_PIS14_Msk                      (0x03UL << PC_ISR_PIS14_Pos)                            /*!< PC ISR: PIS14 Mask                      */
+#define PC_ISR_PIS15_Pos                      30                                                      /*!< PC ISR: PIS15 Position                  */
+#define PC_ISR_PIS15_Msk                      (0x03UL << PC_ISR_PIS15_Pos)                            /*!< PC ISR: PIS15 Mask                      */
+
+/* -----------------------------------  PC_ICR  ----------------------------------- */
+#define PC_ICR_PIC0_Pos                       0                                                       /*!< PC ICR: PIC0 Position                   */
+#define PC_ICR_PIC0_Msk                       (0x03UL << PC_ICR_PIC0_Pos)                             /*!< PC ICR: PIC0 Mask                       */
+#define PC_ICR_PIC1_Pos                       2                                                       /*!< PC ICR: PIC1 Position                   */
+#define PC_ICR_PIC1_Msk                       (0x03UL << PC_ICR_PIC1_Pos)                             /*!< PC ICR: PIC1 Mask                       */
+#define PC_ICR_PIC2_Pos                       4                                                       /*!< PC ICR: PIC2 Position                   */
+#define PC_ICR_PIC2_Msk                       (0x03UL << PC_ICR_PIC2_Pos)                             /*!< PC ICR: PIC2 Mask                       */
+#define PC_ICR_PIC3_Pos                       6                                                       /*!< PC ICR: PIC3 Position                   */
+#define PC_ICR_PIC3_Msk                       (0x03UL << PC_ICR_PIC3_Pos)                             /*!< PC ICR: PIC3 Mask                       */
+#define PC_ICR_PIC4_Pos                       8                                                       /*!< PC ICR: PIC4 Position                   */
+#define PC_ICR_PIC4_Msk                       (0x03UL << PC_ICR_PIC4_Pos)                             /*!< PC ICR: PIC4 Mask                       */
+#define PC_ICR_PIC5_Pos                       10                                                      /*!< PC ICR: PIC5 Position                   */
+#define PC_ICR_PIC5_Msk                       (0x03UL << PC_ICR_PIC5_Pos)                             /*!< PC ICR: PIC5 Mask                       */
+#define PC_ICR_PIC6_Pos                       12                                                      /*!< PC ICR: PIC6 Position                   */
+#define PC_ICR_PIC6_Msk                       (0x03UL << PC_ICR_PIC6_Pos)                             /*!< PC ICR: PIC6 Mask                       */
+#define PC_ICR_PIC7_Pos                       14                                                      /*!< PC ICR: PIC7 Position                   */
+#define PC_ICR_PIC7_Msk                       (0x03UL << PC_ICR_PIC7_Pos)                             /*!< PC ICR: PIC7 Mask                       */
+#define PC_ICR_PIC8_Pos                       16                                                      /*!< PC ICR: PIC8 Position                   */
+#define PC_ICR_PIC8_Msk                       (0x03UL << PC_ICR_PIC8_Pos)                             /*!< PC ICR: PIC8 Mask                       */
+#define PC_ICR_PIC9_Pos                       18                                                      /*!< PC ICR: PIC9 Position                   */
+#define PC_ICR_PIC9_Msk                       (0x03UL << PC_ICR_PIC9_Pos)                             /*!< PC ICR: PIC9 Mask                       */
+#define PC_ICR_PIC10_Pos                      20                                                      /*!< PC ICR: PIC10 Position                  */
+#define PC_ICR_PIC10_Msk                      (0x03UL << PC_ICR_PIC10_Pos)                            /*!< PC ICR: PIC10 Mask                      */
+#define PC_ICR_PIC11_Pos                      22                                                      /*!< PC ICR: PIC11 Position                  */
+#define PC_ICR_PIC11_Msk                      (0x03UL << PC_ICR_PIC11_Pos)                            /*!< PC ICR: PIC11 Mask                      */
+#define PC_ICR_PIC12_Pos                      24                                                      /*!< PC ICR: PIC12 Position                  */
+#define PC_ICR_PIC12_Msk                      (0x03UL << PC_ICR_PIC12_Pos)                            /*!< PC ICR: PIC12 Mask                      */
+#define PC_ICR_PIC13_Pos                      26                                                      /*!< PC ICR: PIC13 Position                  */
+#define PC_ICR_PIC13_Msk                      (0x03UL << PC_ICR_PIC13_Pos)                            /*!< PC ICR: PIC13 Mask                      */
+#define PC_ICR_PIC14_Pos                      28                                                      /*!< PC ICR: PIC14 Position                  */
+#define PC_ICR_PIC14_Msk                      (0x03UL << PC_ICR_PIC14_Pos)                            /*!< PC ICR: PIC14 Mask                      */
+#define PC_ICR_PIC15_Pos                      30                                                      /*!< PC ICR: PIC15 Position                  */
+#define PC_ICR_PIC15_Msk                      (0x03UL << PC_ICR_PIC15_Pos)                            /*!< PC ICR: PIC15 Mask                      */
+
+
+/* ================================================================================ */
+/* ================           struct 'PD' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  PD_MOD  ----------------------------------- */
+#define PD_MOD_MODE0_Pos                      0                                                       /*!< PD MOD: MODE0 Position                  */
+#define PD_MOD_MODE0_Msk                      (0x03UL << PD_MOD_MODE0_Pos)                            /*!< PD MOD: MODE0 Mask                      */
+#define PD_MOD_MODE1_Pos                      2                                                       /*!< PD MOD: MODE1 Position                  */
+#define PD_MOD_MODE1_Msk                      (0x03UL << PD_MOD_MODE1_Pos)                            /*!< PD MOD: MODE1 Mask                      */
+#define PD_MOD_MODE2_Pos                      4                                                       /*!< PD MOD: MODE2 Position                  */
+#define PD_MOD_MODE2_Msk                      (0x03UL << PD_MOD_MODE2_Pos)                            /*!< PD MOD: MODE2 Mask                      */
+#define PD_MOD_MODE3_Pos                      6                                                       /*!< PD MOD: MODE3 Position                  */
+#define PD_MOD_MODE3_Msk                      (0x03UL << PD_MOD_MODE3_Pos)                            /*!< PD MOD: MODE3 Mask                      */
+#define PD_MOD_MODE4_Pos                      8                                                       /*!< PD MOD: MODE4 Position                  */
+#define PD_MOD_MODE4_Msk                      (0x03UL << PD_MOD_MODE4_Pos)                            /*!< PD MOD: MODE4 Mask                      */
+#define PD_MOD_MODE5_Pos                      10                                                      /*!< PD MOD: MODE5 Position                  */
+#define PD_MOD_MODE5_Msk                      (0x03UL << PD_MOD_MODE5_Pos)                            /*!< PD MOD: MODE5 Mask                      */
+#define PD_MOD_MODE6_Pos                      12                                                      /*!< PD MOD: MODE6 Position                  */
+#define PD_MOD_MODE6_Msk                      (0x03UL << PD_MOD_MODE6_Pos)                            /*!< PD MOD: MODE6 Mask                      */
+#define PD_MOD_MODE7_Pos                      14                                                      /*!< PD MOD: MODE7 Position                  */
+#define PD_MOD_MODE7_Msk                      (0x03UL << PD_MOD_MODE7_Pos)                            /*!< PD MOD: MODE7 Mask                      */
+#define PD_MOD_MODE8_Pos                      16                                                      /*!< PD MOD: MODE8 Position                  */
+#define PD_MOD_MODE8_Msk                      (0x03UL << PD_MOD_MODE8_Pos)                            /*!< PD MOD: MODE8 Mask                      */
+#define PD_MOD_MODE9_Pos                      18                                                      /*!< PD MOD: MODE9 Position                  */
+#define PD_MOD_MODE9_Msk                      (0x03UL << PD_MOD_MODE9_Pos)                            /*!< PD MOD: MODE9 Mask                      */
+#define PD_MOD_MODE10_Pos                     20                                                      /*!< PD MOD: MODE10 Position                 */
+#define PD_MOD_MODE10_Msk                     (0x03UL << PD_MOD_MODE10_Pos)                           /*!< PD MOD: MODE10 Mask                     */
+#define PD_MOD_MODE11_Pos                     22                                                      /*!< PD MOD: MODE11 Position                 */
+#define PD_MOD_MODE11_Msk                     (0x03UL << PD_MOD_MODE11_Pos)                           /*!< PD MOD: MODE11 Mask                     */
+#define PD_MOD_MODE12_Pos                     24                                                      /*!< PD MOD: MODE12 Position                 */
+#define PD_MOD_MODE12_Msk                     (0x03UL << PD_MOD_MODE12_Pos)                           /*!< PD MOD: MODE12 Mask                     */
+#define PD_MOD_MODE13_Pos                     26                                                      /*!< PD MOD: MODE13 Position                 */
+#define PD_MOD_MODE13_Msk                     (0x03UL << PD_MOD_MODE13_Pos)                           /*!< PD MOD: MODE13 Mask                     */
+#define PD_MOD_MODE14_Pos                     28                                                      /*!< PD MOD: MODE14 Position                 */
+#define PD_MOD_MODE14_Msk                     (0x03UL << PD_MOD_MODE14_Pos)                           /*!< PD MOD: MODE14 Mask                     */
+#define PD_MOD_MODE15_Pos                     30                                                      /*!< PD MOD: MODE15 Position                 */
+#define PD_MOD_MODE15_Msk                     (0x03UL << PD_MOD_MODE15_Pos)                           /*!< PD MOD: MODE15 Mask                     */
+
+/* -----------------------------------  PD_TYP  ----------------------------------- */
+#define PD_TYP_TYP0_Pos                       0                                                       /*!< PD TYP: TYP0 Position                   */
+#define PD_TYP_TYP0_Msk                       (0x01UL << PD_TYP_TYP0_Pos)                             /*!< PD TYP: TYP0 Mask                       */
+#define PD_TYP_TYP1_Pos                       1                                                       /*!< PD TYP: TYP1 Position                   */
+#define PD_TYP_TYP1_Msk                       (0x01UL << PD_TYP_TYP1_Pos)                             /*!< PD TYP: TYP1 Mask                       */
+#define PD_TYP_TYP2_Pos                       2                                                       /*!< PD TYP: TYP2 Position                   */
+#define PD_TYP_TYP2_Msk                       (0x01UL << PD_TYP_TYP2_Pos)                             /*!< PD TYP: TYP2 Mask                       */
+#define PD_TYP_TYP3_Pos                       3                                                       /*!< PD TYP: TYP3 Position                   */
+#define PD_TYP_TYP3_Msk                       (0x01UL << PD_TYP_TYP3_Pos)                             /*!< PD TYP: TYP3 Mask                       */
+#define PD_TYP_TYP4_Pos                       4                                                       /*!< PD TYP: TYP4 Position                   */
+#define PD_TYP_TYP4_Msk                       (0x01UL << PD_TYP_TYP4_Pos)                             /*!< PD TYP: TYP4 Mask                       */
+#define PD_TYP_TYP5_Pos                       5                                                       /*!< PD TYP: TYP5 Position                   */
+#define PD_TYP_TYP5_Msk                       (0x01UL << PD_TYP_TYP5_Pos)                             /*!< PD TYP: TYP5 Mask                       */
+#define PD_TYP_TYP6_Pos                       6                                                       /*!< PD TYP: TYP6 Position                   */
+#define PD_TYP_TYP6_Msk                       (0x01UL << PD_TYP_TYP6_Pos)                             /*!< PD TYP: TYP6 Mask                       */
+#define PD_TYP_TYP7_Pos                       7                                                       /*!< PD TYP: TYP7 Position                   */
+#define PD_TYP_TYP7_Msk                       (0x01UL << PD_TYP_TYP7_Pos)                             /*!< PD TYP: TYP7 Mask                       */
+#define PD_TYP_TYP8_Pos                       8                                                       /*!< PD TYP: TYP8 Position                   */
+#define PD_TYP_TYP8_Msk                       (0x01UL << PD_TYP_TYP8_Pos)                             /*!< PD TYP: TYP8 Mask                       */
+#define PD_TYP_TYP9_Pos                       9                                                       /*!< PD TYP: TYP9 Position                   */
+#define PD_TYP_TYP9_Msk                       (0x01UL << PD_TYP_TYP9_Pos)                             /*!< PD TYP: TYP9 Mask                       */
+#define PD_TYP_TYP10_Pos                      10                                                      /*!< PD TYP: TYP10 Position                  */
+#define PD_TYP_TYP10_Msk                      (0x01UL << PD_TYP_TYP10_Pos)                            /*!< PD TYP: TYP10 Mask                      */
+#define PD_TYP_TYP11_Pos                      11                                                      /*!< PD TYP: TYP11 Position                  */
+#define PD_TYP_TYP11_Msk                      (0x01UL << PD_TYP_TYP11_Pos)                            /*!< PD TYP: TYP11 Mask                      */
+#define PD_TYP_TYP12_Pos                      12                                                      /*!< PD TYP: TYP12 Position                  */
+#define PD_TYP_TYP12_Msk                      (0x01UL << PD_TYP_TYP12_Pos)                            /*!< PD TYP: TYP12 Mask                      */
+#define PD_TYP_TYP13_Pos                      13                                                      /*!< PD TYP: TYP13 Position                  */
+#define PD_TYP_TYP13_Msk                      (0x01UL << PD_TYP_TYP13_Pos)                            /*!< PD TYP: TYP13 Mask                      */
+#define PD_TYP_TYP14_Pos                      14                                                      /*!< PD TYP: TYP14 Position                  */
+#define PD_TYP_TYP14_Msk                      (0x01UL << PD_TYP_TYP14_Pos)                            /*!< PD TYP: TYP14 Mask                      */
+#define PD_TYP_TYP15_Pos                      15                                                      /*!< PD TYP: TYP15 Position                  */
+#define PD_TYP_TYP15_Msk                      (0x01UL << PD_TYP_TYP15_Pos)                            /*!< PD TYP: TYP15 Mask                      */
+
+/* ----------------------------------  PD_AFSR1  ---------------------------------- */
+#define PD_AFSR1_AFSB0_Pos                    0                                                       /*!< PD AFSR1: AFSB0 Position                */
+#define PD_AFSR1_AFSB0_Msk                    (0x0fUL << PD_AFSR1_AFSB0_Pos)                          /*!< PD AFSR1: AFSB0 Mask                    */
+#define PD_AFSR1_AFSB1_Pos                    4                                                       /*!< PD AFSR1: AFSB1 Position                */
+#define PD_AFSR1_AFSB1_Msk                    (0x0fUL << PD_AFSR1_AFSB1_Pos)                          /*!< PD AFSR1: AFSB1 Mask                    */
+#define PD_AFSR1_AFSB2_Pos                    8                                                       /*!< PD AFSR1: AFSB2 Position                */
+#define PD_AFSR1_AFSB2_Msk                    (0x0fUL << PD_AFSR1_AFSB2_Pos)                          /*!< PD AFSR1: AFSB2 Mask                    */
+#define PD_AFSR1_AFSB3_Pos                    12                                                      /*!< PD AFSR1: AFSB3 Position                */
+#define PD_AFSR1_AFSB3_Msk                    (0x0fUL << PD_AFSR1_AFSB3_Pos)                          /*!< PD AFSR1: AFSB3 Mask                    */
+#define PD_AFSR1_AFSB4_Pos                    16                                                      /*!< PD AFSR1: AFSB4 Position                */
+#define PD_AFSR1_AFSB4_Msk                    (0x0fUL << PD_AFSR1_AFSB4_Pos)                          /*!< PD AFSR1: AFSB4 Mask                    */
+#define PD_AFSR1_AFSB5_Pos                    20                                                      /*!< PD AFSR1: AFSB5 Position                */
+#define PD_AFSR1_AFSB5_Msk                    (0x0fUL << PD_AFSR1_AFSB5_Pos)                          /*!< PD AFSR1: AFSB5 Mask                    */
+#define PD_AFSR1_AFSB6_Pos                    24                                                      /*!< PD AFSR1: AFSB6 Position                */
+#define PD_AFSR1_AFSB6_Msk                    (0x0fUL << PD_AFSR1_AFSB6_Pos)                          /*!< PD AFSR1: AFSB6 Mask                    */
+#define PD_AFSR1_AFSB7_Pos                    28                                                      /*!< PD AFSR1: AFSB7 Position                */
+#define PD_AFSR1_AFSB7_Msk                    (0x0fUL << PD_AFSR1_AFSB7_Pos)                          /*!< PD AFSR1: AFSB7 Mask                    */
+
+/* ----------------------------------  PD_AFSR2  ---------------------------------- */
+#define PD_AFSR2_AFSB8_Pos                    0                                                       /*!< PD AFSR2: AFSB8 Position                */
+#define PD_AFSR2_AFSB8_Msk                    (0x0fUL << PD_AFSR2_AFSB8_Pos)                          /*!< PD AFSR2: AFSB8 Mask                    */
+#define PD_AFSR2_AFSB9_Pos                    4                                                       /*!< PD AFSR2: AFSB9 Position                */
+#define PD_AFSR2_AFSB9_Msk                    (0x0fUL << PD_AFSR2_AFSB9_Pos)                          /*!< PD AFSR2: AFSB9 Mask                    */
+#define PD_AFSR2_AFSB10_Pos                   8                                                       /*!< PD AFSR2: AFSB10 Position               */
+#define PD_AFSR2_AFSB10_Msk                   (0x0fUL << PD_AFSR2_AFSB10_Pos)                         /*!< PD AFSR2: AFSB10 Mask                   */
+#define PD_AFSR2_AFSB11_Pos                   12                                                      /*!< PD AFSR2: AFSB11 Position               */
+#define PD_AFSR2_AFSB11_Msk                   (0x0fUL << PD_AFSR2_AFSB11_Pos)                         /*!< PD AFSR2: AFSB11 Mask                   */
+#define PD_AFSR2_AFSB12_Pos                   16                                                      /*!< PD AFSR2: AFSB12 Position               */
+#define PD_AFSR2_AFSB12_Msk                   (0x0fUL << PD_AFSR2_AFSB12_Pos)                         /*!< PD AFSR2: AFSB12 Mask                   */
+#define PD_AFSR2_AFSB13_Pos                   20                                                      /*!< PD AFSR2: AFSB13 Position               */
+#define PD_AFSR2_AFSB13_Msk                   (0x0fUL << PD_AFSR2_AFSB13_Pos)                         /*!< PD AFSR2: AFSB13 Mask                   */
+#define PD_AFSR2_AFSB14_Pos                   24                                                      /*!< PD AFSR2: AFSB14 Position               */
+#define PD_AFSR2_AFSB14_Msk                   (0x0fUL << PD_AFSR2_AFSB14_Pos)                         /*!< PD AFSR2: AFSB14 Mask                   */
+#define PD_AFSR2_AFSB15_Pos                   28                                                      /*!< PD AFSR2: AFSB15 Position               */
+#define PD_AFSR2_AFSB15_Msk                   (0x0fUL << PD_AFSR2_AFSB15_Pos)                         /*!< PD AFSR2: AFSB15 Mask                   */
+
+/* -----------------------------------  PD_PUPD  ---------------------------------- */
+#define PD_PUPD_PUPD0_Pos                     0                                                       /*!< PD PUPD: PUPD0 Position                 */
+#define PD_PUPD_PUPD0_Msk                     (0x03UL << PD_PUPD_PUPD0_Pos)                           /*!< PD PUPD: PUPD0 Mask                     */
+#define PD_PUPD_PUPD1_Pos                     2                                                       /*!< PD PUPD: PUPD1 Position                 */
+#define PD_PUPD_PUPD1_Msk                     (0x03UL << PD_PUPD_PUPD1_Pos)                           /*!< PD PUPD: PUPD1 Mask                     */
+#define PD_PUPD_PUPD2_Pos                     4                                                       /*!< PD PUPD: PUPD2 Position                 */
+#define PD_PUPD_PUPD2_Msk                     (0x03UL << PD_PUPD_PUPD2_Pos)                           /*!< PD PUPD: PUPD2 Mask                     */
+#define PD_PUPD_PUPD3_Pos                     6                                                       /*!< PD PUPD: PUPD3 Position                 */
+#define PD_PUPD_PUPD3_Msk                     (0x03UL << PD_PUPD_PUPD3_Pos)                           /*!< PD PUPD: PUPD3 Mask                     */
+#define PD_PUPD_PUPD4_Pos                     8                                                       /*!< PD PUPD: PUPD4 Position                 */
+#define PD_PUPD_PUPD4_Msk                     (0x03UL << PD_PUPD_PUPD4_Pos)                           /*!< PD PUPD: PUPD4 Mask                     */
+#define PD_PUPD_PUPD5_Pos                     10                                                      /*!< PD PUPD: PUPD5 Position                 */
+#define PD_PUPD_PUPD5_Msk                     (0x03UL << PD_PUPD_PUPD5_Pos)                           /*!< PD PUPD: PUPD5 Mask                     */
+#define PD_PUPD_PUPD6_Pos                     12                                                      /*!< PD PUPD: PUPD6 Position                 */
+#define PD_PUPD_PUPD6_Msk                     (0x03UL << PD_PUPD_PUPD6_Pos)                           /*!< PD PUPD: PUPD6 Mask                     */
+#define PD_PUPD_PUPD7_Pos                     14                                                      /*!< PD PUPD: PUPD7 Position                 */
+#define PD_PUPD_PUPD7_Msk                     (0x03UL << PD_PUPD_PUPD7_Pos)                           /*!< PD PUPD: PUPD7 Mask                     */
+#define PD_PUPD_PUPD8_Pos                     16                                                      /*!< PD PUPD: PUPD8 Position                 */
+#define PD_PUPD_PUPD8_Msk                     (0x03UL << PD_PUPD_PUPD8_Pos)                           /*!< PD PUPD: PUPD8 Mask                     */
+#define PD_PUPD_PUPD9_Pos                     18                                                      /*!< PD PUPD: PUPD9 Position                 */
+#define PD_PUPD_PUPD9_Msk                     (0x03UL << PD_PUPD_PUPD9_Pos)                           /*!< PD PUPD: PUPD9 Mask                     */
+#define PD_PUPD_PUPD10_Pos                    20                                                      /*!< PD PUPD: PUPD10 Position                */
+#define PD_PUPD_PUPD10_Msk                    (0x03UL << PD_PUPD_PUPD10_Pos)                          /*!< PD PUPD: PUPD10 Mask                    */
+#define PD_PUPD_PUPD11_Pos                    22                                                      /*!< PD PUPD: PUPD11 Position                */
+#define PD_PUPD_PUPD11_Msk                    (0x03UL << PD_PUPD_PUPD11_Pos)                          /*!< PD PUPD: PUPD11 Mask                    */
+#define PD_PUPD_PUPD12_Pos                    24                                                      /*!< PD PUPD: PUPD12 Position                */
+#define PD_PUPD_PUPD12_Msk                    (0x03UL << PD_PUPD_PUPD12_Pos)                          /*!< PD PUPD: PUPD12 Mask                    */
+#define PD_PUPD_PUPD13_Pos                    26                                                      /*!< PD PUPD: PUPD13 Position                */
+#define PD_PUPD_PUPD13_Msk                    (0x03UL << PD_PUPD_PUPD13_Pos)                          /*!< PD PUPD: PUPD13 Mask                    */
+#define PD_PUPD_PUPD14_Pos                    28                                                      /*!< PD PUPD: PUPD14 Position                */
+#define PD_PUPD_PUPD14_Msk                    (0x03UL << PD_PUPD_PUPD14_Pos)                          /*!< PD PUPD: PUPD14 Mask                    */
+#define PD_PUPD_PUPD15_Pos                    30                                                      /*!< PD PUPD: PUPD15 Position                */
+#define PD_PUPD_PUPD15_Msk                    (0x03UL << PD_PUPD_PUPD15_Pos)                          /*!< PD PUPD: PUPD15 Mask                    */
+
+/* -----------------------------------  PD_INDR  ---------------------------------- */
+#define PD_INDR_INDR0_Pos                     0                                                       /*!< PD INDR: INDR0 Position                 */
+#define PD_INDR_INDR0_Msk                     (0x01UL << PD_INDR_INDR0_Pos)                           /*!< PD INDR: INDR0 Mask                     */
+#define PD_INDR_INDR1_Pos                     1                                                       /*!< PD INDR: INDR1 Position                 */
+#define PD_INDR_INDR1_Msk                     (0x01UL << PD_INDR_INDR1_Pos)                           /*!< PD INDR: INDR1 Mask                     */
+#define PD_INDR_INDR2_Pos                     2                                                       /*!< PD INDR: INDR2 Position                 */
+#define PD_INDR_INDR2_Msk                     (0x01UL << PD_INDR_INDR2_Pos)                           /*!< PD INDR: INDR2 Mask                     */
+#define PD_INDR_INDR3_Pos                     3                                                       /*!< PD INDR: INDR3 Position                 */
+#define PD_INDR_INDR3_Msk                     (0x01UL << PD_INDR_INDR3_Pos)                           /*!< PD INDR: INDR3 Mask                     */
+#define PD_INDR_INDR4_Pos                     4                                                       /*!< PD INDR: INDR4 Position                 */
+#define PD_INDR_INDR4_Msk                     (0x01UL << PD_INDR_INDR4_Pos)                           /*!< PD INDR: INDR4 Mask                     */
+#define PD_INDR_INDR5_Pos                     5                                                       /*!< PD INDR: INDR5 Position                 */
+#define PD_INDR_INDR5_Msk                     (0x01UL << PD_INDR_INDR5_Pos)                           /*!< PD INDR: INDR5 Mask                     */
+#define PD_INDR_INDR6_Pos                     6                                                       /*!< PD INDR: INDR6 Position                 */
+#define PD_INDR_INDR6_Msk                     (0x01UL << PD_INDR_INDR6_Pos)                           /*!< PD INDR: INDR6 Mask                     */
+#define PD_INDR_INDR7_Pos                     7                                                       /*!< PD INDR: INDR7 Position                 */
+#define PD_INDR_INDR7_Msk                     (0x01UL << PD_INDR_INDR7_Pos)                           /*!< PD INDR: INDR7 Mask                     */
+#define PD_INDR_INDR8_Pos                     8                                                       /*!< PD INDR: INDR8 Position                 */
+#define PD_INDR_INDR8_Msk                     (0x01UL << PD_INDR_INDR8_Pos)                           /*!< PD INDR: INDR8 Mask                     */
+#define PD_INDR_INDR9_Pos                     9                                                       /*!< PD INDR: INDR9 Position                 */
+#define PD_INDR_INDR9_Msk                     (0x01UL << PD_INDR_INDR9_Pos)                           /*!< PD INDR: INDR9 Mask                     */
+#define PD_INDR_INDR10_Pos                    10                                                      /*!< PD INDR: INDR10 Position                */
+#define PD_INDR_INDR10_Msk                    (0x01UL << PD_INDR_INDR10_Pos)                          /*!< PD INDR: INDR10 Mask                    */
+#define PD_INDR_INDR11_Pos                    11                                                      /*!< PD INDR: INDR11 Position                */
+#define PD_INDR_INDR11_Msk                    (0x01UL << PD_INDR_INDR11_Pos)                          /*!< PD INDR: INDR11 Mask                    */
+#define PD_INDR_INDR12_Pos                    12                                                      /*!< PD INDR: INDR12 Position                */
+#define PD_INDR_INDR12_Msk                    (0x01UL << PD_INDR_INDR12_Pos)                          /*!< PD INDR: INDR12 Mask                    */
+#define PD_INDR_INDR13_Pos                    13                                                      /*!< PD INDR: INDR13 Position                */
+#define PD_INDR_INDR13_Msk                    (0x01UL << PD_INDR_INDR13_Pos)                          /*!< PD INDR: INDR13 Mask                    */
+#define PD_INDR_INDR14_Pos                    14                                                      /*!< PD INDR: INDR14 Position                */
+#define PD_INDR_INDR14_Msk                    (0x01UL << PD_INDR_INDR14_Pos)                          /*!< PD INDR: INDR14 Mask                    */
+#define PD_INDR_INDR15_Pos                    15                                                      /*!< PD INDR: INDR15 Position                */
+#define PD_INDR_INDR15_Msk                    (0x01UL << PD_INDR_INDR15_Pos)                          /*!< PD INDR: INDR15 Mask                    */
+
+/* ----------------------------------  PD_OUTDR  ---------------------------------- */
+#define PD_OUTDR_OUTDR0_Pos                   0                                                       /*!< PD OUTDR: OUTDR0 Position               */
+#define PD_OUTDR_OUTDR0_Msk                   (0x01UL << PD_OUTDR_OUTDR0_Pos)                         /*!< PD OUTDR: OUTDR0 Mask                   */
+#define PD_OUTDR_OUTDR1_Pos                   1                                                       /*!< PD OUTDR: OUTDR1 Position               */
+#define PD_OUTDR_OUTDR1_Msk                   (0x01UL << PD_OUTDR_OUTDR1_Pos)                         /*!< PD OUTDR: OUTDR1 Mask                   */
+#define PD_OUTDR_OUTDR2_Pos                   2                                                       /*!< PD OUTDR: OUTDR2 Position               */
+#define PD_OUTDR_OUTDR2_Msk                   (0x01UL << PD_OUTDR_OUTDR2_Pos)                         /*!< PD OUTDR: OUTDR2 Mask                   */
+#define PD_OUTDR_OUTDR3_Pos                   3                                                       /*!< PD OUTDR: OUTDR3 Position               */
+#define PD_OUTDR_OUTDR3_Msk                   (0x01UL << PD_OUTDR_OUTDR3_Pos)                         /*!< PD OUTDR: OUTDR3 Mask                   */
+#define PD_OUTDR_OUTDR4_Pos                   4                                                       /*!< PD OUTDR: OUTDR4 Position               */
+#define PD_OUTDR_OUTDR4_Msk                   (0x01UL << PD_OUTDR_OUTDR4_Pos)                         /*!< PD OUTDR: OUTDR4 Mask                   */
+#define PD_OUTDR_OUTDR5_Pos                   5                                                       /*!< PD OUTDR: OUTDR5 Position               */
+#define PD_OUTDR_OUTDR5_Msk                   (0x01UL << PD_OUTDR_OUTDR5_Pos)                         /*!< PD OUTDR: OUTDR5 Mask                   */
+#define PD_OUTDR_OUTDR6_Pos                   6                                                       /*!< PD OUTDR: OUTDR6 Position               */
+#define PD_OUTDR_OUTDR6_Msk                   (0x01UL << PD_OUTDR_OUTDR6_Pos)                         /*!< PD OUTDR: OUTDR6 Mask                   */
+#define PD_OUTDR_OUTDR7_Pos                   7                                                       /*!< PD OUTDR: OUTDR7 Position               */
+#define PD_OUTDR_OUTDR7_Msk                   (0x01UL << PD_OUTDR_OUTDR7_Pos)                         /*!< PD OUTDR: OUTDR7 Mask                   */
+#define PD_OUTDR_OUTDR8_Pos                   8                                                       /*!< PD OUTDR: OUTDR8 Position               */
+#define PD_OUTDR_OUTDR8_Msk                   (0x01UL << PD_OUTDR_OUTDR8_Pos)                         /*!< PD OUTDR: OUTDR8 Mask                   */
+#define PD_OUTDR_OUTDR9_Pos                   9                                                       /*!< PD OUTDR: OUTDR9 Position               */
+#define PD_OUTDR_OUTDR9_Msk                   (0x01UL << PD_OUTDR_OUTDR9_Pos)                         /*!< PD OUTDR: OUTDR9 Mask                   */
+#define PD_OUTDR_OUTDR10_Pos                  10                                                      /*!< PD OUTDR: OUTDR10 Position              */
+#define PD_OUTDR_OUTDR10_Msk                  (0x01UL << PD_OUTDR_OUTDR10_Pos)                        /*!< PD OUTDR: OUTDR10 Mask                  */
+#define PD_OUTDR_OUTDR11_Pos                  11                                                      /*!< PD OUTDR: OUTDR11 Position              */
+#define PD_OUTDR_OUTDR11_Msk                  (0x01UL << PD_OUTDR_OUTDR11_Pos)                        /*!< PD OUTDR: OUTDR11 Mask                  */
+#define PD_OUTDR_OUTDR12_Pos                  12                                                      /*!< PD OUTDR: OUTDR12 Position              */
+#define PD_OUTDR_OUTDR12_Msk                  (0x01UL << PD_OUTDR_OUTDR12_Pos)                        /*!< PD OUTDR: OUTDR12 Mask                  */
+#define PD_OUTDR_OUTDR13_Pos                  13                                                      /*!< PD OUTDR: OUTDR13 Position              */
+#define PD_OUTDR_OUTDR13_Msk                  (0x01UL << PD_OUTDR_OUTDR13_Pos)                        /*!< PD OUTDR: OUTDR13 Mask                  */
+#define PD_OUTDR_OUTDR14_Pos                  14                                                      /*!< PD OUTDR: OUTDR14 Position              */
+#define PD_OUTDR_OUTDR14_Msk                  (0x01UL << PD_OUTDR_OUTDR14_Pos)                        /*!< PD OUTDR: OUTDR14 Mask                  */
+#define PD_OUTDR_OUTDR15_Pos                  15                                                      /*!< PD OUTDR: OUTDR15 Position              */
+#define PD_OUTDR_OUTDR15_Msk                  (0x01UL << PD_OUTDR_OUTDR15_Pos)                        /*!< PD OUTDR: OUTDR15 Mask                  */
+
+/* -----------------------------------  PD_BSR  ----------------------------------- */
+#define PD_BSR_BSR0_Pos                       0                                                       /*!< PD BSR: BSR0 Position                   */
+#define PD_BSR_BSR0_Msk                       (0x01UL << PD_BSR_BSR0_Pos)                             /*!< PD BSR: BSR0 Mask                       */
+#define PD_BSR_BSR1_Pos                       1                                                       /*!< PD BSR: BSR1 Position                   */
+#define PD_BSR_BSR1_Msk                       (0x01UL << PD_BSR_BSR1_Pos)                             /*!< PD BSR: BSR1 Mask                       */
+#define PD_BSR_BSR2_Pos                       2                                                       /*!< PD BSR: BSR2 Position                   */
+#define PD_BSR_BSR2_Msk                       (0x01UL << PD_BSR_BSR2_Pos)                             /*!< PD BSR: BSR2 Mask                       */
+#define PD_BSR_BSR3_Pos                       3                                                       /*!< PD BSR: BSR3 Position                   */
+#define PD_BSR_BSR3_Msk                       (0x01UL << PD_BSR_BSR3_Pos)                             /*!< PD BSR: BSR3 Mask                       */
+#define PD_BSR_BSR4_Pos                       4                                                       /*!< PD BSR: BSR4 Position                   */
+#define PD_BSR_BSR4_Msk                       (0x01UL << PD_BSR_BSR4_Pos)                             /*!< PD BSR: BSR4 Mask                       */
+#define PD_BSR_BSR5_Pos                       5                                                       /*!< PD BSR: BSR5 Position                   */
+#define PD_BSR_BSR5_Msk                       (0x01UL << PD_BSR_BSR5_Pos)                             /*!< PD BSR: BSR5 Mask                       */
+#define PD_BSR_BSR6_Pos                       6                                                       /*!< PD BSR: BSR6 Position                   */
+#define PD_BSR_BSR6_Msk                       (0x01UL << PD_BSR_BSR6_Pos)                             /*!< PD BSR: BSR6 Mask                       */
+#define PD_BSR_BSR7_Pos                       7                                                       /*!< PD BSR: BSR7 Position                   */
+#define PD_BSR_BSR7_Msk                       (0x01UL << PD_BSR_BSR7_Pos)                             /*!< PD BSR: BSR7 Mask                       */
+#define PD_BSR_BSR8_Pos                       8                                                       /*!< PD BSR: BSR8 Position                   */
+#define PD_BSR_BSR8_Msk                       (0x01UL << PD_BSR_BSR8_Pos)                             /*!< PD BSR: BSR8 Mask                       */
+#define PD_BSR_BSR9_Pos                       9                                                       /*!< PD BSR: BSR9 Position                   */
+#define PD_BSR_BSR9_Msk                       (0x01UL << PD_BSR_BSR9_Pos)                             /*!< PD BSR: BSR9 Mask                       */
+#define PD_BSR_BSR10_Pos                      10                                                      /*!< PD BSR: BSR10 Position                  */
+#define PD_BSR_BSR10_Msk                      (0x01UL << PD_BSR_BSR10_Pos)                            /*!< PD BSR: BSR10 Mask                      */
+#define PD_BSR_BSR11_Pos                      11                                                      /*!< PD BSR: BSR11 Position                  */
+#define PD_BSR_BSR11_Msk                      (0x01UL << PD_BSR_BSR11_Pos)                            /*!< PD BSR: BSR11 Mask                      */
+#define PD_BSR_BSR12_Pos                      12                                                      /*!< PD BSR: BSR12 Position                  */
+#define PD_BSR_BSR12_Msk                      (0x01UL << PD_BSR_BSR12_Pos)                            /*!< PD BSR: BSR12 Mask                      */
+#define PD_BSR_BSR13_Pos                      13                                                      /*!< PD BSR: BSR13 Position                  */
+#define PD_BSR_BSR13_Msk                      (0x01UL << PD_BSR_BSR13_Pos)                            /*!< PD BSR: BSR13 Mask                      */
+#define PD_BSR_BSR14_Pos                      14                                                      /*!< PD BSR: BSR14 Position                  */
+#define PD_BSR_BSR14_Msk                      (0x01UL << PD_BSR_BSR14_Pos)                            /*!< PD BSR: BSR14 Mask                      */
+#define PD_BSR_BSR15_Pos                      15                                                      /*!< PD BSR: BSR15 Position                  */
+#define PD_BSR_BSR15_Msk                      (0x01UL << PD_BSR_BSR15_Pos)                            /*!< PD BSR: BSR15 Mask                      */
+
+/* -----------------------------------  PD_BCR  ----------------------------------- */
+#define PD_BCR_BCR0_Pos                       0                                                       /*!< PD BCR: BCR0 Position                   */
+#define PD_BCR_BCR0_Msk                       (0x01UL << PD_BCR_BCR0_Pos)                             /*!< PD BCR: BCR0 Mask                       */
+#define PD_BCR_BCR1_Pos                       1                                                       /*!< PD BCR: BCR1 Position                   */
+#define PD_BCR_BCR1_Msk                       (0x01UL << PD_BCR_BCR1_Pos)                             /*!< PD BCR: BCR1 Mask                       */
+#define PD_BCR_BCR2_Pos                       2                                                       /*!< PD BCR: BCR2 Position                   */
+#define PD_BCR_BCR2_Msk                       (0x01UL << PD_BCR_BCR2_Pos)                             /*!< PD BCR: BCR2 Mask                       */
+#define PD_BCR_BCR3_Pos                       3                                                       /*!< PD BCR: BCR3 Position                   */
+#define PD_BCR_BCR3_Msk                       (0x01UL << PD_BCR_BCR3_Pos)                             /*!< PD BCR: BCR3 Mask                       */
+#define PD_BCR_BCR4_Pos                       4                                                       /*!< PD BCR: BCR4 Position                   */
+#define PD_BCR_BCR4_Msk                       (0x01UL << PD_BCR_BCR4_Pos)                             /*!< PD BCR: BCR4 Mask                       */
+#define PD_BCR_BCR5_Pos                       5                                                       /*!< PD BCR: BCR5 Position                   */
+#define PD_BCR_BCR5_Msk                       (0x01UL << PD_BCR_BCR5_Pos)                             /*!< PD BCR: BCR5 Mask                       */
+#define PD_BCR_BCR6_Pos                       6                                                       /*!< PD BCR: BCR6 Position                   */
+#define PD_BCR_BCR6_Msk                       (0x01UL << PD_BCR_BCR6_Pos)                             /*!< PD BCR: BCR6 Mask                       */
+#define PD_BCR_BCR7_Pos                       7                                                       /*!< PD BCR: BCR7 Position                   */
+#define PD_BCR_BCR7_Msk                       (0x01UL << PD_BCR_BCR7_Pos)                             /*!< PD BCR: BCR7 Mask                       */
+#define PD_BCR_BCR8_Pos                       8                                                       /*!< PD BCR: BCR8 Position                   */
+#define PD_BCR_BCR8_Msk                       (0x01UL << PD_BCR_BCR8_Pos)                             /*!< PD BCR: BCR8 Mask                       */
+#define PD_BCR_BCR9_Pos                       9                                                       /*!< PD BCR: BCR9 Position                   */
+#define PD_BCR_BCR9_Msk                       (0x01UL << PD_BCR_BCR9_Pos)                             /*!< PD BCR: BCR9 Mask                       */
+#define PD_BCR_BCR10_Pos                      10                                                      /*!< PD BCR: BCR10 Position                  */
+#define PD_BCR_BCR10_Msk                      (0x01UL << PD_BCR_BCR10_Pos)                            /*!< PD BCR: BCR10 Mask                      */
+#define PD_BCR_BCR11_Pos                      11                                                      /*!< PD BCR: BCR11 Position                  */
+#define PD_BCR_BCR11_Msk                      (0x01UL << PD_BCR_BCR11_Pos)                            /*!< PD BCR: BCR11 Mask                      */
+#define PD_BCR_BCR12_Pos                      12                                                      /*!< PD BCR: BCR12 Position                  */
+#define PD_BCR_BCR12_Msk                      (0x01UL << PD_BCR_BCR12_Pos)                            /*!< PD BCR: BCR12 Mask                      */
+#define PD_BCR_BCR13_Pos                      13                                                      /*!< PD BCR: BCR13 Position                  */
+#define PD_BCR_BCR13_Msk                      (0x01UL << PD_BCR_BCR13_Pos)                            /*!< PD BCR: BCR13 Mask                      */
+#define PD_BCR_BCR14_Pos                      14                                                      /*!< PD BCR: BCR14 Position                  */
+#define PD_BCR_BCR14_Msk                      (0x01UL << PD_BCR_BCR14_Pos)                            /*!< PD BCR: BCR14 Mask                      */
+#define PD_BCR_BCR15_Pos                      15                                                      /*!< PD BCR: BCR15 Position                  */
+#define PD_BCR_BCR15_Msk                      (0x01UL << PD_BCR_BCR15_Pos)                            /*!< PD BCR: BCR15 Mask                      */
+
+/* ---------------------------------  PD_OUTDMSK  --------------------------------- */
+#define PD_OUTDMSK_OUTDMSK0_Pos               0                                                       /*!< PD OUTDMSK: OUTDMSK0 Position           */
+#define PD_OUTDMSK_OUTDMSK0_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK0_Pos)                     /*!< PD OUTDMSK: OUTDMSK0 Mask               */
+#define PD_OUTDMSK_OUTDMSK1_Pos               1                                                       /*!< PD OUTDMSK: OUTDMSK1 Position           */
+#define PD_OUTDMSK_OUTDMSK1_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK1_Pos)                     /*!< PD OUTDMSK: OUTDMSK1 Mask               */
+#define PD_OUTDMSK_OUTDMSK2_Pos               2                                                       /*!< PD OUTDMSK: OUTDMSK2 Position           */
+#define PD_OUTDMSK_OUTDMSK2_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK2_Pos)                     /*!< PD OUTDMSK: OUTDMSK2 Mask               */
+#define PD_OUTDMSK_OUTDMSK3_Pos               3                                                       /*!< PD OUTDMSK: OUTDMSK3 Position           */
+#define PD_OUTDMSK_OUTDMSK3_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK3_Pos)                     /*!< PD OUTDMSK: OUTDMSK3 Mask               */
+#define PD_OUTDMSK_OUTDMSK4_Pos               4                                                       /*!< PD OUTDMSK: OUTDMSK4 Position           */
+#define PD_OUTDMSK_OUTDMSK4_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK4_Pos)                     /*!< PD OUTDMSK: OUTDMSK4 Mask               */
+#define PD_OUTDMSK_OUTDMSK5_Pos               5                                                       /*!< PD OUTDMSK: OUTDMSK5 Position           */
+#define PD_OUTDMSK_OUTDMSK5_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK5_Pos)                     /*!< PD OUTDMSK: OUTDMSK5 Mask               */
+#define PD_OUTDMSK_OUTDMSK6_Pos               6                                                       /*!< PD OUTDMSK: OUTDMSK6 Position           */
+#define PD_OUTDMSK_OUTDMSK6_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK6_Pos)                     /*!< PD OUTDMSK: OUTDMSK6 Mask               */
+#define PD_OUTDMSK_OUTDMSK7_Pos               7                                                       /*!< PD OUTDMSK: OUTDMSK7 Position           */
+#define PD_OUTDMSK_OUTDMSK7_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK7_Pos)                     /*!< PD OUTDMSK: OUTDMSK7 Mask               */
+#define PD_OUTDMSK_OUTDMSK8_Pos               8                                                       /*!< PD OUTDMSK: OUTDMSK8 Position           */
+#define PD_OUTDMSK_OUTDMSK8_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK8_Pos)                     /*!< PD OUTDMSK: OUTDMSK8 Mask               */
+#define PD_OUTDMSK_OUTDMSK9_Pos               9                                                       /*!< PD OUTDMSK: OUTDMSK9 Position           */
+#define PD_OUTDMSK_OUTDMSK9_Msk               (0x01UL << PD_OUTDMSK_OUTDMSK9_Pos)                     /*!< PD OUTDMSK: OUTDMSK9 Mask               */
+#define PD_OUTDMSK_OUTDMSK10_Pos              10                                                      /*!< PD OUTDMSK: OUTDMSK10 Position          */
+#define PD_OUTDMSK_OUTDMSK10_Msk              (0x01UL << PD_OUTDMSK_OUTDMSK10_Pos)                    /*!< PD OUTDMSK: OUTDMSK10 Mask              */
+#define PD_OUTDMSK_OUTDMSK11_Pos              11                                                      /*!< PD OUTDMSK: OUTDMSK11 Position          */
+#define PD_OUTDMSK_OUTDMSK11_Msk              (0x01UL << PD_OUTDMSK_OUTDMSK11_Pos)                    /*!< PD OUTDMSK: OUTDMSK11 Mask              */
+#define PD_OUTDMSK_OUTDMSK12_Pos              12                                                      /*!< PD OUTDMSK: OUTDMSK12 Position          */
+#define PD_OUTDMSK_OUTDMSK12_Msk              (0x01UL << PD_OUTDMSK_OUTDMSK12_Pos)                    /*!< PD OUTDMSK: OUTDMSK12 Mask              */
+#define PD_OUTDMSK_OUTDMSK13_Pos              13                                                      /*!< PD OUTDMSK: OUTDMSK13 Position          */
+#define PD_OUTDMSK_OUTDMSK13_Msk              (0x01UL << PD_OUTDMSK_OUTDMSK13_Pos)                    /*!< PD OUTDMSK: OUTDMSK13 Mask              */
+#define PD_OUTDMSK_OUTDMSK14_Pos              14                                                      /*!< PD OUTDMSK: OUTDMSK14 Position          */
+#define PD_OUTDMSK_OUTDMSK14_Msk              (0x01UL << PD_OUTDMSK_OUTDMSK14_Pos)                    /*!< PD OUTDMSK: OUTDMSK14 Mask              */
+#define PD_OUTDMSK_OUTDMSK15_Pos              15                                                      /*!< PD OUTDMSK: OUTDMSK15 Position          */
+#define PD_OUTDMSK_OUTDMSK15_Msk              (0x01UL << PD_OUTDMSK_OUTDMSK15_Pos)                    /*!< PD OUTDMSK: OUTDMSK15 Mask              */
+
+/* -----------------------------------  PD_DBCR  ---------------------------------- */
+#define PD_DBCR_DBEN0_Pos                     0                                                       /*!< PD DBCR: DBEN0 Position                 */
+#define PD_DBCR_DBEN0_Msk                     (0x01UL << PD_DBCR_DBEN0_Pos)                           /*!< PD DBCR: DBEN0 Mask                     */
+#define PD_DBCR_DBEN1_Pos                     1                                                       /*!< PD DBCR: DBEN1 Position                 */
+#define PD_DBCR_DBEN1_Msk                     (0x01UL << PD_DBCR_DBEN1_Pos)                           /*!< PD DBCR: DBEN1 Mask                     */
+#define PD_DBCR_DBEN2_Pos                     2                                                       /*!< PD DBCR: DBEN2 Position                 */
+#define PD_DBCR_DBEN2_Msk                     (0x01UL << PD_DBCR_DBEN2_Pos)                           /*!< PD DBCR: DBEN2 Mask                     */
+#define PD_DBCR_DBEN3_Pos                     3                                                       /*!< PD DBCR: DBEN3 Position                 */
+#define PD_DBCR_DBEN3_Msk                     (0x01UL << PD_DBCR_DBEN3_Pos)                           /*!< PD DBCR: DBEN3 Mask                     */
+#define PD_DBCR_DBEN4_Pos                     4                                                       /*!< PD DBCR: DBEN4 Position                 */
+#define PD_DBCR_DBEN4_Msk                     (0x01UL << PD_DBCR_DBEN4_Pos)                           /*!< PD DBCR: DBEN4 Mask                     */
+#define PD_DBCR_DBEN5_Pos                     5                                                       /*!< PD DBCR: DBEN5 Position                 */
+#define PD_DBCR_DBEN5_Msk                     (0x01UL << PD_DBCR_DBEN5_Pos)                           /*!< PD DBCR: DBEN5 Mask                     */
+#define PD_DBCR_DBEN6_Pos                     6                                                       /*!< PD DBCR: DBEN6 Position                 */
+#define PD_DBCR_DBEN6_Msk                     (0x01UL << PD_DBCR_DBEN6_Pos)                           /*!< PD DBCR: DBEN6 Mask                     */
+#define PD_DBCR_DBEN7_Pos                     7                                                       /*!< PD DBCR: DBEN7 Position                 */
+#define PD_DBCR_DBEN7_Msk                     (0x01UL << PD_DBCR_DBEN7_Pos)                           /*!< PD DBCR: DBEN7 Mask                     */
+#define PD_DBCR_DBEN8_Pos                     8                                                       /*!< PD DBCR: DBEN8 Position                 */
+#define PD_DBCR_DBEN8_Msk                     (0x01UL << PD_DBCR_DBEN8_Pos)                           /*!< PD DBCR: DBEN8 Mask                     */
+#define PD_DBCR_DBEN9_Pos                     9                                                       /*!< PD DBCR: DBEN9 Position                 */
+#define PD_DBCR_DBEN9_Msk                     (0x01UL << PD_DBCR_DBEN9_Pos)                           /*!< PD DBCR: DBEN9 Mask                     */
+#define PD_DBCR_DBEN10_Pos                    10                                                      /*!< PD DBCR: DBEN10 Position                */
+#define PD_DBCR_DBEN10_Msk                    (0x01UL << PD_DBCR_DBEN10_Pos)                          /*!< PD DBCR: DBEN10 Mask                    */
+#define PD_DBCR_DBEN11_Pos                    11                                                      /*!< PD DBCR: DBEN11 Position                */
+#define PD_DBCR_DBEN11_Msk                    (0x01UL << PD_DBCR_DBEN11_Pos)                          /*!< PD DBCR: DBEN11 Mask                    */
+#define PD_DBCR_DBEN12_Pos                    12                                                      /*!< PD DBCR: DBEN12 Position                */
+#define PD_DBCR_DBEN12_Msk                    (0x01UL << PD_DBCR_DBEN12_Pos)                          /*!< PD DBCR: DBEN12 Mask                    */
+#define PD_DBCR_DBEN13_Pos                    13                                                      /*!< PD DBCR: DBEN13 Position                */
+#define PD_DBCR_DBEN13_Msk                    (0x01UL << PD_DBCR_DBEN13_Pos)                          /*!< PD DBCR: DBEN13 Mask                    */
+#define PD_DBCR_DBEN14_Pos                    14                                                      /*!< PD DBCR: DBEN14 Position                */
+#define PD_DBCR_DBEN14_Msk                    (0x01UL << PD_DBCR_DBEN14_Pos)                          /*!< PD DBCR: DBEN14 Mask                    */
+#define PD_DBCR_DBEN15_Pos                    15                                                      /*!< PD DBCR: DBEN15 Position                */
+#define PD_DBCR_DBEN15_Msk                    (0x01UL << PD_DBCR_DBEN15_Pos)                          /*!< PD DBCR: DBEN15 Mask                    */
+
+/* -----------------------------------  PD_IER  ----------------------------------- */
+#define PD_IER_PIE0_Pos                       0                                                       /*!< PD IER: PIE0 Position                   */
+#define PD_IER_PIE0_Msk                       (0x03UL << PD_IER_PIE0_Pos)                             /*!< PD IER: PIE0 Mask                       */
+#define PD_IER_PIE1_Pos                       2                                                       /*!< PD IER: PIE1 Position                   */
+#define PD_IER_PIE1_Msk                       (0x03UL << PD_IER_PIE1_Pos)                             /*!< PD IER: PIE1 Mask                       */
+#define PD_IER_PIE2_Pos                       4                                                       /*!< PD IER: PIE2 Position                   */
+#define PD_IER_PIE2_Msk                       (0x03UL << PD_IER_PIE2_Pos)                             /*!< PD IER: PIE2 Mask                       */
+#define PD_IER_PIE3_Pos                       6                                                       /*!< PD IER: PIE3 Position                   */
+#define PD_IER_PIE3_Msk                       (0x03UL << PD_IER_PIE3_Pos)                             /*!< PD IER: PIE3 Mask                       */
+#define PD_IER_PIE4_Pos                       8                                                       /*!< PD IER: PIE4 Position                   */
+#define PD_IER_PIE4_Msk                       (0x03UL << PD_IER_PIE4_Pos)                             /*!< PD IER: PIE4 Mask                       */
+#define PD_IER_PIE5_Pos                       10                                                      /*!< PD IER: PIE5 Position                   */
+#define PD_IER_PIE5_Msk                       (0x03UL << PD_IER_PIE5_Pos)                             /*!< PD IER: PIE5 Mask                       */
+#define PD_IER_PIE6_Pos                       12                                                      /*!< PD IER: PIE6 Position                   */
+#define PD_IER_PIE6_Msk                       (0x03UL << PD_IER_PIE6_Pos)                             /*!< PD IER: PIE6 Mask                       */
+#define PD_IER_PIE7_Pos                       14                                                      /*!< PD IER: PIE7 Position                   */
+#define PD_IER_PIE7_Msk                       (0x03UL << PD_IER_PIE7_Pos)                             /*!< PD IER: PIE7 Mask                       */
+#define PD_IER_PIE8_Pos                       16                                                      /*!< PD IER: PIE8 Position                   */
+#define PD_IER_PIE8_Msk                       (0x03UL << PD_IER_PIE8_Pos)                             /*!< PD IER: PIE8 Mask                       */
+#define PD_IER_PIE9_Pos                       18                                                      /*!< PD IER: PIE9 Position                   */
+#define PD_IER_PIE9_Msk                       (0x03UL << PD_IER_PIE9_Pos)                             /*!< PD IER: PIE9 Mask                       */
+#define PD_IER_PIE10_Pos                      20                                                      /*!< PD IER: PIE10 Position                  */
+#define PD_IER_PIE10_Msk                      (0x03UL << PD_IER_PIE10_Pos)                            /*!< PD IER: PIE10 Mask                      */
+#define PD_IER_PIE11_Pos                      22                                                      /*!< PD IER: PIE11 Position                  */
+#define PD_IER_PIE11_Msk                      (0x03UL << PD_IER_PIE11_Pos)                            /*!< PD IER: PIE11 Mask                      */
+#define PD_IER_PIE12_Pos                      24                                                      /*!< PD IER: PIE12 Position                  */
+#define PD_IER_PIE12_Msk                      (0x03UL << PD_IER_PIE12_Pos)                            /*!< PD IER: PIE12 Mask                      */
+#define PD_IER_PIE13_Pos                      26                                                      /*!< PD IER: PIE13 Position                  */
+#define PD_IER_PIE13_Msk                      (0x03UL << PD_IER_PIE13_Pos)                            /*!< PD IER: PIE13 Mask                      */
+#define PD_IER_PIE14_Pos                      28                                                      /*!< PD IER: PIE14 Position                  */
+#define PD_IER_PIE14_Msk                      (0x03UL << PD_IER_PIE14_Pos)                            /*!< PD IER: PIE14 Mask                      */
+#define PD_IER_PIE15_Pos                      30                                                      /*!< PD IER: PIE15 Position                  */
+#define PD_IER_PIE15_Msk                      (0x03UL << PD_IER_PIE15_Pos)                            /*!< PD IER: PIE15 Mask                      */
+
+/* -----------------------------------  PD_ISR  ----------------------------------- */
+#define PD_ISR_PIS0_Pos                       0                                                       /*!< PD ISR: PIS0 Position                   */
+#define PD_ISR_PIS0_Msk                       (0x03UL << PD_ISR_PIS0_Pos)                             /*!< PD ISR: PIS0 Mask                       */
+#define PD_ISR_PIS1_Pos                       2                                                       /*!< PD ISR: PIS1 Position                   */
+#define PD_ISR_PIS1_Msk                       (0x03UL << PD_ISR_PIS1_Pos)                             /*!< PD ISR: PIS1 Mask                       */
+#define PD_ISR_PIS2_Pos                       4                                                       /*!< PD ISR: PIS2 Position                   */
+#define PD_ISR_PIS2_Msk                       (0x03UL << PD_ISR_PIS2_Pos)                             /*!< PD ISR: PIS2 Mask                       */
+#define PD_ISR_PIS3_Pos                       6                                                       /*!< PD ISR: PIS3 Position                   */
+#define PD_ISR_PIS3_Msk                       (0x03UL << PD_ISR_PIS3_Pos)                             /*!< PD ISR: PIS3 Mask                       */
+#define PD_ISR_PIS4_Pos                       8                                                       /*!< PD ISR: PIS4 Position                   */
+#define PD_ISR_PIS4_Msk                       (0x03UL << PD_ISR_PIS4_Pos)                             /*!< PD ISR: PIS4 Mask                       */
+#define PD_ISR_PIS5_Pos                       10                                                      /*!< PD ISR: PIS5 Position                   */
+#define PD_ISR_PIS5_Msk                       (0x03UL << PD_ISR_PIS5_Pos)                             /*!< PD ISR: PIS5 Mask                       */
+#define PD_ISR_PIS6_Pos                       12                                                      /*!< PD ISR: PIS6 Position                   */
+#define PD_ISR_PIS6_Msk                       (0x03UL << PD_ISR_PIS6_Pos)                             /*!< PD ISR: PIS6 Mask                       */
+#define PD_ISR_PIS7_Pos                       14                                                      /*!< PD ISR: PIS7 Position                   */
+#define PD_ISR_PIS7_Msk                       (0x03UL << PD_ISR_PIS7_Pos)                             /*!< PD ISR: PIS7 Mask                       */
+#define PD_ISR_PIS8_Pos                       16                                                      /*!< PD ISR: PIS8 Position                   */
+#define PD_ISR_PIS8_Msk                       (0x03UL << PD_ISR_PIS8_Pos)                             /*!< PD ISR: PIS8 Mask                       */
+#define PD_ISR_PIS9_Pos                       18                                                      /*!< PD ISR: PIS9 Position                   */
+#define PD_ISR_PIS9_Msk                       (0x03UL << PD_ISR_PIS9_Pos)                             /*!< PD ISR: PIS9 Mask                       */
+#define PD_ISR_PIS10_Pos                      20                                                      /*!< PD ISR: PIS10 Position                  */
+#define PD_ISR_PIS10_Msk                      (0x03UL << PD_ISR_PIS10_Pos)                            /*!< PD ISR: PIS10 Mask                      */
+#define PD_ISR_PIS11_Pos                      22                                                      /*!< PD ISR: PIS11 Position                  */
+#define PD_ISR_PIS11_Msk                      (0x03UL << PD_ISR_PIS11_Pos)                            /*!< PD ISR: PIS11 Mask                      */
+#define PD_ISR_PIS12_Pos                      24                                                      /*!< PD ISR: PIS12 Position                  */
+#define PD_ISR_PIS12_Msk                      (0x03UL << PD_ISR_PIS12_Pos)                            /*!< PD ISR: PIS12 Mask                      */
+#define PD_ISR_PIS13_Pos                      26                                                      /*!< PD ISR: PIS13 Position                  */
+#define PD_ISR_PIS13_Msk                      (0x03UL << PD_ISR_PIS13_Pos)                            /*!< PD ISR: PIS13 Mask                      */
+#define PD_ISR_PIS14_Pos                      28                                                      /*!< PD ISR: PIS14 Position                  */
+#define PD_ISR_PIS14_Msk                      (0x03UL << PD_ISR_PIS14_Pos)                            /*!< PD ISR: PIS14 Mask                      */
+#define PD_ISR_PIS15_Pos                      30                                                      /*!< PD ISR: PIS15 Position                  */
+#define PD_ISR_PIS15_Msk                      (0x03UL << PD_ISR_PIS15_Pos)                            /*!< PD ISR: PIS15 Mask                      */
+
+/* -----------------------------------  PD_ICR  ----------------------------------- */
+#define PD_ICR_PIC0_Pos                       0                                                       /*!< PD ICR: PIC0 Position                   */
+#define PD_ICR_PIC0_Msk                       (0x03UL << PD_ICR_PIC0_Pos)                             /*!< PD ICR: PIC0 Mask                       */
+#define PD_ICR_PIC1_Pos                       2                                                       /*!< PD ICR: PIC1 Position                   */
+#define PD_ICR_PIC1_Msk                       (0x03UL << PD_ICR_PIC1_Pos)                             /*!< PD ICR: PIC1 Mask                       */
+#define PD_ICR_PIC2_Pos                       4                                                       /*!< PD ICR: PIC2 Position                   */
+#define PD_ICR_PIC2_Msk                       (0x03UL << PD_ICR_PIC2_Pos)                             /*!< PD ICR: PIC2 Mask                       */
+#define PD_ICR_PIC3_Pos                       6                                                       /*!< PD ICR: PIC3 Position                   */
+#define PD_ICR_PIC3_Msk                       (0x03UL << PD_ICR_PIC3_Pos)                             /*!< PD ICR: PIC3 Mask                       */
+#define PD_ICR_PIC4_Pos                       8                                                       /*!< PD ICR: PIC4 Position                   */
+#define PD_ICR_PIC4_Msk                       (0x03UL << PD_ICR_PIC4_Pos)                             /*!< PD ICR: PIC4 Mask                       */
+#define PD_ICR_PIC5_Pos                       10                                                      /*!< PD ICR: PIC5 Position                   */
+#define PD_ICR_PIC5_Msk                       (0x03UL << PD_ICR_PIC5_Pos)                             /*!< PD ICR: PIC5 Mask                       */
+#define PD_ICR_PIC6_Pos                       12                                                      /*!< PD ICR: PIC6 Position                   */
+#define PD_ICR_PIC6_Msk                       (0x03UL << PD_ICR_PIC6_Pos)                             /*!< PD ICR: PIC6 Mask                       */
+#define PD_ICR_PIC7_Pos                       14                                                      /*!< PD ICR: PIC7 Position                   */
+#define PD_ICR_PIC7_Msk                       (0x03UL << PD_ICR_PIC7_Pos)                             /*!< PD ICR: PIC7 Mask                       */
+#define PD_ICR_PIC8_Pos                       16                                                      /*!< PD ICR: PIC8 Position                   */
+#define PD_ICR_PIC8_Msk                       (0x03UL << PD_ICR_PIC8_Pos)                             /*!< PD ICR: PIC8 Mask                       */
+#define PD_ICR_PIC9_Pos                       18                                                      /*!< PD ICR: PIC9 Position                   */
+#define PD_ICR_PIC9_Msk                       (0x03UL << PD_ICR_PIC9_Pos)                             /*!< PD ICR: PIC9 Mask                       */
+#define PD_ICR_PIC10_Pos                      20                                                      /*!< PD ICR: PIC10 Position                  */
+#define PD_ICR_PIC10_Msk                      (0x03UL << PD_ICR_PIC10_Pos)                            /*!< PD ICR: PIC10 Mask                      */
+#define PD_ICR_PIC11_Pos                      22                                                      /*!< PD ICR: PIC11 Position                  */
+#define PD_ICR_PIC11_Msk                      (0x03UL << PD_ICR_PIC11_Pos)                            /*!< PD ICR: PIC11 Mask                      */
+#define PD_ICR_PIC12_Pos                      24                                                      /*!< PD ICR: PIC12 Position                  */
+#define PD_ICR_PIC12_Msk                      (0x03UL << PD_ICR_PIC12_Pos)                            /*!< PD ICR: PIC12 Mask                      */
+#define PD_ICR_PIC13_Pos                      26                                                      /*!< PD ICR: PIC13 Position                  */
+#define PD_ICR_PIC13_Msk                      (0x03UL << PD_ICR_PIC13_Pos)                            /*!< PD ICR: PIC13 Mask                      */
+#define PD_ICR_PIC14_Pos                      28                                                      /*!< PD ICR: PIC14 Position                  */
+#define PD_ICR_PIC14_Msk                      (0x03UL << PD_ICR_PIC14_Pos)                            /*!< PD ICR: PIC14 Mask                      */
+#define PD_ICR_PIC15_Pos                      30                                                      /*!< PD ICR: PIC15 Position                  */
+#define PD_ICR_PIC15_Msk                      (0x03UL << PD_ICR_PIC15_Pos)                            /*!< PD ICR: PIC15 Mask                      */
+
+
+/* ================================================================================ */
+/* ================           struct 'PE' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  PE_MOD  ----------------------------------- */
+#define PE_MOD_MODE0_Pos                      0                                                       /*!< PE MOD: MODE0 Position                  */
+#define PE_MOD_MODE0_Msk                      (0x03UL << PE_MOD_MODE0_Pos)                            /*!< PE MOD: MODE0 Mask                      */
+#define PE_MOD_MODE1_Pos                      2                                                       /*!< PE MOD: MODE1 Position                  */
+#define PE_MOD_MODE1_Msk                      (0x03UL << PE_MOD_MODE1_Pos)                            /*!< PE MOD: MODE1 Mask                      */
+#define PE_MOD_MODE2_Pos                      4                                                       /*!< PE MOD: MODE2 Position                  */
+#define PE_MOD_MODE2_Msk                      (0x03UL << PE_MOD_MODE2_Pos)                            /*!< PE MOD: MODE2 Mask                      */
+#define PE_MOD_MODE3_Pos                      6                                                       /*!< PE MOD: MODE3 Position                  */
+#define PE_MOD_MODE3_Msk                      (0x03UL << PE_MOD_MODE3_Pos)                            /*!< PE MOD: MODE3 Mask                      */
+#define PE_MOD_MODE4_Pos                      8                                                       /*!< PE MOD: MODE4 Position                  */
+#define PE_MOD_MODE4_Msk                      (0x03UL << PE_MOD_MODE4_Pos)                            /*!< PE MOD: MODE4 Mask                      */
+#define PE_MOD_MODE5_Pos                      10                                                      /*!< PE MOD: MODE5 Position                  */
+#define PE_MOD_MODE5_Msk                      (0x03UL << PE_MOD_MODE5_Pos)                            /*!< PE MOD: MODE5 Mask                      */
+#define PE_MOD_MODE6_Pos                      12                                                      /*!< PE MOD: MODE6 Position                  */
+#define PE_MOD_MODE6_Msk                      (0x03UL << PE_MOD_MODE6_Pos)                            /*!< PE MOD: MODE6 Mask                      */
+#define PE_MOD_MODE7_Pos                      14                                                      /*!< PE MOD: MODE7 Position                  */
+#define PE_MOD_MODE7_Msk                      (0x03UL << PE_MOD_MODE7_Pos)                            /*!< PE MOD: MODE7 Mask                      */
+#define PE_MOD_MODE8_Pos                      16                                                      /*!< PE MOD: MODE8 Position                  */
+#define PE_MOD_MODE8_Msk                      (0x03UL << PE_MOD_MODE8_Pos)                            /*!< PE MOD: MODE8 Mask                      */
+#define PE_MOD_MODE9_Pos                      18                                                      /*!< PE MOD: MODE9 Position                  */
+#define PE_MOD_MODE9_Msk                      (0x03UL << PE_MOD_MODE9_Pos)                            /*!< PE MOD: MODE9 Mask                      */
+#define PE_MOD_MODE10_Pos                     20                                                      /*!< PE MOD: MODE10 Position                 */
+#define PE_MOD_MODE10_Msk                     (0x03UL << PE_MOD_MODE10_Pos)                           /*!< PE MOD: MODE10 Mask                     */
+#define PE_MOD_MODE11_Pos                     22                                                      /*!< PE MOD: MODE11 Position                 */
+#define PE_MOD_MODE11_Msk                     (0x03UL << PE_MOD_MODE11_Pos)                           /*!< PE MOD: MODE11 Mask                     */
+#define PE_MOD_MODE12_Pos                     24                                                      /*!< PE MOD: MODE12 Position                 */
+#define PE_MOD_MODE12_Msk                     (0x03UL << PE_MOD_MODE12_Pos)                           /*!< PE MOD: MODE12 Mask                     */
+#define PE_MOD_MODE13_Pos                     26                                                      /*!< PE MOD: MODE13 Position                 */
+#define PE_MOD_MODE13_Msk                     (0x03UL << PE_MOD_MODE13_Pos)                           /*!< PE MOD: MODE13 Mask                     */
+#define PE_MOD_MODE14_Pos                     28                                                      /*!< PE MOD: MODE14 Position                 */
+#define PE_MOD_MODE14_Msk                     (0x03UL << PE_MOD_MODE14_Pos)                           /*!< PE MOD: MODE14 Mask                     */
+#define PE_MOD_MODE15_Pos                     30                                                      /*!< PE MOD: MODE15 Position                 */
+#define PE_MOD_MODE15_Msk                     (0x03UL << PE_MOD_MODE15_Pos)                           /*!< PE MOD: MODE15 Mask                     */
+
+/* -----------------------------------  PE_TYP  ----------------------------------- */
+#define PE_TYP_TYP0_Pos                       0                                                       /*!< PE TYP: TYP0 Position                   */
+#define PE_TYP_TYP0_Msk                       (0x01UL << PE_TYP_TYP0_Pos)                             /*!< PE TYP: TYP0 Mask                       */
+#define PE_TYP_TYP1_Pos                       1                                                       /*!< PE TYP: TYP1 Position                   */
+#define PE_TYP_TYP1_Msk                       (0x01UL << PE_TYP_TYP1_Pos)                             /*!< PE TYP: TYP1 Mask                       */
+#define PE_TYP_TYP2_Pos                       2                                                       /*!< PE TYP: TYP2 Position                   */
+#define PE_TYP_TYP2_Msk                       (0x01UL << PE_TYP_TYP2_Pos)                             /*!< PE TYP: TYP2 Mask                       */
+#define PE_TYP_TYP3_Pos                       3                                                       /*!< PE TYP: TYP3 Position                   */
+#define PE_TYP_TYP3_Msk                       (0x01UL << PE_TYP_TYP3_Pos)                             /*!< PE TYP: TYP3 Mask                       */
+#define PE_TYP_TYP4_Pos                       4                                                       /*!< PE TYP: TYP4 Position                   */
+#define PE_TYP_TYP4_Msk                       (0x01UL << PE_TYP_TYP4_Pos)                             /*!< PE TYP: TYP4 Mask                       */
+#define PE_TYP_TYP5_Pos                       5                                                       /*!< PE TYP: TYP5 Position                   */
+#define PE_TYP_TYP5_Msk                       (0x01UL << PE_TYP_TYP5_Pos)                             /*!< PE TYP: TYP5 Mask                       */
+#define PE_TYP_TYP6_Pos                       6                                                       /*!< PE TYP: TYP6 Position                   */
+#define PE_TYP_TYP6_Msk                       (0x01UL << PE_TYP_TYP6_Pos)                             /*!< PE TYP: TYP6 Mask                       */
+#define PE_TYP_TYP7_Pos                       7                                                       /*!< PE TYP: TYP7 Position                   */
+#define PE_TYP_TYP7_Msk                       (0x01UL << PE_TYP_TYP7_Pos)                             /*!< PE TYP: TYP7 Mask                       */
+#define PE_TYP_TYP8_Pos                       8                                                       /*!< PE TYP: TYP8 Position                   */
+#define PE_TYP_TYP8_Msk                       (0x01UL << PE_TYP_TYP8_Pos)                             /*!< PE TYP: TYP8 Mask                       */
+#define PE_TYP_TYP9_Pos                       9                                                       /*!< PE TYP: TYP9 Position                   */
+#define PE_TYP_TYP9_Msk                       (0x01UL << PE_TYP_TYP9_Pos)                             /*!< PE TYP: TYP9 Mask                       */
+#define PE_TYP_TYP10_Pos                      10                                                      /*!< PE TYP: TYP10 Position                  */
+#define PE_TYP_TYP10_Msk                      (0x01UL << PE_TYP_TYP10_Pos)                            /*!< PE TYP: TYP10 Mask                      */
+#define PE_TYP_TYP11_Pos                      11                                                      /*!< PE TYP: TYP11 Position                  */
+#define PE_TYP_TYP11_Msk                      (0x01UL << PE_TYP_TYP11_Pos)                            /*!< PE TYP: TYP11 Mask                      */
+#define PE_TYP_TYP12_Pos                      12                                                      /*!< PE TYP: TYP12 Position                  */
+#define PE_TYP_TYP12_Msk                      (0x01UL << PE_TYP_TYP12_Pos)                            /*!< PE TYP: TYP12 Mask                      */
+#define PE_TYP_TYP13_Pos                      13                                                      /*!< PE TYP: TYP13 Position                  */
+#define PE_TYP_TYP13_Msk                      (0x01UL << PE_TYP_TYP13_Pos)                            /*!< PE TYP: TYP13 Mask                      */
+#define PE_TYP_TYP14_Pos                      14                                                      /*!< PE TYP: TYP14 Position                  */
+#define PE_TYP_TYP14_Msk                      (0x01UL << PE_TYP_TYP14_Pos)                            /*!< PE TYP: TYP14 Mask                      */
+#define PE_TYP_TYP15_Pos                      15                                                      /*!< PE TYP: TYP15 Position                  */
+#define PE_TYP_TYP15_Msk                      (0x01UL << PE_TYP_TYP15_Pos)                            /*!< PE TYP: TYP15 Mask                      */
+
+/* ----------------------------------  PE_AFSR1  ---------------------------------- */
+#define PE_AFSR1_AFSB0_Pos                    0                                                       /*!< PE AFSR1: AFSB0 Position                */
+#define PE_AFSR1_AFSB0_Msk                    (0x0fUL << PE_AFSR1_AFSB0_Pos)                          /*!< PE AFSR1: AFSB0 Mask                    */
+#define PE_AFSR1_AFSB1_Pos                    4                                                       /*!< PE AFSR1: AFSB1 Position                */
+#define PE_AFSR1_AFSB1_Msk                    (0x0fUL << PE_AFSR1_AFSB1_Pos)                          /*!< PE AFSR1: AFSB1 Mask                    */
+#define PE_AFSR1_AFSB2_Pos                    8                                                       /*!< PE AFSR1: AFSB2 Position                */
+#define PE_AFSR1_AFSB2_Msk                    (0x0fUL << PE_AFSR1_AFSB2_Pos)                          /*!< PE AFSR1: AFSB2 Mask                    */
+#define PE_AFSR1_AFSB3_Pos                    12                                                      /*!< PE AFSR1: AFSB3 Position                */
+#define PE_AFSR1_AFSB3_Msk                    (0x0fUL << PE_AFSR1_AFSB3_Pos)                          /*!< PE AFSR1: AFSB3 Mask                    */
+#define PE_AFSR1_AFSB4_Pos                    16                                                      /*!< PE AFSR1: AFSB4 Position                */
+#define PE_AFSR1_AFSB4_Msk                    (0x0fUL << PE_AFSR1_AFSB4_Pos)                          /*!< PE AFSR1: AFSB4 Mask                    */
+#define PE_AFSR1_AFSB5_Pos                    20                                                      /*!< PE AFSR1: AFSB5 Position                */
+#define PE_AFSR1_AFSB5_Msk                    (0x0fUL << PE_AFSR1_AFSB5_Pos)                          /*!< PE AFSR1: AFSB5 Mask                    */
+#define PE_AFSR1_AFSB6_Pos                    24                                                      /*!< PE AFSR1: AFSB6 Position                */
+#define PE_AFSR1_AFSB6_Msk                    (0x0fUL << PE_AFSR1_AFSB6_Pos)                          /*!< PE AFSR1: AFSB6 Mask                    */
+#define PE_AFSR1_AFSB7_Pos                    28                                                      /*!< PE AFSR1: AFSB7 Position                */
+#define PE_AFSR1_AFSB7_Msk                    (0x0fUL << PE_AFSR1_AFSB7_Pos)                          /*!< PE AFSR1: AFSB7 Mask                    */
+
+/* ----------------------------------  PE_AFSR2  ---------------------------------- */
+#define PE_AFSR2_AFSB8_Pos                    0                                                       /*!< PE AFSR2: AFSB8 Position                */
+#define PE_AFSR2_AFSB8_Msk                    (0x0fUL << PE_AFSR2_AFSB8_Pos)                          /*!< PE AFSR2: AFSB8 Mask                    */
+#define PE_AFSR2_AFSB9_Pos                    4                                                       /*!< PE AFSR2: AFSB9 Position                */
+#define PE_AFSR2_AFSB9_Msk                    (0x0fUL << PE_AFSR2_AFSB9_Pos)                          /*!< PE AFSR2: AFSB9 Mask                    */
+#define PE_AFSR2_AFSB10_Pos                   8                                                       /*!< PE AFSR2: AFSB10 Position               */
+#define PE_AFSR2_AFSB10_Msk                   (0x0fUL << PE_AFSR2_AFSB10_Pos)                         /*!< PE AFSR2: AFSB10 Mask                   */
+#define PE_AFSR2_AFSB11_Pos                   12                                                      /*!< PE AFSR2: AFSB11 Position               */
+#define PE_AFSR2_AFSB11_Msk                   (0x0fUL << PE_AFSR2_AFSB11_Pos)                         /*!< PE AFSR2: AFSB11 Mask                   */
+#define PE_AFSR2_AFSB12_Pos                   16                                                      /*!< PE AFSR2: AFSB12 Position               */
+#define PE_AFSR2_AFSB12_Msk                   (0x0fUL << PE_AFSR2_AFSB12_Pos)                         /*!< PE AFSR2: AFSB12 Mask                   */
+#define PE_AFSR2_AFSB13_Pos                   20                                                      /*!< PE AFSR2: AFSB13 Position               */
+#define PE_AFSR2_AFSB13_Msk                   (0x0fUL << PE_AFSR2_AFSB13_Pos)                         /*!< PE AFSR2: AFSB13 Mask                   */
+#define PE_AFSR2_AFSB14_Pos                   24                                                      /*!< PE AFSR2: AFSB14 Position               */
+#define PE_AFSR2_AFSB14_Msk                   (0x0fUL << PE_AFSR2_AFSB14_Pos)                         /*!< PE AFSR2: AFSB14 Mask                   */
+#define PE_AFSR2_AFSB15_Pos                   28                                                      /*!< PE AFSR2: AFSB15 Position               */
+#define PE_AFSR2_AFSB15_Msk                   (0x0fUL << PE_AFSR2_AFSB15_Pos)                         /*!< PE AFSR2: AFSB15 Mask                   */
+
+/* -----------------------------------  PE_PUPD  ---------------------------------- */
+#define PE_PUPD_PUPD0_Pos                     0                                                       /*!< PE PUPD: PUPD0 Position                 */
+#define PE_PUPD_PUPD0_Msk                     (0x03UL << PE_PUPD_PUPD0_Pos)                           /*!< PE PUPD: PUPD0 Mask                     */
+#define PE_PUPD_PUPD1_Pos                     2                                                       /*!< PE PUPD: PUPD1 Position                 */
+#define PE_PUPD_PUPD1_Msk                     (0x03UL << PE_PUPD_PUPD1_Pos)                           /*!< PE PUPD: PUPD1 Mask                     */
+#define PE_PUPD_PUPD2_Pos                     4                                                       /*!< PE PUPD: PUPD2 Position                 */
+#define PE_PUPD_PUPD2_Msk                     (0x03UL << PE_PUPD_PUPD2_Pos)                           /*!< PE PUPD: PUPD2 Mask                     */
+#define PE_PUPD_PUPD3_Pos                     6                                                       /*!< PE PUPD: PUPD3 Position                 */
+#define PE_PUPD_PUPD3_Msk                     (0x03UL << PE_PUPD_PUPD3_Pos)                           /*!< PE PUPD: PUPD3 Mask                     */
+#define PE_PUPD_PUPD4_Pos                     8                                                       /*!< PE PUPD: PUPD4 Position                 */
+#define PE_PUPD_PUPD4_Msk                     (0x03UL << PE_PUPD_PUPD4_Pos)                           /*!< PE PUPD: PUPD4 Mask                     */
+#define PE_PUPD_PUPD5_Pos                     10                                                      /*!< PE PUPD: PUPD5 Position                 */
+#define PE_PUPD_PUPD5_Msk                     (0x03UL << PE_PUPD_PUPD5_Pos)                           /*!< PE PUPD: PUPD5 Mask                     */
+#define PE_PUPD_PUPD6_Pos                     12                                                      /*!< PE PUPD: PUPD6 Position                 */
+#define PE_PUPD_PUPD6_Msk                     (0x03UL << PE_PUPD_PUPD6_Pos)                           /*!< PE PUPD: PUPD6 Mask                     */
+#define PE_PUPD_PUPD7_Pos                     14                                                      /*!< PE PUPD: PUPD7 Position                 */
+#define PE_PUPD_PUPD7_Msk                     (0x03UL << PE_PUPD_PUPD7_Pos)                           /*!< PE PUPD: PUPD7 Mask                     */
+#define PE_PUPD_PUPD8_Pos                     16                                                      /*!< PE PUPD: PUPD8 Position                 */
+#define PE_PUPD_PUPD8_Msk                     (0x03UL << PE_PUPD_PUPD8_Pos)                           /*!< PE PUPD: PUPD8 Mask                     */
+#define PE_PUPD_PUPD9_Pos                     18                                                      /*!< PE PUPD: PUPD9 Position                 */
+#define PE_PUPD_PUPD9_Msk                     (0x03UL << PE_PUPD_PUPD9_Pos)                           /*!< PE PUPD: PUPD9 Mask                     */
+#define PE_PUPD_PUPD10_Pos                    20                                                      /*!< PE PUPD: PUPD10 Position                */
+#define PE_PUPD_PUPD10_Msk                    (0x03UL << PE_PUPD_PUPD10_Pos)                          /*!< PE PUPD: PUPD10 Mask                    */
+#define PE_PUPD_PUPD11_Pos                    22                                                      /*!< PE PUPD: PUPD11 Position                */
+#define PE_PUPD_PUPD11_Msk                    (0x03UL << PE_PUPD_PUPD11_Pos)                          /*!< PE PUPD: PUPD11 Mask                    */
+#define PE_PUPD_PUPD12_Pos                    24                                                      /*!< PE PUPD: PUPD12 Position                */
+#define PE_PUPD_PUPD12_Msk                    (0x03UL << PE_PUPD_PUPD12_Pos)                          /*!< PE PUPD: PUPD12 Mask                    */
+#define PE_PUPD_PUPD13_Pos                    26                                                      /*!< PE PUPD: PUPD13 Position                */
+#define PE_PUPD_PUPD13_Msk                    (0x03UL << PE_PUPD_PUPD13_Pos)                          /*!< PE PUPD: PUPD13 Mask                    */
+#define PE_PUPD_PUPD14_Pos                    28                                                      /*!< PE PUPD: PUPD14 Position                */
+#define PE_PUPD_PUPD14_Msk                    (0x03UL << PE_PUPD_PUPD14_Pos)                          /*!< PE PUPD: PUPD14 Mask                    */
+#define PE_PUPD_PUPD15_Pos                    30                                                      /*!< PE PUPD: PUPD15 Position                */
+#define PE_PUPD_PUPD15_Msk                    (0x03UL << PE_PUPD_PUPD15_Pos)                          /*!< PE PUPD: PUPD15 Mask                    */
+
+/* -----------------------------------  PE_INDR  ---------------------------------- */
+#define PE_INDR_INDR0_Pos                     0                                                       /*!< PE INDR: INDR0 Position                 */
+#define PE_INDR_INDR0_Msk                     (0x01UL << PE_INDR_INDR0_Pos)                           /*!< PE INDR: INDR0 Mask                     */
+#define PE_INDR_INDR1_Pos                     1                                                       /*!< PE INDR: INDR1 Position                 */
+#define PE_INDR_INDR1_Msk                     (0x01UL << PE_INDR_INDR1_Pos)                           /*!< PE INDR: INDR1 Mask                     */
+#define PE_INDR_INDR2_Pos                     2                                                       /*!< PE INDR: INDR2 Position                 */
+#define PE_INDR_INDR2_Msk                     (0x01UL << PE_INDR_INDR2_Pos)                           /*!< PE INDR: INDR2 Mask                     */
+#define PE_INDR_INDR3_Pos                     3                                                       /*!< PE INDR: INDR3 Position                 */
+#define PE_INDR_INDR3_Msk                     (0x01UL << PE_INDR_INDR3_Pos)                           /*!< PE INDR: INDR3 Mask                     */
+#define PE_INDR_INDR4_Pos                     4                                                       /*!< PE INDR: INDR4 Position                 */
+#define PE_INDR_INDR4_Msk                     (0x01UL << PE_INDR_INDR4_Pos)                           /*!< PE INDR: INDR4 Mask                     */
+#define PE_INDR_INDR5_Pos                     5                                                       /*!< PE INDR: INDR5 Position                 */
+#define PE_INDR_INDR5_Msk                     (0x01UL << PE_INDR_INDR5_Pos)                           /*!< PE INDR: INDR5 Mask                     */
+#define PE_INDR_INDR6_Pos                     6                                                       /*!< PE INDR: INDR6 Position                 */
+#define PE_INDR_INDR6_Msk                     (0x01UL << PE_INDR_INDR6_Pos)                           /*!< PE INDR: INDR6 Mask                     */
+#define PE_INDR_INDR7_Pos                     7                                                       /*!< PE INDR: INDR7 Position                 */
+#define PE_INDR_INDR7_Msk                     (0x01UL << PE_INDR_INDR7_Pos)                           /*!< PE INDR: INDR7 Mask                     */
+#define PE_INDR_INDR8_Pos                     8                                                       /*!< PE INDR: INDR8 Position                 */
+#define PE_INDR_INDR8_Msk                     (0x01UL << PE_INDR_INDR8_Pos)                           /*!< PE INDR: INDR8 Mask                     */
+#define PE_INDR_INDR9_Pos                     9                                                       /*!< PE INDR: INDR9 Position                 */
+#define PE_INDR_INDR9_Msk                     (0x01UL << PE_INDR_INDR9_Pos)                           /*!< PE INDR: INDR9 Mask                     */
+#define PE_INDR_INDR10_Pos                    10                                                      /*!< PE INDR: INDR10 Position                */
+#define PE_INDR_INDR10_Msk                    (0x01UL << PE_INDR_INDR10_Pos)                          /*!< PE INDR: INDR10 Mask                    */
+#define PE_INDR_INDR11_Pos                    11                                                      /*!< PE INDR: INDR11 Position                */
+#define PE_INDR_INDR11_Msk                    (0x01UL << PE_INDR_INDR11_Pos)                          /*!< PE INDR: INDR11 Mask                    */
+#define PE_INDR_INDR12_Pos                    12                                                      /*!< PE INDR: INDR12 Position                */
+#define PE_INDR_INDR12_Msk                    (0x01UL << PE_INDR_INDR12_Pos)                          /*!< PE INDR: INDR12 Mask                    */
+#define PE_INDR_INDR13_Pos                    13                                                      /*!< PE INDR: INDR13 Position                */
+#define PE_INDR_INDR13_Msk                    (0x01UL << PE_INDR_INDR13_Pos)                          /*!< PE INDR: INDR13 Mask                    */
+#define PE_INDR_INDR14_Pos                    14                                                      /*!< PE INDR: INDR14 Position                */
+#define PE_INDR_INDR14_Msk                    (0x01UL << PE_INDR_INDR14_Pos)                          /*!< PE INDR: INDR14 Mask                    */
+#define PE_INDR_INDR15_Pos                    15                                                      /*!< PE INDR: INDR15 Position                */
+#define PE_INDR_INDR15_Msk                    (0x01UL << PE_INDR_INDR15_Pos)                          /*!< PE INDR: INDR15 Mask                    */
+
+/* ----------------------------------  PE_OUTDR  ---------------------------------- */
+#define PE_OUTDR_OUTDR0_Pos                   0                                                       /*!< PE OUTDR: OUTDR0 Position               */
+#define PE_OUTDR_OUTDR0_Msk                   (0x01UL << PE_OUTDR_OUTDR0_Pos)                         /*!< PE OUTDR: OUTDR0 Mask                   */
+#define PE_OUTDR_OUTDR1_Pos                   1                                                       /*!< PE OUTDR: OUTDR1 Position               */
+#define PE_OUTDR_OUTDR1_Msk                   (0x01UL << PE_OUTDR_OUTDR1_Pos)                         /*!< PE OUTDR: OUTDR1 Mask                   */
+#define PE_OUTDR_OUTDR2_Pos                   2                                                       /*!< PE OUTDR: OUTDR2 Position               */
+#define PE_OUTDR_OUTDR2_Msk                   (0x01UL << PE_OUTDR_OUTDR2_Pos)                         /*!< PE OUTDR: OUTDR2 Mask                   */
+#define PE_OUTDR_OUTDR3_Pos                   3                                                       /*!< PE OUTDR: OUTDR3 Position               */
+#define PE_OUTDR_OUTDR3_Msk                   (0x01UL << PE_OUTDR_OUTDR3_Pos)                         /*!< PE OUTDR: OUTDR3 Mask                   */
+#define PE_OUTDR_OUTDR4_Pos                   4                                                       /*!< PE OUTDR: OUTDR4 Position               */
+#define PE_OUTDR_OUTDR4_Msk                   (0x01UL << PE_OUTDR_OUTDR4_Pos)                         /*!< PE OUTDR: OUTDR4 Mask                   */
+#define PE_OUTDR_OUTDR5_Pos                   5                                                       /*!< PE OUTDR: OUTDR5 Position               */
+#define PE_OUTDR_OUTDR5_Msk                   (0x01UL << PE_OUTDR_OUTDR5_Pos)                         /*!< PE OUTDR: OUTDR5 Mask                   */
+#define PE_OUTDR_OUTDR6_Pos                   6                                                       /*!< PE OUTDR: OUTDR6 Position               */
+#define PE_OUTDR_OUTDR6_Msk                   (0x01UL << PE_OUTDR_OUTDR6_Pos)                         /*!< PE OUTDR: OUTDR6 Mask                   */
+#define PE_OUTDR_OUTDR7_Pos                   7                                                       /*!< PE OUTDR: OUTDR7 Position               */
+#define PE_OUTDR_OUTDR7_Msk                   (0x01UL << PE_OUTDR_OUTDR7_Pos)                         /*!< PE OUTDR: OUTDR7 Mask                   */
+#define PE_OUTDR_OUTDR8_Pos                   8                                                       /*!< PE OUTDR: OUTDR8 Position               */
+#define PE_OUTDR_OUTDR8_Msk                   (0x01UL << PE_OUTDR_OUTDR8_Pos)                         /*!< PE OUTDR: OUTDR8 Mask                   */
+#define PE_OUTDR_OUTDR9_Pos                   9                                                       /*!< PE OUTDR: OUTDR9 Position               */
+#define PE_OUTDR_OUTDR9_Msk                   (0x01UL << PE_OUTDR_OUTDR9_Pos)                         /*!< PE OUTDR: OUTDR9 Mask                   */
+#define PE_OUTDR_OUTDR10_Pos                  10                                                      /*!< PE OUTDR: OUTDR10 Position              */
+#define PE_OUTDR_OUTDR10_Msk                  (0x01UL << PE_OUTDR_OUTDR10_Pos)                        /*!< PE OUTDR: OUTDR10 Mask                  */
+#define PE_OUTDR_OUTDR11_Pos                  11                                                      /*!< PE OUTDR: OUTDR11 Position              */
+#define PE_OUTDR_OUTDR11_Msk                  (0x01UL << PE_OUTDR_OUTDR11_Pos)                        /*!< PE OUTDR: OUTDR11 Mask                  */
+#define PE_OUTDR_OUTDR12_Pos                  12                                                      /*!< PE OUTDR: OUTDR12 Position              */
+#define PE_OUTDR_OUTDR12_Msk                  (0x01UL << PE_OUTDR_OUTDR12_Pos)                        /*!< PE OUTDR: OUTDR12 Mask                  */
+#define PE_OUTDR_OUTDR13_Pos                  13                                                      /*!< PE OUTDR: OUTDR13 Position              */
+#define PE_OUTDR_OUTDR13_Msk                  (0x01UL << PE_OUTDR_OUTDR13_Pos)                        /*!< PE OUTDR: OUTDR13 Mask                  */
+#define PE_OUTDR_OUTDR14_Pos                  14                                                      /*!< PE OUTDR: OUTDR14 Position              */
+#define PE_OUTDR_OUTDR14_Msk                  (0x01UL << PE_OUTDR_OUTDR14_Pos)                        /*!< PE OUTDR: OUTDR14 Mask                  */
+#define PE_OUTDR_OUTDR15_Pos                  15                                                      /*!< PE OUTDR: OUTDR15 Position              */
+#define PE_OUTDR_OUTDR15_Msk                  (0x01UL << PE_OUTDR_OUTDR15_Pos)                        /*!< PE OUTDR: OUTDR15 Mask                  */
+
+/* -----------------------------------  PE_BSR  ----------------------------------- */
+#define PE_BSR_BSR0_Pos                       0                                                       /*!< PE BSR: BSR0 Position                   */
+#define PE_BSR_BSR0_Msk                       (0x01UL << PE_BSR_BSR0_Pos)                             /*!< PE BSR: BSR0 Mask                       */
+#define PE_BSR_BSR1_Pos                       1                                                       /*!< PE BSR: BSR1 Position                   */
+#define PE_BSR_BSR1_Msk                       (0x01UL << PE_BSR_BSR1_Pos)                             /*!< PE BSR: BSR1 Mask                       */
+#define PE_BSR_BSR2_Pos                       2                                                       /*!< PE BSR: BSR2 Position                   */
+#define PE_BSR_BSR2_Msk                       (0x01UL << PE_BSR_BSR2_Pos)                             /*!< PE BSR: BSR2 Mask                       */
+#define PE_BSR_BSR3_Pos                       3                                                       /*!< PE BSR: BSR3 Position                   */
+#define PE_BSR_BSR3_Msk                       (0x01UL << PE_BSR_BSR3_Pos)                             /*!< PE BSR: BSR3 Mask                       */
+#define PE_BSR_BSR4_Pos                       4                                                       /*!< PE BSR: BSR4 Position                   */
+#define PE_BSR_BSR4_Msk                       (0x01UL << PE_BSR_BSR4_Pos)                             /*!< PE BSR: BSR4 Mask                       */
+#define PE_BSR_BSR5_Pos                       5                                                       /*!< PE BSR: BSR5 Position                   */
+#define PE_BSR_BSR5_Msk                       (0x01UL << PE_BSR_BSR5_Pos)                             /*!< PE BSR: BSR5 Mask                       */
+#define PE_BSR_BSR6_Pos                       6                                                       /*!< PE BSR: BSR6 Position                   */
+#define PE_BSR_BSR6_Msk                       (0x01UL << PE_BSR_BSR6_Pos)                             /*!< PE BSR: BSR6 Mask                       */
+#define PE_BSR_BSR7_Pos                       7                                                       /*!< PE BSR: BSR7 Position                   */
+#define PE_BSR_BSR7_Msk                       (0x01UL << PE_BSR_BSR7_Pos)                             /*!< PE BSR: BSR7 Mask                       */
+#define PE_BSR_BSR8_Pos                       8                                                       /*!< PE BSR: BSR8 Position                   */
+#define PE_BSR_BSR8_Msk                       (0x01UL << PE_BSR_BSR8_Pos)                             /*!< PE BSR: BSR8 Mask                       */
+#define PE_BSR_BSR9_Pos                       9                                                       /*!< PE BSR: BSR9 Position                   */
+#define PE_BSR_BSR9_Msk                       (0x01UL << PE_BSR_BSR9_Pos)                             /*!< PE BSR: BSR9 Mask                       */
+#define PE_BSR_BSR10_Pos                      10                                                      /*!< PE BSR: BSR10 Position                  */
+#define PE_BSR_BSR10_Msk                      (0x01UL << PE_BSR_BSR10_Pos)                            /*!< PE BSR: BSR10 Mask                      */
+#define PE_BSR_BSR11_Pos                      11                                                      /*!< PE BSR: BSR11 Position                  */
+#define PE_BSR_BSR11_Msk                      (0x01UL << PE_BSR_BSR11_Pos)                            /*!< PE BSR: BSR11 Mask                      */
+#define PE_BSR_BSR12_Pos                      12                                                      /*!< PE BSR: BSR12 Position                  */
+#define PE_BSR_BSR12_Msk                      (0x01UL << PE_BSR_BSR12_Pos)                            /*!< PE BSR: BSR12 Mask                      */
+#define PE_BSR_BSR13_Pos                      13                                                      /*!< PE BSR: BSR13 Position                  */
+#define PE_BSR_BSR13_Msk                      (0x01UL << PE_BSR_BSR13_Pos)                            /*!< PE BSR: BSR13 Mask                      */
+#define PE_BSR_BSR14_Pos                      14                                                      /*!< PE BSR: BSR14 Position                  */
+#define PE_BSR_BSR14_Msk                      (0x01UL << PE_BSR_BSR14_Pos)                            /*!< PE BSR: BSR14 Mask                      */
+#define PE_BSR_BSR15_Pos                      15                                                      /*!< PE BSR: BSR15 Position                  */
+#define PE_BSR_BSR15_Msk                      (0x01UL << PE_BSR_BSR15_Pos)                            /*!< PE BSR: BSR15 Mask                      */
+
+/* -----------------------------------  PE_BCR  ----------------------------------- */
+#define PE_BCR_BCR0_Pos                       0                                                       /*!< PE BCR: BCR0 Position                   */
+#define PE_BCR_BCR0_Msk                       (0x01UL << PE_BCR_BCR0_Pos)                             /*!< PE BCR: BCR0 Mask                       */
+#define PE_BCR_BCR1_Pos                       1                                                       /*!< PE BCR: BCR1 Position                   */
+#define PE_BCR_BCR1_Msk                       (0x01UL << PE_BCR_BCR1_Pos)                             /*!< PE BCR: BCR1 Mask                       */
+#define PE_BCR_BCR2_Pos                       2                                                       /*!< PE BCR: BCR2 Position                   */
+#define PE_BCR_BCR2_Msk                       (0x01UL << PE_BCR_BCR2_Pos)                             /*!< PE BCR: BCR2 Mask                       */
+#define PE_BCR_BCR3_Pos                       3                                                       /*!< PE BCR: BCR3 Position                   */
+#define PE_BCR_BCR3_Msk                       (0x01UL << PE_BCR_BCR3_Pos)                             /*!< PE BCR: BCR3 Mask                       */
+#define PE_BCR_BCR4_Pos                       4                                                       /*!< PE BCR: BCR4 Position                   */
+#define PE_BCR_BCR4_Msk                       (0x01UL << PE_BCR_BCR4_Pos)                             /*!< PE BCR: BCR4 Mask                       */
+#define PE_BCR_BCR5_Pos                       5                                                       /*!< PE BCR: BCR5 Position                   */
+#define PE_BCR_BCR5_Msk                       (0x01UL << PE_BCR_BCR5_Pos)                             /*!< PE BCR: BCR5 Mask                       */
+#define PE_BCR_BCR6_Pos                       6                                                       /*!< PE BCR: BCR6 Position                   */
+#define PE_BCR_BCR6_Msk                       (0x01UL << PE_BCR_BCR6_Pos)                             /*!< PE BCR: BCR6 Mask                       */
+#define PE_BCR_BCR7_Pos                       7                                                       /*!< PE BCR: BCR7 Position                   */
+#define PE_BCR_BCR7_Msk                       (0x01UL << PE_BCR_BCR7_Pos)                             /*!< PE BCR: BCR7 Mask                       */
+#define PE_BCR_BCR8_Pos                       8                                                       /*!< PE BCR: BCR8 Position                   */
+#define PE_BCR_BCR8_Msk                       (0x01UL << PE_BCR_BCR8_Pos)                             /*!< PE BCR: BCR8 Mask                       */
+#define PE_BCR_BCR9_Pos                       9                                                       /*!< PE BCR: BCR9 Position                   */
+#define PE_BCR_BCR9_Msk                       (0x01UL << PE_BCR_BCR9_Pos)                             /*!< PE BCR: BCR9 Mask                       */
+#define PE_BCR_BCR10_Pos                      10                                                      /*!< PE BCR: BCR10 Position                  */
+#define PE_BCR_BCR10_Msk                      (0x01UL << PE_BCR_BCR10_Pos)                            /*!< PE BCR: BCR10 Mask                      */
+#define PE_BCR_BCR11_Pos                      11                                                      /*!< PE BCR: BCR11 Position                  */
+#define PE_BCR_BCR11_Msk                      (0x01UL << PE_BCR_BCR11_Pos)                            /*!< PE BCR: BCR11 Mask                      */
+#define PE_BCR_BCR12_Pos                      12                                                      /*!< PE BCR: BCR12 Position                  */
+#define PE_BCR_BCR12_Msk                      (0x01UL << PE_BCR_BCR12_Pos)                            /*!< PE BCR: BCR12 Mask                      */
+#define PE_BCR_BCR13_Pos                      13                                                      /*!< PE BCR: BCR13 Position                  */
+#define PE_BCR_BCR13_Msk                      (0x01UL << PE_BCR_BCR13_Pos)                            /*!< PE BCR: BCR13 Mask                      */
+#define PE_BCR_BCR14_Pos                      14                                                      /*!< PE BCR: BCR14 Position                  */
+#define PE_BCR_BCR14_Msk                      (0x01UL << PE_BCR_BCR14_Pos)                            /*!< PE BCR: BCR14 Mask                      */
+#define PE_BCR_BCR15_Pos                      15                                                      /*!< PE BCR: BCR15 Position                  */
+#define PE_BCR_BCR15_Msk                      (0x01UL << PE_BCR_BCR15_Pos)                            /*!< PE BCR: BCR15 Mask                      */
+
+/* ---------------------------------  PE_OUTDMSK  --------------------------------- */
+#define PE_OUTDMSK_OUTDMSK0_Pos               0                                                       /*!< PE OUTDMSK: OUTDMSK0 Position           */
+#define PE_OUTDMSK_OUTDMSK0_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK0_Pos)                     /*!< PE OUTDMSK: OUTDMSK0 Mask               */
+#define PE_OUTDMSK_OUTDMSK1_Pos               1                                                       /*!< PE OUTDMSK: OUTDMSK1 Position           */
+#define PE_OUTDMSK_OUTDMSK1_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK1_Pos)                     /*!< PE OUTDMSK: OUTDMSK1 Mask               */
+#define PE_OUTDMSK_OUTDMSK2_Pos               2                                                       /*!< PE OUTDMSK: OUTDMSK2 Position           */
+#define PE_OUTDMSK_OUTDMSK2_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK2_Pos)                     /*!< PE OUTDMSK: OUTDMSK2 Mask               */
+#define PE_OUTDMSK_OUTDMSK3_Pos               3                                                       /*!< PE OUTDMSK: OUTDMSK3 Position           */
+#define PE_OUTDMSK_OUTDMSK3_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK3_Pos)                     /*!< PE OUTDMSK: OUTDMSK3 Mask               */
+#define PE_OUTDMSK_OUTDMSK4_Pos               4                                                       /*!< PE OUTDMSK: OUTDMSK4 Position           */
+#define PE_OUTDMSK_OUTDMSK4_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK4_Pos)                     /*!< PE OUTDMSK: OUTDMSK4 Mask               */
+#define PE_OUTDMSK_OUTDMSK5_Pos               5                                                       /*!< PE OUTDMSK: OUTDMSK5 Position           */
+#define PE_OUTDMSK_OUTDMSK5_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK5_Pos)                     /*!< PE OUTDMSK: OUTDMSK5 Mask               */
+#define PE_OUTDMSK_OUTDMSK6_Pos               6                                                       /*!< PE OUTDMSK: OUTDMSK6 Position           */
+#define PE_OUTDMSK_OUTDMSK6_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK6_Pos)                     /*!< PE OUTDMSK: OUTDMSK6 Mask               */
+#define PE_OUTDMSK_OUTDMSK7_Pos               7                                                       /*!< PE OUTDMSK: OUTDMSK7 Position           */
+#define PE_OUTDMSK_OUTDMSK7_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK7_Pos)                     /*!< PE OUTDMSK: OUTDMSK7 Mask               */
+#define PE_OUTDMSK_OUTDMSK8_Pos               8                                                       /*!< PE OUTDMSK: OUTDMSK8 Position           */
+#define PE_OUTDMSK_OUTDMSK8_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK8_Pos)                     /*!< PE OUTDMSK: OUTDMSK8 Mask               */
+#define PE_OUTDMSK_OUTDMSK9_Pos               9                                                       /*!< PE OUTDMSK: OUTDMSK9 Position           */
+#define PE_OUTDMSK_OUTDMSK9_Msk               (0x01UL << PE_OUTDMSK_OUTDMSK9_Pos)                     /*!< PE OUTDMSK: OUTDMSK9 Mask               */
+#define PE_OUTDMSK_OUTDMSK10_Pos              10                                                      /*!< PE OUTDMSK: OUTDMSK10 Position          */
+#define PE_OUTDMSK_OUTDMSK10_Msk              (0x01UL << PE_OUTDMSK_OUTDMSK10_Pos)                    /*!< PE OUTDMSK: OUTDMSK10 Mask              */
+#define PE_OUTDMSK_OUTDMSK11_Pos              11                                                      /*!< PE OUTDMSK: OUTDMSK11 Position          */
+#define PE_OUTDMSK_OUTDMSK11_Msk              (0x01UL << PE_OUTDMSK_OUTDMSK11_Pos)                    /*!< PE OUTDMSK: OUTDMSK11 Mask              */
+#define PE_OUTDMSK_OUTDMSK12_Pos              12                                                      /*!< PE OUTDMSK: OUTDMSK12 Position          */
+#define PE_OUTDMSK_OUTDMSK12_Msk              (0x01UL << PE_OUTDMSK_OUTDMSK12_Pos)                    /*!< PE OUTDMSK: OUTDMSK12 Mask              */
+#define PE_OUTDMSK_OUTDMSK13_Pos              13                                                      /*!< PE OUTDMSK: OUTDMSK13 Position          */
+#define PE_OUTDMSK_OUTDMSK13_Msk              (0x01UL << PE_OUTDMSK_OUTDMSK13_Pos)                    /*!< PE OUTDMSK: OUTDMSK13 Mask              */
+#define PE_OUTDMSK_OUTDMSK14_Pos              14                                                      /*!< PE OUTDMSK: OUTDMSK14 Position          */
+#define PE_OUTDMSK_OUTDMSK14_Msk              (0x01UL << PE_OUTDMSK_OUTDMSK14_Pos)                    /*!< PE OUTDMSK: OUTDMSK14 Mask              */
+#define PE_OUTDMSK_OUTDMSK15_Pos              15                                                      /*!< PE OUTDMSK: OUTDMSK15 Position          */
+#define PE_OUTDMSK_OUTDMSK15_Msk              (0x01UL << PE_OUTDMSK_OUTDMSK15_Pos)                    /*!< PE OUTDMSK: OUTDMSK15 Mask              */
+
+/* -----------------------------------  PE_DBCR  ---------------------------------- */
+#define PE_DBCR_DBEN0_Pos                     0                                                       /*!< PE DBCR: DBEN0 Position                 */
+#define PE_DBCR_DBEN0_Msk                     (0x01UL << PE_DBCR_DBEN0_Pos)                           /*!< PE DBCR: DBEN0 Mask                     */
+#define PE_DBCR_DBEN1_Pos                     1                                                       /*!< PE DBCR: DBEN1 Position                 */
+#define PE_DBCR_DBEN1_Msk                     (0x01UL << PE_DBCR_DBEN1_Pos)                           /*!< PE DBCR: DBEN1 Mask                     */
+#define PE_DBCR_DBEN2_Pos                     2                                                       /*!< PE DBCR: DBEN2 Position                 */
+#define PE_DBCR_DBEN2_Msk                     (0x01UL << PE_DBCR_DBEN2_Pos)                           /*!< PE DBCR: DBEN2 Mask                     */
+#define PE_DBCR_DBEN3_Pos                     3                                                       /*!< PE DBCR: DBEN3 Position                 */
+#define PE_DBCR_DBEN3_Msk                     (0x01UL << PE_DBCR_DBEN3_Pos)                           /*!< PE DBCR: DBEN3 Mask                     */
+#define PE_DBCR_DBEN4_Pos                     4                                                       /*!< PE DBCR: DBEN4 Position                 */
+#define PE_DBCR_DBEN4_Msk                     (0x01UL << PE_DBCR_DBEN4_Pos)                           /*!< PE DBCR: DBEN4 Mask                     */
+#define PE_DBCR_DBEN5_Pos                     5                                                       /*!< PE DBCR: DBEN5 Position                 */
+#define PE_DBCR_DBEN5_Msk                     (0x01UL << PE_DBCR_DBEN5_Pos)                           /*!< PE DBCR: DBEN5 Mask                     */
+#define PE_DBCR_DBEN6_Pos                     6                                                       /*!< PE DBCR: DBEN6 Position                 */
+#define PE_DBCR_DBEN6_Msk                     (0x01UL << PE_DBCR_DBEN6_Pos)                           /*!< PE DBCR: DBEN6 Mask                     */
+#define PE_DBCR_DBEN7_Pos                     7                                                       /*!< PE DBCR: DBEN7 Position                 */
+#define PE_DBCR_DBEN7_Msk                     (0x01UL << PE_DBCR_DBEN7_Pos)                           /*!< PE DBCR: DBEN7 Mask                     */
+#define PE_DBCR_DBEN8_Pos                     8                                                       /*!< PE DBCR: DBEN8 Position                 */
+#define PE_DBCR_DBEN8_Msk                     (0x01UL << PE_DBCR_DBEN8_Pos)                           /*!< PE DBCR: DBEN8 Mask                     */
+#define PE_DBCR_DBEN9_Pos                     9                                                       /*!< PE DBCR: DBEN9 Position                 */
+#define PE_DBCR_DBEN9_Msk                     (0x01UL << PE_DBCR_DBEN9_Pos)                           /*!< PE DBCR: DBEN9 Mask                     */
+#define PE_DBCR_DBEN10_Pos                    10                                                      /*!< PE DBCR: DBEN10 Position                */
+#define PE_DBCR_DBEN10_Msk                    (0x01UL << PE_DBCR_DBEN10_Pos)                          /*!< PE DBCR: DBEN10 Mask                    */
+#define PE_DBCR_DBEN11_Pos                    11                                                      /*!< PE DBCR: DBEN11 Position                */
+#define PE_DBCR_DBEN11_Msk                    (0x01UL << PE_DBCR_DBEN11_Pos)                          /*!< PE DBCR: DBEN11 Mask                    */
+#define PE_DBCR_DBEN12_Pos                    12                                                      /*!< PE DBCR: DBEN12 Position                */
+#define PE_DBCR_DBEN12_Msk                    (0x01UL << PE_DBCR_DBEN12_Pos)                          /*!< PE DBCR: DBEN12 Mask                    */
+#define PE_DBCR_DBEN13_Pos                    13                                                      /*!< PE DBCR: DBEN13 Position                */
+#define PE_DBCR_DBEN13_Msk                    (0x01UL << PE_DBCR_DBEN13_Pos)                          /*!< PE DBCR: DBEN13 Mask                    */
+#define PE_DBCR_DBEN14_Pos                    14                                                      /*!< PE DBCR: DBEN14 Position                */
+#define PE_DBCR_DBEN14_Msk                    (0x01UL << PE_DBCR_DBEN14_Pos)                          /*!< PE DBCR: DBEN14 Mask                    */
+#define PE_DBCR_DBEN15_Pos                    15                                                      /*!< PE DBCR: DBEN15 Position                */
+#define PE_DBCR_DBEN15_Msk                    (0x01UL << PE_DBCR_DBEN15_Pos)                          /*!< PE DBCR: DBEN15 Mask                    */
+
+/* -----------------------------------  PE_IER  ----------------------------------- */
+#define PE_IER_PIE0_Pos                       0                                                       /*!< PE IER: PIE0 Position                   */
+#define PE_IER_PIE0_Msk                       (0x03UL << PE_IER_PIE0_Pos)                             /*!< PE IER: PIE0 Mask                       */
+#define PE_IER_PIE1_Pos                       2                                                       /*!< PE IER: PIE1 Position                   */
+#define PE_IER_PIE1_Msk                       (0x03UL << PE_IER_PIE1_Pos)                             /*!< PE IER: PIE1 Mask                       */
+#define PE_IER_PIE2_Pos                       4                                                       /*!< PE IER: PIE2 Position                   */
+#define PE_IER_PIE2_Msk                       (0x03UL << PE_IER_PIE2_Pos)                             /*!< PE IER: PIE2 Mask                       */
+#define PE_IER_PIE3_Pos                       6                                                       /*!< PE IER: PIE3 Position                   */
+#define PE_IER_PIE3_Msk                       (0x03UL << PE_IER_PIE3_Pos)                             /*!< PE IER: PIE3 Mask                       */
+#define PE_IER_PIE4_Pos                       8                                                       /*!< PE IER: PIE4 Position                   */
+#define PE_IER_PIE4_Msk                       (0x03UL << PE_IER_PIE4_Pos)                             /*!< PE IER: PIE4 Mask                       */
+#define PE_IER_PIE5_Pos                       10                                                      /*!< PE IER: PIE5 Position                   */
+#define PE_IER_PIE5_Msk                       (0x03UL << PE_IER_PIE5_Pos)                             /*!< PE IER: PIE5 Mask                       */
+#define PE_IER_PIE6_Pos                       12                                                      /*!< PE IER: PIE6 Position                   */
+#define PE_IER_PIE6_Msk                       (0x03UL << PE_IER_PIE6_Pos)                             /*!< PE IER: PIE6 Mask                       */
+#define PE_IER_PIE7_Pos                       14                                                      /*!< PE IER: PIE7 Position                   */
+#define PE_IER_PIE7_Msk                       (0x03UL << PE_IER_PIE7_Pos)                             /*!< PE IER: PIE7 Mask                       */
+#define PE_IER_PIE8_Pos                       16                                                      /*!< PE IER: PIE8 Position                   */
+#define PE_IER_PIE8_Msk                       (0x03UL << PE_IER_PIE8_Pos)                             /*!< PE IER: PIE8 Mask                       */
+#define PE_IER_PIE9_Pos                       18                                                      /*!< PE IER: PIE9 Position                   */
+#define PE_IER_PIE9_Msk                       (0x03UL << PE_IER_PIE9_Pos)                             /*!< PE IER: PIE9 Mask                       */
+#define PE_IER_PIE10_Pos                      20                                                      /*!< PE IER: PIE10 Position                  */
+#define PE_IER_PIE10_Msk                      (0x03UL << PE_IER_PIE10_Pos)                            /*!< PE IER: PIE10 Mask                      */
+#define PE_IER_PIE11_Pos                      22                                                      /*!< PE IER: PIE11 Position                  */
+#define PE_IER_PIE11_Msk                      (0x03UL << PE_IER_PIE11_Pos)                            /*!< PE IER: PIE11 Mask                      */
+#define PE_IER_PIE12_Pos                      24                                                      /*!< PE IER: PIE12 Position                  */
+#define PE_IER_PIE12_Msk                      (0x03UL << PE_IER_PIE12_Pos)                            /*!< PE IER: PIE12 Mask                      */
+#define PE_IER_PIE13_Pos                      26                                                      /*!< PE IER: PIE13 Position                  */
+#define PE_IER_PIE13_Msk                      (0x03UL << PE_IER_PIE13_Pos)                            /*!< PE IER: PIE13 Mask                      */
+#define PE_IER_PIE14_Pos                      28                                                      /*!< PE IER: PIE14 Position                  */
+#define PE_IER_PIE14_Msk                      (0x03UL << PE_IER_PIE14_Pos)                            /*!< PE IER: PIE14 Mask                      */
+#define PE_IER_PIE15_Pos                      30                                                      /*!< PE IER: PIE15 Position                  */
+#define PE_IER_PIE15_Msk                      (0x03UL << PE_IER_PIE15_Pos)                            /*!< PE IER: PIE15 Mask                      */
+
+/* -----------------------------------  PE_ISR  ----------------------------------- */
+#define PE_ISR_PIS0_Pos                       0                                                       /*!< PE ISR: PIS0 Position                   */
+#define PE_ISR_PIS0_Msk                       (0x03UL << PE_ISR_PIS0_Pos)                             /*!< PE ISR: PIS0 Mask                       */
+#define PE_ISR_PIS1_Pos                       2                                                       /*!< PE ISR: PIS1 Position                   */
+#define PE_ISR_PIS1_Msk                       (0x03UL << PE_ISR_PIS1_Pos)                             /*!< PE ISR: PIS1 Mask                       */
+#define PE_ISR_PIS2_Pos                       4                                                       /*!< PE ISR: PIS2 Position                   */
+#define PE_ISR_PIS2_Msk                       (0x03UL << PE_ISR_PIS2_Pos)                             /*!< PE ISR: PIS2 Mask                       */
+#define PE_ISR_PIS3_Pos                       6                                                       /*!< PE ISR: PIS3 Position                   */
+#define PE_ISR_PIS3_Msk                       (0x03UL << PE_ISR_PIS3_Pos)                             /*!< PE ISR: PIS3 Mask                       */
+#define PE_ISR_PIS4_Pos                       8                                                       /*!< PE ISR: PIS4 Position                   */
+#define PE_ISR_PIS4_Msk                       (0x03UL << PE_ISR_PIS4_Pos)                             /*!< PE ISR: PIS4 Mask                       */
+#define PE_ISR_PIS5_Pos                       10                                                      /*!< PE ISR: PIS5 Position                   */
+#define PE_ISR_PIS5_Msk                       (0x03UL << PE_ISR_PIS5_Pos)                             /*!< PE ISR: PIS5 Mask                       */
+#define PE_ISR_PIS6_Pos                       12                                                      /*!< PE ISR: PIS6 Position                   */
+#define PE_ISR_PIS6_Msk                       (0x03UL << PE_ISR_PIS6_Pos)                             /*!< PE ISR: PIS6 Mask                       */
+#define PE_ISR_PIS7_Pos                       14                                                      /*!< PE ISR: PIS7 Position                   */
+#define PE_ISR_PIS7_Msk                       (0x03UL << PE_ISR_PIS7_Pos)                             /*!< PE ISR: PIS7 Mask                       */
+#define PE_ISR_PIS8_Pos                       16                                                      /*!< PE ISR: PIS8 Position                   */
+#define PE_ISR_PIS8_Msk                       (0x03UL << PE_ISR_PIS8_Pos)                             /*!< PE ISR: PIS8 Mask                       */
+#define PE_ISR_PIS9_Pos                       18                                                      /*!< PE ISR: PIS9 Position                   */
+#define PE_ISR_PIS9_Msk                       (0x03UL << PE_ISR_PIS9_Pos)                             /*!< PE ISR: PIS9 Mask                       */
+#define PE_ISR_PIS10_Pos                      20                                                      /*!< PE ISR: PIS10 Position                  */
+#define PE_ISR_PIS10_Msk                      (0x03UL << PE_ISR_PIS10_Pos)                            /*!< PE ISR: PIS10 Mask                      */
+#define PE_ISR_PIS11_Pos                      22                                                      /*!< PE ISR: PIS11 Position                  */
+#define PE_ISR_PIS11_Msk                      (0x03UL << PE_ISR_PIS11_Pos)                            /*!< PE ISR: PIS11 Mask                      */
+#define PE_ISR_PIS12_Pos                      24                                                      /*!< PE ISR: PIS12 Position                  */
+#define PE_ISR_PIS12_Msk                      (0x03UL << PE_ISR_PIS12_Pos)                            /*!< PE ISR: PIS12 Mask                      */
+#define PE_ISR_PIS13_Pos                      26                                                      /*!< PE ISR: PIS13 Position                  */
+#define PE_ISR_PIS13_Msk                      (0x03UL << PE_ISR_PIS13_Pos)                            /*!< PE ISR: PIS13 Mask                      */
+#define PE_ISR_PIS14_Pos                      28                                                      /*!< PE ISR: PIS14 Position                  */
+#define PE_ISR_PIS14_Msk                      (0x03UL << PE_ISR_PIS14_Pos)                            /*!< PE ISR: PIS14 Mask                      */
+#define PE_ISR_PIS15_Pos                      30                                                      /*!< PE ISR: PIS15 Position                  */
+#define PE_ISR_PIS15_Msk                      (0x03UL << PE_ISR_PIS15_Pos)                            /*!< PE ISR: PIS15 Mask                      */
+
+/* -----------------------------------  PE_ICR  ----------------------------------- */
+#define PE_ICR_PIC0_Pos                       0                                                       /*!< PE ICR: PIC0 Position                   */
+#define PE_ICR_PIC0_Msk                       (0x03UL << PE_ICR_PIC0_Pos)                             /*!< PE ICR: PIC0 Mask                       */
+#define PE_ICR_PIC1_Pos                       2                                                       /*!< PE ICR: PIC1 Position                   */
+#define PE_ICR_PIC1_Msk                       (0x03UL << PE_ICR_PIC1_Pos)                             /*!< PE ICR: PIC1 Mask                       */
+#define PE_ICR_PIC2_Pos                       4                                                       /*!< PE ICR: PIC2 Position                   */
+#define PE_ICR_PIC2_Msk                       (0x03UL << PE_ICR_PIC2_Pos)                             /*!< PE ICR: PIC2 Mask                       */
+#define PE_ICR_PIC3_Pos                       6                                                       /*!< PE ICR: PIC3 Position                   */
+#define PE_ICR_PIC3_Msk                       (0x03UL << PE_ICR_PIC3_Pos)                             /*!< PE ICR: PIC3 Mask                       */
+#define PE_ICR_PIC4_Pos                       8                                                       /*!< PE ICR: PIC4 Position                   */
+#define PE_ICR_PIC4_Msk                       (0x03UL << PE_ICR_PIC4_Pos)                             /*!< PE ICR: PIC4 Mask                       */
+#define PE_ICR_PIC5_Pos                       10                                                      /*!< PE ICR: PIC5 Position                   */
+#define PE_ICR_PIC5_Msk                       (0x03UL << PE_ICR_PIC5_Pos)                             /*!< PE ICR: PIC5 Mask                       */
+#define PE_ICR_PIC6_Pos                       12                                                      /*!< PE ICR: PIC6 Position                   */
+#define PE_ICR_PIC6_Msk                       (0x03UL << PE_ICR_PIC6_Pos)                             /*!< PE ICR: PIC6 Mask                       */
+#define PE_ICR_PIC7_Pos                       14                                                      /*!< PE ICR: PIC7 Position                   */
+#define PE_ICR_PIC7_Msk                       (0x03UL << PE_ICR_PIC7_Pos)                             /*!< PE ICR: PIC7 Mask                       */
+#define PE_ICR_PIC8_Pos                       16                                                      /*!< PE ICR: PIC8 Position                   */
+#define PE_ICR_PIC8_Msk                       (0x03UL << PE_ICR_PIC8_Pos)                             /*!< PE ICR: PIC8 Mask                       */
+#define PE_ICR_PIC9_Pos                       18                                                      /*!< PE ICR: PIC9 Position                   */
+#define PE_ICR_PIC9_Msk                       (0x03UL << PE_ICR_PIC9_Pos)                             /*!< PE ICR: PIC9 Mask                       */
+#define PE_ICR_PIC10_Pos                      20                                                      /*!< PE ICR: PIC10 Position                  */
+#define PE_ICR_PIC10_Msk                      (0x03UL << PE_ICR_PIC10_Pos)                            /*!< PE ICR: PIC10 Mask                      */
+#define PE_ICR_PIC11_Pos                      22                                                      /*!< PE ICR: PIC11 Position                  */
+#define PE_ICR_PIC11_Msk                      (0x03UL << PE_ICR_PIC11_Pos)                            /*!< PE ICR: PIC11 Mask                      */
+#define PE_ICR_PIC12_Pos                      24                                                      /*!< PE ICR: PIC12 Position                  */
+#define PE_ICR_PIC12_Msk                      (0x03UL << PE_ICR_PIC12_Pos)                            /*!< PE ICR: PIC12 Mask                      */
+#define PE_ICR_PIC13_Pos                      26                                                      /*!< PE ICR: PIC13 Position                  */
+#define PE_ICR_PIC13_Msk                      (0x03UL << PE_ICR_PIC13_Pos)                            /*!< PE ICR: PIC13 Mask                      */
+#define PE_ICR_PIC14_Pos                      28                                                      /*!< PE ICR: PIC14 Position                  */
+#define PE_ICR_PIC14_Msk                      (0x03UL << PE_ICR_PIC14_Pos)                            /*!< PE ICR: PIC14 Mask                      */
+#define PE_ICR_PIC15_Pos                      30                                                      /*!< PE ICR: PIC15 Position                  */
+#define PE_ICR_PIC15_Msk                      (0x03UL << PE_ICR_PIC15_Pos)                            /*!< PE ICR: PIC15 Mask                      */
+
+
+/* ================================================================================ */
+/* ================           struct 'PF' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  PF_MOD  ----------------------------------- */
+#define PF_MOD_MODE0_Pos                      0                                                       /*!< PF MOD: MODE0 Position                  */
+#define PF_MOD_MODE0_Msk                      (0x03UL << PF_MOD_MODE0_Pos)                            /*!< PF MOD: MODE0 Mask                      */
+#define PF_MOD_MODE1_Pos                      2                                                       /*!< PF MOD: MODE1 Position                  */
+#define PF_MOD_MODE1_Msk                      (0x03UL << PF_MOD_MODE1_Pos)                            /*!< PF MOD: MODE1 Mask                      */
+#define PF_MOD_MODE2_Pos                      4                                                       /*!< PF MOD: MODE2 Position                  */
+#define PF_MOD_MODE2_Msk                      (0x03UL << PF_MOD_MODE2_Pos)                            /*!< PF MOD: MODE2 Mask                      */
+#define PF_MOD_MODE3_Pos                      6                                                       /*!< PF MOD: MODE3 Position                  */
+#define PF_MOD_MODE3_Msk                      (0x03UL << PF_MOD_MODE3_Pos)                            /*!< PF MOD: MODE3 Mask                      */
+#define PF_MOD_MODE4_Pos                      8                                                       /*!< PF MOD: MODE4 Position                  */
+#define PF_MOD_MODE4_Msk                      (0x03UL << PF_MOD_MODE4_Pos)                            /*!< PF MOD: MODE4 Mask                      */
+#define PF_MOD_MODE5_Pos                      10                                                      /*!< PF MOD: MODE5 Position                  */
+#define PF_MOD_MODE5_Msk                      (0x03UL << PF_MOD_MODE5_Pos)                            /*!< PF MOD: MODE5 Mask                      */
+#define PF_MOD_MODE6_Pos                      12                                                      /*!< PF MOD: MODE6 Position                  */
+#define PF_MOD_MODE6_Msk                      (0x03UL << PF_MOD_MODE6_Pos)                            /*!< PF MOD: MODE6 Mask                      */
+#define PF_MOD_MODE7_Pos                      14                                                      /*!< PF MOD: MODE7 Position                  */
+#define PF_MOD_MODE7_Msk                      (0x03UL << PF_MOD_MODE7_Pos)                            /*!< PF MOD: MODE7 Mask                      */
+#define PF_MOD_MODE8_Pos                      16                                                      /*!< PF MOD: MODE8 Position                  */
+#define PF_MOD_MODE8_Msk                      (0x03UL << PF_MOD_MODE8_Pos)                            /*!< PF MOD: MODE8 Mask                      */
+#define PF_MOD_MODE9_Pos                      18                                                      /*!< PF MOD: MODE9 Position                  */
+#define PF_MOD_MODE9_Msk                      (0x03UL << PF_MOD_MODE9_Pos)                            /*!< PF MOD: MODE9 Mask                      */
+#define PF_MOD_MODE10_Pos                     20                                                      /*!< PF MOD: MODE10 Position                 */
+#define PF_MOD_MODE10_Msk                     (0x03UL << PF_MOD_MODE10_Pos)                           /*!< PF MOD: MODE10 Mask                     */
+#define PF_MOD_MODE11_Pos                     22                                                      /*!< PF MOD: MODE11 Position                 */
+#define PF_MOD_MODE11_Msk                     (0x03UL << PF_MOD_MODE11_Pos)                           /*!< PF MOD: MODE11 Mask                     */
+#define PF_MOD_MODE12_Pos                     24                                                      /*!< PF MOD: MODE12 Position                 */
+#define PF_MOD_MODE12_Msk                     (0x03UL << PF_MOD_MODE12_Pos)                           /*!< PF MOD: MODE12 Mask                     */
+#define PF_MOD_MODE13_Pos                     26                                                      /*!< PF MOD: MODE13 Position                 */
+#define PF_MOD_MODE13_Msk                     (0x03UL << PF_MOD_MODE13_Pos)                           /*!< PF MOD: MODE13 Mask                     */
+#define PF_MOD_MODE14_Pos                     28                                                      /*!< PF MOD: MODE14 Position                 */
+#define PF_MOD_MODE14_Msk                     (0x03UL << PF_MOD_MODE14_Pos)                           /*!< PF MOD: MODE14 Mask                     */
+#define PF_MOD_MODE15_Pos                     30                                                      /*!< PF MOD: MODE15 Position                 */
+#define PF_MOD_MODE15_Msk                     (0x03UL << PF_MOD_MODE15_Pos)                           /*!< PF MOD: MODE15 Mask                     */
+
+/* -----------------------------------  PF_TYP  ----------------------------------- */
+#define PF_TYP_TYP0_Pos                       0                                                       /*!< PF TYP: TYP0 Position                   */
+#define PF_TYP_TYP0_Msk                       (0x01UL << PF_TYP_TYP0_Pos)                             /*!< PF TYP: TYP0 Mask                       */
+#define PF_TYP_TYP1_Pos                       1                                                       /*!< PF TYP: TYP1 Position                   */
+#define PF_TYP_TYP1_Msk                       (0x01UL << PF_TYP_TYP1_Pos)                             /*!< PF TYP: TYP1 Mask                       */
+#define PF_TYP_TYP2_Pos                       2                                                       /*!< PF TYP: TYP2 Position                   */
+#define PF_TYP_TYP2_Msk                       (0x01UL << PF_TYP_TYP2_Pos)                             /*!< PF TYP: TYP2 Mask                       */
+#define PF_TYP_TYP3_Pos                       3                                                       /*!< PF TYP: TYP3 Position                   */
+#define PF_TYP_TYP3_Msk                       (0x01UL << PF_TYP_TYP3_Pos)                             /*!< PF TYP: TYP3 Mask                       */
+#define PF_TYP_TYP4_Pos                       4                                                       /*!< PF TYP: TYP4 Position                   */
+#define PF_TYP_TYP4_Msk                       (0x01UL << PF_TYP_TYP4_Pos)                             /*!< PF TYP: TYP4 Mask                       */
+#define PF_TYP_TYP5_Pos                       5                                                       /*!< PF TYP: TYP5 Position                   */
+#define PF_TYP_TYP5_Msk                       (0x01UL << PF_TYP_TYP5_Pos)                             /*!< PF TYP: TYP5 Mask                       */
+#define PF_TYP_TYP6_Pos                       6                                                       /*!< PF TYP: TYP6 Position                   */
+#define PF_TYP_TYP6_Msk                       (0x01UL << PF_TYP_TYP6_Pos)                             /*!< PF TYP: TYP6 Mask                       */
+#define PF_TYP_TYP7_Pos                       7                                                       /*!< PF TYP: TYP7 Position                   */
+#define PF_TYP_TYP7_Msk                       (0x01UL << PF_TYP_TYP7_Pos)                             /*!< PF TYP: TYP7 Mask                       */
+#define PF_TYP_TYP8_Pos                       8                                                       /*!< PF TYP: TYP8 Position                   */
+#define PF_TYP_TYP8_Msk                       (0x01UL << PF_TYP_TYP8_Pos)                             /*!< PF TYP: TYP8 Mask                       */
+#define PF_TYP_TYP9_Pos                       9                                                       /*!< PF TYP: TYP9 Position                   */
+#define PF_TYP_TYP9_Msk                       (0x01UL << PF_TYP_TYP9_Pos)                             /*!< PF TYP: TYP9 Mask                       */
+#define PF_TYP_TYP10_Pos                      10                                                      /*!< PF TYP: TYP10 Position                  */
+#define PF_TYP_TYP10_Msk                      (0x01UL << PF_TYP_TYP10_Pos)                            /*!< PF TYP: TYP10 Mask                      */
+#define PF_TYP_TYP11_Pos                      11                                                      /*!< PF TYP: TYP11 Position                  */
+#define PF_TYP_TYP11_Msk                      (0x01UL << PF_TYP_TYP11_Pos)                            /*!< PF TYP: TYP11 Mask                      */
+#define PF_TYP_TYP12_Pos                      12                                                      /*!< PF TYP: TYP12 Position                  */
+#define PF_TYP_TYP12_Msk                      (0x01UL << PF_TYP_TYP12_Pos)                            /*!< PF TYP: TYP12 Mask                      */
+#define PF_TYP_TYP13_Pos                      13                                                      /*!< PF TYP: TYP13 Position                  */
+#define PF_TYP_TYP13_Msk                      (0x01UL << PF_TYP_TYP13_Pos)                            /*!< PF TYP: TYP13 Mask                      */
+#define PF_TYP_TYP14_Pos                      14                                                      /*!< PF TYP: TYP14 Position                  */
+#define PF_TYP_TYP14_Msk                      (0x01UL << PF_TYP_TYP14_Pos)                            /*!< PF TYP: TYP14 Mask                      */
+#define PF_TYP_TYP15_Pos                      15                                                      /*!< PF TYP: TYP15 Position                  */
+#define PF_TYP_TYP15_Msk                      (0x01UL << PF_TYP_TYP15_Pos)                            /*!< PF TYP: TYP15 Mask                      */
+
+/* ----------------------------------  PF_AFSR1  ---------------------------------- */
+#define PF_AFSR1_AFSB0_Pos                    0                                                       /*!< PF AFSR1: AFSB0 Position                */
+#define PF_AFSR1_AFSB0_Msk                    (0x0fUL << PF_AFSR1_AFSB0_Pos)                          /*!< PF AFSR1: AFSB0 Mask                    */
+#define PF_AFSR1_AFSB1_Pos                    4                                                       /*!< PF AFSR1: AFSB1 Position                */
+#define PF_AFSR1_AFSB1_Msk                    (0x0fUL << PF_AFSR1_AFSB1_Pos)                          /*!< PF AFSR1: AFSB1 Mask                    */
+#define PF_AFSR1_AFSB2_Pos                    8                                                       /*!< PF AFSR1: AFSB2 Position                */
+#define PF_AFSR1_AFSB2_Msk                    (0x0fUL << PF_AFSR1_AFSB2_Pos)                          /*!< PF AFSR1: AFSB2 Mask                    */
+#define PF_AFSR1_AFSB3_Pos                    12                                                      /*!< PF AFSR1: AFSB3 Position                */
+#define PF_AFSR1_AFSB3_Msk                    (0x0fUL << PF_AFSR1_AFSB3_Pos)                          /*!< PF AFSR1: AFSB3 Mask                    */
+#define PF_AFSR1_AFSB4_Pos                    16                                                      /*!< PF AFSR1: AFSB4 Position                */
+#define PF_AFSR1_AFSB4_Msk                    (0x0fUL << PF_AFSR1_AFSB4_Pos)                          /*!< PF AFSR1: AFSB4 Mask                    */
+#define PF_AFSR1_AFSB5_Pos                    20                                                      /*!< PF AFSR1: AFSB5 Position                */
+#define PF_AFSR1_AFSB5_Msk                    (0x0fUL << PF_AFSR1_AFSB5_Pos)                          /*!< PF AFSR1: AFSB5 Mask                    */
+#define PF_AFSR1_AFSB6_Pos                    24                                                      /*!< PF AFSR1: AFSB6 Position                */
+#define PF_AFSR1_AFSB6_Msk                    (0x0fUL << PF_AFSR1_AFSB6_Pos)                          /*!< PF AFSR1: AFSB6 Mask                    */
+#define PF_AFSR1_AFSB7_Pos                    28                                                      /*!< PF AFSR1: AFSB7 Position                */
+#define PF_AFSR1_AFSB7_Msk                    (0x0fUL << PF_AFSR1_AFSB7_Pos)                          /*!< PF AFSR1: AFSB7 Mask                    */
+
+/* ----------------------------------  PF_AFSR2  ---------------------------------- */
+#define PF_AFSR2_AFSB8_Pos                    0                                                       /*!< PF AFSR2: AFSB8 Position                */
+#define PF_AFSR2_AFSB8_Msk                    (0x0fUL << PF_AFSR2_AFSB8_Pos)                          /*!< PF AFSR2: AFSB8 Mask                    */
+#define PF_AFSR2_AFSB9_Pos                    4                                                       /*!< PF AFSR2: AFSB9 Position                */
+#define PF_AFSR2_AFSB9_Msk                    (0x0fUL << PF_AFSR2_AFSB9_Pos)                          /*!< PF AFSR2: AFSB9 Mask                    */
+#define PF_AFSR2_AFSB10_Pos                   8                                                       /*!< PF AFSR2: AFSB10 Position               */
+#define PF_AFSR2_AFSB10_Msk                   (0x0fUL << PF_AFSR2_AFSB10_Pos)                         /*!< PF AFSR2: AFSB10 Mask                   */
+#define PF_AFSR2_AFSB11_Pos                   12                                                      /*!< PF AFSR2: AFSB11 Position               */
+#define PF_AFSR2_AFSB11_Msk                   (0x0fUL << PF_AFSR2_AFSB11_Pos)                         /*!< PF AFSR2: AFSB11 Mask                   */
+#define PF_AFSR2_AFSB12_Pos                   16                                                      /*!< PF AFSR2: AFSB12 Position               */
+#define PF_AFSR2_AFSB12_Msk                   (0x0fUL << PF_AFSR2_AFSB12_Pos)                         /*!< PF AFSR2: AFSB12 Mask                   */
+#define PF_AFSR2_AFSB13_Pos                   20                                                      /*!< PF AFSR2: AFSB13 Position               */
+#define PF_AFSR2_AFSB13_Msk                   (0x0fUL << PF_AFSR2_AFSB13_Pos)                         /*!< PF AFSR2: AFSB13 Mask                   */
+#define PF_AFSR2_AFSB14_Pos                   24                                                      /*!< PF AFSR2: AFSB14 Position               */
+#define PF_AFSR2_AFSB14_Msk                   (0x0fUL << PF_AFSR2_AFSB14_Pos)                         /*!< PF AFSR2: AFSB14 Mask                   */
+#define PF_AFSR2_AFSB15_Pos                   28                                                      /*!< PF AFSR2: AFSB15 Position               */
+#define PF_AFSR2_AFSB15_Msk                   (0x0fUL << PF_AFSR2_AFSB15_Pos)                         /*!< PF AFSR2: AFSB15 Mask                   */
+
+/* -----------------------------------  PF_PUPD  ---------------------------------- */
+#define PF_PUPD_PUPD0_Pos                     0                                                       /*!< PF PUPD: PUPD0 Position                 */
+#define PF_PUPD_PUPD0_Msk                     (0x03UL << PF_PUPD_PUPD0_Pos)                           /*!< PF PUPD: PUPD0 Mask                     */
+#define PF_PUPD_PUPD1_Pos                     2                                                       /*!< PF PUPD: PUPD1 Position                 */
+#define PF_PUPD_PUPD1_Msk                     (0x03UL << PF_PUPD_PUPD1_Pos)                           /*!< PF PUPD: PUPD1 Mask                     */
+#define PF_PUPD_PUPD2_Pos                     4                                                       /*!< PF PUPD: PUPD2 Position                 */
+#define PF_PUPD_PUPD2_Msk                     (0x03UL << PF_PUPD_PUPD2_Pos)                           /*!< PF PUPD: PUPD2 Mask                     */
+#define PF_PUPD_PUPD3_Pos                     6                                                       /*!< PF PUPD: PUPD3 Position                 */
+#define PF_PUPD_PUPD3_Msk                     (0x03UL << PF_PUPD_PUPD3_Pos)                           /*!< PF PUPD: PUPD3 Mask                     */
+#define PF_PUPD_PUPD4_Pos                     8                                                       /*!< PF PUPD: PUPD4 Position                 */
+#define PF_PUPD_PUPD4_Msk                     (0x03UL << PF_PUPD_PUPD4_Pos)                           /*!< PF PUPD: PUPD4 Mask                     */
+#define PF_PUPD_PUPD5_Pos                     10                                                      /*!< PF PUPD: PUPD5 Position                 */
+#define PF_PUPD_PUPD5_Msk                     (0x03UL << PF_PUPD_PUPD5_Pos)                           /*!< PF PUPD: PUPD5 Mask                     */
+#define PF_PUPD_PUPD6_Pos                     12                                                      /*!< PF PUPD: PUPD6 Position                 */
+#define PF_PUPD_PUPD6_Msk                     (0x03UL << PF_PUPD_PUPD6_Pos)                           /*!< PF PUPD: PUPD6 Mask                     */
+#define PF_PUPD_PUPD7_Pos                     14                                                      /*!< PF PUPD: PUPD7 Position                 */
+#define PF_PUPD_PUPD7_Msk                     (0x03UL << PF_PUPD_PUPD7_Pos)                           /*!< PF PUPD: PUPD7 Mask                     */
+#define PF_PUPD_PUPD8_Pos                     16                                                      /*!< PF PUPD: PUPD8 Position                 */
+#define PF_PUPD_PUPD8_Msk                     (0x03UL << PF_PUPD_PUPD8_Pos)                           /*!< PF PUPD: PUPD8 Mask                     */
+#define PF_PUPD_PUPD9_Pos                     18                                                      /*!< PF PUPD: PUPD9 Position                 */
+#define PF_PUPD_PUPD9_Msk                     (0x03UL << PF_PUPD_PUPD9_Pos)                           /*!< PF PUPD: PUPD9 Mask                     */
+#define PF_PUPD_PUPD10_Pos                    20                                                      /*!< PF PUPD: PUPD10 Position                */
+#define PF_PUPD_PUPD10_Msk                    (0x03UL << PF_PUPD_PUPD10_Pos)                          /*!< PF PUPD: PUPD10 Mask                    */
+#define PF_PUPD_PUPD11_Pos                    22                                                      /*!< PF PUPD: PUPD11 Position                */
+#define PF_PUPD_PUPD11_Msk                    (0x03UL << PF_PUPD_PUPD11_Pos)                          /*!< PF PUPD: PUPD11 Mask                    */
+#define PF_PUPD_PUPD12_Pos                    24                                                      /*!< PF PUPD: PUPD12 Position                */
+#define PF_PUPD_PUPD12_Msk                    (0x03UL << PF_PUPD_PUPD12_Pos)                          /*!< PF PUPD: PUPD12 Mask                    */
+#define PF_PUPD_PUPD13_Pos                    26                                                      /*!< PF PUPD: PUPD13 Position                */
+#define PF_PUPD_PUPD13_Msk                    (0x03UL << PF_PUPD_PUPD13_Pos)                          /*!< PF PUPD: PUPD13 Mask                    */
+#define PF_PUPD_PUPD14_Pos                    28                                                      /*!< PF PUPD: PUPD14 Position                */
+#define PF_PUPD_PUPD14_Msk                    (0x03UL << PF_PUPD_PUPD14_Pos)                          /*!< PF PUPD: PUPD14 Mask                    */
+#define PF_PUPD_PUPD15_Pos                    30                                                      /*!< PF PUPD: PUPD15 Position                */
+#define PF_PUPD_PUPD15_Msk                    (0x03UL << PF_PUPD_PUPD15_Pos)                          /*!< PF PUPD: PUPD15 Mask                    */
+
+/* -----------------------------------  PF_INDR  ---------------------------------- */
+#define PF_INDR_INDR0_Pos                     0                                                       /*!< PF INDR: INDR0 Position                 */
+#define PF_INDR_INDR0_Msk                     (0x01UL << PF_INDR_INDR0_Pos)                           /*!< PF INDR: INDR0 Mask                     */
+#define PF_INDR_INDR1_Pos                     1                                                       /*!< PF INDR: INDR1 Position                 */
+#define PF_INDR_INDR1_Msk                     (0x01UL << PF_INDR_INDR1_Pos)                           /*!< PF INDR: INDR1 Mask                     */
+#define PF_INDR_INDR2_Pos                     2                                                       /*!< PF INDR: INDR2 Position                 */
+#define PF_INDR_INDR2_Msk                     (0x01UL << PF_INDR_INDR2_Pos)                           /*!< PF INDR: INDR2 Mask                     */
+#define PF_INDR_INDR3_Pos                     3                                                       /*!< PF INDR: INDR3 Position                 */
+#define PF_INDR_INDR3_Msk                     (0x01UL << PF_INDR_INDR3_Pos)                           /*!< PF INDR: INDR3 Mask                     */
+#define PF_INDR_INDR4_Pos                     4                                                       /*!< PF INDR: INDR4 Position                 */
+#define PF_INDR_INDR4_Msk                     (0x01UL << PF_INDR_INDR4_Pos)                           /*!< PF INDR: INDR4 Mask                     */
+#define PF_INDR_INDR5_Pos                     5                                                       /*!< PF INDR: INDR5 Position                 */
+#define PF_INDR_INDR5_Msk                     (0x01UL << PF_INDR_INDR5_Pos)                           /*!< PF INDR: INDR5 Mask                     */
+#define PF_INDR_INDR6_Pos                     6                                                       /*!< PF INDR: INDR6 Position                 */
+#define PF_INDR_INDR6_Msk                     (0x01UL << PF_INDR_INDR6_Pos)                           /*!< PF INDR: INDR6 Mask                     */
+#define PF_INDR_INDR7_Pos                     7                                                       /*!< PF INDR: INDR7 Position                 */
+#define PF_INDR_INDR7_Msk                     (0x01UL << PF_INDR_INDR7_Pos)                           /*!< PF INDR: INDR7 Mask                     */
+#define PF_INDR_INDR8_Pos                     8                                                       /*!< PF INDR: INDR8 Position                 */
+#define PF_INDR_INDR8_Msk                     (0x01UL << PF_INDR_INDR8_Pos)                           /*!< PF INDR: INDR8 Mask                     */
+#define PF_INDR_INDR9_Pos                     9                                                       /*!< PF INDR: INDR9 Position                 */
+#define PF_INDR_INDR9_Msk                     (0x01UL << PF_INDR_INDR9_Pos)                           /*!< PF INDR: INDR9 Mask                     */
+#define PF_INDR_INDR10_Pos                    10                                                      /*!< PF INDR: INDR10 Position                */
+#define PF_INDR_INDR10_Msk                    (0x01UL << PF_INDR_INDR10_Pos)                          /*!< PF INDR: INDR10 Mask                    */
+#define PF_INDR_INDR11_Pos                    11                                                      /*!< PF INDR: INDR11 Position                */
+#define PF_INDR_INDR11_Msk                    (0x01UL << PF_INDR_INDR11_Pos)                          /*!< PF INDR: INDR11 Mask                    */
+#define PF_INDR_INDR12_Pos                    12                                                      /*!< PF INDR: INDR12 Position                */
+#define PF_INDR_INDR12_Msk                    (0x01UL << PF_INDR_INDR12_Pos)                          /*!< PF INDR: INDR12 Mask                    */
+#define PF_INDR_INDR13_Pos                    13                                                      /*!< PF INDR: INDR13 Position                */
+#define PF_INDR_INDR13_Msk                    (0x01UL << PF_INDR_INDR13_Pos)                          /*!< PF INDR: INDR13 Mask                    */
+#define PF_INDR_INDR14_Pos                    14                                                      /*!< PF INDR: INDR14 Position                */
+#define PF_INDR_INDR14_Msk                    (0x01UL << PF_INDR_INDR14_Pos)                          /*!< PF INDR: INDR14 Mask                    */
+#define PF_INDR_INDR15_Pos                    15                                                      /*!< PF INDR: INDR15 Position                */
+#define PF_INDR_INDR15_Msk                    (0x01UL << PF_INDR_INDR15_Pos)                          /*!< PF INDR: INDR15 Mask                    */
+
+/* ----------------------------------  PF_OUTDR  ---------------------------------- */
+#define PF_OUTDR_OUTDR0_Pos                   0                                                       /*!< PF OUTDR: OUTDR0 Position               */
+#define PF_OUTDR_OUTDR0_Msk                   (0x01UL << PF_OUTDR_OUTDR0_Pos)                         /*!< PF OUTDR: OUTDR0 Mask                   */
+#define PF_OUTDR_OUTDR1_Pos                   1                                                       /*!< PF OUTDR: OUTDR1 Position               */
+#define PF_OUTDR_OUTDR1_Msk                   (0x01UL << PF_OUTDR_OUTDR1_Pos)                         /*!< PF OUTDR: OUTDR1 Mask                   */
+#define PF_OUTDR_OUTDR2_Pos                   2                                                       /*!< PF OUTDR: OUTDR2 Position               */
+#define PF_OUTDR_OUTDR2_Msk                   (0x01UL << PF_OUTDR_OUTDR2_Pos)                         /*!< PF OUTDR: OUTDR2 Mask                   */
+#define PF_OUTDR_OUTDR3_Pos                   3                                                       /*!< PF OUTDR: OUTDR3 Position               */
+#define PF_OUTDR_OUTDR3_Msk                   (0x01UL << PF_OUTDR_OUTDR3_Pos)                         /*!< PF OUTDR: OUTDR3 Mask                   */
+#define PF_OUTDR_OUTDR4_Pos                   4                                                       /*!< PF OUTDR: OUTDR4 Position               */
+#define PF_OUTDR_OUTDR4_Msk                   (0x01UL << PF_OUTDR_OUTDR4_Pos)                         /*!< PF OUTDR: OUTDR4 Mask                   */
+#define PF_OUTDR_OUTDR5_Pos                   5                                                       /*!< PF OUTDR: OUTDR5 Position               */
+#define PF_OUTDR_OUTDR5_Msk                   (0x01UL << PF_OUTDR_OUTDR5_Pos)                         /*!< PF OUTDR: OUTDR5 Mask                   */
+#define PF_OUTDR_OUTDR6_Pos                   6                                                       /*!< PF OUTDR: OUTDR6 Position               */
+#define PF_OUTDR_OUTDR6_Msk                   (0x01UL << PF_OUTDR_OUTDR6_Pos)                         /*!< PF OUTDR: OUTDR6 Mask                   */
+#define PF_OUTDR_OUTDR7_Pos                   7                                                       /*!< PF OUTDR: OUTDR7 Position               */
+#define PF_OUTDR_OUTDR7_Msk                   (0x01UL << PF_OUTDR_OUTDR7_Pos)                         /*!< PF OUTDR: OUTDR7 Mask                   */
+#define PF_OUTDR_OUTDR8_Pos                   8                                                       /*!< PF OUTDR: OUTDR8 Position               */
+#define PF_OUTDR_OUTDR8_Msk                   (0x01UL << PF_OUTDR_OUTDR8_Pos)                         /*!< PF OUTDR: OUTDR8 Mask                   */
+#define PF_OUTDR_OUTDR9_Pos                   9                                                       /*!< PF OUTDR: OUTDR9 Position               */
+#define PF_OUTDR_OUTDR9_Msk                   (0x01UL << PF_OUTDR_OUTDR9_Pos)                         /*!< PF OUTDR: OUTDR9 Mask                   */
+#define PF_OUTDR_OUTDR10_Pos                  10                                                      /*!< PF OUTDR: OUTDR10 Position              */
+#define PF_OUTDR_OUTDR10_Msk                  (0x01UL << PF_OUTDR_OUTDR10_Pos)                        /*!< PF OUTDR: OUTDR10 Mask                  */
+#define PF_OUTDR_OUTDR11_Pos                  11                                                      /*!< PF OUTDR: OUTDR11 Position              */
+#define PF_OUTDR_OUTDR11_Msk                  (0x01UL << PF_OUTDR_OUTDR11_Pos)                        /*!< PF OUTDR: OUTDR11 Mask                  */
+#define PF_OUTDR_OUTDR12_Pos                  12                                                      /*!< PF OUTDR: OUTDR12 Position              */
+#define PF_OUTDR_OUTDR12_Msk                  (0x01UL << PF_OUTDR_OUTDR12_Pos)                        /*!< PF OUTDR: OUTDR12 Mask                  */
+#define PF_OUTDR_OUTDR13_Pos                  13                                                      /*!< PF OUTDR: OUTDR13 Position              */
+#define PF_OUTDR_OUTDR13_Msk                  (0x01UL << PF_OUTDR_OUTDR13_Pos)                        /*!< PF OUTDR: OUTDR13 Mask                  */
+#define PF_OUTDR_OUTDR14_Pos                  14                                                      /*!< PF OUTDR: OUTDR14 Position              */
+#define PF_OUTDR_OUTDR14_Msk                  (0x01UL << PF_OUTDR_OUTDR14_Pos)                        /*!< PF OUTDR: OUTDR14 Mask                  */
+#define PF_OUTDR_OUTDR15_Pos                  15                                                      /*!< PF OUTDR: OUTDR15 Position              */
+#define PF_OUTDR_OUTDR15_Msk                  (0x01UL << PF_OUTDR_OUTDR15_Pos)                        /*!< PF OUTDR: OUTDR15 Mask                  */
+
+/* -----------------------------------  PF_BSR  ----------------------------------- */
+#define PF_BSR_BSR0_Pos                       0                                                       /*!< PF BSR: BSR0 Position                   */
+#define PF_BSR_BSR0_Msk                       (0x01UL << PF_BSR_BSR0_Pos)                             /*!< PF BSR: BSR0 Mask                       */
+#define PF_BSR_BSR1_Pos                       1                                                       /*!< PF BSR: BSR1 Position                   */
+#define PF_BSR_BSR1_Msk                       (0x01UL << PF_BSR_BSR1_Pos)                             /*!< PF BSR: BSR1 Mask                       */
+#define PF_BSR_BSR2_Pos                       2                                                       /*!< PF BSR: BSR2 Position                   */
+#define PF_BSR_BSR2_Msk                       (0x01UL << PF_BSR_BSR2_Pos)                             /*!< PF BSR: BSR2 Mask                       */
+#define PF_BSR_BSR3_Pos                       3                                                       /*!< PF BSR: BSR3 Position                   */
+#define PF_BSR_BSR3_Msk                       (0x01UL << PF_BSR_BSR3_Pos)                             /*!< PF BSR: BSR3 Mask                       */
+#define PF_BSR_BSR4_Pos                       4                                                       /*!< PF BSR: BSR4 Position                   */
+#define PF_BSR_BSR4_Msk                       (0x01UL << PF_BSR_BSR4_Pos)                             /*!< PF BSR: BSR4 Mask                       */
+#define PF_BSR_BSR5_Pos                       5                                                       /*!< PF BSR: BSR5 Position                   */
+#define PF_BSR_BSR5_Msk                       (0x01UL << PF_BSR_BSR5_Pos)                             /*!< PF BSR: BSR5 Mask                       */
+#define PF_BSR_BSR6_Pos                       6                                                       /*!< PF BSR: BSR6 Position                   */
+#define PF_BSR_BSR6_Msk                       (0x01UL << PF_BSR_BSR6_Pos)                             /*!< PF BSR: BSR6 Mask                       */
+#define PF_BSR_BSR7_Pos                       7                                                       /*!< PF BSR: BSR7 Position                   */
+#define PF_BSR_BSR7_Msk                       (0x01UL << PF_BSR_BSR7_Pos)                             /*!< PF BSR: BSR7 Mask                       */
+#define PF_BSR_BSR8_Pos                       8                                                       /*!< PF BSR: BSR8 Position                   */
+#define PF_BSR_BSR8_Msk                       (0x01UL << PF_BSR_BSR8_Pos)                             /*!< PF BSR: BSR8 Mask                       */
+#define PF_BSR_BSR9_Pos                       9                                                       /*!< PF BSR: BSR9 Position                   */
+#define PF_BSR_BSR9_Msk                       (0x01UL << PF_BSR_BSR9_Pos)                             /*!< PF BSR: BSR9 Mask                       */
+#define PF_BSR_BSR10_Pos                      10                                                      /*!< PF BSR: BSR10 Position                  */
+#define PF_BSR_BSR10_Msk                      (0x01UL << PF_BSR_BSR10_Pos)                            /*!< PF BSR: BSR10 Mask                      */
+#define PF_BSR_BSR11_Pos                      11                                                      /*!< PF BSR: BSR11 Position                  */
+#define PF_BSR_BSR11_Msk                      (0x01UL << PF_BSR_BSR11_Pos)                            /*!< PF BSR: BSR11 Mask                      */
+#define PF_BSR_BSR12_Pos                      12                                                      /*!< PF BSR: BSR12 Position                  */
+#define PF_BSR_BSR12_Msk                      (0x01UL << PF_BSR_BSR12_Pos)                            /*!< PF BSR: BSR12 Mask                      */
+#define PF_BSR_BSR13_Pos                      13                                                      /*!< PF BSR: BSR13 Position                  */
+#define PF_BSR_BSR13_Msk                      (0x01UL << PF_BSR_BSR13_Pos)                            /*!< PF BSR: BSR13 Mask                      */
+#define PF_BSR_BSR14_Pos                      14                                                      /*!< PF BSR: BSR14 Position                  */
+#define PF_BSR_BSR14_Msk                      (0x01UL << PF_BSR_BSR14_Pos)                            /*!< PF BSR: BSR14 Mask                      */
+#define PF_BSR_BSR15_Pos                      15                                                      /*!< PF BSR: BSR15 Position                  */
+#define PF_BSR_BSR15_Msk                      (0x01UL << PF_BSR_BSR15_Pos)                            /*!< PF BSR: BSR15 Mask                      */
+
+/* -----------------------------------  PF_BCR  ----------------------------------- */
+#define PF_BCR_BCR0_Pos                       0                                                       /*!< PF BCR: BCR0 Position                   */
+#define PF_BCR_BCR0_Msk                       (0x01UL << PF_BCR_BCR0_Pos)                             /*!< PF BCR: BCR0 Mask                       */
+#define PF_BCR_BCR1_Pos                       1                                                       /*!< PF BCR: BCR1 Position                   */
+#define PF_BCR_BCR1_Msk                       (0x01UL << PF_BCR_BCR1_Pos)                             /*!< PF BCR: BCR1 Mask                       */
+#define PF_BCR_BCR2_Pos                       2                                                       /*!< PF BCR: BCR2 Position                   */
+#define PF_BCR_BCR2_Msk                       (0x01UL << PF_BCR_BCR2_Pos)                             /*!< PF BCR: BCR2 Mask                       */
+#define PF_BCR_BCR3_Pos                       3                                                       /*!< PF BCR: BCR3 Position                   */
+#define PF_BCR_BCR3_Msk                       (0x01UL << PF_BCR_BCR3_Pos)                             /*!< PF BCR: BCR3 Mask                       */
+#define PF_BCR_BCR4_Pos                       4                                                       /*!< PF BCR: BCR4 Position                   */
+#define PF_BCR_BCR4_Msk                       (0x01UL << PF_BCR_BCR4_Pos)                             /*!< PF BCR: BCR4 Mask                       */
+#define PF_BCR_BCR5_Pos                       5                                                       /*!< PF BCR: BCR5 Position                   */
+#define PF_BCR_BCR5_Msk                       (0x01UL << PF_BCR_BCR5_Pos)                             /*!< PF BCR: BCR5 Mask                       */
+#define PF_BCR_BCR6_Pos                       6                                                       /*!< PF BCR: BCR6 Position                   */
+#define PF_BCR_BCR6_Msk                       (0x01UL << PF_BCR_BCR6_Pos)                             /*!< PF BCR: BCR6 Mask                       */
+#define PF_BCR_BCR7_Pos                       7                                                       /*!< PF BCR: BCR7 Position                   */
+#define PF_BCR_BCR7_Msk                       (0x01UL << PF_BCR_BCR7_Pos)                             /*!< PF BCR: BCR7 Mask                       */
+#define PF_BCR_BCR8_Pos                       8                                                       /*!< PF BCR: BCR8 Position                   */
+#define PF_BCR_BCR8_Msk                       (0x01UL << PF_BCR_BCR8_Pos)                             /*!< PF BCR: BCR8 Mask                       */
+#define PF_BCR_BCR9_Pos                       9                                                       /*!< PF BCR: BCR9 Position                   */
+#define PF_BCR_BCR9_Msk                       (0x01UL << PF_BCR_BCR9_Pos)                             /*!< PF BCR: BCR9 Mask                       */
+#define PF_BCR_BCR10_Pos                      10                                                      /*!< PF BCR: BCR10 Position                  */
+#define PF_BCR_BCR10_Msk                      (0x01UL << PF_BCR_BCR10_Pos)                            /*!< PF BCR: BCR10 Mask                      */
+#define PF_BCR_BCR11_Pos                      11                                                      /*!< PF BCR: BCR11 Position                  */
+#define PF_BCR_BCR11_Msk                      (0x01UL << PF_BCR_BCR11_Pos)                            /*!< PF BCR: BCR11 Mask                      */
+#define PF_BCR_BCR12_Pos                      12                                                      /*!< PF BCR: BCR12 Position                  */
+#define PF_BCR_BCR12_Msk                      (0x01UL << PF_BCR_BCR12_Pos)                            /*!< PF BCR: BCR12 Mask                      */
+#define PF_BCR_BCR13_Pos                      13                                                      /*!< PF BCR: BCR13 Position                  */
+#define PF_BCR_BCR13_Msk                      (0x01UL << PF_BCR_BCR13_Pos)                            /*!< PF BCR: BCR13 Mask                      */
+#define PF_BCR_BCR14_Pos                      14                                                      /*!< PF BCR: BCR14 Position                  */
+#define PF_BCR_BCR14_Msk                      (0x01UL << PF_BCR_BCR14_Pos)                            /*!< PF BCR: BCR14 Mask                      */
+#define PF_BCR_BCR15_Pos                      15                                                      /*!< PF BCR: BCR15 Position                  */
+#define PF_BCR_BCR15_Msk                      (0x01UL << PF_BCR_BCR15_Pos)                            /*!< PF BCR: BCR15 Mask                      */
+
+/* ---------------------------------  PF_OUTDMSK  --------------------------------- */
+#define PF_OUTDMSK_OUTDMSK0_Pos               0                                                       /*!< PF OUTDMSK: OUTDMSK0 Position           */
+#define PF_OUTDMSK_OUTDMSK0_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK0_Pos)                     /*!< PF OUTDMSK: OUTDMSK0 Mask               */
+#define PF_OUTDMSK_OUTDMSK1_Pos               1                                                       /*!< PF OUTDMSK: OUTDMSK1 Position           */
+#define PF_OUTDMSK_OUTDMSK1_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK1_Pos)                     /*!< PF OUTDMSK: OUTDMSK1 Mask               */
+#define PF_OUTDMSK_OUTDMSK2_Pos               2                                                       /*!< PF OUTDMSK: OUTDMSK2 Position           */
+#define PF_OUTDMSK_OUTDMSK2_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK2_Pos)                     /*!< PF OUTDMSK: OUTDMSK2 Mask               */
+#define PF_OUTDMSK_OUTDMSK3_Pos               3                                                       /*!< PF OUTDMSK: OUTDMSK3 Position           */
+#define PF_OUTDMSK_OUTDMSK3_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK3_Pos)                     /*!< PF OUTDMSK: OUTDMSK3 Mask               */
+#define PF_OUTDMSK_OUTDMSK4_Pos               4                                                       /*!< PF OUTDMSK: OUTDMSK4 Position           */
+#define PF_OUTDMSK_OUTDMSK4_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK4_Pos)                     /*!< PF OUTDMSK: OUTDMSK4 Mask               */
+#define PF_OUTDMSK_OUTDMSK5_Pos               5                                                       /*!< PF OUTDMSK: OUTDMSK5 Position           */
+#define PF_OUTDMSK_OUTDMSK5_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK5_Pos)                     /*!< PF OUTDMSK: OUTDMSK5 Mask               */
+#define PF_OUTDMSK_OUTDMSK6_Pos               6                                                       /*!< PF OUTDMSK: OUTDMSK6 Position           */
+#define PF_OUTDMSK_OUTDMSK6_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK6_Pos)                     /*!< PF OUTDMSK: OUTDMSK6 Mask               */
+#define PF_OUTDMSK_OUTDMSK7_Pos               7                                                       /*!< PF OUTDMSK: OUTDMSK7 Position           */
+#define PF_OUTDMSK_OUTDMSK7_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK7_Pos)                     /*!< PF OUTDMSK: OUTDMSK7 Mask               */
+#define PF_OUTDMSK_OUTDMSK8_Pos               8                                                       /*!< PF OUTDMSK: OUTDMSK8 Position           */
+#define PF_OUTDMSK_OUTDMSK8_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK8_Pos)                     /*!< PF OUTDMSK: OUTDMSK8 Mask               */
+#define PF_OUTDMSK_OUTDMSK9_Pos               9                                                       /*!< PF OUTDMSK: OUTDMSK9 Position           */
+#define PF_OUTDMSK_OUTDMSK9_Msk               (0x01UL << PF_OUTDMSK_OUTDMSK9_Pos)                     /*!< PF OUTDMSK: OUTDMSK9 Mask               */
+#define PF_OUTDMSK_OUTDMSK10_Pos              10                                                      /*!< PF OUTDMSK: OUTDMSK10 Position          */
+#define PF_OUTDMSK_OUTDMSK10_Msk              (0x01UL << PF_OUTDMSK_OUTDMSK10_Pos)                    /*!< PF OUTDMSK: OUTDMSK10 Mask              */
+#define PF_OUTDMSK_OUTDMSK11_Pos              11                                                      /*!< PF OUTDMSK: OUTDMSK11 Position          */
+#define PF_OUTDMSK_OUTDMSK11_Msk              (0x01UL << PF_OUTDMSK_OUTDMSK11_Pos)                    /*!< PF OUTDMSK: OUTDMSK11 Mask              */
+#define PF_OUTDMSK_OUTDMSK12_Pos              12                                                      /*!< PF OUTDMSK: OUTDMSK12 Position          */
+#define PF_OUTDMSK_OUTDMSK12_Msk              (0x01UL << PF_OUTDMSK_OUTDMSK12_Pos)                    /*!< PF OUTDMSK: OUTDMSK12 Mask              */
+#define PF_OUTDMSK_OUTDMSK13_Pos              13                                                      /*!< PF OUTDMSK: OUTDMSK13 Position          */
+#define PF_OUTDMSK_OUTDMSK13_Msk              (0x01UL << PF_OUTDMSK_OUTDMSK13_Pos)                    /*!< PF OUTDMSK: OUTDMSK13 Mask              */
+#define PF_OUTDMSK_OUTDMSK14_Pos              14                                                      /*!< PF OUTDMSK: OUTDMSK14 Position          */
+#define PF_OUTDMSK_OUTDMSK14_Msk              (0x01UL << PF_OUTDMSK_OUTDMSK14_Pos)                    /*!< PF OUTDMSK: OUTDMSK14 Mask              */
+#define PF_OUTDMSK_OUTDMSK15_Pos              15                                                      /*!< PF OUTDMSK: OUTDMSK15 Position          */
+#define PF_OUTDMSK_OUTDMSK15_Msk              (0x01UL << PF_OUTDMSK_OUTDMSK15_Pos)                    /*!< PF OUTDMSK: OUTDMSK15 Mask              */
+
+/* -----------------------------------  PF_DBCR  ---------------------------------- */
+#define PF_DBCR_DBEN0_Pos                     0                                                       /*!< PF DBCR: DBEN0 Position                 */
+#define PF_DBCR_DBEN0_Msk                     (0x01UL << PF_DBCR_DBEN0_Pos)                           /*!< PF DBCR: DBEN0 Mask                     */
+#define PF_DBCR_DBEN1_Pos                     1                                                       /*!< PF DBCR: DBEN1 Position                 */
+#define PF_DBCR_DBEN1_Msk                     (0x01UL << PF_DBCR_DBEN1_Pos)                           /*!< PF DBCR: DBEN1 Mask                     */
+#define PF_DBCR_DBEN2_Pos                     2                                                       /*!< PF DBCR: DBEN2 Position                 */
+#define PF_DBCR_DBEN2_Msk                     (0x01UL << PF_DBCR_DBEN2_Pos)                           /*!< PF DBCR: DBEN2 Mask                     */
+#define PF_DBCR_DBEN3_Pos                     3                                                       /*!< PF DBCR: DBEN3 Position                 */
+#define PF_DBCR_DBEN3_Msk                     (0x01UL << PF_DBCR_DBEN3_Pos)                           /*!< PF DBCR: DBEN3 Mask                     */
+#define PF_DBCR_DBEN4_Pos                     4                                                       /*!< PF DBCR: DBEN4 Position                 */
+#define PF_DBCR_DBEN4_Msk                     (0x01UL << PF_DBCR_DBEN4_Pos)                           /*!< PF DBCR: DBEN4 Mask                     */
+#define PF_DBCR_DBEN5_Pos                     5                                                       /*!< PF DBCR: DBEN5 Position                 */
+#define PF_DBCR_DBEN5_Msk                     (0x01UL << PF_DBCR_DBEN5_Pos)                           /*!< PF DBCR: DBEN5 Mask                     */
+#define PF_DBCR_DBEN6_Pos                     6                                                       /*!< PF DBCR: DBEN6 Position                 */
+#define PF_DBCR_DBEN6_Msk                     (0x01UL << PF_DBCR_DBEN6_Pos)                           /*!< PF DBCR: DBEN6 Mask                     */
+#define PF_DBCR_DBEN7_Pos                     7                                                       /*!< PF DBCR: DBEN7 Position                 */
+#define PF_DBCR_DBEN7_Msk                     (0x01UL << PF_DBCR_DBEN7_Pos)                           /*!< PF DBCR: DBEN7 Mask                     */
+#define PF_DBCR_DBEN8_Pos                     8                                                       /*!< PF DBCR: DBEN8 Position                 */
+#define PF_DBCR_DBEN8_Msk                     (0x01UL << PF_DBCR_DBEN8_Pos)                           /*!< PF DBCR: DBEN8 Mask                     */
+#define PF_DBCR_DBEN9_Pos                     9                                                       /*!< PF DBCR: DBEN9 Position                 */
+#define PF_DBCR_DBEN9_Msk                     (0x01UL << PF_DBCR_DBEN9_Pos)                           /*!< PF DBCR: DBEN9 Mask                     */
+#define PF_DBCR_DBEN10_Pos                    10                                                      /*!< PF DBCR: DBEN10 Position                */
+#define PF_DBCR_DBEN10_Msk                    (0x01UL << PF_DBCR_DBEN10_Pos)                          /*!< PF DBCR: DBEN10 Mask                    */
+#define PF_DBCR_DBEN11_Pos                    11                                                      /*!< PF DBCR: DBEN11 Position                */
+#define PF_DBCR_DBEN11_Msk                    (0x01UL << PF_DBCR_DBEN11_Pos)                          /*!< PF DBCR: DBEN11 Mask                    */
+#define PF_DBCR_DBEN12_Pos                    12                                                      /*!< PF DBCR: DBEN12 Position                */
+#define PF_DBCR_DBEN12_Msk                    (0x01UL << PF_DBCR_DBEN12_Pos)                          /*!< PF DBCR: DBEN12 Mask                    */
+#define PF_DBCR_DBEN13_Pos                    13                                                      /*!< PF DBCR: DBEN13 Position                */
+#define PF_DBCR_DBEN13_Msk                    (0x01UL << PF_DBCR_DBEN13_Pos)                          /*!< PF DBCR: DBEN13 Mask                    */
+#define PF_DBCR_DBEN14_Pos                    14                                                      /*!< PF DBCR: DBEN14 Position                */
+#define PF_DBCR_DBEN14_Msk                    (0x01UL << PF_DBCR_DBEN14_Pos)                          /*!< PF DBCR: DBEN14 Mask                    */
+#define PF_DBCR_DBEN15_Pos                    15                                                      /*!< PF DBCR: DBEN15 Position                */
+#define PF_DBCR_DBEN15_Msk                    (0x01UL << PF_DBCR_DBEN15_Pos)                          /*!< PF DBCR: DBEN15 Mask                    */
+
+/* -----------------------------------  PF_IER  ----------------------------------- */
+#define PF_IER_PIE0_Pos                       0                                                       /*!< PF IER: PIE0 Position                   */
+#define PF_IER_PIE0_Msk                       (0x03UL << PF_IER_PIE0_Pos)                             /*!< PF IER: PIE0 Mask                       */
+#define PF_IER_PIE1_Pos                       2                                                       /*!< PF IER: PIE1 Position                   */
+#define PF_IER_PIE1_Msk                       (0x03UL << PF_IER_PIE1_Pos)                             /*!< PF IER: PIE1 Mask                       */
+#define PF_IER_PIE2_Pos                       4                                                       /*!< PF IER: PIE2 Position                   */
+#define PF_IER_PIE2_Msk                       (0x03UL << PF_IER_PIE2_Pos)                             /*!< PF IER: PIE2 Mask                       */
+#define PF_IER_PIE3_Pos                       6                                                       /*!< PF IER: PIE3 Position                   */
+#define PF_IER_PIE3_Msk                       (0x03UL << PF_IER_PIE3_Pos)                             /*!< PF IER: PIE3 Mask                       */
+#define PF_IER_PIE4_Pos                       8                                                       /*!< PF IER: PIE4 Position                   */
+#define PF_IER_PIE4_Msk                       (0x03UL << PF_IER_PIE4_Pos)                             /*!< PF IER: PIE4 Mask                       */
+#define PF_IER_PIE5_Pos                       10                                                      /*!< PF IER: PIE5 Position                   */
+#define PF_IER_PIE5_Msk                       (0x03UL << PF_IER_PIE5_Pos)                             /*!< PF IER: PIE5 Mask                       */
+#define PF_IER_PIE6_Pos                       12                                                      /*!< PF IER: PIE6 Position                   */
+#define PF_IER_PIE6_Msk                       (0x03UL << PF_IER_PIE6_Pos)                             /*!< PF IER: PIE6 Mask                       */
+#define PF_IER_PIE7_Pos                       14                                                      /*!< PF IER: PIE7 Position                   */
+#define PF_IER_PIE7_Msk                       (0x03UL << PF_IER_PIE7_Pos)                             /*!< PF IER: PIE7 Mask                       */
+#define PF_IER_PIE8_Pos                       16                                                      /*!< PF IER: PIE8 Position                   */
+#define PF_IER_PIE8_Msk                       (0x03UL << PF_IER_PIE8_Pos)                             /*!< PF IER: PIE8 Mask                       */
+#define PF_IER_PIE9_Pos                       18                                                      /*!< PF IER: PIE9 Position                   */
+#define PF_IER_PIE9_Msk                       (0x03UL << PF_IER_PIE9_Pos)                             /*!< PF IER: PIE9 Mask                       */
+#define PF_IER_PIE10_Pos                      20                                                      /*!< PF IER: PIE10 Position                  */
+#define PF_IER_PIE10_Msk                      (0x03UL << PF_IER_PIE10_Pos)                            /*!< PF IER: PIE10 Mask                      */
+#define PF_IER_PIE11_Pos                      22                                                      /*!< PF IER: PIE11 Position                  */
+#define PF_IER_PIE11_Msk                      (0x03UL << PF_IER_PIE11_Pos)                            /*!< PF IER: PIE11 Mask                      */
+#define PF_IER_PIE12_Pos                      24                                                      /*!< PF IER: PIE12 Position                  */
+#define PF_IER_PIE12_Msk                      (0x03UL << PF_IER_PIE12_Pos)                            /*!< PF IER: PIE12 Mask                      */
+#define PF_IER_PIE13_Pos                      26                                                      /*!< PF IER: PIE13 Position                  */
+#define PF_IER_PIE13_Msk                      (0x03UL << PF_IER_PIE13_Pos)                            /*!< PF IER: PIE13 Mask                      */
+#define PF_IER_PIE14_Pos                      28                                                      /*!< PF IER: PIE14 Position                  */
+#define PF_IER_PIE14_Msk                      (0x03UL << PF_IER_PIE14_Pos)                            /*!< PF IER: PIE14 Mask                      */
+#define PF_IER_PIE15_Pos                      30                                                      /*!< PF IER: PIE15 Position                  */
+#define PF_IER_PIE15_Msk                      (0x03UL << PF_IER_PIE15_Pos)                            /*!< PF IER: PIE15 Mask                      */
+
+/* -----------------------------------  PF_ISR  ----------------------------------- */
+#define PF_ISR_PIS0_Pos                       0                                                       /*!< PF ISR: PIS0 Position                   */
+#define PF_ISR_PIS0_Msk                       (0x03UL << PF_ISR_PIS0_Pos)                             /*!< PF ISR: PIS0 Mask                       */
+#define PF_ISR_PIS1_Pos                       2                                                       /*!< PF ISR: PIS1 Position                   */
+#define PF_ISR_PIS1_Msk                       (0x03UL << PF_ISR_PIS1_Pos)                             /*!< PF ISR: PIS1 Mask                       */
+#define PF_ISR_PIS2_Pos                       4                                                       /*!< PF ISR: PIS2 Position                   */
+#define PF_ISR_PIS2_Msk                       (0x03UL << PF_ISR_PIS2_Pos)                             /*!< PF ISR: PIS2 Mask                       */
+#define PF_ISR_PIS3_Pos                       6                                                       /*!< PF ISR: PIS3 Position                   */
+#define PF_ISR_PIS3_Msk                       (0x03UL << PF_ISR_PIS3_Pos)                             /*!< PF ISR: PIS3 Mask                       */
+#define PF_ISR_PIS4_Pos                       8                                                       /*!< PF ISR: PIS4 Position                   */
+#define PF_ISR_PIS4_Msk                       (0x03UL << PF_ISR_PIS4_Pos)                             /*!< PF ISR: PIS4 Mask                       */
+#define PF_ISR_PIS5_Pos                       10                                                      /*!< PF ISR: PIS5 Position                   */
+#define PF_ISR_PIS5_Msk                       (0x03UL << PF_ISR_PIS5_Pos)                             /*!< PF ISR: PIS5 Mask                       */
+#define PF_ISR_PIS6_Pos                       12                                                      /*!< PF ISR: PIS6 Position                   */
+#define PF_ISR_PIS6_Msk                       (0x03UL << PF_ISR_PIS6_Pos)                             /*!< PF ISR: PIS6 Mask                       */
+#define PF_ISR_PIS7_Pos                       14                                                      /*!< PF ISR: PIS7 Position                   */
+#define PF_ISR_PIS7_Msk                       (0x03UL << PF_ISR_PIS7_Pos)                             /*!< PF ISR: PIS7 Mask                       */
+#define PF_ISR_PIS8_Pos                       16                                                      /*!< PF ISR: PIS8 Position                   */
+#define PF_ISR_PIS8_Msk                       (0x03UL << PF_ISR_PIS8_Pos)                             /*!< PF ISR: PIS8 Mask                       */
+#define PF_ISR_PIS9_Pos                       18                                                      /*!< PF ISR: PIS9 Position                   */
+#define PF_ISR_PIS9_Msk                       (0x03UL << PF_ISR_PIS9_Pos)                             /*!< PF ISR: PIS9 Mask                       */
+#define PF_ISR_PIS10_Pos                      20                                                      /*!< PF ISR: PIS10 Position                  */
+#define PF_ISR_PIS10_Msk                      (0x03UL << PF_ISR_PIS10_Pos)                            /*!< PF ISR: PIS10 Mask                      */
+#define PF_ISR_PIS11_Pos                      22                                                      /*!< PF ISR: PIS11 Position                  */
+#define PF_ISR_PIS11_Msk                      (0x03UL << PF_ISR_PIS11_Pos)                            /*!< PF ISR: PIS11 Mask                      */
+#define PF_ISR_PIS12_Pos                      24                                                      /*!< PF ISR: PIS12 Position                  */
+#define PF_ISR_PIS12_Msk                      (0x03UL << PF_ISR_PIS12_Pos)                            /*!< PF ISR: PIS12 Mask                      */
+#define PF_ISR_PIS13_Pos                      26                                                      /*!< PF ISR: PIS13 Position                  */
+#define PF_ISR_PIS13_Msk                      (0x03UL << PF_ISR_PIS13_Pos)                            /*!< PF ISR: PIS13 Mask                      */
+#define PF_ISR_PIS14_Pos                      28                                                      /*!< PF ISR: PIS14 Position                  */
+#define PF_ISR_PIS14_Msk                      (0x03UL << PF_ISR_PIS14_Pos)                            /*!< PF ISR: PIS14 Mask                      */
+#define PF_ISR_PIS15_Pos                      30                                                      /*!< PF ISR: PIS15 Position                  */
+#define PF_ISR_PIS15_Msk                      (0x03UL << PF_ISR_PIS15_Pos)                            /*!< PF ISR: PIS15 Mask                      */
+
+/* -----------------------------------  PF_ICR  ----------------------------------- */
+#define PF_ICR_PIC0_Pos                       0                                                       /*!< PF ICR: PIC0 Position                   */
+#define PF_ICR_PIC0_Msk                       (0x03UL << PF_ICR_PIC0_Pos)                             /*!< PF ICR: PIC0 Mask                       */
+#define PF_ICR_PIC1_Pos                       2                                                       /*!< PF ICR: PIC1 Position                   */
+#define PF_ICR_PIC1_Msk                       (0x03UL << PF_ICR_PIC1_Pos)                             /*!< PF ICR: PIC1 Mask                       */
+#define PF_ICR_PIC2_Pos                       4                                                       /*!< PF ICR: PIC2 Position                   */
+#define PF_ICR_PIC2_Msk                       (0x03UL << PF_ICR_PIC2_Pos)                             /*!< PF ICR: PIC2 Mask                       */
+#define PF_ICR_PIC3_Pos                       6                                                       /*!< PF ICR: PIC3 Position                   */
+#define PF_ICR_PIC3_Msk                       (0x03UL << PF_ICR_PIC3_Pos)                             /*!< PF ICR: PIC3 Mask                       */
+#define PF_ICR_PIC4_Pos                       8                                                       /*!< PF ICR: PIC4 Position                   */
+#define PF_ICR_PIC4_Msk                       (0x03UL << PF_ICR_PIC4_Pos)                             /*!< PF ICR: PIC4 Mask                       */
+#define PF_ICR_PIC5_Pos                       10                                                      /*!< PF ICR: PIC5 Position                   */
+#define PF_ICR_PIC5_Msk                       (0x03UL << PF_ICR_PIC5_Pos)                             /*!< PF ICR: PIC5 Mask                       */
+#define PF_ICR_PIC6_Pos                       12                                                      /*!< PF ICR: PIC6 Position                   */
+#define PF_ICR_PIC6_Msk                       (0x03UL << PF_ICR_PIC6_Pos)                             /*!< PF ICR: PIC6 Mask                       */
+#define PF_ICR_PIC7_Pos                       14                                                      /*!< PF ICR: PIC7 Position                   */
+#define PF_ICR_PIC7_Msk                       (0x03UL << PF_ICR_PIC7_Pos)                             /*!< PF ICR: PIC7 Mask                       */
+#define PF_ICR_PIC8_Pos                       16                                                      /*!< PF ICR: PIC8 Position                   */
+#define PF_ICR_PIC8_Msk                       (0x03UL << PF_ICR_PIC8_Pos)                             /*!< PF ICR: PIC8 Mask                       */
+#define PF_ICR_PIC9_Pos                       18                                                      /*!< PF ICR: PIC9 Position                   */
+#define PF_ICR_PIC9_Msk                       (0x03UL << PF_ICR_PIC9_Pos)                             /*!< PF ICR: PIC9 Mask                       */
+#define PF_ICR_PIC10_Pos                      20                                                      /*!< PF ICR: PIC10 Position                  */
+#define PF_ICR_PIC10_Msk                      (0x03UL << PF_ICR_PIC10_Pos)                            /*!< PF ICR: PIC10 Mask                      */
+#define PF_ICR_PIC11_Pos                      22                                                      /*!< PF ICR: PIC11 Position                  */
+#define PF_ICR_PIC11_Msk                      (0x03UL << PF_ICR_PIC11_Pos)                            /*!< PF ICR: PIC11 Mask                      */
+#define PF_ICR_PIC12_Pos                      24                                                      /*!< PF ICR: PIC12 Position                  */
+#define PF_ICR_PIC12_Msk                      (0x03UL << PF_ICR_PIC12_Pos)                            /*!< PF ICR: PIC12 Mask                      */
+#define PF_ICR_PIC13_Pos                      26                                                      /*!< PF ICR: PIC13 Position                  */
+#define PF_ICR_PIC13_Msk                      (0x03UL << PF_ICR_PIC13_Pos)                            /*!< PF ICR: PIC13 Mask                      */
+#define PF_ICR_PIC14_Pos                      28                                                      /*!< PF ICR: PIC14 Position                  */
+#define PF_ICR_PIC14_Msk                      (0x03UL << PF_ICR_PIC14_Pos)                            /*!< PF ICR: PIC14 Mask                      */
+#define PF_ICR_PIC15_Pos                      30                                                      /*!< PF ICR: PIC15 Position                  */
+#define PF_ICR_PIC15_Msk                      (0x03UL << PF_ICR_PIC15_Pos)                            /*!< PF ICR: PIC15 Mask                      */
+
+
+/* ================================================================================ */
+/* ================          struct 'PCU' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  PCU_PORTEN  --------------------------------- */
+#define PCU_PORTEN_PORTEN_Pos                 0                                                       /*!< PCU PORTEN: PORTEN Position             */
+#define PCU_PORTEN_PORTEN_Msk                 (0x000000ffUL << PCU_PORTEN_PORTEN_Pos)                 /*!< PCU PORTEN: PORTEN Mask                 */
+
+
+/* ================================================================================ */
+/* ================          struct 'FMC' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  FMC_MR  ----------------------------------- */
+#define FMC_MR_ACODE_Pos                      0                                                       /*!< FMC MR: ACODE Position                  */
+#define FMC_MR_ACODE_Msk                      (0x7fUL << FMC_MR_ACODE_Pos)                            /*!< FMC MR: ACODE Mask                      */
+
+/* -----------------------------------  FMC_CR  ----------------------------------- */
+#define FMC_CR_HVEN_Pos                       0                                                       /*!< FMC CR: HVEN Position                   */
+#define FMC_CR_HVEN_Msk                       (0x01UL << FMC_CR_HVEN_Pos)                             /*!< FMC CR: HVEN Mask                       */
+#define FMC_CR_ERS_Pos                        1                                                       /*!< FMC CR: ERS Position                    */
+#define FMC_CR_ERS_Msk                        (0x01UL << FMC_CR_ERS_Pos)                              /*!< FMC CR: ERS Mask                        */
+#define FMC_CR_PGM_Pos                        2                                                       /*!< FMC CR: PGM Position                    */
+#define FMC_CR_PGM_Msk                        (0x01UL << FMC_CR_PGM_Pos)                              /*!< FMC CR: PGM Mask                        */
+#define FMC_CR_WADCK_Pos                      3                                                       /*!< FMC CR: WADCK Position                  */
+#define FMC_CR_WADCK_Msk                      (0x01UL << FMC_CR_WADCK_Pos)                            /*!< FMC CR: WADCK Mask                      */
+#define FMC_CR_PMODE_Pos                      4                                                       /*!< FMC CR: PMODE Position                  */
+#define FMC_CR_PMODE_Msk                      (0x01UL << FMC_CR_PMODE_Pos)                            /*!< FMC CR: PMODE Mask                      */
+#define FMC_CR_SECT1K_Pos                     5                                                       /*!< FMC CR: SECT1K Position                 */
+#define FMC_CR_SECT1K_Msk                     (0x01UL << FMC_CR_SECT1K_Pos)                           /*!< FMC CR: SECT1K Mask                     */
+#define FMC_CR_SECT4K_Pos                     6                                                       /*!< FMC CR: SECT4K Position                 */
+#define FMC_CR_SECT4K_Msk                     (0x01UL << FMC_CR_SECT4K_Pos)                           /*!< FMC CR: SECT4K Mask                     */
+#define FMC_CR_MAS_Pos                        7                                                       /*!< FMC CR: MAS Position                    */
+#define FMC_CR_MAS_Msk                        (0x01UL << FMC_CR_MAS_Pos)                              /*!< FMC CR: MAS Mask                        */
+#define FMC_CR_BBLOCK_Pos                     8                                                       /*!< FMC CR: BBLOCK Position                 */
+#define FMC_CR_BBLOCK_Msk                     (0x01UL << FMC_CR_BBLOCK_Pos)                           /*!< FMC CR: BBLOCK Mask                     */
+#define FMC_CR_IFEN_Pos                       12                                                      /*!< FMC CR: IFEN Position                   */
+#define FMC_CR_IFEN_Msk                       (0x01UL << FMC_CR_IFEN_Pos)                             /*!< FMC CR: IFEN Mask                       */
+#define FMC_CR_SELFPGM_Pos                    23                                                      /*!< FMC CR: SELFPGM Position                */
+#define FMC_CR_SELFPGM_Msk                    (0x01UL << FMC_CR_SELFPGM_Pos)                          /*!< FMC CR: SELFPGM Mask                    */
+
+/* -----------------------------------  FMC_AR  ----------------------------------- */
+#define FMC_AR_FADDR_Pos                      0                                                       /*!< FMC AR: FADDR Position                  */
+#define FMC_AR_FADDR_Msk                      (0x00003fffUL << FMC_AR_FADDR_Pos)                      /*!< FMC AR: FADDR Mask                      */
+
+/* -----------------------------------  FMC_DR  ----------------------------------- */
+#define FMC_DR_FDATA_Pos                      0                                                       /*!< FMC DR: FDATA Position                  */
+#define FMC_DR_FDATA_Msk                      (0xffffffffUL << FMC_DR_FDATA_Pos)                      /*!< FMC DR: FDATA Mask                      */
+
+/* ----------------------------------  FMC_BUSY  ---------------------------------- */
+#define FMC_BUSY_WRBUSY_Pos                   0                                                       /*!< FMC BUSY: WRBUSY Position               */
+#define FMC_BUSY_WRBUSY_Msk                   (0x01UL << FMC_BUSY_WRBUSY_Pos)                         /*!< FMC BUSY: WRBUSY Mask                   */
+
+/* -----------------------------------  FMC_CRC  ---------------------------------- */
+#define FMC_CRC_CRC16_Pos                     0                                                       /*!< FMC CRC: CRC16 Position                 */
+#define FMC_CRC_CRC16_Msk                     (0x0000ffffUL << FMC_CRC_CRC16_Pos)                     /*!< FMC CRC: CRC16 Mask                     */
+
+/* -----------------------------------  FMC_CFG  ---------------------------------- */
+#define FMC_CFG_CRCEN_Pos                     6                                                       /*!< FMC CFG: CRCEN Position                 */
+#define FMC_CFG_CRCEN_Msk                     (0x01UL << FMC_CFG_CRCEN_Pos)                           /*!< FMC CFG: CRCEN Mask                     */
+#define FMC_CFG_CRCINIT_Pos                   7                                                       /*!< FMC CFG: CRCINIT Position               */
+#define FMC_CFG_CRCINIT_Msk                   (0x01UL << FMC_CFG_CRCINIT_Pos)                         /*!< FMC CFG: CRCINIT Mask                   */
+#define FMC_CFG_WAIT_Pos                      8                                                       /*!< FMC CFG: WAIT Position                  */
+#define FMC_CFG_WAIT_Msk                      (0x07UL << FMC_CFG_WAIT_Pos)                            /*!< FMC CFG: WAIT Mask                      */
+#define FMC_CFG_WTIDKY_Pos                    16                                                      /*!< FMC CFG: WTIDKY Position                */
+#define FMC_CFG_WTIDKY_Msk                    (0x0000ffffUL << FMC_CFG_WTIDKY_Pos)                    /*!< FMC CFG: WTIDKY Mask                    */
+
+/* ----------------------------------  FMC_WPROT  --------------------------------- */
+#define FMC_WPROT_WPROT_Pos                   0                                                       /*!< FMC WPROT: WPROT Position               */
+#define FMC_WPROT_WPROT_Msk                   (0xffffffffUL << FMC_WPROT_WPROT_Pos)                   /*!< FMC WPROT: WPROT Mask                   */
+
+/* ----------------------------------  FMC_LOCK  ---------------------------------- */
+#define FMC_LOCK_RPROT_Pos                    0                                                       /*!< FMC LOCK: RPROT Position                */
+#define FMC_LOCK_RPROT_Msk                    (0x000000ffUL << FMC_LOCK_RPROT_Pos)                    /*!< FMC LOCK: RPROT Mask                    */
+
+/* ----------------------------------  FMC_HWID  ---------------------------------- */
+#define FMC_HWID_HWID_Pos                     0                                                       /*!< FMC HWID: HWID Position                 */
+#define FMC_HWID_HWID_Msk                     (0xffffffffUL << FMC_HWID_HWID_Pos)                     /*!< FMC HWID: HWID Mask                     */
+
+
+/* ================================================================================ */
+/* ================          struct 'DMA0' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  DMA0_CR  ---------------------------------- */
+#define DMA0_CR_DIR_Pos                       1                                                       /*!< DMA0 CR: DIR Position                   */
+#define DMA0_CR_DIR_Msk                       (0x01UL << DMA0_CR_DIR_Pos)                             /*!< DMA0 CR: DIR Mask                       */
+#define DMA0_CR_SIZE_Pos                      2                                                       /*!< DMA0 CR: SIZE Position                  */
+#define DMA0_CR_SIZE_Msk                      (0x03UL << DMA0_CR_SIZE_Pos)                            /*!< DMA0 CR: SIZE Mask                      */
+#define DMA0_CR_PERISEL_Pos                   8                                                       /*!< DMA0 CR: PERISEL Position               */
+#define DMA0_CR_PERISEL_Msk                   (0x0fUL << DMA0_CR_PERISEL_Pos)                         /*!< DMA0 CR: PERISEL Mask                   */
+#define DMA0_CR_TRANSCNT_Pos                  16                                                      /*!< DMA0 CR: TRANSCNT Position              */
+#define DMA0_CR_TRANSCNT_Msk                  (0x00000fffUL << DMA0_CR_TRANSCNT_Pos)                  /*!< DMA0 CR: TRANSCNT Mask                  */
+
+/* -----------------------------------  DMA0_SR  ---------------------------------- */
+#define DMA0_SR_DMAEN_Pos                     0                                                       /*!< DMA0 SR: DMAEN Position                 */
+#define DMA0_SR_DMAEN_Msk                     (0x01UL << DMA0_SR_DMAEN_Pos)                           /*!< DMA0 SR: DMAEN Mask                     */
+#define DMA0_SR_EOT_Pos                       7                                                       /*!< DMA0 SR: EOT Position                   */
+#define DMA0_SR_EOT_Msk                       (0x01UL << DMA0_SR_EOT_Pos)                             /*!< DMA0 SR: EOT Mask                       */
+
+/* ----------------------------------  DMA0_PAR  ---------------------------------- */
+#define DMA0_PAR_PAR_Pos                      0                                                       /*!< DMA0 PAR: PAR Position                  */
+#define DMA0_PAR_PAR_Msk                      (0x0000ffffUL << DMA0_PAR_PAR_Pos)                      /*!< DMA0 PAR: PAR Mask                      */
+
+/* ----------------------------------  DMA0_MAR  ---------------------------------- */
+#define DMA0_MAR_MAR_Pos                      0                                                       /*!< DMA0 MAR: MAR Position                  */
+#define DMA0_MAR_MAR_Msk                      (0x0000ffffUL << DMA0_MAR_MAR_Pos)                      /*!< DMA0 MAR: MAR Mask                      */
+
+
+/* ================================================================================ */
+/* ================          struct 'DMA1' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  DMA1_CR  ---------------------------------- */
+#define DMA1_CR_DIR_Pos                       1                                                       /*!< DMA1 CR: DIR Position                   */
+#define DMA1_CR_DIR_Msk                       (0x01UL << DMA1_CR_DIR_Pos)                             /*!< DMA1 CR: DIR Mask                       */
+#define DMA1_CR_SIZE_Pos                      2                                                       /*!< DMA1 CR: SIZE Position                  */
+#define DMA1_CR_SIZE_Msk                      (0x03UL << DMA1_CR_SIZE_Pos)                            /*!< DMA1 CR: SIZE Mask                      */
+#define DMA1_CR_PERISEL_Pos                   8                                                       /*!< DMA1 CR: PERISEL Position               */
+#define DMA1_CR_PERISEL_Msk                   (0x0fUL << DMA1_CR_PERISEL_Pos)                         /*!< DMA1 CR: PERISEL Mask                   */
+#define DMA1_CR_TRANSCNT_Pos                  16                                                      /*!< DMA1 CR: TRANSCNT Position              */
+#define DMA1_CR_TRANSCNT_Msk                  (0x00000fffUL << DMA1_CR_TRANSCNT_Pos)                  /*!< DMA1 CR: TRANSCNT Mask                  */
+
+/* -----------------------------------  DMA1_SR  ---------------------------------- */
+#define DMA1_SR_DMAEN_Pos                     0                                                       /*!< DMA1 SR: DMAEN Position                 */
+#define DMA1_SR_DMAEN_Msk                     (0x01UL << DMA1_SR_DMAEN_Pos)                           /*!< DMA1 SR: DMAEN Mask                     */
+#define DMA1_SR_EOT_Pos                       7                                                       /*!< DMA1 SR: EOT Position                   */
+#define DMA1_SR_EOT_Msk                       (0x01UL << DMA1_SR_EOT_Pos)                             /*!< DMA1 SR: EOT Mask                       */
+
+/* ----------------------------------  DMA1_PAR  ---------------------------------- */
+#define DMA1_PAR_PAR_Pos                      0                                                       /*!< DMA1 PAR: PAR Position                  */
+#define DMA1_PAR_PAR_Msk                      (0x0000ffffUL << DMA1_PAR_PAR_Pos)                      /*!< DMA1 PAR: PAR Mask                      */
+
+/* ----------------------------------  DMA1_MAR  ---------------------------------- */
+#define DMA1_MAR_MAR_Pos                      0                                                       /*!< DMA1 MAR: MAR Position                  */
+#define DMA1_MAR_MAR_Msk                      (0x0000ffffUL << DMA1_MAR_MAR_Pos)                      /*!< DMA1 MAR: MAR Mask                      */
+
+
+/* ================================================================================ */
+/* ================          struct 'DMA2' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  DMA2_CR  ---------------------------------- */
+#define DMA2_CR_DIR_Pos                       1                                                       /*!< DMA2 CR: DIR Position                   */
+#define DMA2_CR_DIR_Msk                       (0x01UL << DMA2_CR_DIR_Pos)                             /*!< DMA2 CR: DIR Mask                       */
+#define DMA2_CR_SIZE_Pos                      2                                                       /*!< DMA2 CR: SIZE Position                  */
+#define DMA2_CR_SIZE_Msk                      (0x03UL << DMA2_CR_SIZE_Pos)                            /*!< DMA2 CR: SIZE Mask                      */
+#define DMA2_CR_PERISEL_Pos                   8                                                       /*!< DMA2 CR: PERISEL Position               */
+#define DMA2_CR_PERISEL_Msk                   (0x0fUL << DMA2_CR_PERISEL_Pos)                         /*!< DMA2 CR: PERISEL Mask                   */
+#define DMA2_CR_TRANSCNT_Pos                  16                                                      /*!< DMA2 CR: TRANSCNT Position              */
+#define DMA2_CR_TRANSCNT_Msk                  (0x00000fffUL << DMA2_CR_TRANSCNT_Pos)                  /*!< DMA2 CR: TRANSCNT Mask                  */
+
+/* -----------------------------------  DMA2_SR  ---------------------------------- */
+#define DMA2_SR_DMAEN_Pos                     0                                                       /*!< DMA2 SR: DMAEN Position                 */
+#define DMA2_SR_DMAEN_Msk                     (0x01UL << DMA2_SR_DMAEN_Pos)                           /*!< DMA2 SR: DMAEN Mask                     */
+#define DMA2_SR_EOT_Pos                       7                                                       /*!< DMA2 SR: EOT Position                   */
+#define DMA2_SR_EOT_Msk                       (0x01UL << DMA2_SR_EOT_Pos)                             /*!< DMA2 SR: EOT Mask                       */
+
+/* ----------------------------------  DMA2_PAR  ---------------------------------- */
+#define DMA2_PAR_PAR_Pos                      0                                                       /*!< DMA2 PAR: PAR Position                  */
+#define DMA2_PAR_PAR_Msk                      (0x0000ffffUL << DMA2_PAR_PAR_Pos)                      /*!< DMA2 PAR: PAR Mask                      */
+
+/* ----------------------------------  DMA2_MAR  ---------------------------------- */
+#define DMA2_MAR_MAR_Pos                      0                                                       /*!< DMA2 MAR: MAR Position                  */
+#define DMA2_MAR_MAR_Msk                      (0x0000ffffUL << DMA2_MAR_MAR_Pos)                      /*!< DMA2 MAR: MAR Mask                      */
+
+
+/* ================================================================================ */
+/* ================          struct 'DMA3' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  DMA3_CR  ---------------------------------- */
+#define DMA3_CR_DIR_Pos                       1                                                       /*!< DMA3 CR: DIR Position                   */
+#define DMA3_CR_DIR_Msk                       (0x01UL << DMA3_CR_DIR_Pos)                             /*!< DMA3 CR: DIR Mask                       */
+#define DMA3_CR_SIZE_Pos                      2                                                       /*!< DMA3 CR: SIZE Position                  */
+#define DMA3_CR_SIZE_Msk                      (0x03UL << DMA3_CR_SIZE_Pos)                            /*!< DMA3 CR: SIZE Mask                      */
+#define DMA3_CR_PERISEL_Pos                   8                                                       /*!< DMA3 CR: PERISEL Position               */
+#define DMA3_CR_PERISEL_Msk                   (0x0fUL << DMA3_CR_PERISEL_Pos)                         /*!< DMA3 CR: PERISEL Mask                   */
+#define DMA3_CR_TRANSCNT_Pos                  16                                                      /*!< DMA3 CR: TRANSCNT Position              */
+#define DMA3_CR_TRANSCNT_Msk                  (0x00000fffUL << DMA3_CR_TRANSCNT_Pos)                  /*!< DMA3 CR: TRANSCNT Mask                  */
+
+/* -----------------------------------  DMA3_SR  ---------------------------------- */
+#define DMA3_SR_DMAEN_Pos                     0                                                       /*!< DMA3 SR: DMAEN Position                 */
+#define DMA3_SR_DMAEN_Msk                     (0x01UL << DMA3_SR_DMAEN_Pos)                           /*!< DMA3 SR: DMAEN Mask                     */
+#define DMA3_SR_EOT_Pos                       7                                                       /*!< DMA3 SR: EOT Position                   */
+#define DMA3_SR_EOT_Msk                       (0x01UL << DMA3_SR_EOT_Pos)                             /*!< DMA3 SR: EOT Mask                       */
+
+/* ----------------------------------  DMA3_PAR  ---------------------------------- */
+#define DMA3_PAR_PAR_Pos                      0                                                       /*!< DMA3 PAR: PAR Position                  */
+#define DMA3_PAR_PAR_Msk                      (0x0000ffffUL << DMA3_PAR_PAR_Pos)                      /*!< DMA3 PAR: PAR Mask                      */
+
+/* ----------------------------------  DMA3_MAR  ---------------------------------- */
+#define DMA3_MAR_MAR_Pos                      0                                                       /*!< DMA3 MAR: MAR Position                  */
+#define DMA3_MAR_MAR_Msk                      (0x0000ffffUL << DMA3_MAR_MAR_Pos)                      /*!< DMA3 MAR: MAR Mask                      */
+
+
+/* ================================================================================ */
+/* ================          struct 'WDT' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  WDT_CR  ----------------------------------- */
+#define WDT_CR_CLKDIV_Pos                     0                                                       /*!< WDT CR: CLKDIV Position                 */
+#define WDT_CR_CLKDIV_Msk                     (0x03UL << WDT_CR_CLKDIV_Pos)                           /*!< WDT CR: CLKDIV Mask                     */
+#define WDT_CR_UNFIEN_Pos                     2                                                       /*!< WDT CR: UNFIEN Position                 */
+#define WDT_CR_UNFIEN_Msk                     (0x01UL << WDT_CR_UNFIEN_Pos)                           /*!< WDT CR: UNFIEN Mask                     */
+#define WDT_CR_WINMIEN_Pos                    3                                                       /*!< WDT CR: WINMIEN Position                */
+#define WDT_CR_WINMIEN_Msk                    (0x01UL << WDT_CR_WINMIEN_Pos)                          /*!< WDT CR: WINMIEN Mask                    */
+#define WDT_CR_CNTEN_Pos                      4                                                       /*!< WDT CR: CNTEN Position                  */
+#define WDT_CR_CNTEN_Msk                      (0x3fUL << WDT_CR_CNTEN_Pos)                            /*!< WDT CR: CNTEN Mask                      */
+#define WDT_CR_RSTEN_Pos                      10                                                      /*!< WDT CR: RSTEN Position                  */
+#define WDT_CR_RSTEN_Msk                      (0x3fUL << WDT_CR_RSTEN_Pos)                            /*!< WDT CR: RSTEN Mask                      */
+#define WDT_CR_WTIDKY_Pos                     16                                                      /*!< WDT CR: WTIDKY Position                 */
+#define WDT_CR_WTIDKY_Msk                     (0x0000ffffUL << WDT_CR_WTIDKY_Pos)                     /*!< WDT CR: WTIDKY Mask                     */
+
+/* -----------------------------------  WDT_SR  ----------------------------------- */
+#define WDT_SR_UNFIFLAG_Pos                   0                                                       /*!< WDT SR: UNFIFLAG Position               */
+#define WDT_SR_UNFIFLAG_Msk                   (0x01UL << WDT_SR_UNFIFLAG_Pos)                         /*!< WDT SR: UNFIFLAG Mask                   */
+#define WDT_SR_WINMIFLAG_Pos                  1                                                       /*!< WDT SR: WINMIFLAG Position              */
+#define WDT_SR_WINMIFLAG_Msk                  (0x01UL << WDT_SR_WINMIFLAG_Pos)                        /*!< WDT SR: WINMIFLAG Mask                  */
+#define WDT_SR_DBGCNTEN_Pos                   7                                                       /*!< WDT SR: DBGCNTEN Position               */
+#define WDT_SR_DBGCNTEN_Msk                   (0x01UL << WDT_SR_DBGCNTEN_Pos)                         /*!< WDT SR: DBGCNTEN Mask                   */
+
+/* -----------------------------------  WDT_DR  ----------------------------------- */
+#define WDT_DR_DATA_Pos                       0                                                       /*!< WDT DR: DATA Position                   */
+#define WDT_DR_DATA_Msk                       (0x00ffffffUL << WDT_DR_DATA_Pos)                       /*!< WDT DR: DATA Mask                       */
+
+/* -----------------------------------  WDT_CNT  ---------------------------------- */
+#define WDT_CNT_CNT_Pos                       0                                                       /*!< WDT CNT: CNT Position                   */
+#define WDT_CNT_CNT_Msk                       (0x00ffffffUL << WDT_CNT_CNT_Pos)                       /*!< WDT CNT: CNT Mask                       */
+
+/* ----------------------------------  WDT_WINDR  --------------------------------- */
+#define WDT_WINDR_WDATA_Pos                   0                                                       /*!< WDT WINDR: WDATA Position               */
+#define WDT_WINDR_WDATA_Msk                   (0x00ffffffUL << WDT_WINDR_WDATA_Pos)                   /*!< WDT WINDR: WDATA Mask                   */
+
+/* ----------------------------------  WDT_CNTR  ---------------------------------- */
+#define WDT_CNTR_CNTR_Pos                     0                                                       /*!< WDT CNTR: CNTR Position                 */
+#define WDT_CNTR_CNTR_Msk                     (0x000000ffUL << WDT_CNTR_CNTR_Pos)                     /*!< WDT CNTR: CNTR Mask                     */
+
+
+/* ================================================================================ */
+/* ================           struct 'WT' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* ------------------------------------  WT_CR  ----------------------------------- */
+#define WT_CR_WTCLR_Pos                       0                                                       /*!< WT CR: WTCLR Position                   */
+#define WT_CR_WTCLR_Msk                       (0x01UL << WT_CR_WTCLR_Pos)                             /*!< WT CR: WTCLR Mask                       */
+#define WT_CR_WTIFLAG_Pos                     1                                                       /*!< WT CR: WTIFLAG Position                 */
+#define WT_CR_WTIFLAG_Msk                     (0x01UL << WT_CR_WTIFLAG_Pos)                           /*!< WT CR: WTIFLAG Mask                     */
+#define WT_CR_WTIEN_Pos                       3                                                       /*!< WT CR: WTIEN Position                   */
+#define WT_CR_WTIEN_Msk                       (0x01UL << WT_CR_WTIEN_Pos)                             /*!< WT CR: WTIEN Mask                       */
+#define WT_CR_WTINTV_Pos                      4                                                       /*!< WT CR: WTINTV Position                  */
+#define WT_CR_WTINTV_Msk                      (0x03UL << WT_CR_WTINTV_Pos)                            /*!< WT CR: WTINTV Mask                      */
+#define WT_CR_WTEN_Pos                        7                                                       /*!< WT CR: WTEN Position                    */
+#define WT_CR_WTEN_Msk                        (0x01UL << WT_CR_WTEN_Pos)                              /*!< WT CR: WTEN Mask                        */
+
+/* ------------------------------------  WT_DR  ----------------------------------- */
+#define WT_DR_WTDATA_Pos                      0                                                       /*!< WT DR: WTDATA Position                  */
+#define WT_DR_WTDATA_Msk                      (0x00000fffUL << WT_DR_WTDATA_Pos)                      /*!< WT DR: WTDATA Mask                      */
+
+/* -----------------------------------  WT_CNT  ----------------------------------- */
+#define WT_CNT_CNT_Pos                        0                                                       /*!< WT CNT: CNT Position                    */
+#define WT_CNT_CNT_Msk                        (0x00000fffUL << WT_CNT_CNT_Pos)                        /*!< WT CNT: CNT Mask                        */
+
+
+/* ================================================================================ */
+/* ================         Group 'TIMER1n' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER1n_CR  --------------------------------- */
+#define TIMER1n_CR_TnCLR_Pos                  0                                                       /*!< TIMER1n CR: TnCLR Position              */
+#define TIMER1n_CR_TnCLR_Msk                  (0x01UL << TIMER1n_CR_TnCLR_Pos)                        /*!< TIMER1n CR: TnCLR Mask                  */
+#define TIMER1n_CR_TnPAU_Pos                  1                                                       /*!< TIMER1n CR: TnPAU Position              */
+#define TIMER1n_CR_TnPAU_Msk                  (0x01UL << TIMER1n_CR_TnPAU_Pos)                        /*!< TIMER1n CR: TnPAU Mask                  */
+#define TIMER1n_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER1n CR: TnCIFLAG Position           */
+#define TIMER1n_CR_TnCIFLAG_Msk               (0x01UL << TIMER1n_CR_TnCIFLAG_Pos)                     /*!< TIMER1n CR: TnCIFLAG Mask               */
+#define TIMER1n_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER1n CR: TnMIFLAG Position           */
+#define TIMER1n_CR_TnMIFLAG_Msk               (0x01UL << TIMER1n_CR_TnMIFLAG_Pos)                     /*!< TIMER1n CR: TnMIFLAG Mask               */
+#define TIMER1n_CR_TnCIEN_Pos                 4                                                       /*!< TIMER1n CR: TnCIEN Position             */
+#define TIMER1n_CR_TnCIEN_Msk                 (0x01UL << TIMER1n_CR_TnCIEN_Pos)                       /*!< TIMER1n CR: TnCIEN Mask                 */
+#define TIMER1n_CR_TnMIEN_Pos                 5                                                       /*!< TIMER1n CR: TnMIEN Position             */
+#define TIMER1n_CR_TnMIEN_Msk                 (0x01UL << TIMER1n_CR_TnMIEN_Pos)                       /*!< TIMER1n CR: TnMIEN Mask                 */
+#define TIMER1n_CR_TnCPOL_Pos                 6                                                       /*!< TIMER1n CR: TnCPOL Position             */
+#define TIMER1n_CR_TnCPOL_Msk                 (0x03UL << TIMER1n_CR_TnCPOL_Pos)                       /*!< TIMER1n CR: TnCPOL Mask                 */
+#define TIMER1n_CR_TnOPOL_Pos                 8                                                       /*!< TIMER1n CR: TnOPOL Position             */
+#define TIMER1n_CR_TnOPOL_Msk                 (0x01UL << TIMER1n_CR_TnOPOL_Pos)                       /*!< TIMER1n CR: TnOPOL Mask                 */
+#define TIMER1n_CR_TnECE_Pos                  11                                                      /*!< TIMER1n CR: TnECE Position              */
+#define TIMER1n_CR_TnECE_Msk                  (0x01UL << TIMER1n_CR_TnECE_Pos)                        /*!< TIMER1n CR: TnECE Mask                  */
+#define TIMER1n_CR_TnMS_Pos                   12                                                      /*!< TIMER1n CR: TnMS Position               */
+#define TIMER1n_CR_TnMS_Msk                   (0x03UL << TIMER1n_CR_TnMS_Pos)                         /*!< TIMER1n CR: TnMS Mask                   */
+#define TIMER1n_CR_TnCLK_Pos                  14                                                      /*!< TIMER1n CR: TnCLK Position              */
+#define TIMER1n_CR_TnCLK_Msk                  (0x01UL << TIMER1n_CR_TnCLK_Pos)                        /*!< TIMER1n CR: TnCLK Mask                  */
+#define TIMER1n_CR_TnEN_Pos                   15                                                      /*!< TIMER1n CR: TnEN Position               */
+#define TIMER1n_CR_TnEN_Msk                   (0x01UL << TIMER1n_CR_TnEN_Pos)                         /*!< TIMER1n CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER1n_ADR  -------------------------------- */
+#define TIMER1n_ADR_ADATA_Pos                 0                                                       /*!< TIMER1n ADR: ADATA Position             */
+#define TIMER1n_ADR_ADATA_Msk                 (0x0000ffffUL << TIMER1n_ADR_ADATA_Pos)                 /*!< TIMER1n ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER1n_BDR  -------------------------------- */
+#define TIMER1n_BDR_BDATA_Pos                 0                                                       /*!< TIMER1n BDR: BDATA Position             */
+#define TIMER1n_BDR_BDATA_Msk                 (0x0000ffffUL << TIMER1n_BDR_BDATA_Pos)                 /*!< TIMER1n BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER1n_CAPDR  ------------------------------- */
+#define TIMER1n_CAPDR_CAPD_Pos                0                                                       /*!< TIMER1n CAPDR: CAPD Position            */
+#define TIMER1n_CAPDR_CAPD_Msk                (0x0000ffffUL << TIMER1n_CAPDR_CAPD_Pos)                /*!< TIMER1n CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER1n_PREDR  ------------------------------- */
+#define TIMER1n_PREDR_PRED_Pos                0                                                       /*!< TIMER1n PREDR: PRED Position            */
+#define TIMER1n_PREDR_PRED_Msk                (0x00000fffUL << TIMER1n_PREDR_PRED_Pos)                /*!< TIMER1n PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER1n_CNT  -------------------------------- */
+#define TIMER1n_CNT_CNT_Pos                   0                                                       /*!< TIMER1n CNT: CNT Position               */
+#define TIMER1n_CNT_CNT_Msk                   (0x0000ffffUL << TIMER1n_CNT_CNT_Pos)                   /*!< TIMER1n CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER10' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER10_CR  --------------------------------- */
+#define TIMER10_CR_TnCLR_Pos                  0                                                       /*!< TIMER10 CR: TnCLR Position              */
+#define TIMER10_CR_TnCLR_Msk                  (0x01UL << TIMER10_CR_TnCLR_Pos)                        /*!< TIMER10 CR: TnCLR Mask                  */
+#define TIMER10_CR_TnPAU_Pos                  1                                                       /*!< TIMER10 CR: TnPAU Position              */
+#define TIMER10_CR_TnPAU_Msk                  (0x01UL << TIMER10_CR_TnPAU_Pos)                        /*!< TIMER10 CR: TnPAU Mask                  */
+#define TIMER10_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER10 CR: TnCIFLAG Position           */
+#define TIMER10_CR_TnCIFLAG_Msk               (0x01UL << TIMER10_CR_TnCIFLAG_Pos)                     /*!< TIMER10 CR: TnCIFLAG Mask               */
+#define TIMER10_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER10 CR: TnMIFLAG Position           */
+#define TIMER10_CR_TnMIFLAG_Msk               (0x01UL << TIMER10_CR_TnMIFLAG_Pos)                     /*!< TIMER10 CR: TnMIFLAG Mask               */
+#define TIMER10_CR_TnCIEN_Pos                 4                                                       /*!< TIMER10 CR: TnCIEN Position             */
+#define TIMER10_CR_TnCIEN_Msk                 (0x01UL << TIMER10_CR_TnCIEN_Pos)                       /*!< TIMER10 CR: TnCIEN Mask                 */
+#define TIMER10_CR_TnMIEN_Pos                 5                                                       /*!< TIMER10 CR: TnMIEN Position             */
+#define TIMER10_CR_TnMIEN_Msk                 (0x01UL << TIMER10_CR_TnMIEN_Pos)                       /*!< TIMER10 CR: TnMIEN Mask                 */
+#define TIMER10_CR_TnCPOL_Pos                 6                                                       /*!< TIMER10 CR: TnCPOL Position             */
+#define TIMER10_CR_TnCPOL_Msk                 (0x03UL << TIMER10_CR_TnCPOL_Pos)                       /*!< TIMER10 CR: TnCPOL Mask                 */
+#define TIMER10_CR_TnOPOL_Pos                 8                                                       /*!< TIMER10 CR: TnOPOL Position             */
+#define TIMER10_CR_TnOPOL_Msk                 (0x01UL << TIMER10_CR_TnOPOL_Pos)                       /*!< TIMER10 CR: TnOPOL Mask                 */
+#define TIMER10_CR_TnECE_Pos                  11                                                      /*!< TIMER10 CR: TnECE Position              */
+#define TIMER10_CR_TnECE_Msk                  (0x01UL << TIMER10_CR_TnECE_Pos)                        /*!< TIMER10 CR: TnECE Mask                  */
+#define TIMER10_CR_TnMS_Pos                   12                                                      /*!< TIMER10 CR: TnMS Position               */
+#define TIMER10_CR_TnMS_Msk                   (0x03UL << TIMER10_CR_TnMS_Pos)                         /*!< TIMER10 CR: TnMS Mask                   */
+#define TIMER10_CR_TnCLK_Pos                  14                                                      /*!< TIMER10 CR: TnCLK Position              */
+#define TIMER10_CR_TnCLK_Msk                  (0x01UL << TIMER10_CR_TnCLK_Pos)                        /*!< TIMER10 CR: TnCLK Mask                  */
+#define TIMER10_CR_TnEN_Pos                   15                                                      /*!< TIMER10 CR: TnEN Position               */
+#define TIMER10_CR_TnEN_Msk                   (0x01UL << TIMER10_CR_TnEN_Pos)                         /*!< TIMER10 CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER10_ADR  -------------------------------- */
+#define TIMER10_ADR_ADATA_Pos                 0                                                       /*!< TIMER10 ADR: ADATA Position             */
+#define TIMER10_ADR_ADATA_Msk                 (0x0000ffffUL << TIMER10_ADR_ADATA_Pos)                 /*!< TIMER10 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER10_BDR  -------------------------------- */
+#define TIMER10_BDR_BDATA_Pos                 0                                                       /*!< TIMER10 BDR: BDATA Position             */
+#define TIMER10_BDR_BDATA_Msk                 (0x0000ffffUL << TIMER10_BDR_BDATA_Pos)                 /*!< TIMER10 BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER10_CAPDR  ------------------------------- */
+#define TIMER10_CAPDR_CAPD_Pos                0                                                       /*!< TIMER10 CAPDR: CAPD Position            */
+#define TIMER10_CAPDR_CAPD_Msk                (0x0000ffffUL << TIMER10_CAPDR_CAPD_Pos)                /*!< TIMER10 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER10_PREDR  ------------------------------- */
+#define TIMER10_PREDR_PRED_Pos                0                                                       /*!< TIMER10 PREDR: PRED Position            */
+#define TIMER10_PREDR_PRED_Msk                (0x00000fffUL << TIMER10_PREDR_PRED_Pos)                /*!< TIMER10 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER10_CNT  -------------------------------- */
+#define TIMER10_CNT_CNT_Pos                   0                                                       /*!< TIMER10 CNT: CNT Position               */
+#define TIMER10_CNT_CNT_Msk                   (0x0000ffffUL << TIMER10_CNT_CNT_Pos)                   /*!< TIMER10 CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER11' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER11_CR  --------------------------------- */
+#define TIMER11_CR_TnCLR_Pos                  0                                                       /*!< TIMER11 CR: TnCLR Position              */
+#define TIMER11_CR_TnCLR_Msk                  (0x01UL << TIMER11_CR_TnCLR_Pos)                        /*!< TIMER11 CR: TnCLR Mask                  */
+#define TIMER11_CR_TnPAU_Pos                  1                                                       /*!< TIMER11 CR: TnPAU Position              */
+#define TIMER11_CR_TnPAU_Msk                  (0x01UL << TIMER11_CR_TnPAU_Pos)                        /*!< TIMER11 CR: TnPAU Mask                  */
+#define TIMER11_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER11 CR: TnCIFLAG Position           */
+#define TIMER11_CR_TnCIFLAG_Msk               (0x01UL << TIMER11_CR_TnCIFLAG_Pos)                     /*!< TIMER11 CR: TnCIFLAG Mask               */
+#define TIMER11_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER11 CR: TnMIFLAG Position           */
+#define TIMER11_CR_TnMIFLAG_Msk               (0x01UL << TIMER11_CR_TnMIFLAG_Pos)                     /*!< TIMER11 CR: TnMIFLAG Mask               */
+#define TIMER11_CR_TnCIEN_Pos                 4                                                       /*!< TIMER11 CR: TnCIEN Position             */
+#define TIMER11_CR_TnCIEN_Msk                 (0x01UL << TIMER11_CR_TnCIEN_Pos)                       /*!< TIMER11 CR: TnCIEN Mask                 */
+#define TIMER11_CR_TnMIEN_Pos                 5                                                       /*!< TIMER11 CR: TnMIEN Position             */
+#define TIMER11_CR_TnMIEN_Msk                 (0x01UL << TIMER11_CR_TnMIEN_Pos)                       /*!< TIMER11 CR: TnMIEN Mask                 */
+#define TIMER11_CR_TnCPOL_Pos                 6                                                       /*!< TIMER11 CR: TnCPOL Position             */
+#define TIMER11_CR_TnCPOL_Msk                 (0x03UL << TIMER11_CR_TnCPOL_Pos)                       /*!< TIMER11 CR: TnCPOL Mask                 */
+#define TIMER11_CR_TnOPOL_Pos                 8                                                       /*!< TIMER11 CR: TnOPOL Position             */
+#define TIMER11_CR_TnOPOL_Msk                 (0x01UL << TIMER11_CR_TnOPOL_Pos)                       /*!< TIMER11 CR: TnOPOL Mask                 */
+#define TIMER11_CR_TnECE_Pos                  11                                                      /*!< TIMER11 CR: TnECE Position              */
+#define TIMER11_CR_TnECE_Msk                  (0x01UL << TIMER11_CR_TnECE_Pos)                        /*!< TIMER11 CR: TnECE Mask                  */
+#define TIMER11_CR_TnMS_Pos                   12                                                      /*!< TIMER11 CR: TnMS Position               */
+#define TIMER11_CR_TnMS_Msk                   (0x03UL << TIMER11_CR_TnMS_Pos)                         /*!< TIMER11 CR: TnMS Mask                   */
+#define TIMER11_CR_TnCLK_Pos                  14                                                      /*!< TIMER11 CR: TnCLK Position              */
+#define TIMER11_CR_TnCLK_Msk                  (0x01UL << TIMER11_CR_TnCLK_Pos)                        /*!< TIMER11 CR: TnCLK Mask                  */
+#define TIMER11_CR_TnEN_Pos                   15                                                      /*!< TIMER11 CR: TnEN Position               */
+#define TIMER11_CR_TnEN_Msk                   (0x01UL << TIMER11_CR_TnEN_Pos)                         /*!< TIMER11 CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER11_ADR  -------------------------------- */
+#define TIMER11_ADR_ADATA_Pos                 0                                                       /*!< TIMER11 ADR: ADATA Position             */
+#define TIMER11_ADR_ADATA_Msk                 (0x0000ffffUL << TIMER11_ADR_ADATA_Pos)                 /*!< TIMER11 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER11_BDR  -------------------------------- */
+#define TIMER11_BDR_BDATA_Pos                 0                                                       /*!< TIMER11 BDR: BDATA Position             */
+#define TIMER11_BDR_BDATA_Msk                 (0x0000ffffUL << TIMER11_BDR_BDATA_Pos)                 /*!< TIMER11 BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER11_CAPDR  ------------------------------- */
+#define TIMER11_CAPDR_CAPD_Pos                0                                                       /*!< TIMER11 CAPDR: CAPD Position            */
+#define TIMER11_CAPDR_CAPD_Msk                (0x0000ffffUL << TIMER11_CAPDR_CAPD_Pos)                /*!< TIMER11 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER11_PREDR  ------------------------------- */
+#define TIMER11_PREDR_PRED_Pos                0                                                       /*!< TIMER11 PREDR: PRED Position            */
+#define TIMER11_PREDR_PRED_Msk                (0x00000fffUL << TIMER11_PREDR_PRED_Pos)                /*!< TIMER11 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER11_CNT  -------------------------------- */
+#define TIMER11_CNT_CNT_Pos                   0                                                       /*!< TIMER11 CNT: CNT Position               */
+#define TIMER11_CNT_CNT_Msk                   (0x0000ffffUL << TIMER11_CNT_CNT_Pos)                   /*!< TIMER11 CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER12' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER12_CR  --------------------------------- */
+#define TIMER12_CR_TnCLR_Pos                  0                                                       /*!< TIMER12 CR: TnCLR Position              */
+#define TIMER12_CR_TnCLR_Msk                  (0x01UL << TIMER12_CR_TnCLR_Pos)                        /*!< TIMER12 CR: TnCLR Mask                  */
+#define TIMER12_CR_TnPAU_Pos                  1                                                       /*!< TIMER12 CR: TnPAU Position              */
+#define TIMER12_CR_TnPAU_Msk                  (0x01UL << TIMER12_CR_TnPAU_Pos)                        /*!< TIMER12 CR: TnPAU Mask                  */
+#define TIMER12_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER12 CR: TnCIFLAG Position           */
+#define TIMER12_CR_TnCIFLAG_Msk               (0x01UL << TIMER12_CR_TnCIFLAG_Pos)                     /*!< TIMER12 CR: TnCIFLAG Mask               */
+#define TIMER12_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER12 CR: TnMIFLAG Position           */
+#define TIMER12_CR_TnMIFLAG_Msk               (0x01UL << TIMER12_CR_TnMIFLAG_Pos)                     /*!< TIMER12 CR: TnMIFLAG Mask               */
+#define TIMER12_CR_TnCIEN_Pos                 4                                                       /*!< TIMER12 CR: TnCIEN Position             */
+#define TIMER12_CR_TnCIEN_Msk                 (0x01UL << TIMER12_CR_TnCIEN_Pos)                       /*!< TIMER12 CR: TnCIEN Mask                 */
+#define TIMER12_CR_TnMIEN_Pos                 5                                                       /*!< TIMER12 CR: TnMIEN Position             */
+#define TIMER12_CR_TnMIEN_Msk                 (0x01UL << TIMER12_CR_TnMIEN_Pos)                       /*!< TIMER12 CR: TnMIEN Mask                 */
+#define TIMER12_CR_TnCPOL_Pos                 6                                                       /*!< TIMER12 CR: TnCPOL Position             */
+#define TIMER12_CR_TnCPOL_Msk                 (0x03UL << TIMER12_CR_TnCPOL_Pos)                       /*!< TIMER12 CR: TnCPOL Mask                 */
+#define TIMER12_CR_TnOPOL_Pos                 8                                                       /*!< TIMER12 CR: TnOPOL Position             */
+#define TIMER12_CR_TnOPOL_Msk                 (0x01UL << TIMER12_CR_TnOPOL_Pos)                       /*!< TIMER12 CR: TnOPOL Mask                 */
+#define TIMER12_CR_TnECE_Pos                  11                                                      /*!< TIMER12 CR: TnECE Position              */
+#define TIMER12_CR_TnECE_Msk                  (0x01UL << TIMER12_CR_TnECE_Pos)                        /*!< TIMER12 CR: TnECE Mask                  */
+#define TIMER12_CR_TnMS_Pos                   12                                                      /*!< TIMER12 CR: TnMS Position               */
+#define TIMER12_CR_TnMS_Msk                   (0x03UL << TIMER12_CR_TnMS_Pos)                         /*!< TIMER12 CR: TnMS Mask                   */
+#define TIMER12_CR_TnCLK_Pos                  14                                                      /*!< TIMER12 CR: TnCLK Position              */
+#define TIMER12_CR_TnCLK_Msk                  (0x01UL << TIMER12_CR_TnCLK_Pos)                        /*!< TIMER12 CR: TnCLK Mask                  */
+#define TIMER12_CR_TnEN_Pos                   15                                                      /*!< TIMER12 CR: TnEN Position               */
+#define TIMER12_CR_TnEN_Msk                   (0x01UL << TIMER12_CR_TnEN_Pos)                         /*!< TIMER12 CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER12_ADR  -------------------------------- */
+#define TIMER12_ADR_ADATA_Pos                 0                                                       /*!< TIMER12 ADR: ADATA Position             */
+#define TIMER12_ADR_ADATA_Msk                 (0x0000ffffUL << TIMER12_ADR_ADATA_Pos)                 /*!< TIMER12 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER12_BDR  -------------------------------- */
+#define TIMER12_BDR_BDATA_Pos                 0                                                       /*!< TIMER12 BDR: BDATA Position             */
+#define TIMER12_BDR_BDATA_Msk                 (0x0000ffffUL << TIMER12_BDR_BDATA_Pos)                 /*!< TIMER12 BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER12_CAPDR  ------------------------------- */
+#define TIMER12_CAPDR_CAPD_Pos                0                                                       /*!< TIMER12 CAPDR: CAPD Position            */
+#define TIMER12_CAPDR_CAPD_Msk                (0x0000ffffUL << TIMER12_CAPDR_CAPD_Pos)                /*!< TIMER12 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER12_PREDR  ------------------------------- */
+#define TIMER12_PREDR_PRED_Pos                0                                                       /*!< TIMER12 PREDR: PRED Position            */
+#define TIMER12_PREDR_PRED_Msk                (0x00000fffUL << TIMER12_PREDR_PRED_Pos)                /*!< TIMER12 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER12_CNT  -------------------------------- */
+#define TIMER12_CNT_CNT_Pos                   0                                                       /*!< TIMER12 CNT: CNT Position               */
+#define TIMER12_CNT_CNT_Msk                   (0x0000ffffUL << TIMER12_CNT_CNT_Pos)                   /*!< TIMER12 CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER13' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER13_CR  --------------------------------- */
+#define TIMER13_CR_TnCLR_Pos                  0                                                       /*!< TIMER13 CR: TnCLR Position              */
+#define TIMER13_CR_TnCLR_Msk                  (0x01UL << TIMER13_CR_TnCLR_Pos)                        /*!< TIMER13 CR: TnCLR Mask                  */
+#define TIMER13_CR_TnPAU_Pos                  1                                                       /*!< TIMER13 CR: TnPAU Position              */
+#define TIMER13_CR_TnPAU_Msk                  (0x01UL << TIMER13_CR_TnPAU_Pos)                        /*!< TIMER13 CR: TnPAU Mask                  */
+#define TIMER13_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER13 CR: TnCIFLAG Position           */
+#define TIMER13_CR_TnCIFLAG_Msk               (0x01UL << TIMER13_CR_TnCIFLAG_Pos)                     /*!< TIMER13 CR: TnCIFLAG Mask               */
+#define TIMER13_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER13 CR: TnMIFLAG Position           */
+#define TIMER13_CR_TnMIFLAG_Msk               (0x01UL << TIMER13_CR_TnMIFLAG_Pos)                     /*!< TIMER13 CR: TnMIFLAG Mask               */
+#define TIMER13_CR_TnCIEN_Pos                 4                                                       /*!< TIMER13 CR: TnCIEN Position             */
+#define TIMER13_CR_TnCIEN_Msk                 (0x01UL << TIMER13_CR_TnCIEN_Pos)                       /*!< TIMER13 CR: TnCIEN Mask                 */
+#define TIMER13_CR_TnMIEN_Pos                 5                                                       /*!< TIMER13 CR: TnMIEN Position             */
+#define TIMER13_CR_TnMIEN_Msk                 (0x01UL << TIMER13_CR_TnMIEN_Pos)                       /*!< TIMER13 CR: TnMIEN Mask                 */
+#define TIMER13_CR_TnCPOL_Pos                 6                                                       /*!< TIMER13 CR: TnCPOL Position             */
+#define TIMER13_CR_TnCPOL_Msk                 (0x03UL << TIMER13_CR_TnCPOL_Pos)                       /*!< TIMER13 CR: TnCPOL Mask                 */
+#define TIMER13_CR_TnOPOL_Pos                 8                                                       /*!< TIMER13 CR: TnOPOL Position             */
+#define TIMER13_CR_TnOPOL_Msk                 (0x01UL << TIMER13_CR_TnOPOL_Pos)                       /*!< TIMER13 CR: TnOPOL Mask                 */
+#define TIMER13_CR_TnECE_Pos                  11                                                      /*!< TIMER13 CR: TnECE Position              */
+#define TIMER13_CR_TnECE_Msk                  (0x01UL << TIMER13_CR_TnECE_Pos)                        /*!< TIMER13 CR: TnECE Mask                  */
+#define TIMER13_CR_TnMS_Pos                   12                                                      /*!< TIMER13 CR: TnMS Position               */
+#define TIMER13_CR_TnMS_Msk                   (0x03UL << TIMER13_CR_TnMS_Pos)                         /*!< TIMER13 CR: TnMS Mask                   */
+#define TIMER13_CR_TnCLK_Pos                  14                                                      /*!< TIMER13 CR: TnCLK Position              */
+#define TIMER13_CR_TnCLK_Msk                  (0x01UL << TIMER13_CR_TnCLK_Pos)                        /*!< TIMER13 CR: TnCLK Mask                  */
+#define TIMER13_CR_TnEN_Pos                   15                                                      /*!< TIMER13 CR: TnEN Position               */
+#define TIMER13_CR_TnEN_Msk                   (0x01UL << TIMER13_CR_TnEN_Pos)                         /*!< TIMER13 CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER13_ADR  -------------------------------- */
+#define TIMER13_ADR_ADATA_Pos                 0                                                       /*!< TIMER13 ADR: ADATA Position             */
+#define TIMER13_ADR_ADATA_Msk                 (0x0000ffffUL << TIMER13_ADR_ADATA_Pos)                 /*!< TIMER13 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER13_BDR  -------------------------------- */
+#define TIMER13_BDR_BDATA_Pos                 0                                                       /*!< TIMER13 BDR: BDATA Position             */
+#define TIMER13_BDR_BDATA_Msk                 (0x0000ffffUL << TIMER13_BDR_BDATA_Pos)                 /*!< TIMER13 BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER13_CAPDR  ------------------------------- */
+#define TIMER13_CAPDR_CAPD_Pos                0                                                       /*!< TIMER13 CAPDR: CAPD Position            */
+#define TIMER13_CAPDR_CAPD_Msk                (0x0000ffffUL << TIMER13_CAPDR_CAPD_Pos)                /*!< TIMER13 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER13_PREDR  ------------------------------- */
+#define TIMER13_PREDR_PRED_Pos                0                                                       /*!< TIMER13 PREDR: PRED Position            */
+#define TIMER13_PREDR_PRED_Msk                (0x00000fffUL << TIMER13_PREDR_PRED_Pos)                /*!< TIMER13 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER13_CNT  -------------------------------- */
+#define TIMER13_CNT_CNT_Pos                   0                                                       /*!< TIMER13 CNT: CNT Position               */
+#define TIMER13_CNT_CNT_Msk                   (0x0000ffffUL << TIMER13_CNT_CNT_Pos)                   /*!< TIMER13 CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER20' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER20_CR  --------------------------------- */
+#define TIMER20_CR_TnCLR_Pos                  0                                                       /*!< TIMER20 CR: TnCLR Position              */
+#define TIMER20_CR_TnCLR_Msk                  (0x01UL << TIMER20_CR_TnCLR_Pos)                        /*!< TIMER20 CR: TnCLR Mask                  */
+#define TIMER20_CR_TnPAU_Pos                  1                                                       /*!< TIMER20 CR: TnPAU Position              */
+#define TIMER20_CR_TnPAU_Msk                  (0x01UL << TIMER20_CR_TnPAU_Pos)                        /*!< TIMER20 CR: TnPAU Mask                  */
+#define TIMER20_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER20 CR: TnCIFLAG Position           */
+#define TIMER20_CR_TnCIFLAG_Msk               (0x01UL << TIMER20_CR_TnCIFLAG_Pos)                     /*!< TIMER20 CR: TnCIFLAG Mask               */
+#define TIMER20_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER20 CR: TnMIFLAG Position           */
+#define TIMER20_CR_TnMIFLAG_Msk               (0x01UL << TIMER20_CR_TnMIFLAG_Pos)                     /*!< TIMER20 CR: TnMIFLAG Mask               */
+#define TIMER20_CR_TnCIEN_Pos                 4                                                       /*!< TIMER20 CR: TnCIEN Position             */
+#define TIMER20_CR_TnCIEN_Msk                 (0x01UL << TIMER20_CR_TnCIEN_Pos)                       /*!< TIMER20 CR: TnCIEN Mask                 */
+#define TIMER20_CR_TnMIEN_Pos                 5                                                       /*!< TIMER20 CR: TnMIEN Position             */
+#define TIMER20_CR_TnMIEN_Msk                 (0x01UL << TIMER20_CR_TnMIEN_Pos)                       /*!< TIMER20 CR: TnMIEN Mask                 */
+#define TIMER20_CR_TnCPOL_Pos                 6                                                       /*!< TIMER20 CR: TnCPOL Position             */
+#define TIMER20_CR_TnCPOL_Msk                 (0x03UL << TIMER20_CR_TnCPOL_Pos)                       /*!< TIMER20 CR: TnCPOL Mask                 */
+#define TIMER20_CR_TnOPOL_Pos                 8                                                       /*!< TIMER20 CR: TnOPOL Position             */
+#define TIMER20_CR_TnOPOL_Msk                 (0x01UL << TIMER20_CR_TnOPOL_Pos)                       /*!< TIMER20 CR: TnOPOL Mask                 */
+#define TIMER20_CR_CAPSEL_Pos                 9                                                       /*!< TIMER20 CR: CAPSEL Position             */
+#define TIMER20_CR_CAPSEL_Msk                 (0x03UL << TIMER20_CR_CAPSEL_Pos)                       /*!< TIMER20 CR: CAPSEL Mask                 */
+#define TIMER20_CR_TnECE_Pos                  11                                                      /*!< TIMER20 CR: TnECE Position              */
+#define TIMER20_CR_TnECE_Msk                  (0x01UL << TIMER20_CR_TnECE_Pos)                        /*!< TIMER20 CR: TnECE Mask                  */
+#define TIMER20_CR_TnMS_Pos                   12                                                      /*!< TIMER20 CR: TnMS Position               */
+#define TIMER20_CR_TnMS_Msk                   (0x03UL << TIMER20_CR_TnMS_Pos)                         /*!< TIMER20 CR: TnMS Mask                   */
+#define TIMER20_CR_TnCLK_Pos                  14                                                      /*!< TIMER20 CR: TnCLK Position              */
+#define TIMER20_CR_TnCLK_Msk                  (0x01UL << TIMER20_CR_TnCLK_Pos)                        /*!< TIMER20 CR: TnCLK Mask                  */
+#define TIMER20_CR_TnEN_Pos                   15                                                      /*!< TIMER20 CR: TnEN Position               */
+#define TIMER20_CR_TnEN_Msk                   (0x01UL << TIMER20_CR_TnEN_Pos)                         /*!< TIMER20 CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER20_ADR  -------------------------------- */
+#define TIMER20_ADR_ADATA_Pos                 0                                                       /*!< TIMER20 ADR: ADATA Position             */
+#define TIMER20_ADR_ADATA_Msk                 (0xffffffffUL << TIMER20_ADR_ADATA_Pos)                 /*!< TIMER20 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER20_BDR  -------------------------------- */
+#define TIMER20_BDR_BDATA_Pos                 0                                                       /*!< TIMER20 BDR: BDATA Position             */
+#define TIMER20_BDR_BDATA_Msk                 (0xffffffffUL << TIMER20_BDR_BDATA_Pos)                 /*!< TIMER20 BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER20_CAPDR  ------------------------------- */
+#define TIMER20_CAPDR_CAPD_Pos                0                                                       /*!< TIMER20 CAPDR: CAPD Position            */
+#define TIMER20_CAPDR_CAPD_Msk                (0xffffffffUL << TIMER20_CAPDR_CAPD_Pos)                /*!< TIMER20 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER20_PREDR  ------------------------------- */
+#define TIMER20_PREDR_PRED_Pos                0                                                       /*!< TIMER20 PREDR: PRED Position            */
+#define TIMER20_PREDR_PRED_Msk                (0x00000fffUL << TIMER20_PREDR_PRED_Pos)                /*!< TIMER20 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER20_CNT  -------------------------------- */
+#define TIMER20_CNT_CNT_Pos                   0                                                       /*!< TIMER20 CNT: CNT Position               */
+#define TIMER20_CNT_CNT_Msk                   (0xffffffffUL << TIMER20_CNT_CNT_Pos)                   /*!< TIMER20 CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER21' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER21_CR  --------------------------------- */
+#define TIMER21_CR_TnCLR_Pos                  0                                                       /*!< TIMER21 CR: TnCLR Position              */
+#define TIMER21_CR_TnCLR_Msk                  (0x01UL << TIMER21_CR_TnCLR_Pos)                        /*!< TIMER21 CR: TnCLR Mask                  */
+#define TIMER21_CR_TnPAU_Pos                  1                                                       /*!< TIMER21 CR: TnPAU Position              */
+#define TIMER21_CR_TnPAU_Msk                  (0x01UL << TIMER21_CR_TnPAU_Pos)                        /*!< TIMER21 CR: TnPAU Mask                  */
+#define TIMER21_CR_TnCIFLAG_Pos               2                                                       /*!< TIMER21 CR: TnCIFLAG Position           */
+#define TIMER21_CR_TnCIFLAG_Msk               (0x01UL << TIMER21_CR_TnCIFLAG_Pos)                     /*!< TIMER21 CR: TnCIFLAG Mask               */
+#define TIMER21_CR_TnMIFLAG_Pos               3                                                       /*!< TIMER21 CR: TnMIFLAG Position           */
+#define TIMER21_CR_TnMIFLAG_Msk               (0x01UL << TIMER21_CR_TnMIFLAG_Pos)                     /*!< TIMER21 CR: TnMIFLAG Mask               */
+#define TIMER21_CR_TnCIEN_Pos                 4                                                       /*!< TIMER21 CR: TnCIEN Position             */
+#define TIMER21_CR_TnCIEN_Msk                 (0x01UL << TIMER21_CR_TnCIEN_Pos)                       /*!< TIMER21 CR: TnCIEN Mask                 */
+#define TIMER21_CR_TnMIEN_Pos                 5                                                       /*!< TIMER21 CR: TnMIEN Position             */
+#define TIMER21_CR_TnMIEN_Msk                 (0x01UL << TIMER21_CR_TnMIEN_Pos)                       /*!< TIMER21 CR: TnMIEN Mask                 */
+#define TIMER21_CR_TnCPOL_Pos                 6                                                       /*!< TIMER21 CR: TnCPOL Position             */
+#define TIMER21_CR_TnCPOL_Msk                 (0x03UL << TIMER21_CR_TnCPOL_Pos)                       /*!< TIMER21 CR: TnCPOL Mask                 */
+#define TIMER21_CR_TnOPOL_Pos                 8                                                       /*!< TIMER21 CR: TnOPOL Position             */
+#define TIMER21_CR_TnOPOL_Msk                 (0x01UL << TIMER21_CR_TnOPOL_Pos)                       /*!< TIMER21 CR: TnOPOL Mask                 */
+#define TIMER21_CR_CAPSEL_Pos                 9                                                       /*!< TIMER21 CR: CAPSEL Position             */
+#define TIMER21_CR_CAPSEL_Msk                 (0x03UL << TIMER21_CR_CAPSEL_Pos)                       /*!< TIMER21 CR: CAPSEL Mask                 */
+#define TIMER21_CR_TnECE_Pos                  11                                                      /*!< TIMER21 CR: TnECE Position              */
+#define TIMER21_CR_TnECE_Msk                  (0x01UL << TIMER21_CR_TnECE_Pos)                        /*!< TIMER21 CR: TnECE Mask                  */
+#define TIMER21_CR_TnMS_Pos                   12                                                      /*!< TIMER21 CR: TnMS Position               */
+#define TIMER21_CR_TnMS_Msk                   (0x03UL << TIMER21_CR_TnMS_Pos)                         /*!< TIMER21 CR: TnMS Mask                   */
+#define TIMER21_CR_TnCLK_Pos                  14                                                      /*!< TIMER21 CR: TnCLK Position              */
+#define TIMER21_CR_TnCLK_Msk                  (0x01UL << TIMER21_CR_TnCLK_Pos)                        /*!< TIMER21 CR: TnCLK Mask                  */
+#define TIMER21_CR_TnEN_Pos                   15                                                      /*!< TIMER21 CR: TnEN Position               */
+#define TIMER21_CR_TnEN_Msk                   (0x01UL << TIMER21_CR_TnEN_Pos)                         /*!< TIMER21 CR: TnEN Mask                   */
+
+/* ---------------------------------  TIMER21_ADR  -------------------------------- */
+#define TIMER21_ADR_ADATA_Pos                 0                                                       /*!< TIMER21 ADR: ADATA Position             */
+#define TIMER21_ADR_ADATA_Msk                 (0xffffffffUL << TIMER21_ADR_ADATA_Pos)                 /*!< TIMER21 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER21_BDR  -------------------------------- */
+#define TIMER21_BDR_BDATA_Pos                 0                                                       /*!< TIMER21 BDR: BDATA Position             */
+#define TIMER21_BDR_BDATA_Msk                 (0xffffffffUL << TIMER21_BDR_BDATA_Pos)                 /*!< TIMER21 BDR: BDATA Mask                 */
+
+/* --------------------------------  TIMER21_CAPDR  ------------------------------- */
+#define TIMER21_CAPDR_CAPD_Pos                0                                                       /*!< TIMER21 CAPDR: CAPD Position            */
+#define TIMER21_CAPDR_CAPD_Msk                (0xffffffffUL << TIMER21_CAPDR_CAPD_Pos)                /*!< TIMER21 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER21_PREDR  ------------------------------- */
+#define TIMER21_PREDR_PRED_Pos                0                                                       /*!< TIMER21 PREDR: PRED Position            */
+#define TIMER21_PREDR_PRED_Msk                (0x00000fffUL << TIMER21_PREDR_PRED_Pos)                /*!< TIMER21 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER21_CNT  -------------------------------- */
+#define TIMER21_CNT_CNT_Pos                   0                                                       /*!< TIMER21 CNT: CNT Position               */
+#define TIMER21_CNT_CNT_Msk                   (0xffffffffUL << TIMER21_CNT_CNT_Pos)                   /*!< TIMER21 CNT: CNT Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'TIMER30' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  TIMER30_CR  --------------------------------- */
+#define TIMER30_CR_T30CLR_Pos                 0                                                       /*!< TIMER30 CR: T30CLR Position             */
+#define TIMER30_CR_T30CLR_Msk                 (0x01UL << TIMER30_CR_T30CLR_Pos)                       /*!< TIMER30 CR: T30CLR Mask                 */
+#define TIMER30_CR_PMOC_Pos                   1                                                       /*!< TIMER30 CR: PMOC Position               */
+#define TIMER30_CR_PMOC_Msk                   (0x07UL << TIMER30_CR_PMOC_Pos)                         /*!< TIMER30 CR: PMOC Mask                   */
+#define TIMER30_CR_UPDT_Pos                   4                                                       /*!< TIMER30 CR: UPDT Position               */
+#define TIMER30_CR_UPDT_Msk                   (0x03UL << TIMER30_CR_UPDT_Pos)                         /*!< TIMER30 CR: UPDT Mask                   */
+#define TIMER30_CR_T30CPOL_Pos                6                                                       /*!< TIMER30 CR: T30CPOL Position            */
+#define TIMER30_CR_T30CPOL_Msk                (0x03UL << TIMER30_CR_T30CPOL_Pos)                      /*!< TIMER30 CR: T30CPOL Mask                */
+#define TIMER30_CR_DLYPOS_Pos                 8                                                       /*!< TIMER30 CR: DLYPOS Position             */
+#define TIMER30_CR_DLYPOS_Msk                 (0x01UL << TIMER30_CR_DLYPOS_Pos)                       /*!< TIMER30 CR: DLYPOS Mask                 */
+#define TIMER30_CR_DLYEN_Pos                  9                                                       /*!< TIMER30 CR: DLYEN Position              */
+#define TIMER30_CR_DLYEN_Msk                  (0x01UL << TIMER30_CR_DLYEN_Pos)                        /*!< TIMER30 CR: DLYEN Mask                  */
+#define TIMER30_CR_FORCA_Pos                  10                                                      /*!< TIMER30 CR: FORCA Position              */
+#define TIMER30_CR_FORCA_Msk                  (0x01UL << TIMER30_CR_FORCA_Pos)                        /*!< TIMER30 CR: FORCA Mask                  */
+#define TIMER30_CR_T30ECE_Pos                 11                                                      /*!< TIMER30 CR: T30ECE Position             */
+#define TIMER30_CR_T30ECE_Msk                 (0x01UL << TIMER30_CR_T30ECE_Pos)                       /*!< TIMER30 CR: T30ECE Mask                 */
+#define TIMER30_CR_T30MS_Pos                  12                                                      /*!< TIMER30 CR: T30MS Position              */
+#define TIMER30_CR_T30MS_Msk                  (0x03UL << TIMER30_CR_T30MS_Pos)                        /*!< TIMER30 CR: T30MS Mask                  */
+#define TIMER30_CR_T30CLK_Pos                 14                                                      /*!< TIMER30 CR: T30CLK Position             */
+#define TIMER30_CR_T30CLK_Msk                 (0x01UL << TIMER30_CR_T30CLK_Pos)                       /*!< TIMER30 CR: T30CLK Mask                 */
+#define TIMER30_CR_T30EN_Pos                  15                                                      /*!< TIMER30 CR: T30EN Position              */
+#define TIMER30_CR_T30EN_Msk                  (0x01UL << TIMER30_CR_T30EN_Pos)                        /*!< TIMER30 CR: T30EN Mask                  */
+
+/* ---------------------------------  TIMER30_PDR  -------------------------------- */
+#define TIMER30_PDR_PDATA_Pos                 0                                                       /*!< TIMER30 PDR: PDATA Position             */
+#define TIMER30_PDR_PDATA_Msk                 (0x0000ffffUL << TIMER30_PDR_PDATA_Pos)                 /*!< TIMER30 PDR: PDATA Mask                 */
+
+/* ---------------------------------  TIMER30_ADR  -------------------------------- */
+#define TIMER30_ADR_ADATA_Pos                 0                                                       /*!< TIMER30 ADR: ADATA Position             */
+#define TIMER30_ADR_ADATA_Msk                 (0x0000ffffUL << TIMER30_ADR_ADATA_Pos)                 /*!< TIMER30 ADR: ADATA Mask                 */
+
+/* ---------------------------------  TIMER30_BDR  -------------------------------- */
+#define TIMER30_BDR_BDATA_Pos                 0                                                       /*!< TIMER30 BDR: BDATA Position             */
+#define TIMER30_BDR_BDATA_Msk                 (0x0000ffffUL << TIMER30_BDR_BDATA_Pos)                 /*!< TIMER30 BDR: BDATA Mask                 */
+
+/* ---------------------------------  TIMER30_CDR  -------------------------------- */
+#define TIMER30_CDR_CDATA_Pos                 0                                                       /*!< TIMER30 CDR: CDATA Position             */
+#define TIMER30_CDR_CDATA_Msk                 (0x0000ffffUL << TIMER30_CDR_CDATA_Pos)                 /*!< TIMER30 CDR: CDATA Mask                 */
+
+/* --------------------------------  TIMER30_CAPDR  ------------------------------- */
+#define TIMER30_CAPDR_CAPD_Pos                0                                                       /*!< TIMER30 CAPDR: CAPD Position            */
+#define TIMER30_CAPDR_CAPD_Msk                (0x0000ffffUL << TIMER30_CAPDR_CAPD_Pos)                /*!< TIMER30 CAPDR: CAPD Mask                */
+
+/* --------------------------------  TIMER30_PREDR  ------------------------------- */
+#define TIMER30_PREDR_PRED_Pos                0                                                       /*!< TIMER30 PREDR: PRED Position            */
+#define TIMER30_PREDR_PRED_Msk                (0x00000fffUL << TIMER30_PREDR_PRED_Pos)                /*!< TIMER30 PREDR: PRED Mask                */
+
+/* ---------------------------------  TIMER30_CNT  -------------------------------- */
+#define TIMER30_CNT_CNT_Pos                   0                                                       /*!< TIMER30 CNT: CNT Position               */
+#define TIMER30_CNT_CNT_Msk                   (0x0000ffffUL << TIMER30_CNT_CNT_Pos)                   /*!< TIMER30 CNT: CNT Mask                   */
+
+/* --------------------------------  TIMER30_OUTCR  ------------------------------- */
+#define TIMER30_OUTCR_LVLCA_Pos               0                                                       /*!< TIMER30 OUTCR: LVLCA Position           */
+#define TIMER30_OUTCR_LVLCA_Msk               (0x01UL << TIMER30_OUTCR_LVLCA_Pos)                     /*!< TIMER30 OUTCR: LVLCA Mask               */
+#define TIMER30_OUTCR_LVLBA_Pos               1                                                       /*!< TIMER30 OUTCR: LVLBA Position           */
+#define TIMER30_OUTCR_LVLBA_Msk               (0x01UL << TIMER30_OUTCR_LVLBA_Pos)                     /*!< TIMER30 OUTCR: LVLBA Mask               */
+#define TIMER30_OUTCR_LVLAA_Pos               2                                                       /*!< TIMER30 OUTCR: LVLAA Position           */
+#define TIMER30_OUTCR_LVLAA_Msk               (0x01UL << TIMER30_OUTCR_LVLAA_Pos)                     /*!< TIMER30 OUTCR: LVLAA Mask               */
+#define TIMER30_OUTCR_LVLCB_Pos               4                                                       /*!< TIMER30 OUTCR: LVLCB Position           */
+#define TIMER30_OUTCR_LVLCB_Msk               (0x01UL << TIMER30_OUTCR_LVLCB_Pos)                     /*!< TIMER30 OUTCR: LVLCB Mask               */
+#define TIMER30_OUTCR_LVLBB_Pos               5                                                       /*!< TIMER30 OUTCR: LVLBB Position           */
+#define TIMER30_OUTCR_LVLBB_Msk               (0x01UL << TIMER30_OUTCR_LVLBB_Pos)                     /*!< TIMER30 OUTCR: LVLBB Mask               */
+#define TIMER30_OUTCR_LVLAB_Pos               6                                                       /*!< TIMER30 OUTCR: LVLAB Position           */
+#define TIMER30_OUTCR_LVLAB_Msk               (0x01UL << TIMER30_OUTCR_LVLAB_Pos)                     /*!< TIMER30 OUTCR: LVLAB Mask               */
+#define TIMER30_OUTCR_PCAOE_Pos               8                                                       /*!< TIMER30 OUTCR: PCAOE Position           */
+#define TIMER30_OUTCR_PCAOE_Msk               (0x01UL << TIMER30_OUTCR_PCAOE_Pos)                     /*!< TIMER30 OUTCR: PCAOE Mask               */
+#define TIMER30_OUTCR_PBAOE_Pos               9                                                       /*!< TIMER30 OUTCR: PBAOE Position           */
+#define TIMER30_OUTCR_PBAOE_Msk               (0x01UL << TIMER30_OUTCR_PBAOE_Pos)                     /*!< TIMER30 OUTCR: PBAOE Mask               */
+#define TIMER30_OUTCR_PAAOE_Pos               10                                                      /*!< TIMER30 OUTCR: PAAOE Position           */
+#define TIMER30_OUTCR_PAAOE_Msk               (0x01UL << TIMER30_OUTCR_PAAOE_Pos)                     /*!< TIMER30 OUTCR: PAAOE Mask               */
+#define TIMER30_OUTCR_PCBOE_Pos               11                                                      /*!< TIMER30 OUTCR: PCBOE Position           */
+#define TIMER30_OUTCR_PCBOE_Msk               (0x01UL << TIMER30_OUTCR_PCBOE_Pos)                     /*!< TIMER30 OUTCR: PCBOE Mask               */
+#define TIMER30_OUTCR_PBBOE_Pos               12                                                      /*!< TIMER30 OUTCR: PBBOE Position           */
+#define TIMER30_OUTCR_PBBOE_Msk               (0x01UL << TIMER30_OUTCR_PBBOE_Pos)                     /*!< TIMER30 OUTCR: PBBOE Mask               */
+#define TIMER30_OUTCR_PABOE_Pos               13                                                      /*!< TIMER30 OUTCR: PABOE Position           */
+#define TIMER30_OUTCR_PABOE_Msk               (0x01UL << TIMER30_OUTCR_PABOE_Pos)                     /*!< TIMER30 OUTCR: PABOE Mask               */
+#define TIMER30_OUTCR_POLA_Pos                14                                                      /*!< TIMER30 OUTCR: POLA Position            */
+#define TIMER30_OUTCR_POLA_Msk                (0x01UL << TIMER30_OUTCR_POLA_Pos)                      /*!< TIMER30 OUTCR: POLA Mask                */
+#define TIMER30_OUTCR_POLB_Pos                15                                                      /*!< TIMER30 OUTCR: POLB Position            */
+#define TIMER30_OUTCR_POLB_Msk                (0x01UL << TIMER30_OUTCR_POLB_Pos)                      /*!< TIMER30 OUTCR: POLB Mask                */
+#define TIMER30_OUTCR_WTIDKY_Pos              16                                                      /*!< TIMER30 OUTCR: WTIDKY Position          */
+#define TIMER30_OUTCR_WTIDKY_Msk              (0x0000ffffUL << TIMER30_OUTCR_WTIDKY_Pos)              /*!< TIMER30 OUTCR: WTIDKY Mask              */
+
+/* ---------------------------------  TIMER30_DLY  -------------------------------- */
+#define TIMER30_DLY_DLY_Pos                   0                                                       /*!< TIMER30 DLY: DLY Position               */
+#define TIMER30_DLY_DLY_Msk                   (0x000003ffUL << TIMER30_DLY_DLY_Pos)                   /*!< TIMER30 DLY: DLY Mask                   */
+
+/* --------------------------------  TIMER30_INTCR  ------------------------------- */
+#define TIMER30_INTCR_T30CMIEN_Pos            0                                                       /*!< TIMER30 INTCR: T30CMIEN Position        */
+#define TIMER30_INTCR_T30CMIEN_Msk            (0x01UL << TIMER30_INTCR_T30CMIEN_Pos)                  /*!< TIMER30 INTCR: T30CMIEN Mask            */
+#define TIMER30_INTCR_T30BMIEN_Pos            1                                                       /*!< TIMER30 INTCR: T30BMIEN Position        */
+#define TIMER30_INTCR_T30BMIEN_Msk            (0x01UL << TIMER30_INTCR_T30BMIEN_Pos)                  /*!< TIMER30 INTCR: T30BMIEN Mask            */
+#define TIMER30_INTCR_T30AMIEN_Pos            2                                                       /*!< TIMER30 INTCR: T30AMIEN Position        */
+#define TIMER30_INTCR_T30AMIEN_Msk            (0x01UL << TIMER30_INTCR_T30AMIEN_Pos)                  /*!< TIMER30 INTCR: T30AMIEN Mask            */
+#define TIMER30_INTCR_T30PMIEN_Pos            3                                                       /*!< TIMER30 INTCR: T30PMIEN Position        */
+#define TIMER30_INTCR_T30PMIEN_Msk            (0x01UL << TIMER30_INTCR_T30PMIEN_Pos)                  /*!< TIMER30 INTCR: T30PMIEN Mask            */
+#define TIMER30_INTCR_T30BTIEN_Pos            4                                                       /*!< TIMER30 INTCR: T30BTIEN Position        */
+#define TIMER30_INTCR_T30BTIEN_Msk            (0x01UL << TIMER30_INTCR_T30BTIEN_Pos)                  /*!< TIMER30 INTCR: T30BTIEN Mask            */
+#define TIMER30_INTCR_T30CIEN_Pos             5                                                       /*!< TIMER30 INTCR: T30CIEN Position         */
+#define TIMER30_INTCR_T30CIEN_Msk             (0x01UL << TIMER30_INTCR_T30CIEN_Pos)                   /*!< TIMER30 INTCR: T30CIEN Mask             */
+#define TIMER30_INTCR_HIZIEN_Pos              6                                                       /*!< TIMER30 INTCR: HIZIEN Position          */
+#define TIMER30_INTCR_HIZIEN_Msk              (0x01UL << TIMER30_INTCR_HIZIEN_Pos)                    /*!< TIMER30 INTCR: HIZIEN Mask              */
+
+/* -------------------------------  TIMER30_INTFLAG  ------------------------------ */
+#define TIMER30_INTFLAG_T30CMIFLAG_Pos        0                                                       /*!< TIMER30 INTFLAG: T30CMIFLAG Position    */
+#define TIMER30_INTFLAG_T30CMIFLAG_Msk        (0x01UL << TIMER30_INTFLAG_T30CMIFLAG_Pos)              /*!< TIMER30 INTFLAG: T30CMIFLAG Mask        */
+#define TIMER30_INTFLAG_T30BMIFLAG_Pos        1                                                       /*!< TIMER30 INTFLAG: T30BMIFLAG Position    */
+#define TIMER30_INTFLAG_T30BMIFLAG_Msk        (0x01UL << TIMER30_INTFLAG_T30BMIFLAG_Pos)              /*!< TIMER30 INTFLAG: T30BMIFLAG Mask        */
+#define TIMER30_INTFLAG_T30AMIFLAG_Pos        2                                                       /*!< TIMER30 INTFLAG: T30AMIFLAG Position    */
+#define TIMER30_INTFLAG_T30AMIFLAG_Msk        (0x01UL << TIMER30_INTFLAG_T30AMIFLAG_Pos)              /*!< TIMER30 INTFLAG: T30AMIFLAG Mask        */
+#define TIMER30_INTFLAG_T30PMIFLAG_Pos        3                                                       /*!< TIMER30 INTFLAG: T30PMIFLAG Position    */
+#define TIMER30_INTFLAG_T30PMIFLAG_Msk        (0x01UL << TIMER30_INTFLAG_T30PMIFLAG_Pos)              /*!< TIMER30 INTFLAG: T30PMIFLAG Mask        */
+#define TIMER30_INTFLAG_T30BTIFLAG_Pos        4                                                       /*!< TIMER30 INTFLAG: T30BTIFLAG Position    */
+#define TIMER30_INTFLAG_T30BTIFLAG_Msk        (0x01UL << TIMER30_INTFLAG_T30BTIFLAG_Pos)              /*!< TIMER30 INTFLAG: T30BTIFLAG Mask        */
+#define TIMER30_INTFLAG_T30CIFLAG_Pos         5                                                       /*!< TIMER30 INTFLAG: T30CIFLAG Position     */
+#define TIMER30_INTFLAG_T30CIFLAG_Msk         (0x01UL << TIMER30_INTFLAG_T30CIFLAG_Pos)               /*!< TIMER30 INTFLAG: T30CIFLAG Mask         */
+#define TIMER30_INTFLAG_HIZIFLAG_Pos          6                                                       /*!< TIMER30 INTFLAG: HIZIFLAG Position      */
+#define TIMER30_INTFLAG_HIZIFLAG_Msk          (0x01UL << TIMER30_INTFLAG_HIZIFLAG_Pos)                /*!< TIMER30 INTFLAG: HIZIFLAG Mask          */
+
+/* --------------------------------  TIMER30_HIZCR  ------------------------------- */
+#define TIMER30_HIZCR_HIZCLR_Pos              0                                                       /*!< TIMER30 HIZCR: HIZCLR Position          */
+#define TIMER30_HIZCR_HIZCLR_Msk              (0x01UL << TIMER30_HIZCR_HIZCLR_Pos)                    /*!< TIMER30 HIZCR: HIZCLR Mask              */
+#define TIMER30_HIZCR_HIZSTA_Pos              1                                                       /*!< TIMER30 HIZCR: HIZSTA Position          */
+#define TIMER30_HIZCR_HIZSTA_Msk              (0x01UL << TIMER30_HIZCR_HIZSTA_Pos)                    /*!< TIMER30 HIZCR: HIZSTA Mask              */
+#define TIMER30_HIZCR_HEDGE_Pos               2                                                       /*!< TIMER30 HIZCR: HEDGE Position           */
+#define TIMER30_HIZCR_HEDGE_Msk               (0x01UL << TIMER30_HIZCR_HEDGE_Pos)                     /*!< TIMER30 HIZCR: HEDGE Mask               */
+#define TIMER30_HIZCR_HIZSW_Pos               4                                                       /*!< TIMER30 HIZCR: HIZSW Position           */
+#define TIMER30_HIZCR_HIZSW_Msk               (0x01UL << TIMER30_HIZCR_HIZSW_Pos)                     /*!< TIMER30 HIZCR: HIZSW Mask               */
+#define TIMER30_HIZCR_HIZEN_Pos               7                                                       /*!< TIMER30 HIZCR: HIZEN Position           */
+#define TIMER30_HIZCR_HIZEN_Msk               (0x01UL << TIMER30_HIZCR_HIZEN_Pos)                     /*!< TIMER30 HIZCR: HIZEN Mask               */
+
+/* --------------------------------  TIMER30_ADTCR  ------------------------------- */
+#define TIMER30_ADTCR_T30CMTG_Pos             0                                                       /*!< TIMER30 ADTCR: T30CMTG Position         */
+#define TIMER30_ADTCR_T30CMTG_Msk             (0x01UL << TIMER30_ADTCR_T30CMTG_Pos)                   /*!< TIMER30 ADTCR: T30CMTG Mask             */
+#define TIMER30_ADTCR_T30BMTG_Pos             1                                                       /*!< TIMER30 ADTCR: T30BMTG Position         */
+#define TIMER30_ADTCR_T30BMTG_Msk             (0x01UL << TIMER30_ADTCR_T30BMTG_Pos)                   /*!< TIMER30 ADTCR: T30BMTG Mask             */
+#define TIMER30_ADTCR_T30AMTG_Pos             2                                                       /*!< TIMER30 ADTCR: T30AMTG Position         */
+#define TIMER30_ADTCR_T30AMTG_Msk             (0x01UL << TIMER30_ADTCR_T30AMTG_Pos)                   /*!< TIMER30 ADTCR: T30AMTG Mask             */
+#define TIMER30_ADTCR_T30PMTG_Pos             3                                                       /*!< TIMER30 ADTCR: T30PMTG Position         */
+#define TIMER30_ADTCR_T30PMTG_Msk             (0x01UL << TIMER30_ADTCR_T30PMTG_Pos)                   /*!< TIMER30 ADTCR: T30PMTG Mask             */
+#define TIMER30_ADTCR_T30BTTG_Pos             4                                                       /*!< TIMER30 ADTCR: T30BTTG Position         */
+#define TIMER30_ADTCR_T30BTTG_Msk             (0x01UL << TIMER30_ADTCR_T30BTTG_Pos)                   /*!< TIMER30 ADTCR: T30BTTG Mask             */
+
+/* --------------------------------  TIMER30_ADTDR  ------------------------------- */
+#define TIMER30_ADTDR_ADTDATA_Pos             0                                                       /*!< TIMER30 ADTDR: ADTDATA Position         */
+#define TIMER30_ADTDR_ADTDATA_Msk             (0x00003fffUL << TIMER30_ADTDR_ADTDATA_Pos)             /*!< TIMER30 ADTDR: ADTDATA Mask             */
+
+
+/* ================================================================================ */
+/* ================          Group 'USART' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  USART_CR1  --------------------------------- */
+#define USART_CR1_RXEn_Pos                    0                                                       /*!< USART CR1: RXEn Position                */
+#define USART_CR1_RXEn_Msk                    (0x01UL << USART_CR1_RXEn_Pos)                          /*!< USART CR1: RXEn Mask                    */
+#define USART_CR1_TXEn_Pos                    1                                                       /*!< USART CR1: TXEn Position                */
+#define USART_CR1_TXEn_Msk                    (0x01UL << USART_CR1_TXEn_Pos)                          /*!< USART CR1: TXEn Mask                    */
+#define USART_CR1_WAKEIEn_Pos                 2                                                       /*!< USART CR1: WAKEIEn Position             */
+#define USART_CR1_WAKEIEn_Msk                 (0x01UL << USART_CR1_WAKEIEn_Pos)                       /*!< USART CR1: WAKEIEn Mask                 */
+#define USART_CR1_RXCIEn_Pos                  3                                                       /*!< USART CR1: RXCIEn Position              */
+#define USART_CR1_RXCIEn_Msk                  (0x01UL << USART_CR1_RXCIEn_Pos)                        /*!< USART CR1: RXCIEn Mask                  */
+#define USART_CR1_TXCIEn_Pos                  4                                                       /*!< USART CR1: TXCIEn Position              */
+#define USART_CR1_TXCIEn_Msk                  (0x01UL << USART_CR1_TXCIEn_Pos)                        /*!< USART CR1: TXCIEn Mask                  */
+#define USART_CR1_DRIEn_Pos                   5                                                       /*!< USART CR1: DRIEn Position               */
+#define USART_CR1_DRIEn_Msk                   (0x01UL << USART_CR1_DRIEn_Pos)                         /*!< USART CR1: DRIEn Mask                   */
+#define USART_CR1_CPHAn_Pos                   6                                                       /*!< USART CR1: CPHAn Position               */
+#define USART_CR1_CPHAn_Msk                   (0x01UL << USART_CR1_CPHAn_Pos)                         /*!< USART CR1: CPHAn Mask                   */
+#define USART_CR1_CPOLn_Pos                   7                                                       /*!< USART CR1: CPOLn Position               */
+#define USART_CR1_CPOLn_Msk                   (0x01UL << USART_CR1_CPOLn_Pos)                         /*!< USART CR1: CPOLn Mask                   */
+#define USART_CR1_ORDn_Pos                    8                                                       /*!< USART CR1: ORDn Position                */
+#define USART_CR1_ORDn_Msk                    (0x01UL << USART_CR1_ORDn_Pos)                          /*!< USART CR1: ORDn Mask                    */
+#define USART_CR1_USTnS_Pos                   9                                                       /*!< USART CR1: USTnS Position               */
+#define USART_CR1_USTnS_Msk                   (0x07UL << USART_CR1_USTnS_Pos)                         /*!< USART CR1: USTnS Mask                   */
+#define USART_CR1_USTnP_Pos                   12                                                      /*!< USART CR1: USTnP Position               */
+#define USART_CR1_USTnP_Msk                   (0x03UL << USART_CR1_USTnP_Pos)                         /*!< USART CR1: USTnP Mask                   */
+#define USART_CR1_USTnMS_Pos                  14                                                      /*!< USART CR1: USTnMS Position              */
+#define USART_CR1_USTnMS_Msk                  (0x03UL << USART_CR1_USTnMS_Pos)                        /*!< USART CR1: USTnMS Mask                  */
+
+/* ----------------------------------  USART_CR2  --------------------------------- */
+#define USART_CR2_USTnRX8_Pos                 0                                                       /*!< USART CR2: USTnRX8 Position             */
+#define USART_CR2_USTnRX8_Msk                 (0x01UL << USART_CR2_USTnRX8_Pos)                       /*!< USART CR2: USTnRX8 Mask                 */
+#define USART_CR2_USTnTX8_Pos                 1                                                       /*!< USART CR2: USTnTX8 Position             */
+#define USART_CR2_USTnTX8_Msk                 (0x01UL << USART_CR2_USTnTX8_Pos)                       /*!< USART CR2: USTnTX8 Mask                 */
+#define USART_CR2_USTnSB_Pos                  2                                                       /*!< USART CR2: USTnSB Position              */
+#define USART_CR2_USTnSB_Msk                  (0x01UL << USART_CR2_USTnSB_Pos)                        /*!< USART CR2: USTnSB Mask                  */
+#define USART_CR2_FXCHn_Pos                   3                                                       /*!< USART CR2: FXCHn Position               */
+#define USART_CR2_FXCHn_Msk                   (0x01UL << USART_CR2_FXCHn_Pos)                         /*!< USART CR2: FXCHn Mask                   */
+#define USART_CR2_USTnSSEN_Pos                4                                                       /*!< USART CR2: USTnSSEN Position            */
+#define USART_CR2_USTnSSEN_Msk                (0x01UL << USART_CR2_USTnSSEN_Pos)                      /*!< USART CR2: USTnSSEN Mask                */
+#define USART_CR2_DISSCKn_Pos                 5                                                       /*!< USART CR2: DISSCKn Position             */
+#define USART_CR2_DISSCKn_Msk                 (0x01UL << USART_CR2_DISSCKn_Pos)                       /*!< USART CR2: DISSCKn Mask                 */
+#define USART_CR2_LOOPSn_Pos                  6                                                       /*!< USART CR2: LOOPSn Position              */
+#define USART_CR2_LOOPSn_Msk                  (0x01UL << USART_CR2_LOOPSn_Pos)                        /*!< USART CR2: LOOPSn Mask                  */
+#define USART_CR2_MASTERn_Pos                 7                                                       /*!< USART CR2: MASTERn Position             */
+#define USART_CR2_MASTERn_Msk                 (0x01UL << USART_CR2_MASTERn_Pos)                       /*!< USART CR2: MASTERn Mask                 */
+#define USART_CR2_DBLSn_Pos                   8                                                       /*!< USART CR2: DBLSn Position               */
+#define USART_CR2_DBLSn_Msk                   (0x01UL << USART_CR2_DBLSn_Pos)                         /*!< USART CR2: DBLSn Mask                   */
+#define USART_CR2_USTnEN_Pos                  9                                                       /*!< USART CR2: USTnEN Position              */
+#define USART_CR2_USTnEN_Msk                  (0x01UL << USART_CR2_USTnEN_Pos)                        /*!< USART CR2: USTnEN Mask                  */
+
+/* ----------------------------------  USART_ST  ---------------------------------- */
+#define USART_ST_PEn_Pos                      0                                                       /*!< USART ST: PEn Position                  */
+#define USART_ST_PEn_Msk                      (0x01UL << USART_ST_PEn_Pos)                            /*!< USART ST: PEn Mask                      */
+#define USART_ST_FEn_Pos                      1                                                       /*!< USART ST: FEn Position                  */
+#define USART_ST_FEn_Msk                      (0x01UL << USART_ST_FEn_Pos)                            /*!< USART ST: FEn Mask                      */
+#define USART_ST_DORn_Pos                     2                                                       /*!< USART ST: DORn Position                 */
+#define USART_ST_DORn_Msk                     (0x01UL << USART_ST_DORn_Pos)                           /*!< USART ST: DORn Mask                     */
+#define USART_ST_WAKEn_Pos                    4                                                       /*!< USART ST: WAKEn Position                */
+#define USART_ST_WAKEn_Msk                    (0x01UL << USART_ST_WAKEn_Pos)                          /*!< USART ST: WAKEn Mask                    */
+#define USART_ST_RXCn_Pos                     5                                                       /*!< USART ST: RXCn Position                 */
+#define USART_ST_RXCn_Msk                     (0x01UL << USART_ST_RXCn_Pos)                           /*!< USART ST: RXCn Mask                     */
+#define USART_ST_TXCn_Pos                     6                                                       /*!< USART ST: TXCn Position                 */
+#define USART_ST_TXCn_Msk                     (0x01UL << USART_ST_TXCn_Pos)                           /*!< USART ST: TXCn Mask                     */
+#define USART_ST_DREn_Pos                     7                                                       /*!< USART ST: DREn Position                 */
+#define USART_ST_DREn_Msk                     (0x01UL << USART_ST_DREn_Pos)                           /*!< USART ST: DREn Mask                     */
+
+/* ----------------------------------  USART_BDR  --------------------------------- */
+#define USART_BDR_BDATA_Pos                   0                                                       /*!< USART BDR: BDATA Position               */
+#define USART_BDR_BDATA_Msk                   (0x00000fffUL << USART_BDR_BDATA_Pos)                   /*!< USART BDR: BDATA Mask                   */
+
+/* ----------------------------------  USART_DR  ---------------------------------- */
+#define USART_DR_DATA_Pos                     0                                                       /*!< USART DR: DATA Position                 */
+#define USART_DR_DATA_Msk                     (0x000000ffUL << USART_DR_DATA_Pos)                     /*!< USART DR: DATA Mask                     */
+
+
+/* ================================================================================ */
+/* ================        struct 'USART10' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  USART10_CR1  -------------------------------- */
+#define USART10_CR1_RXEn_Pos                  0                                                       /*!< USART10 CR1: RXEn Position              */
+#define USART10_CR1_RXEn_Msk                  (0x01UL << USART10_CR1_RXEn_Pos)                        /*!< USART10 CR1: RXEn Mask                  */
+#define USART10_CR1_TXEn_Pos                  1                                                       /*!< USART10 CR1: TXEn Position              */
+#define USART10_CR1_TXEn_Msk                  (0x01UL << USART10_CR1_TXEn_Pos)                        /*!< USART10 CR1: TXEn Mask                  */
+#define USART10_CR1_WAKEIEn_Pos               2                                                       /*!< USART10 CR1: WAKEIEn Position           */
+#define USART10_CR1_WAKEIEn_Msk               (0x01UL << USART10_CR1_WAKEIEn_Pos)                     /*!< USART10 CR1: WAKEIEn Mask               */
+#define USART10_CR1_RXCIEn_Pos                3                                                       /*!< USART10 CR1: RXCIEn Position            */
+#define USART10_CR1_RXCIEn_Msk                (0x01UL << USART10_CR1_RXCIEn_Pos)                      /*!< USART10 CR1: RXCIEn Mask                */
+#define USART10_CR1_TXCIEn_Pos                4                                                       /*!< USART10 CR1: TXCIEn Position            */
+#define USART10_CR1_TXCIEn_Msk                (0x01UL << USART10_CR1_TXCIEn_Pos)                      /*!< USART10 CR1: TXCIEn Mask                */
+#define USART10_CR1_DRIEn_Pos                 5                                                       /*!< USART10 CR1: DRIEn Position             */
+#define USART10_CR1_DRIEn_Msk                 (0x01UL << USART10_CR1_DRIEn_Pos)                       /*!< USART10 CR1: DRIEn Mask                 */
+#define USART10_CR1_CPHAn_Pos                 6                                                       /*!< USART10 CR1: CPHAn Position             */
+#define USART10_CR1_CPHAn_Msk                 (0x01UL << USART10_CR1_CPHAn_Pos)                       /*!< USART10 CR1: CPHAn Mask                 */
+#define USART10_CR1_CPOLn_Pos                 7                                                       /*!< USART10 CR1: CPOLn Position             */
+#define USART10_CR1_CPOLn_Msk                 (0x01UL << USART10_CR1_CPOLn_Pos)                       /*!< USART10 CR1: CPOLn Mask                 */
+#define USART10_CR1_ORDn_Pos                  8                                                       /*!< USART10 CR1: ORDn Position              */
+#define USART10_CR1_ORDn_Msk                  (0x01UL << USART10_CR1_ORDn_Pos)                        /*!< USART10 CR1: ORDn Mask                  */
+#define USART10_CR1_USTnS_Pos                 9                                                       /*!< USART10 CR1: USTnS Position             */
+#define USART10_CR1_USTnS_Msk                 (0x07UL << USART10_CR1_USTnS_Pos)                       /*!< USART10 CR1: USTnS Mask                 */
+#define USART10_CR1_USTnP_Pos                 12                                                      /*!< USART10 CR1: USTnP Position             */
+#define USART10_CR1_USTnP_Msk                 (0x03UL << USART10_CR1_USTnP_Pos)                       /*!< USART10 CR1: USTnP Mask                 */
+#define USART10_CR1_USTnMS_Pos                14                                                      /*!< USART10 CR1: USTnMS Position            */
+#define USART10_CR1_USTnMS_Msk                (0x03UL << USART10_CR1_USTnMS_Pos)                      /*!< USART10 CR1: USTnMS Mask                */
+
+/* ---------------------------------  USART10_CR2  -------------------------------- */
+#define USART10_CR2_USTnRX8_Pos               0                                                       /*!< USART10 CR2: USTnRX8 Position           */
+#define USART10_CR2_USTnRX8_Msk               (0x01UL << USART10_CR2_USTnRX8_Pos)                     /*!< USART10 CR2: USTnRX8 Mask               */
+#define USART10_CR2_USTnTX8_Pos               1                                                       /*!< USART10 CR2: USTnTX8 Position           */
+#define USART10_CR2_USTnTX8_Msk               (0x01UL << USART10_CR2_USTnTX8_Pos)                     /*!< USART10 CR2: USTnTX8 Mask               */
+#define USART10_CR2_USTnSB_Pos                2                                                       /*!< USART10 CR2: USTnSB Position            */
+#define USART10_CR2_USTnSB_Msk                (0x01UL << USART10_CR2_USTnSB_Pos)                      /*!< USART10 CR2: USTnSB Mask                */
+#define USART10_CR2_FXCHn_Pos                 3                                                       /*!< USART10 CR2: FXCHn Position             */
+#define USART10_CR2_FXCHn_Msk                 (0x01UL << USART10_CR2_FXCHn_Pos)                       /*!< USART10 CR2: FXCHn Mask                 */
+#define USART10_CR2_USTnSSEN_Pos              4                                                       /*!< USART10 CR2: USTnSSEN Position          */
+#define USART10_CR2_USTnSSEN_Msk              (0x01UL << USART10_CR2_USTnSSEN_Pos)                    /*!< USART10 CR2: USTnSSEN Mask              */
+#define USART10_CR2_DISSCKn_Pos               5                                                       /*!< USART10 CR2: DISSCKn Position           */
+#define USART10_CR2_DISSCKn_Msk               (0x01UL << USART10_CR2_DISSCKn_Pos)                     /*!< USART10 CR2: DISSCKn Mask               */
+#define USART10_CR2_LOOPSn_Pos                6                                                       /*!< USART10 CR2: LOOPSn Position            */
+#define USART10_CR2_LOOPSn_Msk                (0x01UL << USART10_CR2_LOOPSn_Pos)                      /*!< USART10 CR2: LOOPSn Mask                */
+#define USART10_CR2_MASTERn_Pos               7                                                       /*!< USART10 CR2: MASTERn Position           */
+#define USART10_CR2_MASTERn_Msk               (0x01UL << USART10_CR2_MASTERn_Pos)                     /*!< USART10 CR2: MASTERn Mask               */
+#define USART10_CR2_DBLSn_Pos                 8                                                       /*!< USART10 CR2: DBLSn Position             */
+#define USART10_CR2_DBLSn_Msk                 (0x01UL << USART10_CR2_DBLSn_Pos)                       /*!< USART10 CR2: DBLSn Mask                 */
+#define USART10_CR2_USTnEN_Pos                9                                                       /*!< USART10 CR2: USTnEN Position            */
+#define USART10_CR2_USTnEN_Msk                (0x01UL << USART10_CR2_USTnEN_Pos)                      /*!< USART10 CR2: USTnEN Mask                */
+
+/* ---------------------------------  USART10_ST  --------------------------------- */
+#define USART10_ST_PEn_Pos                    0                                                       /*!< USART10 ST: PEn Position                */
+#define USART10_ST_PEn_Msk                    (0x01UL << USART10_ST_PEn_Pos)                          /*!< USART10 ST: PEn Mask                    */
+#define USART10_ST_FEn_Pos                    1                                                       /*!< USART10 ST: FEn Position                */
+#define USART10_ST_FEn_Msk                    (0x01UL << USART10_ST_FEn_Pos)                          /*!< USART10 ST: FEn Mask                    */
+#define USART10_ST_DORn_Pos                   2                                                       /*!< USART10 ST: DORn Position               */
+#define USART10_ST_DORn_Msk                   (0x01UL << USART10_ST_DORn_Pos)                         /*!< USART10 ST: DORn Mask                   */
+#define USART10_ST_WAKEn_Pos                  4                                                       /*!< USART10 ST: WAKEn Position              */
+#define USART10_ST_WAKEn_Msk                  (0x01UL << USART10_ST_WAKEn_Pos)                        /*!< USART10 ST: WAKEn Mask                  */
+#define USART10_ST_RXCn_Pos                   5                                                       /*!< USART10 ST: RXCn Position               */
+#define USART10_ST_RXCn_Msk                   (0x01UL << USART10_ST_RXCn_Pos)                         /*!< USART10 ST: RXCn Mask                   */
+#define USART10_ST_TXCn_Pos                   6                                                       /*!< USART10 ST: TXCn Position               */
+#define USART10_ST_TXCn_Msk                   (0x01UL << USART10_ST_TXCn_Pos)                         /*!< USART10 ST: TXCn Mask                   */
+#define USART10_ST_DREn_Pos                   7                                                       /*!< USART10 ST: DREn Position               */
+#define USART10_ST_DREn_Msk                   (0x01UL << USART10_ST_DREn_Pos)                         /*!< USART10 ST: DREn Mask                   */
+
+/* ---------------------------------  USART10_BDR  -------------------------------- */
+#define USART10_BDR_BDATA_Pos                 0                                                       /*!< USART10 BDR: BDATA Position             */
+#define USART10_BDR_BDATA_Msk                 (0x00000fffUL << USART10_BDR_BDATA_Pos)                 /*!< USART10 BDR: BDATA Mask                 */
+
+/* ---------------------------------  USART10_DR  --------------------------------- */
+#define USART10_DR_DATA_Pos                   0                                                       /*!< USART10 DR: DATA Position               */
+#define USART10_DR_DATA_Msk                   (0x000000ffUL << USART10_DR_DATA_Pos)                   /*!< USART10 DR: DATA Mask                   */
+
+
+/* ================================================================================ */
+/* ================        struct 'USART11' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  USART11_CR1  -------------------------------- */
+#define USART11_CR1_RXEn_Pos                  0                                                       /*!< USART11 CR1: RXEn Position              */
+#define USART11_CR1_RXEn_Msk                  (0x01UL << USART11_CR1_RXEn_Pos)                        /*!< USART11 CR1: RXEn Mask                  */
+#define USART11_CR1_TXEn_Pos                  1                                                       /*!< USART11 CR1: TXEn Position              */
+#define USART11_CR1_TXEn_Msk                  (0x01UL << USART11_CR1_TXEn_Pos)                        /*!< USART11 CR1: TXEn Mask                  */
+#define USART11_CR1_WAKEIEn_Pos               2                                                       /*!< USART11 CR1: WAKEIEn Position           */
+#define USART11_CR1_WAKEIEn_Msk               (0x01UL << USART11_CR1_WAKEIEn_Pos)                     /*!< USART11 CR1: WAKEIEn Mask               */
+#define USART11_CR1_RXCIEn_Pos                3                                                       /*!< USART11 CR1: RXCIEn Position            */
+#define USART11_CR1_RXCIEn_Msk                (0x01UL << USART11_CR1_RXCIEn_Pos)                      /*!< USART11 CR1: RXCIEn Mask                */
+#define USART11_CR1_TXCIEn_Pos                4                                                       /*!< USART11 CR1: TXCIEn Position            */
+#define USART11_CR1_TXCIEn_Msk                (0x01UL << USART11_CR1_TXCIEn_Pos)                      /*!< USART11 CR1: TXCIEn Mask                */
+#define USART11_CR1_DRIEn_Pos                 5                                                       /*!< USART11 CR1: DRIEn Position             */
+#define USART11_CR1_DRIEn_Msk                 (0x01UL << USART11_CR1_DRIEn_Pos)                       /*!< USART11 CR1: DRIEn Mask                 */
+#define USART11_CR1_CPHAn_Pos                 6                                                       /*!< USART11 CR1: CPHAn Position             */
+#define USART11_CR1_CPHAn_Msk                 (0x01UL << USART11_CR1_CPHAn_Pos)                       /*!< USART11 CR1: CPHAn Mask                 */
+#define USART11_CR1_CPOLn_Pos                 7                                                       /*!< USART11 CR1: CPOLn Position             */
+#define USART11_CR1_CPOLn_Msk                 (0x01UL << USART11_CR1_CPOLn_Pos)                       /*!< USART11 CR1: CPOLn Mask                 */
+#define USART11_CR1_ORDn_Pos                  8                                                       /*!< USART11 CR1: ORDn Position              */
+#define USART11_CR1_ORDn_Msk                  (0x01UL << USART11_CR1_ORDn_Pos)                        /*!< USART11 CR1: ORDn Mask                  */
+#define USART11_CR1_USTnS_Pos                 9                                                       /*!< USART11 CR1: USTnS Position             */
+#define USART11_CR1_USTnS_Msk                 (0x07UL << USART11_CR1_USTnS_Pos)                       /*!< USART11 CR1: USTnS Mask                 */
+#define USART11_CR1_USTnP_Pos                 12                                                      /*!< USART11 CR1: USTnP Position             */
+#define USART11_CR1_USTnP_Msk                 (0x03UL << USART11_CR1_USTnP_Pos)                       /*!< USART11 CR1: USTnP Mask                 */
+#define USART11_CR1_USTnMS_Pos                14                                                      /*!< USART11 CR1: USTnMS Position            */
+#define USART11_CR1_USTnMS_Msk                (0x03UL << USART11_CR1_USTnMS_Pos)                      /*!< USART11 CR1: USTnMS Mask                */
+
+/* ---------------------------------  USART11_CR2  -------------------------------- */
+#define USART11_CR2_USTnRX8_Pos               0                                                       /*!< USART11 CR2: USTnRX8 Position           */
+#define USART11_CR2_USTnRX8_Msk               (0x01UL << USART11_CR2_USTnRX8_Pos)                     /*!< USART11 CR2: USTnRX8 Mask               */
+#define USART11_CR2_USTnTX8_Pos               1                                                       /*!< USART11 CR2: USTnTX8 Position           */
+#define USART11_CR2_USTnTX8_Msk               (0x01UL << USART11_CR2_USTnTX8_Pos)                     /*!< USART11 CR2: USTnTX8 Mask               */
+#define USART11_CR2_USTnSB_Pos                2                                                       /*!< USART11 CR2: USTnSB Position            */
+#define USART11_CR2_USTnSB_Msk                (0x01UL << USART11_CR2_USTnSB_Pos)                      /*!< USART11 CR2: USTnSB Mask                */
+#define USART11_CR2_FXCHn_Pos                 3                                                       /*!< USART11 CR2: FXCHn Position             */
+#define USART11_CR2_FXCHn_Msk                 (0x01UL << USART11_CR2_FXCHn_Pos)                       /*!< USART11 CR2: FXCHn Mask                 */
+#define USART11_CR2_USTnSSEN_Pos              4                                                       /*!< USART11 CR2: USTnSSEN Position          */
+#define USART11_CR2_USTnSSEN_Msk              (0x01UL << USART11_CR2_USTnSSEN_Pos)                    /*!< USART11 CR2: USTnSSEN Mask              */
+#define USART11_CR2_DISSCKn_Pos               5                                                       /*!< USART11 CR2: DISSCKn Position           */
+#define USART11_CR2_DISSCKn_Msk               (0x01UL << USART11_CR2_DISSCKn_Pos)                     /*!< USART11 CR2: DISSCKn Mask               */
+#define USART11_CR2_LOOPSn_Pos                6                                                       /*!< USART11 CR2: LOOPSn Position            */
+#define USART11_CR2_LOOPSn_Msk                (0x01UL << USART11_CR2_LOOPSn_Pos)                      /*!< USART11 CR2: LOOPSn Mask                */
+#define USART11_CR2_MASTERn_Pos               7                                                       /*!< USART11 CR2: MASTERn Position           */
+#define USART11_CR2_MASTERn_Msk               (0x01UL << USART11_CR2_MASTERn_Pos)                     /*!< USART11 CR2: MASTERn Mask               */
+#define USART11_CR2_DBLSn_Pos                 8                                                       /*!< USART11 CR2: DBLSn Position             */
+#define USART11_CR2_DBLSn_Msk                 (0x01UL << USART11_CR2_DBLSn_Pos)                       /*!< USART11 CR2: DBLSn Mask                 */
+#define USART11_CR2_USTnEN_Pos                9                                                       /*!< USART11 CR2: USTnEN Position            */
+#define USART11_CR2_USTnEN_Msk                (0x01UL << USART11_CR2_USTnEN_Pos)                      /*!< USART11 CR2: USTnEN Mask                */
+
+/* ---------------------------------  USART11_ST  --------------------------------- */
+#define USART11_ST_PEn_Pos                    0                                                       /*!< USART11 ST: PEn Position                */
+#define USART11_ST_PEn_Msk                    (0x01UL << USART11_ST_PEn_Pos)                          /*!< USART11 ST: PEn Mask                    */
+#define USART11_ST_FEn_Pos                    1                                                       /*!< USART11 ST: FEn Position                */
+#define USART11_ST_FEn_Msk                    (0x01UL << USART11_ST_FEn_Pos)                          /*!< USART11 ST: FEn Mask                    */
+#define USART11_ST_DORn_Pos                   2                                                       /*!< USART11 ST: DORn Position               */
+#define USART11_ST_DORn_Msk                   (0x01UL << USART11_ST_DORn_Pos)                         /*!< USART11 ST: DORn Mask                   */
+#define USART11_ST_WAKEn_Pos                  4                                                       /*!< USART11 ST: WAKEn Position              */
+#define USART11_ST_WAKEn_Msk                  (0x01UL << USART11_ST_WAKEn_Pos)                        /*!< USART11 ST: WAKEn Mask                  */
+#define USART11_ST_RXCn_Pos                   5                                                       /*!< USART11 ST: RXCn Position               */
+#define USART11_ST_RXCn_Msk                   (0x01UL << USART11_ST_RXCn_Pos)                         /*!< USART11 ST: RXCn Mask                   */
+#define USART11_ST_TXCn_Pos                   6                                                       /*!< USART11 ST: TXCn Position               */
+#define USART11_ST_TXCn_Msk                   (0x01UL << USART11_ST_TXCn_Pos)                         /*!< USART11 ST: TXCn Mask                   */
+#define USART11_ST_DREn_Pos                   7                                                       /*!< USART11 ST: DREn Position               */
+#define USART11_ST_DREn_Msk                   (0x01UL << USART11_ST_DREn_Pos)                         /*!< USART11 ST: DREn Mask                   */
+
+/* ---------------------------------  USART11_BDR  -------------------------------- */
+#define USART11_BDR_BDATA_Pos                 0                                                       /*!< USART11 BDR: BDATA Position             */
+#define USART11_BDR_BDATA_Msk                 (0x00000fffUL << USART11_BDR_BDATA_Pos)                 /*!< USART11 BDR: BDATA Mask                 */
+
+/* ---------------------------------  USART11_DR  --------------------------------- */
+#define USART11_DR_DATA_Pos                   0                                                       /*!< USART11 DR: DATA Position               */
+#define USART11_DR_DATA_Msk                   (0x000000ffUL << USART11_DR_DATA_Pos)                   /*!< USART11 DR: DATA Mask                   */
+
+
+/* ================================================================================ */
+/* ================          Group 'UART' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  UART_RBR  ---------------------------------- */
+#define UART_RBR_RBR_Pos                      0                                                       /*!< UART RBR: RBR Position                  */
+#define UART_RBR_RBR_Msk                      (0x000000ffUL << UART_RBR_RBR_Pos)                      /*!< UART RBR: RBR Mask                      */
+
+/* ----------------------------------  UART_THR  ---------------------------------- */
+#define UART_THR_THR_Pos                      0                                                       /*!< UART THR: THR Position                  */
+#define UART_THR_THR_Msk                      (0x000000ffUL << UART_THR_THR_Pos)                      /*!< UART THR: THR Mask                      */
+
+/* ----------------------------------  UART_IER  ---------------------------------- */
+#define UART_IER_DRIE_Pos                     0                                                       /*!< UART IER: DRIE Position                 */
+#define UART_IER_DRIE_Msk                     (0x01UL << UART_IER_DRIE_Pos)                           /*!< UART IER: DRIE Mask                     */
+#define UART_IER_THREIE_Pos                   1                                                       /*!< UART IER: THREIE Position               */
+#define UART_IER_THREIE_Msk                   (0x01UL << UART_IER_THREIE_Pos)                         /*!< UART IER: THREIE Mask                   */
+#define UART_IER_RLSIE_Pos                    2                                                       /*!< UART IER: RLSIE Position                */
+#define UART_IER_RLSIE_Msk                    (0x01UL << UART_IER_RLSIE_Pos)                          /*!< UART IER: RLSIE Mask                    */
+#define UART_IER_TXEIE_Pos                    3                                                       /*!< UART IER: TXEIE Position                */
+#define UART_IER_TXEIE_Msk                    (0x01UL << UART_IER_TXEIE_Pos)                          /*!< UART IER: TXEIE Mask                    */
+#define UART_IER_DRXIEN_Pos                   4                                                       /*!< UART IER: DRXIEN Position               */
+#define UART_IER_DRXIEN_Msk                   (0x01UL << UART_IER_DRXIEN_Pos)                         /*!< UART IER: DRXIEN Mask                   */
+#define UART_IER_DTXIEN_Pos                   5                                                       /*!< UART IER: DTXIEN Position               */
+#define UART_IER_DTXIEN_Msk                   (0x01UL << UART_IER_DTXIEN_Pos)                         /*!< UART IER: DTXIEN Mask                   */
+
+/* ----------------------------------  UART_IIR  ---------------------------------- */
+#define UART_IIR_IPEN_Pos                     0                                                       /*!< UART IIR: IPEN Position                 */
+#define UART_IIR_IPEN_Msk                     (0x01UL << UART_IIR_IPEN_Pos)                           /*!< UART IIR: IPEN Mask                     */
+#define UART_IIR_IID_Pos                      1                                                       /*!< UART IIR: IID Position                  */
+#define UART_IIR_IID_Msk                      (0x03UL << UART_IIR_IID_Pos)                            /*!< UART IIR: IID Mask                      */
+#define UART_IIR_TXE_Pos                      4                                                       /*!< UART IIR: TXE Position                  */
+#define UART_IIR_TXE_Msk                      (0x01UL << UART_IIR_TXE_Pos)                            /*!< UART IIR: TXE Mask                      */
+
+/* ----------------------------------  UART_LCR  ---------------------------------- */
+#define UART_LCR_DLEN_Pos                     0                                                       /*!< UART LCR: DLEN Position                 */
+#define UART_LCR_DLEN_Msk                     (0x03UL << UART_LCR_DLEN_Pos)                           /*!< UART LCR: DLEN Mask                     */
+#define UART_LCR_STOPBIT_Pos                  2                                                       /*!< UART LCR: STOPBIT Position              */
+#define UART_LCR_STOPBIT_Msk                  (0x01UL << UART_LCR_STOPBIT_Pos)                        /*!< UART LCR: STOPBIT Mask                  */
+#define UART_LCR_PEN_Pos                      3                                                       /*!< UART LCR: PEN Position                  */
+#define UART_LCR_PEN_Msk                      (0x01UL << UART_LCR_PEN_Pos)                            /*!< UART LCR: PEN Mask                      */
+#define UART_LCR_PARITY_Pos                   4                                                       /*!< UART LCR: PARITY Position               */
+#define UART_LCR_PARITY_Msk                   (0x01UL << UART_LCR_PARITY_Pos)                         /*!< UART LCR: PARITY Mask                   */
+#define UART_LCR_STICKP_Pos                   5                                                       /*!< UART LCR: STICKP Position               */
+#define UART_LCR_STICKP_Msk                   (0x01UL << UART_LCR_STICKP_Pos)                         /*!< UART LCR: STICKP Mask                   */
+#define UART_LCR_BREAK_Pos                    6                                                       /*!< UART LCR: BREAK Position                */
+#define UART_LCR_BREAK_Msk                    (0x01UL << UART_LCR_BREAK_Pos)                          /*!< UART LCR: BREAK Mask                    */
+
+/* ----------------------------------  UART_DCR  ---------------------------------- */
+#define UART_DCR_TXINV_Pos                    2                                                       /*!< UART DCR: TXINV Position                */
+#define UART_DCR_TXINV_Msk                    (0x01UL << UART_DCR_TXINV_Pos)                          /*!< UART DCR: TXINV Mask                    */
+#define UART_DCR_RXINV_Pos                    3                                                       /*!< UART DCR: RXINV Position                */
+#define UART_DCR_RXINV_Msk                    (0x01UL << UART_DCR_RXINV_Pos)                          /*!< UART DCR: RXINV Mask                    */
+#define UART_DCR_LBON_Pos                     4                                                       /*!< UART DCR: LBON Position                 */
+#define UART_DCR_LBON_Msk                     (0x01UL << UART_DCR_LBON_Pos)                           /*!< UART DCR: LBON Mask                     */
+
+/* ----------------------------------  UART_LSR  ---------------------------------- */
+#define UART_LSR_DR_Pos                       0                                                       /*!< UART LSR: DR Position                   */
+#define UART_LSR_DR_Msk                       (0x01UL << UART_LSR_DR_Pos)                             /*!< UART LSR: DR Mask                       */
+#define UART_LSR_OE_Pos                       1                                                       /*!< UART LSR: OE Position                   */
+#define UART_LSR_OE_Msk                       (0x01UL << UART_LSR_OE_Pos)                             /*!< UART LSR: OE Mask                       */
+#define UART_LSR_PE_Pos                       2                                                       /*!< UART LSR: PE Position                   */
+#define UART_LSR_PE_Msk                       (0x01UL << UART_LSR_PE_Pos)                             /*!< UART LSR: PE Mask                       */
+#define UART_LSR_FE_Pos                       3                                                       /*!< UART LSR: FE Position                   */
+#define UART_LSR_FE_Msk                       (0x01UL << UART_LSR_FE_Pos)                             /*!< UART LSR: FE Mask                       */
+#define UART_LSR_BI_Pos                       4                                                       /*!< UART LSR: BI Position                   */
+#define UART_LSR_BI_Msk                       (0x01UL << UART_LSR_BI_Pos)                             /*!< UART LSR: BI Mask                       */
+#define UART_LSR_THRE_Pos                     5                                                       /*!< UART LSR: THRE Position                 */
+#define UART_LSR_THRE_Msk                     (0x01UL << UART_LSR_THRE_Pos)                           /*!< UART LSR: THRE Mask                     */
+#define UART_LSR_TEMT_Pos                     6                                                       /*!< UART LSR: TEMT Position                 */
+#define UART_LSR_TEMT_Msk                     (0x01UL << UART_LSR_TEMT_Pos)                           /*!< UART LSR: TEMT Mask                     */
+
+/* ----------------------------------  UART_BDR  ---------------------------------- */
+#define UART_BDR_BDR_Pos                      0                                                       /*!< UART BDR: BDR Position                  */
+#define UART_BDR_BDR_Msk                      (0x0000ffffUL << UART_BDR_BDR_Pos)                      /*!< UART BDR: BDR Mask                      */
+
+/* ----------------------------------  UART_BFR  ---------------------------------- */
+#define UART_BFR_BFR_Pos                      0                                                       /*!< UART BFR: BFR Position                  */
+#define UART_BFR_BFR_Msk                      (0x000000ffUL << UART_BFR_BFR_Pos)                      /*!< UART BFR: BFR Mask                      */
+
+/* ----------------------------------  UART_IDTR  --------------------------------- */
+#define UART_IDTR_WAITVAL_Pos                 0                                                       /*!< UART IDTR: WAITVAL Position             */
+#define UART_IDTR_WAITVAL_Msk                 (0x07UL << UART_IDTR_WAITVAL_Pos)                       /*!< UART IDTR: WAITVAL Mask                 */
+#define UART_IDTR_DMS_Pos                     6                                                       /*!< UART IDTR: DMS Position                 */
+#define UART_IDTR_DMS_Msk                     (0x01UL << UART_IDTR_DMS_Pos)                           /*!< UART IDTR: DMS Mask                     */
+#define UART_IDTR_SMS_Pos                     7                                                       /*!< UART IDTR: SMS Position                 */
+#define UART_IDTR_SMS_Msk                     (0x01UL << UART_IDTR_SMS_Pos)                           /*!< UART IDTR: SMS Mask                     */
+
+
+/* ================================================================================ */
+/* ================         struct 'UART0' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  UART0_RBR  --------------------------------- */
+#define UART0_RBR_RBR_Pos                     0                                                       /*!< UART0 RBR: RBR Position                 */
+#define UART0_RBR_RBR_Msk                     (0x000000ffUL << UART0_RBR_RBR_Pos)                     /*!< UART0 RBR: RBR Mask                     */
+
+/* ----------------------------------  UART0_THR  --------------------------------- */
+#define UART0_THR_THR_Pos                     0                                                       /*!< UART0 THR: THR Position                 */
+#define UART0_THR_THR_Msk                     (0x000000ffUL << UART0_THR_THR_Pos)                     /*!< UART0 THR: THR Mask                     */
+
+/* ----------------------------------  UART0_IER  --------------------------------- */
+#define UART0_IER_DRIE_Pos                    0                                                       /*!< UART0 IER: DRIE Position                */
+#define UART0_IER_DRIE_Msk                    (0x01UL << UART0_IER_DRIE_Pos)                          /*!< UART0 IER: DRIE Mask                    */
+#define UART0_IER_THREIE_Pos                  1                                                       /*!< UART0 IER: THREIE Position              */
+#define UART0_IER_THREIE_Msk                  (0x01UL << UART0_IER_THREIE_Pos)                        /*!< UART0 IER: THREIE Mask                  */
+#define UART0_IER_RLSIE_Pos                   2                                                       /*!< UART0 IER: RLSIE Position               */
+#define UART0_IER_RLSIE_Msk                   (0x01UL << UART0_IER_RLSIE_Pos)                         /*!< UART0 IER: RLSIE Mask                   */
+#define UART0_IER_TXEIE_Pos                   3                                                       /*!< UART0 IER: TXEIE Position               */
+#define UART0_IER_TXEIE_Msk                   (0x01UL << UART0_IER_TXEIE_Pos)                         /*!< UART0 IER: TXEIE Mask                   */
+#define UART0_IER_DRXIEN_Pos                  4                                                       /*!< UART0 IER: DRXIEN Position              */
+#define UART0_IER_DRXIEN_Msk                  (0x01UL << UART0_IER_DRXIEN_Pos)                        /*!< UART0 IER: DRXIEN Mask                  */
+#define UART0_IER_DTXIEN_Pos                  5                                                       /*!< UART0 IER: DTXIEN Position              */
+#define UART0_IER_DTXIEN_Msk                  (0x01UL << UART0_IER_DTXIEN_Pos)                        /*!< UART0 IER: DTXIEN Mask                  */
+
+/* ----------------------------------  UART0_IIR  --------------------------------- */
+#define UART0_IIR_IPEN_Pos                    0                                                       /*!< UART0 IIR: IPEN Position                */
+#define UART0_IIR_IPEN_Msk                    (0x01UL << UART0_IIR_IPEN_Pos)                          /*!< UART0 IIR: IPEN Mask                    */
+#define UART0_IIR_IID_Pos                     1                                                       /*!< UART0 IIR: IID Position                 */
+#define UART0_IIR_IID_Msk                     (0x03UL << UART0_IIR_IID_Pos)                           /*!< UART0 IIR: IID Mask                     */
+#define UART0_IIR_TXE_Pos                     4                                                       /*!< UART0 IIR: TXE Position                 */
+#define UART0_IIR_TXE_Msk                     (0x01UL << UART0_IIR_TXE_Pos)                           /*!< UART0 IIR: TXE Mask                     */
+
+/* ----------------------------------  UART0_LCR  --------------------------------- */
+#define UART0_LCR_DLEN_Pos                    0                                                       /*!< UART0 LCR: DLEN Position                */
+#define UART0_LCR_DLEN_Msk                    (0x03UL << UART0_LCR_DLEN_Pos)                          /*!< UART0 LCR: DLEN Mask                    */
+#define UART0_LCR_STOPBIT_Pos                 2                                                       /*!< UART0 LCR: STOPBIT Position             */
+#define UART0_LCR_STOPBIT_Msk                 (0x01UL << UART0_LCR_STOPBIT_Pos)                       /*!< UART0 LCR: STOPBIT Mask                 */
+#define UART0_LCR_PEN_Pos                     3                                                       /*!< UART0 LCR: PEN Position                 */
+#define UART0_LCR_PEN_Msk                     (0x01UL << UART0_LCR_PEN_Pos)                           /*!< UART0 LCR: PEN Mask                     */
+#define UART0_LCR_PARITY_Pos                  4                                                       /*!< UART0 LCR: PARITY Position              */
+#define UART0_LCR_PARITY_Msk                  (0x01UL << UART0_LCR_PARITY_Pos)                        /*!< UART0 LCR: PARITY Mask                  */
+#define UART0_LCR_STICKP_Pos                  5                                                       /*!< UART0 LCR: STICKP Position              */
+#define UART0_LCR_STICKP_Msk                  (0x01UL << UART0_LCR_STICKP_Pos)                        /*!< UART0 LCR: STICKP Mask                  */
+#define UART0_LCR_BREAK_Pos                   6                                                       /*!< UART0 LCR: BREAK Position               */
+#define UART0_LCR_BREAK_Msk                   (0x01UL << UART0_LCR_BREAK_Pos)                         /*!< UART0 LCR: BREAK Mask                   */
+
+/* ----------------------------------  UART0_DCR  --------------------------------- */
+#define UART0_DCR_TXINV_Pos                   2                                                       /*!< UART0 DCR: TXINV Position               */
+#define UART0_DCR_TXINV_Msk                   (0x01UL << UART0_DCR_TXINV_Pos)                         /*!< UART0 DCR: TXINV Mask                   */
+#define UART0_DCR_RXINV_Pos                   3                                                       /*!< UART0 DCR: RXINV Position               */
+#define UART0_DCR_RXINV_Msk                   (0x01UL << UART0_DCR_RXINV_Pos)                         /*!< UART0 DCR: RXINV Mask                   */
+#define UART0_DCR_LBON_Pos                    4                                                       /*!< UART0 DCR: LBON Position                */
+#define UART0_DCR_LBON_Msk                    (0x01UL << UART0_DCR_LBON_Pos)                          /*!< UART0 DCR: LBON Mask                    */
+
+/* ----------------------------------  UART0_LSR  --------------------------------- */
+#define UART0_LSR_DR_Pos                      0                                                       /*!< UART0 LSR: DR Position                  */
+#define UART0_LSR_DR_Msk                      (0x01UL << UART0_LSR_DR_Pos)                            /*!< UART0 LSR: DR Mask                      */
+#define UART0_LSR_OE_Pos                      1                                                       /*!< UART0 LSR: OE Position                  */
+#define UART0_LSR_OE_Msk                      (0x01UL << UART0_LSR_OE_Pos)                            /*!< UART0 LSR: OE Mask                      */
+#define UART0_LSR_PE_Pos                      2                                                       /*!< UART0 LSR: PE Position                  */
+#define UART0_LSR_PE_Msk                      (0x01UL << UART0_LSR_PE_Pos)                            /*!< UART0 LSR: PE Mask                      */
+#define UART0_LSR_FE_Pos                      3                                                       /*!< UART0 LSR: FE Position                  */
+#define UART0_LSR_FE_Msk                      (0x01UL << UART0_LSR_FE_Pos)                            /*!< UART0 LSR: FE Mask                      */
+#define UART0_LSR_BI_Pos                      4                                                       /*!< UART0 LSR: BI Position                  */
+#define UART0_LSR_BI_Msk                      (0x01UL << UART0_LSR_BI_Pos)                            /*!< UART0 LSR: BI Mask                      */
+#define UART0_LSR_THRE_Pos                    5                                                       /*!< UART0 LSR: THRE Position                */
+#define UART0_LSR_THRE_Msk                    (0x01UL << UART0_LSR_THRE_Pos)                          /*!< UART0 LSR: THRE Mask                    */
+#define UART0_LSR_TEMT_Pos                    6                                                       /*!< UART0 LSR: TEMT Position                */
+#define UART0_LSR_TEMT_Msk                    (0x01UL << UART0_LSR_TEMT_Pos)                          /*!< UART0 LSR: TEMT Mask                    */
+
+/* ----------------------------------  UART0_BDR  --------------------------------- */
+#define UART0_BDR_BDR_Pos                     0                                                       /*!< UART0 BDR: BDR Position                 */
+#define UART0_BDR_BDR_Msk                     (0x0000ffffUL << UART0_BDR_BDR_Pos)                     /*!< UART0 BDR: BDR Mask                     */
+
+/* ----------------------------------  UART0_BFR  --------------------------------- */
+#define UART0_BFR_BFR_Pos                     0                                                       /*!< UART0 BFR: BFR Position                 */
+#define UART0_BFR_BFR_Msk                     (0x000000ffUL << UART0_BFR_BFR_Pos)                     /*!< UART0 BFR: BFR Mask                     */
+
+/* ---------------------------------  UART0_IDTR  --------------------------------- */
+#define UART0_IDTR_WAITVAL_Pos                0                                                       /*!< UART0 IDTR: WAITVAL Position            */
+#define UART0_IDTR_WAITVAL_Msk                (0x07UL << UART0_IDTR_WAITVAL_Pos)                      /*!< UART0 IDTR: WAITVAL Mask                */
+#define UART0_IDTR_DMS_Pos                    6                                                       /*!< UART0 IDTR: DMS Position                */
+#define UART0_IDTR_DMS_Msk                    (0x01UL << UART0_IDTR_DMS_Pos)                          /*!< UART0 IDTR: DMS Mask                    */
+#define UART0_IDTR_SMS_Pos                    7                                                       /*!< UART0 IDTR: SMS Position                */
+#define UART0_IDTR_SMS_Msk                    (0x01UL << UART0_IDTR_SMS_Pos)                          /*!< UART0 IDTR: SMS Mask                    */
+
+
+/* ================================================================================ */
+/* ================         struct 'UART1' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  UART1_THR  --------------------------------- */
+#define UART1_THR_THR_Pos                     0                                                       /*!< UART1 THR: THR Position                 */
+#define UART1_THR_THR_Msk                     (0x000000ffUL << UART1_THR_THR_Pos)                     /*!< UART1 THR: THR Mask                     */
+
+/* ----------------------------------  UART1_RBR  --------------------------------- */
+#define UART1_RBR_RBR_Pos                     0                                                       /*!< UART1 RBR: RBR Position                 */
+#define UART1_RBR_RBR_Msk                     (0x000000ffUL << UART1_RBR_RBR_Pos)                     /*!< UART1 RBR: RBR Mask                     */
+
+/* ----------------------------------  UART1_IER  --------------------------------- */
+#define UART1_IER_DRIE_Pos                    0                                                       /*!< UART1 IER: DRIE Position                */
+#define UART1_IER_DRIE_Msk                    (0x01UL << UART1_IER_DRIE_Pos)                          /*!< UART1 IER: DRIE Mask                    */
+#define UART1_IER_THREIE_Pos                  1                                                       /*!< UART1 IER: THREIE Position              */
+#define UART1_IER_THREIE_Msk                  (0x01UL << UART1_IER_THREIE_Pos)                        /*!< UART1 IER: THREIE Mask                  */
+#define UART1_IER_RLSIE_Pos                   2                                                       /*!< UART1 IER: RLSIE Position               */
+#define UART1_IER_RLSIE_Msk                   (0x01UL << UART1_IER_RLSIE_Pos)                         /*!< UART1 IER: RLSIE Mask                   */
+#define UART1_IER_TXEIE_Pos                   3                                                       /*!< UART1 IER: TXEIE Position               */
+#define UART1_IER_TXEIE_Msk                   (0x01UL << UART1_IER_TXEIE_Pos)                         /*!< UART1 IER: TXEIE Mask                   */
+#define UART1_IER_DRXIEN_Pos                  4                                                       /*!< UART1 IER: DRXIEN Position              */
+#define UART1_IER_DRXIEN_Msk                  (0x01UL << UART1_IER_DRXIEN_Pos)                        /*!< UART1 IER: DRXIEN Mask                  */
+#define UART1_IER_DTXIEN_Pos                  5                                                       /*!< UART1 IER: DTXIEN Position              */
+#define UART1_IER_DTXIEN_Msk                  (0x01UL << UART1_IER_DTXIEN_Pos)                        /*!< UART1 IER: DTXIEN Mask                  */
+
+/* ----------------------------------  UART1_IIR  --------------------------------- */
+#define UART1_IIR_IPEN_Pos                    0                                                       /*!< UART1 IIR: IPEN Position                */
+#define UART1_IIR_IPEN_Msk                    (0x01UL << UART1_IIR_IPEN_Pos)                          /*!< UART1 IIR: IPEN Mask                    */
+#define UART1_IIR_IID_Pos                     1                                                       /*!< UART1 IIR: IID Position                 */
+#define UART1_IIR_IID_Msk                     (0x03UL << UART1_IIR_IID_Pos)                           /*!< UART1 IIR: IID Mask                     */
+#define UART1_IIR_TXE_Pos                     4                                                       /*!< UART1 IIR: TXE Position                 */
+#define UART1_IIR_TXE_Msk                     (0x01UL << UART1_IIR_TXE_Pos)                           /*!< UART1 IIR: TXE Mask                     */
+
+/* ----------------------------------  UART1_LCR  --------------------------------- */
+#define UART1_LCR_DLEN_Pos                    0                                                       /*!< UART1 LCR: DLEN Position                */
+#define UART1_LCR_DLEN_Msk                    (0x03UL << UART1_LCR_DLEN_Pos)                          /*!< UART1 LCR: DLEN Mask                    */
+#define UART1_LCR_STOPBIT_Pos                 2                                                       /*!< UART1 LCR: STOPBIT Position             */
+#define UART1_LCR_STOPBIT_Msk                 (0x01UL << UART1_LCR_STOPBIT_Pos)                       /*!< UART1 LCR: STOPBIT Mask                 */
+#define UART1_LCR_PEN_Pos                     3                                                       /*!< UART1 LCR: PEN Position                 */
+#define UART1_LCR_PEN_Msk                     (0x01UL << UART1_LCR_PEN_Pos)                           /*!< UART1 LCR: PEN Mask                     */
+#define UART1_LCR_PARITY_Pos                  4                                                       /*!< UART1 LCR: PARITY Position              */
+#define UART1_LCR_PARITY_Msk                  (0x01UL << UART1_LCR_PARITY_Pos)                        /*!< UART1 LCR: PARITY Mask                  */
+#define UART1_LCR_STICKP_Pos                  5                                                       /*!< UART1 LCR: STICKP Position              */
+#define UART1_LCR_STICKP_Msk                  (0x01UL << UART1_LCR_STICKP_Pos)                        /*!< UART1 LCR: STICKP Mask                  */
+#define UART1_LCR_BREAK_Pos                   6                                                       /*!< UART1 LCR: BREAK Position               */
+#define UART1_LCR_BREAK_Msk                   (0x01UL << UART1_LCR_BREAK_Pos)                         /*!< UART1 LCR: BREAK Mask                   */
+
+/* ----------------------------------  UART1_DCR  --------------------------------- */
+#define UART1_DCR_TXINV_Pos                   2                                                       /*!< UART1 DCR: TXINV Position               */
+#define UART1_DCR_TXINV_Msk                   (0x01UL << UART1_DCR_TXINV_Pos)                         /*!< UART1 DCR: TXINV Mask                   */
+#define UART1_DCR_RXINV_Pos                   3                                                       /*!< UART1 DCR: RXINV Position               */
+#define UART1_DCR_RXINV_Msk                   (0x01UL << UART1_DCR_RXINV_Pos)                         /*!< UART1 DCR: RXINV Mask                   */
+#define UART1_DCR_LBON_Pos                    4                                                       /*!< UART1 DCR: LBON Position                */
+#define UART1_DCR_LBON_Msk                    (0x01UL << UART1_DCR_LBON_Pos)                          /*!< UART1 DCR: LBON Mask                    */
+
+/* ----------------------------------  UART1_LSR  --------------------------------- */
+#define UART1_LSR_DR_Pos                      0                                                       /*!< UART1 LSR: DR Position                  */
+#define UART1_LSR_DR_Msk                      (0x01UL << UART1_LSR_DR_Pos)                            /*!< UART1 LSR: DR Mask                      */
+#define UART1_LSR_OE_Pos                      1                                                       /*!< UART1 LSR: OE Position                  */
+#define UART1_LSR_OE_Msk                      (0x01UL << UART1_LSR_OE_Pos)                            /*!< UART1 LSR: OE Mask                      */
+#define UART1_LSR_PE_Pos                      2                                                       /*!< UART1 LSR: PE Position                  */
+#define UART1_LSR_PE_Msk                      (0x01UL << UART1_LSR_PE_Pos)                            /*!< UART1 LSR: PE Mask                      */
+#define UART1_LSR_FE_Pos                      3                                                       /*!< UART1 LSR: FE Position                  */
+#define UART1_LSR_FE_Msk                      (0x01UL << UART1_LSR_FE_Pos)                            /*!< UART1 LSR: FE Mask                      */
+#define UART1_LSR_BI_Pos                      4                                                       /*!< UART1 LSR: BI Position                  */
+#define UART1_LSR_BI_Msk                      (0x01UL << UART1_LSR_BI_Pos)                            /*!< UART1 LSR: BI Mask                      */
+#define UART1_LSR_THRE_Pos                    5                                                       /*!< UART1 LSR: THRE Position                */
+#define UART1_LSR_THRE_Msk                    (0x01UL << UART1_LSR_THRE_Pos)                          /*!< UART1 LSR: THRE Mask                    */
+#define UART1_LSR_TEMT_Pos                    6                                                       /*!< UART1 LSR: TEMT Position                */
+#define UART1_LSR_TEMT_Msk                    (0x01UL << UART1_LSR_TEMT_Pos)                          /*!< UART1 LSR: TEMT Mask                    */
+
+/* ----------------------------------  UART1_BDR  --------------------------------- */
+#define UART1_BDR_BDR_Pos                     0                                                       /*!< UART1 BDR: BDR Position                 */
+#define UART1_BDR_BDR_Msk                     (0x0000ffffUL << UART1_BDR_BDR_Pos)                     /*!< UART1 BDR: BDR Mask                     */
+
+/* ----------------------------------  UART1_BFR  --------------------------------- */
+#define UART1_BFR_BFR_Pos                     0                                                       /*!< UART1 BFR: BFR Position                 */
+#define UART1_BFR_BFR_Msk                     (0x000000ffUL << UART1_BFR_BFR_Pos)                     /*!< UART1 BFR: BFR Mask                     */
+
+/* ---------------------------------  UART1_IDTR  --------------------------------- */
+#define UART1_IDTR_WAITVAL_Pos                0                                                       /*!< UART1 IDTR: WAITVAL Position            */
+#define UART1_IDTR_WAITVAL_Msk                (0x07UL << UART1_IDTR_WAITVAL_Pos)                      /*!< UART1 IDTR: WAITVAL Mask                */
+#define UART1_IDTR_DMS_Pos                    6                                                       /*!< UART1 IDTR: DMS Position                */
+#define UART1_IDTR_DMS_Msk                    (0x01UL << UART1_IDTR_DMS_Pos)                          /*!< UART1 IDTR: DMS Mask                    */
+#define UART1_IDTR_SMS_Pos                    7                                                       /*!< UART1 IDTR: SMS Position                */
+#define UART1_IDTR_SMS_Msk                    (0x01UL << UART1_IDTR_SMS_Pos)                          /*!< UART1 IDTR: SMS Mask                    */
+
+
+/* ================================================================================ */
+/* ================           Group 'I2C' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  I2C_CR  ----------------------------------- */
+#define I2C_CR_STARTCn_Pos                    0                                                       /*!< I2C CR: STARTCn Position                */
+#define I2C_CR_STARTCn_Msk                    (0x01UL << I2C_CR_STARTCn_Pos)                          /*!< I2C CR: STARTCn Mask                    */
+#define I2C_CR_STOPCn_Pos                     1                                                       /*!< I2C CR: STOPCn Position                 */
+#define I2C_CR_STOPCn_Msk                     (0x01UL << I2C_CR_STOPCn_Pos)                           /*!< I2C CR: STOPCn Mask                     */
+#define I2C_CR_IMASTERn_Pos                   2                                                       /*!< I2C CR: IMASTERn Position               */
+#define I2C_CR_IMASTERn_Msk                   (0x01UL << I2C_CR_IMASTERn_Pos)                         /*!< I2C CR: IMASTERn Mask                   */
+#define I2C_CR_ACKnEN_Pos                     3                                                       /*!< I2C CR: ACKnEN Position                 */
+#define I2C_CR_ACKnEN_Msk                     (0x01UL << I2C_CR_ACKnEN_Pos)                           /*!< I2C CR: ACKnEN Mask                     */
+#define I2C_CR_I2CnIFLAG_Pos                  4                                                       /*!< I2C CR: I2CnIFLAG Position              */
+#define I2C_CR_I2CnIFLAG_Msk                  (0x01UL << I2C_CR_I2CnIFLAG_Pos)                        /*!< I2C CR: I2CnIFLAG Mask                  */
+#define I2C_CR_I2CnIEN_Pos                    5                                                       /*!< I2C CR: I2CnIEN Position                */
+#define I2C_CR_I2CnIEN_Msk                    (0x01UL << I2C_CR_I2CnIEN_Pos)                          /*!< I2C CR: I2CnIEN Mask                    */
+#define I2C_CR_TXDLYENBn_Pos                  6                                                       /*!< I2C CR: TXDLYENBn Position              */
+#define I2C_CR_TXDLYENBn_Msk                  (0x01UL << I2C_CR_TXDLYENBn_Pos)                        /*!< I2C CR: TXDLYENBn Mask                  */
+#define I2C_CR_I2CnEN_Pos                     7                                                       /*!< I2C CR: I2CnEN Position                 */
+#define I2C_CR_I2CnEN_Msk                     (0x01UL << I2C_CR_I2CnEN_Pos)                           /*!< I2C CR: I2CnEN Mask                     */
+#define I2C_CR_INTERVAL_Pos                   8                                                       /*!< I2C CR: INTERVAL Position               */
+#define I2C_CR_INTERVAL_Msk                   (0x03UL << I2C_CR_INTERVAL_Pos)                         /*!< I2C CR: INTERVAL Mask                   */
+
+/* -----------------------------------  I2C_ST  ----------------------------------- */
+#define I2C_ST_RXACKn_Pos                     0                                                       /*!< I2C ST: RXACKn Position                 */
+#define I2C_ST_RXACKn_Msk                     (0x01UL << I2C_ST_RXACKn_Pos)                           /*!< I2C ST: RXACKn Mask                     */
+#define I2C_ST_TMODEn_Pos                     1                                                       /*!< I2C ST: TMODEn Position                 */
+#define I2C_ST_TMODEn_Msk                     (0x01UL << I2C_ST_TMODEn_Pos)                           /*!< I2C ST: TMODEn Mask                     */
+#define I2C_ST_BUSYn_Pos                      2                                                       /*!< I2C ST: BUSYn Position                  */
+#define I2C_ST_BUSYn_Msk                      (0x01UL << I2C_ST_BUSYn_Pos)                            /*!< I2C ST: BUSYn Mask                      */
+#define I2C_ST_MLOSTn_Pos                     3                                                       /*!< I2C ST: MLOSTn Position                 */
+#define I2C_ST_MLOSTn_Msk                     (0x01UL << I2C_ST_MLOSTn_Pos)                           /*!< I2C ST: MLOSTn Mask                     */
+#define I2C_ST_SSELn_Pos                      4                                                       /*!< I2C ST: SSELn Position                  */
+#define I2C_ST_SSELn_Msk                      (0x01UL << I2C_ST_SSELn_Pos)                            /*!< I2C ST: SSELn Mask                      */
+#define I2C_ST_STOPDn_Pos                     5                                                       /*!< I2C ST: STOPDn Position                 */
+#define I2C_ST_STOPDn_Msk                     (0x01UL << I2C_ST_STOPDn_Pos)                           /*!< I2C ST: STOPDn Mask                     */
+#define I2C_ST_TENDn_Pos                      6                                                       /*!< I2C ST: TENDn Position                  */
+#define I2C_ST_TENDn_Msk                      (0x01UL << I2C_ST_TENDn_Pos)                            /*!< I2C ST: TENDn Mask                      */
+#define I2C_ST_GCALLn_Pos                     7                                                       /*!< I2C ST: GCALLn Position                 */
+#define I2C_ST_GCALLn_Msk                     (0x01UL << I2C_ST_GCALLn_Pos)                           /*!< I2C ST: GCALLn Mask                     */
+#define I2C_ST_SLT_Pos                        31                                                      /*!< I2C ST: SLT Position                    */
+#define I2C_ST_SLT_Msk                        (0x01UL << I2C_ST_SLT_Pos)                              /*!< I2C ST: SLT Mask                        */
+
+/* ----------------------------------  I2C_SAR1  ---------------------------------- */
+#define I2C_SAR1_GCALLnEN_Pos                 0                                                       /*!< I2C SAR1: GCALLnEN Position             */
+#define I2C_SAR1_GCALLnEN_Msk                 (0x01UL << I2C_SAR1_GCALLnEN_Pos)                       /*!< I2C SAR1: GCALLnEN Mask                 */
+#define I2C_SAR1_SLAn_Pos                     1                                                       /*!< I2C SAR1: SLAn Position                 */
+#define I2C_SAR1_SLAn_Msk                     (0x7fUL << I2C_SAR1_SLAn_Pos)                           /*!< I2C SAR1: SLAn Mask                     */
+
+/* ----------------------------------  I2C_SAR2  ---------------------------------- */
+#define I2C_SAR2_GCALLnEN_Pos                 0                                                       /*!< I2C SAR2: GCALLnEN Position             */
+#define I2C_SAR2_GCALLnEN_Msk                 (0x01UL << I2C_SAR2_GCALLnEN_Pos)                       /*!< I2C SAR2: GCALLnEN Mask                 */
+#define I2C_SAR2_SLAn_Pos                     1                                                       /*!< I2C SAR2: SLAn Position                 */
+#define I2C_SAR2_SLAn_Msk                     (0x7fUL << I2C_SAR2_SLAn_Pos)                           /*!< I2C SAR2: SLAn Mask                     */
+
+/* -----------------------------------  I2C_DR  ----------------------------------- */
+#define I2C_DR_DATA_Pos                       0                                                       /*!< I2C DR: DATA Position                   */
+#define I2C_DR_DATA_Msk                       (0x000000ffUL << I2C_DR_DATA_Pos)                       /*!< I2C DR: DATA Mask                       */
+
+/* ----------------------------------  I2C_SDHR  ---------------------------------- */
+#define I2C_SDHR_HLDT_Pos                     0                                                       /*!< I2C SDHR: HLDT Position                 */
+#define I2C_SDHR_HLDT_Msk                     (0x00000fffUL << I2C_SDHR_HLDT_Pos)                     /*!< I2C SDHR: HLDT Mask                     */
+
+/* ----------------------------------  I2C_SCLR  ---------------------------------- */
+#define I2C_SCLR_SCLL_Pos                     0                                                       /*!< I2C SCLR: SCLL Position                 */
+#define I2C_SCLR_SCLL_Msk                     (0x00000fffUL << I2C_SCLR_SCLL_Pos)                     /*!< I2C SCLR: SCLL Mask                     */
+
+/* ----------------------------------  I2C_SCHR  ---------------------------------- */
+#define I2C_SCHR_SCLH_Pos                     0                                                       /*!< I2C SCHR: SCLH Position                 */
+#define I2C_SCHR_SCLH_Msk                     (0x00000fffUL << I2C_SCHR_SCLH_Pos)                     /*!< I2C SCHR: SCLH Mask                     */
+
+/* ----------------------------------  I2C_SLTCR  --------------------------------- */
+#define I2C_SLTCR_SLTEN_Pos                   0                                                       /*!< I2C SLTCR: SLTEN Position               */
+#define I2C_SLTCR_SLTEN_Msk                   (0x01UL << I2C_SLTCR_SLTEN_Pos)                         /*!< I2C SLTCR: SLTEN Mask                   */
+#define I2C_SLTCR_SLTINT_Pos                  1                                                       /*!< I2C SLTCR: SLTINT Position              */
+#define I2C_SLTCR_SLTINT_Msk                  (0x01UL << I2C_SLTCR_SLTINT_Pos)                        /*!< I2C SLTCR: SLTINT Mask                  */
+
+/* ---------------------------------  I2C_SLTPDR  --------------------------------- */
+#define I2C_SLTPDR_PDATA_Pos                  0                                                       /*!< I2C SLTPDR: PDATA Position              */
+#define I2C_SLTPDR_PDATA_Msk                  (0x00ffffffUL << I2C_SLTPDR_PDATA_Pos)                  /*!< I2C SLTPDR: PDATA Mask                  */
+
+/* ----------------------------------  I2C_MBCR  ---------------------------------- */
+#define I2C_MBCR_SDAMCE_Pos                   0                                                       /*!< I2C MBCR: SDAMCE Position               */
+#define I2C_MBCR_SDAMCE_Msk                   (0x01UL << I2C_MBCR_SDAMCE_Pos)                         /*!< I2C MBCR: SDAMCE Mask                   */
+#define I2C_MBCR_SCLMCE_Pos                   1                                                       /*!< I2C MBCR: SCLMCE Position               */
+#define I2C_MBCR_SCLMCE_Msk                   (0x01UL << I2C_MBCR_SCLMCE_Pos)                         /*!< I2C MBCR: SCLMCE Mask                   */
+#define I2C_MBCR_SDAO_Pos                     2                                                       /*!< I2C MBCR: SDAO Position                 */
+#define I2C_MBCR_SDAO_Msk                     (0x01UL << I2C_MBCR_SDAO_Pos)                           /*!< I2C MBCR: SDAO Mask                     */
+#define I2C_MBCR_SCLO_Pos                     3                                                       /*!< I2C MBCR: SCLO Position                 */
+#define I2C_MBCR_SCLO_Msk                     (0x01UL << I2C_MBCR_SCLO_Pos)                           /*!< I2C MBCR: SCLO Mask                     */
+#define I2C_MBCR_SDAS_Pos                     8                                                       /*!< I2C MBCR: SDAS Position                 */
+#define I2C_MBCR_SDAS_Msk                     (0x01UL << I2C_MBCR_SDAS_Pos)                           /*!< I2C MBCR: SDAS Mask                     */
+#define I2C_MBCR_SCLS_Pos                     9                                                       /*!< I2C MBCR: SCLS Position                 */
+#define I2C_MBCR_SCLS_Msk                     (0x01UL << I2C_MBCR_SCLS_Pos)                           /*!< I2C MBCR: SCLS Mask                     */
+
+
+/* ================================================================================ */
+/* ================          struct 'I2C0' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  I2C0_CR  ---------------------------------- */
+#define I2C0_CR_STARTCn_Pos                   0                                                       /*!< I2C0 CR: STARTCn Position               */
+#define I2C0_CR_STARTCn_Msk                   (0x01UL << I2C0_CR_STARTCn_Pos)                         /*!< I2C0 CR: STARTCn Mask                   */
+#define I2C0_CR_STOPCn_Pos                    1                                                       /*!< I2C0 CR: STOPCn Position                */
+#define I2C0_CR_STOPCn_Msk                    (0x01UL << I2C0_CR_STOPCn_Pos)                          /*!< I2C0 CR: STOPCn Mask                    */
+#define I2C0_CR_IMASTERn_Pos                  2                                                       /*!< I2C0 CR: IMASTERn Position              */
+#define I2C0_CR_IMASTERn_Msk                  (0x01UL << I2C0_CR_IMASTERn_Pos)                        /*!< I2C0 CR: IMASTERn Mask                  */
+#define I2C0_CR_ACKnEN_Pos                    3                                                       /*!< I2C0 CR: ACKnEN Position                */
+#define I2C0_CR_ACKnEN_Msk                    (0x01UL << I2C0_CR_ACKnEN_Pos)                          /*!< I2C0 CR: ACKnEN Mask                    */
+#define I2C0_CR_I2CnIFLAG_Pos                 4                                                       /*!< I2C0 CR: I2CnIFLAG Position             */
+#define I2C0_CR_I2CnIFLAG_Msk                 (0x01UL << I2C0_CR_I2CnIFLAG_Pos)                       /*!< I2C0 CR: I2CnIFLAG Mask                 */
+#define I2C0_CR_I2CnIEN_Pos                   5                                                       /*!< I2C0 CR: I2CnIEN Position               */
+#define I2C0_CR_I2CnIEN_Msk                   (0x01UL << I2C0_CR_I2CnIEN_Pos)                         /*!< I2C0 CR: I2CnIEN Mask                   */
+#define I2C0_CR_TXDLYENBn_Pos                 6                                                       /*!< I2C0 CR: TXDLYENBn Position             */
+#define I2C0_CR_TXDLYENBn_Msk                 (0x01UL << I2C0_CR_TXDLYENBn_Pos)                       /*!< I2C0 CR: TXDLYENBn Mask                 */
+#define I2C0_CR_I2CnEN_Pos                    7                                                       /*!< I2C0 CR: I2CnEN Position                */
+#define I2C0_CR_I2CnEN_Msk                    (0x01UL << I2C0_CR_I2CnEN_Pos)                          /*!< I2C0 CR: I2CnEN Mask                    */
+#define I2C0_CR_INTERVAL_Pos                  8                                                       /*!< I2C0 CR: INTERVAL Position              */
+#define I2C0_CR_INTERVAL_Msk                  (0x03UL << I2C0_CR_INTERVAL_Pos)                        /*!< I2C0 CR: INTERVAL Mask                  */
+
+/* -----------------------------------  I2C0_ST  ---------------------------------- */
+#define I2C0_ST_RXACKn_Pos                    0                                                       /*!< I2C0 ST: RXACKn Position                */
+#define I2C0_ST_RXACKn_Msk                    (0x01UL << I2C0_ST_RXACKn_Pos)                          /*!< I2C0 ST: RXACKn Mask                    */
+#define I2C0_ST_TMODEn_Pos                    1                                                       /*!< I2C0 ST: TMODEn Position                */
+#define I2C0_ST_TMODEn_Msk                    (0x01UL << I2C0_ST_TMODEn_Pos)                          /*!< I2C0 ST: TMODEn Mask                    */
+#define I2C0_ST_BUSYn_Pos                     2                                                       /*!< I2C0 ST: BUSYn Position                 */
+#define I2C0_ST_BUSYn_Msk                     (0x01UL << I2C0_ST_BUSYn_Pos)                           /*!< I2C0 ST: BUSYn Mask                     */
+#define I2C0_ST_MLOSTn_Pos                    3                                                       /*!< I2C0 ST: MLOSTn Position                */
+#define I2C0_ST_MLOSTn_Msk                    (0x01UL << I2C0_ST_MLOSTn_Pos)                          /*!< I2C0 ST: MLOSTn Mask                    */
+#define I2C0_ST_SSELn_Pos                     4                                                       /*!< I2C0 ST: SSELn Position                 */
+#define I2C0_ST_SSELn_Msk                     (0x01UL << I2C0_ST_SSELn_Pos)                           /*!< I2C0 ST: SSELn Mask                     */
+#define I2C0_ST_STOPDn_Pos                    5                                                       /*!< I2C0 ST: STOPDn Position                */
+#define I2C0_ST_STOPDn_Msk                    (0x01UL << I2C0_ST_STOPDn_Pos)                          /*!< I2C0 ST: STOPDn Mask                    */
+#define I2C0_ST_TENDn_Pos                     6                                                       /*!< I2C0 ST: TENDn Position                 */
+#define I2C0_ST_TENDn_Msk                     (0x01UL << I2C0_ST_TENDn_Pos)                           /*!< I2C0 ST: TENDn Mask                     */
+#define I2C0_ST_GCALLn_Pos                    7                                                       /*!< I2C0 ST: GCALLn Position                */
+#define I2C0_ST_GCALLn_Msk                    (0x01UL << I2C0_ST_GCALLn_Pos)                          /*!< I2C0 ST: GCALLn Mask                    */
+#define I2C0_ST_SLT_Pos                       31                                                      /*!< I2C0 ST: SLT Position                   */
+#define I2C0_ST_SLT_Msk                       (0x01UL << I2C0_ST_SLT_Pos)                             /*!< I2C0 ST: SLT Mask                       */
+
+/* ----------------------------------  I2C0_SAR1  --------------------------------- */
+#define I2C0_SAR1_GCALLnEN_Pos                0                                                       /*!< I2C0 SAR1: GCALLnEN Position            */
+#define I2C0_SAR1_GCALLnEN_Msk                (0x01UL << I2C0_SAR1_GCALLnEN_Pos)                      /*!< I2C0 SAR1: GCALLnEN Mask                */
+#define I2C0_SAR1_SLAn_Pos                    1                                                       /*!< I2C0 SAR1: SLAn Position                */
+#define I2C0_SAR1_SLAn_Msk                    (0x7fUL << I2C0_SAR1_SLAn_Pos)                          /*!< I2C0 SAR1: SLAn Mask                    */
+
+/* ----------------------------------  I2C0_SAR2  --------------------------------- */
+#define I2C0_SAR2_GCALLnEN_Pos                0                                                       /*!< I2C0 SAR2: GCALLnEN Position            */
+#define I2C0_SAR2_GCALLnEN_Msk                (0x01UL << I2C0_SAR2_GCALLnEN_Pos)                      /*!< I2C0 SAR2: GCALLnEN Mask                */
+#define I2C0_SAR2_SLAn_Pos                    1                                                       /*!< I2C0 SAR2: SLAn Position                */
+#define I2C0_SAR2_SLAn_Msk                    (0x7fUL << I2C0_SAR2_SLAn_Pos)                          /*!< I2C0 SAR2: SLAn Mask                    */
+
+/* -----------------------------------  I2C0_DR  ---------------------------------- */
+#define I2C0_DR_DATA_Pos                      0                                                       /*!< I2C0 DR: DATA Position                  */
+#define I2C0_DR_DATA_Msk                      (0x000000ffUL << I2C0_DR_DATA_Pos)                      /*!< I2C0 DR: DATA Mask                      */
+
+/* ----------------------------------  I2C0_SDHR  --------------------------------- */
+#define I2C0_SDHR_HLDT_Pos                    0                                                       /*!< I2C0 SDHR: HLDT Position                */
+#define I2C0_SDHR_HLDT_Msk                    (0x00000fffUL << I2C0_SDHR_HLDT_Pos)                    /*!< I2C0 SDHR: HLDT Mask                    */
+
+/* ----------------------------------  I2C0_SCLR  --------------------------------- */
+#define I2C0_SCLR_SCLL_Pos                    0                                                       /*!< I2C0 SCLR: SCLL Position                */
+#define I2C0_SCLR_SCLL_Msk                    (0x00000fffUL << I2C0_SCLR_SCLL_Pos)                    /*!< I2C0 SCLR: SCLL Mask                    */
+
+/* ----------------------------------  I2C0_SCHR  --------------------------------- */
+#define I2C0_SCHR_SCLH_Pos                    0                                                       /*!< I2C0 SCHR: SCLH Position                */
+#define I2C0_SCHR_SCLH_Msk                    (0x00000fffUL << I2C0_SCHR_SCLH_Pos)                    /*!< I2C0 SCHR: SCLH Mask                    */
+
+/* ---------------------------------  I2C0_SLTCR  --------------------------------- */
+#define I2C0_SLTCR_SLTEN_Pos                  0                                                       /*!< I2C0 SLTCR: SLTEN Position              */
+#define I2C0_SLTCR_SLTEN_Msk                  (0x01UL << I2C0_SLTCR_SLTEN_Pos)                        /*!< I2C0 SLTCR: SLTEN Mask                  */
+#define I2C0_SLTCR_SLTINT_Pos                 1                                                       /*!< I2C0 SLTCR: SLTINT Position             */
+#define I2C0_SLTCR_SLTINT_Msk                 (0x01UL << I2C0_SLTCR_SLTINT_Pos)                       /*!< I2C0 SLTCR: SLTINT Mask                 */
+
+/* ---------------------------------  I2C0_SLTPDR  -------------------------------- */
+#define I2C0_SLTPDR_PDATA_Pos                 0                                                       /*!< I2C0 SLTPDR: PDATA Position             */
+#define I2C0_SLTPDR_PDATA_Msk                 (0x00ffffffUL << I2C0_SLTPDR_PDATA_Pos)                 /*!< I2C0 SLTPDR: PDATA Mask                 */
+
+/* ----------------------------------  I2C0_MBCR  --------------------------------- */
+#define I2C0_MBCR_SDAMCE_Pos                  0                                                       /*!< I2C0 MBCR: SDAMCE Position              */
+#define I2C0_MBCR_SDAMCE_Msk                  (0x01UL << I2C0_MBCR_SDAMCE_Pos)                        /*!< I2C0 MBCR: SDAMCE Mask                  */
+#define I2C0_MBCR_SCLMCE_Pos                  1                                                       /*!< I2C0 MBCR: SCLMCE Position              */
+#define I2C0_MBCR_SCLMCE_Msk                  (0x01UL << I2C0_MBCR_SCLMCE_Pos)                        /*!< I2C0 MBCR: SCLMCE Mask                  */
+#define I2C0_MBCR_SDAO_Pos                    2                                                       /*!< I2C0 MBCR: SDAO Position                */
+#define I2C0_MBCR_SDAO_Msk                    (0x01UL << I2C0_MBCR_SDAO_Pos)                          /*!< I2C0 MBCR: SDAO Mask                    */
+#define I2C0_MBCR_SCLO_Pos                    3                                                       /*!< I2C0 MBCR: SCLO Position                */
+#define I2C0_MBCR_SCLO_Msk                    (0x01UL << I2C0_MBCR_SCLO_Pos)                          /*!< I2C0 MBCR: SCLO Mask                    */
+#define I2C0_MBCR_SDAS_Pos                    8                                                       /*!< I2C0 MBCR: SDAS Position                */
+#define I2C0_MBCR_SDAS_Msk                    (0x01UL << I2C0_MBCR_SDAS_Pos)                          /*!< I2C0 MBCR: SDAS Mask                    */
+#define I2C0_MBCR_SCLS_Pos                    9                                                       /*!< I2C0 MBCR: SCLS Position                */
+#define I2C0_MBCR_SCLS_Msk                    (0x01UL << I2C0_MBCR_SCLS_Pos)                          /*!< I2C0 MBCR: SCLS Mask                    */
+
+
+/* ================================================================================ */
+/* ================          struct 'I2C1' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  I2C1_CR  ---------------------------------- */
+#define I2C1_CR_STARTCn_Pos                   0                                                       /*!< I2C1 CR: STARTCn Position               */
+#define I2C1_CR_STARTCn_Msk                   (0x01UL << I2C1_CR_STARTCn_Pos)                         /*!< I2C1 CR: STARTCn Mask                   */
+#define I2C1_CR_STOPCn_Pos                    1                                                       /*!< I2C1 CR: STOPCn Position                */
+#define I2C1_CR_STOPCn_Msk                    (0x01UL << I2C1_CR_STOPCn_Pos)                          /*!< I2C1 CR: STOPCn Mask                    */
+#define I2C1_CR_IMASTERn_Pos                  2                                                       /*!< I2C1 CR: IMASTERn Position              */
+#define I2C1_CR_IMASTERn_Msk                  (0x01UL << I2C1_CR_IMASTERn_Pos)                        /*!< I2C1 CR: IMASTERn Mask                  */
+#define I2C1_CR_ACKnEN_Pos                    3                                                       /*!< I2C1 CR: ACKnEN Position                */
+#define I2C1_CR_ACKnEN_Msk                    (0x01UL << I2C1_CR_ACKnEN_Pos)                          /*!< I2C1 CR: ACKnEN Mask                    */
+#define I2C1_CR_I2CnIFLAG_Pos                 4                                                       /*!< I2C1 CR: I2CnIFLAG Position             */
+#define I2C1_CR_I2CnIFLAG_Msk                 (0x01UL << I2C1_CR_I2CnIFLAG_Pos)                       /*!< I2C1 CR: I2CnIFLAG Mask                 */
+#define I2C1_CR_I2CnIEN_Pos                   5                                                       /*!< I2C1 CR: I2CnIEN Position               */
+#define I2C1_CR_I2CnIEN_Msk                   (0x01UL << I2C1_CR_I2CnIEN_Pos)                         /*!< I2C1 CR: I2CnIEN Mask                   */
+#define I2C1_CR_TXDLYENBn_Pos                 6                                                       /*!< I2C1 CR: TXDLYENBn Position             */
+#define I2C1_CR_TXDLYENBn_Msk                 (0x01UL << I2C1_CR_TXDLYENBn_Pos)                       /*!< I2C1 CR: TXDLYENBn Mask                 */
+#define I2C1_CR_I2CnEN_Pos                    7                                                       /*!< I2C1 CR: I2CnEN Position                */
+#define I2C1_CR_I2CnEN_Msk                    (0x01UL << I2C1_CR_I2CnEN_Pos)                          /*!< I2C1 CR: I2CnEN Mask                    */
+#define I2C1_CR_INTERVAL_Pos                  8                                                       /*!< I2C1 CR: INTERVAL Position              */
+#define I2C1_CR_INTERVAL_Msk                  (0x03UL << I2C1_CR_INTERVAL_Pos)                        /*!< I2C1 CR: INTERVAL Mask                  */
+
+/* -----------------------------------  I2C1_ST  ---------------------------------- */
+#define I2C1_ST_RXACKn_Pos                    0                                                       /*!< I2C1 ST: RXACKn Position                */
+#define I2C1_ST_RXACKn_Msk                    (0x01UL << I2C1_ST_RXACKn_Pos)                          /*!< I2C1 ST: RXACKn Mask                    */
+#define I2C1_ST_TMODEn_Pos                    1                                                       /*!< I2C1 ST: TMODEn Position                */
+#define I2C1_ST_TMODEn_Msk                    (0x01UL << I2C1_ST_TMODEn_Pos)                          /*!< I2C1 ST: TMODEn Mask                    */
+#define I2C1_ST_BUSYn_Pos                     2                                                       /*!< I2C1 ST: BUSYn Position                 */
+#define I2C1_ST_BUSYn_Msk                     (0x01UL << I2C1_ST_BUSYn_Pos)                           /*!< I2C1 ST: BUSYn Mask                     */
+#define I2C1_ST_MLOSTn_Pos                    3                                                       /*!< I2C1 ST: MLOSTn Position                */
+#define I2C1_ST_MLOSTn_Msk                    (0x01UL << I2C1_ST_MLOSTn_Pos)                          /*!< I2C1 ST: MLOSTn Mask                    */
+#define I2C1_ST_SSELn_Pos                     4                                                       /*!< I2C1 ST: SSELn Position                 */
+#define I2C1_ST_SSELn_Msk                     (0x01UL << I2C1_ST_SSELn_Pos)                           /*!< I2C1 ST: SSELn Mask                     */
+#define I2C1_ST_STOPDn_Pos                    5                                                       /*!< I2C1 ST: STOPDn Position                */
+#define I2C1_ST_STOPDn_Msk                    (0x01UL << I2C1_ST_STOPDn_Pos)                          /*!< I2C1 ST: STOPDn Mask                    */
+#define I2C1_ST_TENDn_Pos                     6                                                       /*!< I2C1 ST: TENDn Position                 */
+#define I2C1_ST_TENDn_Msk                     (0x01UL << I2C1_ST_TENDn_Pos)                           /*!< I2C1 ST: TENDn Mask                     */
+#define I2C1_ST_GCALLn_Pos                    7                                                       /*!< I2C1 ST: GCALLn Position                */
+#define I2C1_ST_GCALLn_Msk                    (0x01UL << I2C1_ST_GCALLn_Pos)                          /*!< I2C1 ST: GCALLn Mask                    */
+#define I2C1_ST_SLT_Pos                       31                                                      /*!< I2C1 ST: SLT Position                   */
+#define I2C1_ST_SLT_Msk                       (0x01UL << I2C1_ST_SLT_Pos)                             /*!< I2C1 ST: SLT Mask                       */
+
+/* ----------------------------------  I2C1_SAR1  --------------------------------- */
+#define I2C1_SAR1_GCALLnEN_Pos                0                                                       /*!< I2C1 SAR1: GCALLnEN Position            */
+#define I2C1_SAR1_GCALLnEN_Msk                (0x01UL << I2C1_SAR1_GCALLnEN_Pos)                      /*!< I2C1 SAR1: GCALLnEN Mask                */
+#define I2C1_SAR1_SLAn_Pos                    1                                                       /*!< I2C1 SAR1: SLAn Position                */
+#define I2C1_SAR1_SLAn_Msk                    (0x7fUL << I2C1_SAR1_SLAn_Pos)                          /*!< I2C1 SAR1: SLAn Mask                    */
+
+/* ----------------------------------  I2C1_SAR2  --------------------------------- */
+#define I2C1_SAR2_GCALLnEN_Pos                0                                                       /*!< I2C1 SAR2: GCALLnEN Position            */
+#define I2C1_SAR2_GCALLnEN_Msk                (0x01UL << I2C1_SAR2_GCALLnEN_Pos)                      /*!< I2C1 SAR2: GCALLnEN Mask                */
+#define I2C1_SAR2_SLAn_Pos                    1                                                       /*!< I2C1 SAR2: SLAn Position                */
+#define I2C1_SAR2_SLAn_Msk                    (0x7fUL << I2C1_SAR2_SLAn_Pos)                          /*!< I2C1 SAR2: SLAn Mask                    */
+
+/* -----------------------------------  I2C1_DR  ---------------------------------- */
+#define I2C1_DR_DATA_Pos                      0                                                       /*!< I2C1 DR: DATA Position                  */
+#define I2C1_DR_DATA_Msk                      (0x000000ffUL << I2C1_DR_DATA_Pos)                      /*!< I2C1 DR: DATA Mask                      */
+
+/* ----------------------------------  I2C1_SDHR  --------------------------------- */
+#define I2C1_SDHR_HLDT_Pos                    0                                                       /*!< I2C1 SDHR: HLDT Position                */
+#define I2C1_SDHR_HLDT_Msk                    (0x00000fffUL << I2C1_SDHR_HLDT_Pos)                    /*!< I2C1 SDHR: HLDT Mask                    */
+
+/* ----------------------------------  I2C1_SCLR  --------------------------------- */
+#define I2C1_SCLR_SCLL_Pos                    0                                                       /*!< I2C1 SCLR: SCLL Position                */
+#define I2C1_SCLR_SCLL_Msk                    (0x00000fffUL << I2C1_SCLR_SCLL_Pos)                    /*!< I2C1 SCLR: SCLL Mask                    */
+
+/* ----------------------------------  I2C1_SCHR  --------------------------------- */
+#define I2C1_SCHR_SCLH_Pos                    0                                                       /*!< I2C1 SCHR: SCLH Position                */
+#define I2C1_SCHR_SCLH_Msk                    (0x00000fffUL << I2C1_SCHR_SCLH_Pos)                    /*!< I2C1 SCHR: SCLH Mask                    */
+
+/* ---------------------------------  I2C1_SLTCR  --------------------------------- */
+#define I2C1_SLTCR_SLTEN_Pos                  0                                                       /*!< I2C1 SLTCR: SLTEN Position              */
+#define I2C1_SLTCR_SLTEN_Msk                  (0x01UL << I2C1_SLTCR_SLTEN_Pos)                        /*!< I2C1 SLTCR: SLTEN Mask                  */
+#define I2C1_SLTCR_SLTINT_Pos                 1                                                       /*!< I2C1 SLTCR: SLTINT Position             */
+#define I2C1_SLTCR_SLTINT_Msk                 (0x01UL << I2C1_SLTCR_SLTINT_Pos)                       /*!< I2C1 SLTCR: SLTINT Mask                 */
+
+/* ---------------------------------  I2C1_SLTPDR  -------------------------------- */
+#define I2C1_SLTPDR_PDATA_Pos                 0                                                       /*!< I2C1 SLTPDR: PDATA Position             */
+#define I2C1_SLTPDR_PDATA_Msk                 (0x00ffffffUL << I2C1_SLTPDR_PDATA_Pos)                 /*!< I2C1 SLTPDR: PDATA Mask                 */
+
+/* ----------------------------------  I2C1_MBCR  --------------------------------- */
+#define I2C1_MBCR_SDAMCE_Pos                  0                                                       /*!< I2C1 MBCR: SDAMCE Position              */
+#define I2C1_MBCR_SDAMCE_Msk                  (0x01UL << I2C1_MBCR_SDAMCE_Pos)                        /*!< I2C1 MBCR: SDAMCE Mask                  */
+#define I2C1_MBCR_SCLMCE_Pos                  1                                                       /*!< I2C1 MBCR: SCLMCE Position              */
+#define I2C1_MBCR_SCLMCE_Msk                  (0x01UL << I2C1_MBCR_SCLMCE_Pos)                        /*!< I2C1 MBCR: SCLMCE Mask                  */
+#define I2C1_MBCR_SDAO_Pos                    2                                                       /*!< I2C1 MBCR: SDAO Position                */
+#define I2C1_MBCR_SDAO_Msk                    (0x01UL << I2C1_MBCR_SDAO_Pos)                          /*!< I2C1 MBCR: SDAO Mask                    */
+#define I2C1_MBCR_SCLO_Pos                    3                                                       /*!< I2C1 MBCR: SCLO Position                */
+#define I2C1_MBCR_SCLO_Msk                    (0x01UL << I2C1_MBCR_SCLO_Pos)                          /*!< I2C1 MBCR: SCLO Mask                    */
+#define I2C1_MBCR_SDAS_Pos                    8                                                       /*!< I2C1 MBCR: SDAS Position                */
+#define I2C1_MBCR_SDAS_Msk                    (0x01UL << I2C1_MBCR_SDAS_Pos)                          /*!< I2C1 MBCR: SDAS Mask                    */
+#define I2C1_MBCR_SCLS_Pos                    9                                                       /*!< I2C1 MBCR: SCLS Position                */
+#define I2C1_MBCR_SCLS_Msk                    (0x01UL << I2C1_MBCR_SCLS_Pos)                          /*!< I2C1 MBCR: SCLS Mask                    */
+
+
+/* ================================================================================ */
+/* ================         struct 'SPI20' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  SPI20_TDR  --------------------------------- */
+#define SPI20_TDR_TDR_Pos                     0                                                       /*!< SPI20 TDR: TDR Position                 */
+#define SPI20_TDR_TDR_Msk                     (0x0001ffffUL << SPI20_TDR_TDR_Pos)                     /*!< SPI20 TDR: TDR Mask                     */
+
+/* ----------------------------------  SPI20_RDR  --------------------------------- */
+#define SPI20_RDR_RDR_Pos                     0                                                       /*!< SPI20 RDR: RDR Position                 */
+#define SPI20_RDR_RDR_Msk                     (0x0001ffffUL << SPI20_RDR_RDR_Pos)                     /*!< SPI20 RDR: RDR Mask                     */
+
+/* ----------------------------------  SPI20_CR  ---------------------------------- */
+#define SPI20_CR_BITSZ_Pos                    0                                                       /*!< SPI20 CR: BITSZ Position                */
+#define SPI20_CR_BITSZ_Msk                    (0x03UL << SPI20_CR_BITSZ_Pos)                          /*!< SPI20 CR: BITSZ Mask                    */
+#define SPI20_CR_CPOL_Pos                     2                                                       /*!< SPI20 CR: CPOL Position                 */
+#define SPI20_CR_CPOL_Msk                     (0x01UL << SPI20_CR_CPOL_Pos)                           /*!< SPI20 CR: CPOL Mask                     */
+#define SPI20_CR_CPHA_Pos                     3                                                       /*!< SPI20 CR: CPHA Position                 */
+#define SPI20_CR_CPHA_Msk                     (0x01UL << SPI20_CR_CPHA_Pos)                           /*!< SPI20 CR: CPHA Mask                     */
+#define SPI20_CR_MSBF_Pos                     4                                                       /*!< SPI20 CR: MSBF Position                 */
+#define SPI20_CR_MSBF_Msk                     (0x01UL << SPI20_CR_MSBF_Pos)                           /*!< SPI20 CR: MSBF Mask                     */
+#define SPI20_CR_MS_Pos                       5                                                       /*!< SPI20 CR: MS Position                   */
+#define SPI20_CR_MS_Msk                       (0x01UL << SPI20_CR_MS_Pos)                             /*!< SPI20 CR: MS Mask                       */
+#define SPI20_CR_SSPOL_Pos                    8                                                       /*!< SPI20 CR: SSPOL Position                */
+#define SPI20_CR_SSPOL_Msk                    (0x01UL << SPI20_CR_SSPOL_Pos)                          /*!< SPI20 CR: SSPOL Mask                    */
+#define SPI20_CR_SSMO_Pos                     9                                                       /*!< SPI20 CR: SSMO Position                 */
+#define SPI20_CR_SSMO_Msk                     (0x01UL << SPI20_CR_SSMO_Pos)                           /*!< SPI20 CR: SSMO Mask                     */
+#define SPI20_CR_SSMASK_Pos                   10                                                      /*!< SPI20 CR: SSMASK Position               */
+#define SPI20_CR_SSMASK_Msk                   (0x01UL << SPI20_CR_SSMASK_Pos)                         /*!< SPI20 CR: SSMASK Mask                   */
+#define SPI20_CR_LBE_Pos                      11                                                      /*!< SPI20 CR: LBE Position                  */
+#define SPI20_CR_LBE_Msk                      (0x01UL << SPI20_CR_LBE_Pos)                            /*!< SPI20 CR: LBE Mask                      */
+#define SPI20_CR_SSOUT_Pos                    12                                                      /*!< SPI20 CR: SSOUT Position                */
+#define SPI20_CR_SSOUT_Msk                    (0x01UL << SPI20_CR_SSOUT_Pos)                          /*!< SPI20 CR: SSOUT Mask                    */
+#define SPI20_CR_SSMOD_Pos                    13                                                      /*!< SPI20 CR: SSMOD Position                */
+#define SPI20_CR_SSMOD_Msk                    (0x01UL << SPI20_CR_SSMOD_Pos)                          /*!< SPI20 CR: SSMOD Mask                    */
+#define SPI20_CR_RXIE_Pos                     14                                                      /*!< SPI20 CR: RXIE Position                 */
+#define SPI20_CR_RXIE_Msk                     (0x01UL << SPI20_CR_RXIE_Pos)                           /*!< SPI20 CR: RXIE Mask                     */
+#define SPI20_CR_TXIE_Pos                     15                                                      /*!< SPI20 CR: TXIE Position                 */
+#define SPI20_CR_TXIE_Msk                     (0x01UL << SPI20_CR_TXIE_Pos)                           /*!< SPI20 CR: TXIE Mask                     */
+#define SPI20_CR_SSCIE_Pos                    16                                                      /*!< SPI20 CR: SSCIE Position                */
+#define SPI20_CR_SSCIE_Msk                    (0x01UL << SPI20_CR_SSCIE_Pos)                          /*!< SPI20 CR: SSCIE Mask                    */
+#define SPI20_CR_RXDIE_Pos                    17                                                      /*!< SPI20 CR: RXDIE Position                */
+#define SPI20_CR_RXDIE_Msk                    (0x01UL << SPI20_CR_RXDIE_Pos)                          /*!< SPI20 CR: RXDIE Mask                    */
+#define SPI20_CR_TXDIE_Pos                    18                                                      /*!< SPI20 CR: TXDIE Position                */
+#define SPI20_CR_TXDIE_Msk                    (0x01UL << SPI20_CR_TXDIE_Pos)                          /*!< SPI20 CR: TXDIE Mask                    */
+#define SPI20_CR_RXBC_Pos                     19                                                      /*!< SPI20 CR: RXBC Position                 */
+#define SPI20_CR_RXBC_Msk                     (0x01UL << SPI20_CR_RXBC_Pos)                           /*!< SPI20 CR: RXBC Mask                     */
+#define SPI20_CR_TXBC_Pos                     20                                                      /*!< SPI20 CR: TXBC Position                 */
+#define SPI20_CR_TXBC_Msk                     (0x01UL << SPI20_CR_TXBC_Pos)                           /*!< SPI20 CR: TXBC Mask                     */
+
+/* ----------------------------------  SPI20_SR  ---------------------------------- */
+#define SPI20_SR_RRDY_Pos                     0                                                       /*!< SPI20 SR: RRDY Position                 */
+#define SPI20_SR_RRDY_Msk                     (0x01UL << SPI20_SR_RRDY_Pos)                           /*!< SPI20 SR: RRDY Mask                     */
+#define SPI20_SR_TRDY_Pos                     1                                                       /*!< SPI20 SR: TRDY Position                 */
+#define SPI20_SR_TRDY_Msk                     (0x01UL << SPI20_SR_TRDY_Pos)                           /*!< SPI20 SR: TRDY Mask                     */
+#define SPI20_SR_TXIDLE_Pos                   2                                                       /*!< SPI20 SR: TXIDLE Position               */
+#define SPI20_SR_TXIDLE_Msk                   (0x01UL << SPI20_SR_TXIDLE_Pos)                         /*!< SPI20 SR: TXIDLE Mask                   */
+#define SPI20_SR_UDRF_Pos                     3                                                       /*!< SPI20 SR: UDRF Position                 */
+#define SPI20_SR_UDRF_Msk                     (0x01UL << SPI20_SR_UDRF_Pos)                           /*!< SPI20 SR: UDRF Mask                     */
+#define SPI20_SR_OVRF_Pos                     4                                                       /*!< SPI20 SR: OVRF Position                 */
+#define SPI20_SR_OVRF_Msk                     (0x01UL << SPI20_SR_OVRF_Pos)                           /*!< SPI20 SR: OVRF Mask                     */
+#define SPI20_SR_SSON_Pos                     5                                                       /*!< SPI20 SR: SSON Position                 */
+#define SPI20_SR_SSON_Msk                     (0x01UL << SPI20_SR_SSON_Pos)                           /*!< SPI20 SR: SSON Mask                     */
+#define SPI20_SR_SSDET_Pos                    6                                                       /*!< SPI20 SR: SSDET Position                */
+#define SPI20_SR_SSDET_Msk                    (0x01UL << SPI20_SR_SSDET_Pos)                          /*!< SPI20 SR: SSDET Mask                    */
+#define SPI20_SR_SBUSY_Pos                    7                                                       /*!< SPI20 SR: SBUSY Position                */
+#define SPI20_SR_SBUSY_Msk                    (0x01UL << SPI20_SR_SBUSY_Pos)                          /*!< SPI20 SR: SBUSY Mask                    */
+#define SPI20_SR_RXDMAF_Pos                   8                                                       /*!< SPI20 SR: RXDMAF Position               */
+#define SPI20_SR_RXDMAF_Msk                   (0x01UL << SPI20_SR_RXDMAF_Pos)                         /*!< SPI20 SR: RXDMAF Mask                   */
+#define SPI20_SR_TXDMAF_Pos                   9                                                       /*!< SPI20 SR: TXDMAF Position               */
+#define SPI20_SR_TXDMAF_Msk                   (0x01UL << SPI20_SR_TXDMAF_Pos)                         /*!< SPI20 SR: TXDMAF Mask                   */
+
+/* ----------------------------------  SPI20_BR  ---------------------------------- */
+#define SPI20_BR_BR_Pos                       0                                                       /*!< SPI20 BR: BR Position                   */
+#define SPI20_BR_BR_Msk                       (0x0000ffffUL << SPI20_BR_BR_Pos)                       /*!< SPI20 BR: BR Mask                       */
+
+/* ----------------------------------  SPI20_EN  ---------------------------------- */
+#define SPI20_EN_ENABLE_Pos                   0                                                       /*!< SPI20 EN: ENABLE Position               */
+#define SPI20_EN_ENABLE_Msk                   (0x01UL << SPI20_EN_ENABLE_Pos)                         /*!< SPI20 EN: ENABLE Mask                   */
+
+/* ----------------------------------  SPI20_LR  ---------------------------------- */
+#define SPI20_LR_STL_Pos                      0                                                       /*!< SPI20 LR: STL Position                  */
+#define SPI20_LR_STL_Msk                      (0x000000ffUL << SPI20_LR_STL_Pos)                      /*!< SPI20 LR: STL Mask                      */
+#define SPI20_LR_BTL_Pos                      8                                                       /*!< SPI20 LR: BTL Position                  */
+#define SPI20_LR_BTL_Msk                      (0x000000ffUL << SPI20_LR_BTL_Pos)                      /*!< SPI20 LR: BTL Mask                      */
+#define SPI20_LR_SPL_Pos                      16                                                      /*!< SPI20 LR: SPL Position                  */
+#define SPI20_LR_SPL_Msk                      (0x000000ffUL << SPI20_LR_SPL_Pos)                      /*!< SPI20 LR: SPL Mask                      */
+
+
+/* ================================================================================ */
+/* ================         struct 'SPI21' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  SPI21_RDR  --------------------------------- */
+#define SPI21_RDR_RDR_Pos                     0                                                       /*!< SPI21 RDR: RDR Position                 */
+#define SPI21_RDR_RDR_Msk                     (0x0001ffffUL << SPI21_RDR_RDR_Pos)                     /*!< SPI21 RDR: RDR Mask                     */
+
+/* ----------------------------------  SPI21_TDR  --------------------------------- */
+#define SPI21_TDR_TDR_Pos                     0                                                       /*!< SPI21 TDR: TDR Position                 */
+#define SPI21_TDR_TDR_Msk                     (0x0001ffffUL << SPI21_TDR_TDR_Pos)                     /*!< SPI21 TDR: TDR Mask                     */
+
+/* ----------------------------------  SPI21_CR  ---------------------------------- */
+#define SPI21_CR_BITSZ_Pos                    0                                                       /*!< SPI21 CR: BITSZ Position                */
+#define SPI21_CR_BITSZ_Msk                    (0x03UL << SPI21_CR_BITSZ_Pos)                          /*!< SPI21 CR: BITSZ Mask                    */
+#define SPI21_CR_CPOL_Pos                     2                                                       /*!< SPI21 CR: CPOL Position                 */
+#define SPI21_CR_CPOL_Msk                     (0x01UL << SPI21_CR_CPOL_Pos)                           /*!< SPI21 CR: CPOL Mask                     */
+#define SPI21_CR_CPHA_Pos                     3                                                       /*!< SPI21 CR: CPHA Position                 */
+#define SPI21_CR_CPHA_Msk                     (0x01UL << SPI21_CR_CPHA_Pos)                           /*!< SPI21 CR: CPHA Mask                     */
+#define SPI21_CR_MSBF_Pos                     4                                                       /*!< SPI21 CR: MSBF Position                 */
+#define SPI21_CR_MSBF_Msk                     (0x01UL << SPI21_CR_MSBF_Pos)                           /*!< SPI21 CR: MSBF Mask                     */
+#define SPI21_CR_MS_Pos                       5                                                       /*!< SPI21 CR: MS Position                   */
+#define SPI21_CR_MS_Msk                       (0x01UL << SPI21_CR_MS_Pos)                             /*!< SPI21 CR: MS Mask                       */
+#define SPI21_CR_SSPOL_Pos                    8                                                       /*!< SPI21 CR: SSPOL Position                */
+#define SPI21_CR_SSPOL_Msk                    (0x01UL << SPI21_CR_SSPOL_Pos)                          /*!< SPI21 CR: SSPOL Mask                    */
+#define SPI21_CR_SSMO_Pos                     9                                                       /*!< SPI21 CR: SSMO Position                 */
+#define SPI21_CR_SSMO_Msk                     (0x01UL << SPI21_CR_SSMO_Pos)                           /*!< SPI21 CR: SSMO Mask                     */
+#define SPI21_CR_SSMASK_Pos                   10                                                      /*!< SPI21 CR: SSMASK Position               */
+#define SPI21_CR_SSMASK_Msk                   (0x01UL << SPI21_CR_SSMASK_Pos)                         /*!< SPI21 CR: SSMASK Mask                   */
+#define SPI21_CR_LBE_Pos                      11                                                      /*!< SPI21 CR: LBE Position                  */
+#define SPI21_CR_LBE_Msk                      (0x01UL << SPI21_CR_LBE_Pos)                            /*!< SPI21 CR: LBE Mask                      */
+#define SPI21_CR_SSOUT_Pos                    12                                                      /*!< SPI21 CR: SSOUT Position                */
+#define SPI21_CR_SSOUT_Msk                    (0x01UL << SPI21_CR_SSOUT_Pos)                          /*!< SPI21 CR: SSOUT Mask                    */
+#define SPI21_CR_SSMOD_Pos                    13                                                      /*!< SPI21 CR: SSMOD Position                */
+#define SPI21_CR_SSMOD_Msk                    (0x01UL << SPI21_CR_SSMOD_Pos)                          /*!< SPI21 CR: SSMOD Mask                    */
+#define SPI21_CR_RXIE_Pos                     14                                                      /*!< SPI21 CR: RXIE Position                 */
+#define SPI21_CR_RXIE_Msk                     (0x01UL << SPI21_CR_RXIE_Pos)                           /*!< SPI21 CR: RXIE Mask                     */
+#define SPI21_CR_TXIE_Pos                     15                                                      /*!< SPI21 CR: TXIE Position                 */
+#define SPI21_CR_TXIE_Msk                     (0x01UL << SPI21_CR_TXIE_Pos)                           /*!< SPI21 CR: TXIE Mask                     */
+#define SPI21_CR_SSCIE_Pos                    16                                                      /*!< SPI21 CR: SSCIE Position                */
+#define SPI21_CR_SSCIE_Msk                    (0x01UL << SPI21_CR_SSCIE_Pos)                          /*!< SPI21 CR: SSCIE Mask                    */
+#define SPI21_CR_RXDIE_Pos                    17                                                      /*!< SPI21 CR: RXDIE Position                */
+#define SPI21_CR_RXDIE_Msk                    (0x01UL << SPI21_CR_RXDIE_Pos)                          /*!< SPI21 CR: RXDIE Mask                    */
+#define SPI21_CR_TXDIE_Pos                    18                                                      /*!< SPI21 CR: TXDIE Position                */
+#define SPI21_CR_TXDIE_Msk                    (0x01UL << SPI21_CR_TXDIE_Pos)                          /*!< SPI21 CR: TXDIE Mask                    */
+#define SPI21_CR_RXBC_Pos                     19                                                      /*!< SPI21 CR: RXBC Position                 */
+#define SPI21_CR_RXBC_Msk                     (0x01UL << SPI21_CR_RXBC_Pos)                           /*!< SPI21 CR: RXBC Mask                     */
+#define SPI21_CR_TXBC_Pos                     20                                                      /*!< SPI21 CR: TXBC Position                 */
+#define SPI21_CR_TXBC_Msk                     (0x01UL << SPI21_CR_TXBC_Pos)                           /*!< SPI21 CR: TXBC Mask                     */
+
+/* ----------------------------------  SPI21_SR  ---------------------------------- */
+#define SPI21_SR_RRDY_Pos                     0                                                       /*!< SPI21 SR: RRDY Position                 */
+#define SPI21_SR_RRDY_Msk                     (0x01UL << SPI21_SR_RRDY_Pos)                           /*!< SPI21 SR: RRDY Mask                     */
+#define SPI21_SR_TRDY_Pos                     1                                                       /*!< SPI21 SR: TRDY Position                 */
+#define SPI21_SR_TRDY_Msk                     (0x01UL << SPI21_SR_TRDY_Pos)                           /*!< SPI21 SR: TRDY Mask                     */
+#define SPI21_SR_TXIDLE_Pos                   2                                                       /*!< SPI21 SR: TXIDLE Position               */
+#define SPI21_SR_TXIDLE_Msk                   (0x01UL << SPI21_SR_TXIDLE_Pos)                         /*!< SPI21 SR: TXIDLE Mask                   */
+#define SPI21_SR_UDRF_Pos                     3                                                       /*!< SPI21 SR: UDRF Position                 */
+#define SPI21_SR_UDRF_Msk                     (0x01UL << SPI21_SR_UDRF_Pos)                           /*!< SPI21 SR: UDRF Mask                     */
+#define SPI21_SR_OVRF_Pos                     4                                                       /*!< SPI21 SR: OVRF Position                 */
+#define SPI21_SR_OVRF_Msk                     (0x01UL << SPI21_SR_OVRF_Pos)                           /*!< SPI21 SR: OVRF Mask                     */
+#define SPI21_SR_SSON_Pos                     5                                                       /*!< SPI21 SR: SSON Position                 */
+#define SPI21_SR_SSON_Msk                     (0x01UL << SPI21_SR_SSON_Pos)                           /*!< SPI21 SR: SSON Mask                     */
+#define SPI21_SR_SSDET_Pos                    6                                                       /*!< SPI21 SR: SSDET Position                */
+#define SPI21_SR_SSDET_Msk                    (0x01UL << SPI21_SR_SSDET_Pos)                          /*!< SPI21 SR: SSDET Mask                    */
+#define SPI21_SR_SBUSY_Pos                    7                                                       /*!< SPI21 SR: SBUSY Position                */
+#define SPI21_SR_SBUSY_Msk                    (0x01UL << SPI21_SR_SBUSY_Pos)                          /*!< SPI21 SR: SBUSY Mask                    */
+#define SPI21_SR_RXDMAF_Pos                   8                                                       /*!< SPI21 SR: RXDMAF Position               */
+#define SPI21_SR_RXDMAF_Msk                   (0x01UL << SPI21_SR_RXDMAF_Pos)                         /*!< SPI21 SR: RXDMAF Mask                   */
+#define SPI21_SR_TXDMAF_Pos                   9                                                       /*!< SPI21 SR: TXDMAF Position               */
+#define SPI21_SR_TXDMAF_Msk                   (0x01UL << SPI21_SR_TXDMAF_Pos)                         /*!< SPI21 SR: TXDMAF Mask                   */
+
+/* ----------------------------------  SPI21_BR  ---------------------------------- */
+#define SPI21_BR_BR_Pos                       0                                                       /*!< SPI21 BR: BR Position                   */
+#define SPI21_BR_BR_Msk                       (0x0000ffffUL << SPI21_BR_BR_Pos)                       /*!< SPI21 BR: BR Mask                       */
+
+/* ----------------------------------  SPI21_EN  ---------------------------------- */
+#define SPI21_EN_ENABLE_Pos                   0                                                       /*!< SPI21 EN: ENABLE Position               */
+#define SPI21_EN_ENABLE_Msk                   (0x01UL << SPI21_EN_ENABLE_Pos)                         /*!< SPI21 EN: ENABLE Mask                   */
+
+/* ----------------------------------  SPI21_LR  ---------------------------------- */
+#define SPI21_LR_STL_Pos                      0                                                       /*!< SPI21 LR: STL Position                  */
+#define SPI21_LR_STL_Msk                      (0x000000ffUL << SPI21_LR_STL_Pos)                      /*!< SPI21 LR: STL Mask                      */
+#define SPI21_LR_BTL_Pos                      8                                                       /*!< SPI21 LR: BTL Position                  */
+#define SPI21_LR_BTL_Msk                      (0x000000ffUL << SPI21_LR_BTL_Pos)                      /*!< SPI21 LR: BTL Mask                      */
+#define SPI21_LR_SPL_Pos                      16                                                      /*!< SPI21 LR: SPL Position                  */
+#define SPI21_LR_SPL_Msk                      (0x000000ffUL << SPI21_LR_SPL_Pos)                      /*!< SPI21 LR: SPL Mask                      */
+
+
+/* ================================================================================ */
+/* ================          struct 'ADC' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  ADC_CR  ----------------------------------- */
+#define ADC_CR_ADSEL_Pos                      0                                                       /*!< ADC CR: ADSEL Position                  */
+#define ADC_CR_ADSEL_Msk                      (0x0fUL << ADC_CR_ADSEL_Pos)                            /*!< ADC CR: ADSEL Mask                      */
+#define ADC_CR_ADCIFLAG_Pos                   4                                                       /*!< ADC CR: ADCIFLAG Position               */
+#define ADC_CR_ADCIFLAG_Msk                   (0x01UL << ADC_CR_ADCIFLAG_Pos)                         /*!< ADC CR: ADCIFLAG Mask                   */
+#define ADC_CR_ADCIEN_Pos                     5                                                       /*!< ADC CR: ADCIEN Position                 */
+#define ADC_CR_ADCIEN_Msk                     (0x01UL << ADC_CR_ADCIEN_Pos)                           /*!< ADC CR: ADCIEN Mask                     */
+#define ADC_CR_ADST_Pos                       8                                                       /*!< ADC CR: ADST Position                   */
+#define ADC_CR_ADST_Msk                       (0x01UL << ADC_CR_ADST_Pos)                             /*!< ADC CR: ADST Mask                       */
+#define ADC_CR_REFSEL_Pos                     10                                                      /*!< ADC CR: REFSEL Position                 */
+#define ADC_CR_REFSEL_Msk                     (0x01UL << ADC_CR_REFSEL_Pos)                           /*!< ADC CR: REFSEL Mask                     */
+#define ADC_CR_TRIG_Pos                       11                                                      /*!< ADC CR: TRIG Position                   */
+#define ADC_CR_TRIG_Msk                       (0x07UL << ADC_CR_TRIG_Pos)                             /*!< ADC CR: TRIG Mask                       */
+#define ADC_CR_ADCEN_Pos                      15                                                      /*!< ADC CR: ADCEN Position                  */
+#define ADC_CR_ADCEN_Msk                      (0x01UL << ADC_CR_ADCEN_Pos)                            /*!< ADC CR: ADCEN Mask                      */
+
+/* -----------------------------------  ADC_DR  ----------------------------------- */
+#define ADC_DR_ADDATA_Pos                     0                                                       /*!< ADC DR: ADDATA Position                 */
+#define ADC_DR_ADDATA_Msk                     (0x00000fffUL << ADC_DR_ADDATA_Pos)                     /*!< ADC DR: ADDATA Mask                     */
+
+/* ----------------------------------  ADC_PREDR  --------------------------------- */
+#define ADC_PREDR_PRED_Pos                    0                                                       /*!< ADC PREDR: PRED Position                */
+#define ADC_PREDR_PRED_Msk                    (0x3fUL << ADC_PREDR_PRED_Pos)                          /*!< ADC PREDR: PRED Mask                    */
+
+
+/* ================================================================================ */
+/* ================         struct 'TOUCH' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ------------------------------  TOUCH_SUM_CH0_F0  ------------------------------ */
+#define TOUCH_SUM_CH0_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH0_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH0_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH0_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH0_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH0_F1  ------------------------------ */
+#define TOUCH_SUM_CH0_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH0_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH0_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH0_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH0_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH1_F0  ------------------------------ */
+#define TOUCH_SUM_CH1_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH1_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH1_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH1_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH1_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH1_F1  ------------------------------ */
+#define TOUCH_SUM_CH1_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH1_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH1_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH1_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH1_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH2_F0  ------------------------------ */
+#define TOUCH_SUM_CH2_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH2_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH2_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH2_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH2_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH2_F1  ------------------------------ */
+#define TOUCH_SUM_CH2_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH2_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH2_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH2_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH2_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH3_F0  ------------------------------ */
+#define TOUCH_SUM_CH3_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH3_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH3_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH3_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH3_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH3_F1  ------------------------------ */
+#define TOUCH_SUM_CH3_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH3_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH3_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH3_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH3_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH4_F0  ------------------------------ */
+#define TOUCH_SUM_CH4_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH4_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH4_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH4_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH4_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH4_F1  ------------------------------ */
+#define TOUCH_SUM_CH4_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH4_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH4_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH4_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH4_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH5_F0  ------------------------------ */
+#define TOUCH_SUM_CH5_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH5_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH5_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH5_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH5_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH5_F1  ------------------------------ */
+#define TOUCH_SUM_CH5_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH5_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH5_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH5_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH5_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH6_F0  ------------------------------ */
+#define TOUCH_SUM_CH6_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH6_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH6_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH6_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH6_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH6_F1  ------------------------------ */
+#define TOUCH_SUM_CH6_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH6_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH6_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH6_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH6_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH7_F0  ------------------------------ */
+#define TOUCH_SUM_CH7_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH7_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH7_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH7_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH7_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH7_F1  ------------------------------ */
+#define TOUCH_SUM_CH7_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH7_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH7_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH7_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH7_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH8_F0  ------------------------------ */
+#define TOUCH_SUM_CH8_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH8_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH8_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH8_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH8_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH8_F1  ------------------------------ */
+#define TOUCH_SUM_CH8_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH8_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH8_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH8_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH8_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH9_F0  ------------------------------ */
+#define TOUCH_SUM_CH9_F0_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH9_F0: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH9_F0_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH9_F0_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH9_F0: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH9_F1  ------------------------------ */
+#define TOUCH_SUM_CH9_F1_SUM_CH_DATA_Pos      0                                                       /*!< TOUCH SUM_CH9_F1: SUM_CH_DATA Position  */
+#define TOUCH_SUM_CH9_F1_SUM_CH_DATA_Msk      (0x0000ffffUL << TOUCH_SUM_CH9_F1_SUM_CH_DATA_Pos)      /*!< TOUCH SUM_CH9_F1: SUM_CH_DATA Mask      */
+
+/* ------------------------------  TOUCH_SUM_CH10_F0  ----------------------------- */
+#define TOUCH_SUM_CH10_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH10_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH10_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH10_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH10_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH10_F1  ----------------------------- */
+#define TOUCH_SUM_CH10_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH10_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH10_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH10_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH10_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH11_F0  ----------------------------- */
+#define TOUCH_SUM_CH11_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH11_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH11_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH11_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH11_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH11_F1  ----------------------------- */
+#define TOUCH_SUM_CH11_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH11_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH11_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH11_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH11_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH12_F0  ----------------------------- */
+#define TOUCH_SUM_CH12_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH12_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH12_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH12_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH12_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH12_F1  ----------------------------- */
+#define TOUCH_SUM_CH12_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH12_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH12_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH12_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH12_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH13_F0  ----------------------------- */
+#define TOUCH_SUM_CH13_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH13_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH13_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH13_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH13_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH13_F1  ----------------------------- */
+#define TOUCH_SUM_CH13_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH13_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH13_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH13_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH13_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH14_F0  ----------------------------- */
+#define TOUCH_SUM_CH14_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH14_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH14_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH14_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH14_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH14_F1  ----------------------------- */
+#define TOUCH_SUM_CH14_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH14_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH14_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH14_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH14_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH15_F0  ----------------------------- */
+#define TOUCH_SUM_CH15_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH15_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH15_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH15_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH15_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH15_F1  ----------------------------- */
+#define TOUCH_SUM_CH15_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH15_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH15_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH15_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH15_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH16_F0  ----------------------------- */
+#define TOUCH_SUM_CH16_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH16_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH16_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH16_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH16_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH16_F1  ----------------------------- */
+#define TOUCH_SUM_CH16_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH16_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH16_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH16_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH16_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH17_F0  ----------------------------- */
+#define TOUCH_SUM_CH17_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH17_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH17_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH17_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH17_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH17_F1  ----------------------------- */
+#define TOUCH_SUM_CH17_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH17_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH17_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH17_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH17_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH18_F0  ----------------------------- */
+#define TOUCH_SUM_CH18_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH18_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH18_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH18_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH18_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH18_F1  ----------------------------- */
+#define TOUCH_SUM_CH18_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH18_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH18_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH18_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH18_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH19_F0  ----------------------------- */
+#define TOUCH_SUM_CH19_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH19_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH19_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH19_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH19_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH19_F1  ----------------------------- */
+#define TOUCH_SUM_CH19_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH19_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH19_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH19_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH19_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH20_F0  ----------------------------- */
+#define TOUCH_SUM_CH20_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH20_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH20_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH20_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH20_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH20_F1  ----------------------------- */
+#define TOUCH_SUM_CH20_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH20_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH20_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH20_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH20_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH21_F0  ----------------------------- */
+#define TOUCH_SUM_CH21_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH21_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH21_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH21_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH21_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH21_F1  ----------------------------- */
+#define TOUCH_SUM_CH21_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH21_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH21_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH21_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH21_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH22_F0  ----------------------------- */
+#define TOUCH_SUM_CH22_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH22_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH22_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH22_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH22_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH22_F1  ----------------------------- */
+#define TOUCH_SUM_CH22_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH22_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH22_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH22_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH22_F1: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH23_F0  ----------------------------- */
+#define TOUCH_SUM_CH23_F0_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH23_F0: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH23_F0_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH23_F0_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH23_F0: SUM_CH_DATA Mask     */
+
+/* ------------------------------  TOUCH_SUM_CH23_F1  ----------------------------- */
+#define TOUCH_SUM_CH23_F1_SUM_CH_DATA_Pos     0                                                       /*!< TOUCH SUM_CH23_F1: SUM_CH_DATA Position */
+#define TOUCH_SUM_CH23_F1_SUM_CH_DATA_Msk     (0x0000ffffUL << TOUCH_SUM_CH23_F1_SUM_CH_DATA_Pos)     /*!< TOUCH SUM_CH23_F1: SUM_CH_DATA Mask     */
+
+/* ---------------------------------  TOUCH_SCO0  --------------------------------- */
+#define TOUCH_SCO0_SCO_Pos                    0                                                       /*!< TOUCH SCO0: SCO Position                */
+#define TOUCH_SCO0_SCO_Msk                    (0x00001fffUL << TOUCH_SCO0_SCO_Pos)                    /*!< TOUCH SCO0: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO1  --------------------------------- */
+#define TOUCH_SCO1_SCO_Pos                    0                                                       /*!< TOUCH SCO1: SCO Position                */
+#define TOUCH_SCO1_SCO_Msk                    (0x00001fffUL << TOUCH_SCO1_SCO_Pos)                    /*!< TOUCH SCO1: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO2  --------------------------------- */
+#define TOUCH_SCO2_SCO_Pos                    0                                                       /*!< TOUCH SCO2: SCO Position                */
+#define TOUCH_SCO2_SCO_Msk                    (0x00001fffUL << TOUCH_SCO2_SCO_Pos)                    /*!< TOUCH SCO2: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO3  --------------------------------- */
+#define TOUCH_SCO3_SCO_Pos                    0                                                       /*!< TOUCH SCO3: SCO Position                */
+#define TOUCH_SCO3_SCO_Msk                    (0x00001fffUL << TOUCH_SCO3_SCO_Pos)                    /*!< TOUCH SCO3: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO4  --------------------------------- */
+#define TOUCH_SCO4_SCO_Pos                    0                                                       /*!< TOUCH SCO4: SCO Position                */
+#define TOUCH_SCO4_SCO_Msk                    (0x00001fffUL << TOUCH_SCO4_SCO_Pos)                    /*!< TOUCH SCO4: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO5  --------------------------------- */
+#define TOUCH_SCO5_SCO_Pos                    0                                                       /*!< TOUCH SCO5: SCO Position                */
+#define TOUCH_SCO5_SCO_Msk                    (0x00001fffUL << TOUCH_SCO5_SCO_Pos)                    /*!< TOUCH SCO5: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO6  --------------------------------- */
+#define TOUCH_SCO6_SCO_Pos                    0                                                       /*!< TOUCH SCO6: SCO Position                */
+#define TOUCH_SCO6_SCO_Msk                    (0x00001fffUL << TOUCH_SCO6_SCO_Pos)                    /*!< TOUCH SCO6: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO7  --------------------------------- */
+#define TOUCH_SCO7_SCO_Pos                    0                                                       /*!< TOUCH SCO7: SCO Position                */
+#define TOUCH_SCO7_SCO_Msk                    (0x00001fffUL << TOUCH_SCO7_SCO_Pos)                    /*!< TOUCH SCO7: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO8  --------------------------------- */
+#define TOUCH_SCO8_SCO_Pos                    0                                                       /*!< TOUCH SCO8: SCO Position                */
+#define TOUCH_SCO8_SCO_Msk                    (0x00001fffUL << TOUCH_SCO8_SCO_Pos)                    /*!< TOUCH SCO8: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO9  --------------------------------- */
+#define TOUCH_SCO9_SCO_Pos                    0                                                       /*!< TOUCH SCO9: SCO Position                */
+#define TOUCH_SCO9_SCO_Msk                    (0x00001fffUL << TOUCH_SCO9_SCO_Pos)                    /*!< TOUCH SCO9: SCO Mask                    */
+
+/* ---------------------------------  TOUCH_SCO10  -------------------------------- */
+#define TOUCH_SCO10_SCO_Pos                   0                                                       /*!< TOUCH SCO10: SCO Position               */
+#define TOUCH_SCO10_SCO_Msk                   (0x00001fffUL << TOUCH_SCO10_SCO_Pos)                   /*!< TOUCH SCO10: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO11  -------------------------------- */
+#define TOUCH_SCO11_SCO_Pos                   0                                                       /*!< TOUCH SCO11: SCO Position               */
+#define TOUCH_SCO11_SCO_Msk                   (0x00001fffUL << TOUCH_SCO11_SCO_Pos)                   /*!< TOUCH SCO11: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO12  -------------------------------- */
+#define TOUCH_SCO12_SCO_Pos                   0                                                       /*!< TOUCH SCO12: SCO Position               */
+#define TOUCH_SCO12_SCO_Msk                   (0x00001fffUL << TOUCH_SCO12_SCO_Pos)                   /*!< TOUCH SCO12: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO13  -------------------------------- */
+#define TOUCH_SCO13_SCO_Pos                   0                                                       /*!< TOUCH SCO13: SCO Position               */
+#define TOUCH_SCO13_SCO_Msk                   (0x00001fffUL << TOUCH_SCO13_SCO_Pos)                   /*!< TOUCH SCO13: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO14  -------------------------------- */
+#define TOUCH_SCO14_SCO_Pos                   0                                                       /*!< TOUCH SCO14: SCO Position               */
+#define TOUCH_SCO14_SCO_Msk                   (0x00001fffUL << TOUCH_SCO14_SCO_Pos)                   /*!< TOUCH SCO14: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO15  -------------------------------- */
+#define TOUCH_SCO15_SCO_Pos                   0                                                       /*!< TOUCH SCO15: SCO Position               */
+#define TOUCH_SCO15_SCO_Msk                   (0x00001fffUL << TOUCH_SCO15_SCO_Pos)                   /*!< TOUCH SCO15: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO16  -------------------------------- */
+#define TOUCH_SCO16_SCO_Pos                   0                                                       /*!< TOUCH SCO16: SCO Position               */
+#define TOUCH_SCO16_SCO_Msk                   (0x00001fffUL << TOUCH_SCO16_SCO_Pos)                   /*!< TOUCH SCO16: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO17  -------------------------------- */
+#define TOUCH_SCO17_SCO_Pos                   0                                                       /*!< TOUCH SCO17: SCO Position               */
+#define TOUCH_SCO17_SCO_Msk                   (0x00001fffUL << TOUCH_SCO17_SCO_Pos)                   /*!< TOUCH SCO17: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO18  -------------------------------- */
+#define TOUCH_SCO18_SCO_Pos                   0                                                       /*!< TOUCH SCO18: SCO Position               */
+#define TOUCH_SCO18_SCO_Msk                   (0x00001fffUL << TOUCH_SCO18_SCO_Pos)                   /*!< TOUCH SCO18: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO19  -------------------------------- */
+#define TOUCH_SCO19_SCO_Pos                   0                                                       /*!< TOUCH SCO19: SCO Position               */
+#define TOUCH_SCO19_SCO_Msk                   (0x00001fffUL << TOUCH_SCO19_SCO_Pos)                   /*!< TOUCH SCO19: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO20  -------------------------------- */
+#define TOUCH_SCO20_SCO_Pos                   0                                                       /*!< TOUCH SCO20: SCO Position               */
+#define TOUCH_SCO20_SCO_Msk                   (0x00001fffUL << TOUCH_SCO20_SCO_Pos)                   /*!< TOUCH SCO20: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO21  -------------------------------- */
+#define TOUCH_SCO21_SCO_Pos                   0                                                       /*!< TOUCH SCO21: SCO Position               */
+#define TOUCH_SCO21_SCO_Msk                   (0x00001fffUL << TOUCH_SCO21_SCO_Pos)                   /*!< TOUCH SCO21: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO22  -------------------------------- */
+#define TOUCH_SCO22_SCO_Pos                   0                                                       /*!< TOUCH SCO22: SCO Position               */
+#define TOUCH_SCO22_SCO_Msk                   (0x00001fffUL << TOUCH_SCO22_SCO_Pos)                   /*!< TOUCH SCO22: SCO Mask                   */
+
+/* ---------------------------------  TOUCH_SCO23  -------------------------------- */
+#define TOUCH_SCO23_SCO_Pos                   0                                                       /*!< TOUCH SCO23: SCO Position               */
+#define TOUCH_SCO23_SCO_Msk                   (0x00001fffUL << TOUCH_SCO23_SCO_Pos)                   /*!< TOUCH SCO23: SCO Mask                   */
+
+/* ----------------------------------  TOUCH_CON  --------------------------------- */
+#define TOUCH_CON_TS_RUN_Pos                  0                                                       /*!< TOUCH CON: TS_RUN Position              */
+#define TOUCH_CON_TS_RUN_Msk                  (0x01UL << TOUCH_CON_TS_RUN_Pos)                        /*!< TOUCH CON: TS_RUN Mask                  */
+#define TOUCH_CON_TS_IF_Pos                   2                                                       /*!< TOUCH CON: TS_IF Position               */
+#define TOUCH_CON_TS_IF_Msk                   (0x01UL << TOUCH_CON_TS_IF_Pos)                         /*!< TOUCH CON: TS_IF Mask                   */
+#define TOUCH_CON_LED_FLAG_Pos                3                                                       /*!< TOUCH CON: LED_FLAG Position            */
+#define TOUCH_CON_LED_FLAG_Msk                (0x01UL << TOUCH_CON_LED_FLAG_Pos)                      /*!< TOUCH CON: LED_FLAG Mask                */
+
+/* ---------------------------------  TOUCH_MODE  --------------------------------- */
+#define TOUCH_MODE_PORT_Pos                   0                                                       /*!< TOUCH MODE: PORT Position               */
+#define TOUCH_MODE_PORT_Msk                   (0x03UL << TOUCH_MODE_PORT_Pos)                         /*!< TOUCH MODE: PORT Mask                   */
+#define TOUCH_MODE_MODE_Pos                   2                                                       /*!< TOUCH MODE: MODE Position               */
+#define TOUCH_MODE_MODE_Msk                   (0x07UL << TOUCH_MODE_MODE_Pos)                         /*!< TOUCH MODE: MODE Mask                   */
+#define TOUCH_MODE_S1_SWEEP_FIX_Pos           5                                                       /*!< TOUCH MODE: S1_SWEEP_FIX Position       */
+#define TOUCH_MODE_S1_SWEEP_FIX_Msk           (0x01UL << TOUCH_MODE_S1_SWEEP_FIX_Pos)                 /*!< TOUCH MODE: S1_SWEEP_FIX Mask           */
+#define TOUCH_MODE_SC_GAIN_Pos                6                                                       /*!< TOUCH MODE: SC_GAIN Position            */
+#define TOUCH_MODE_SC_GAIN_Msk                (0x01UL << TOUCH_MODE_SC_GAIN_Pos)                      /*!< TOUCH MODE: SC_GAIN Mask                */
+#define TOUCH_MODE_PORT_OPT_Pos               7                                                       /*!< TOUCH MODE: PORT_OPT Position           */
+#define TOUCH_MODE_PORT_OPT_Msk               (0x01UL << TOUCH_MODE_PORT_OPT_Pos)                     /*!< TOUCH MODE: PORT_OPT Mask               */
+#define TOUCH_MODE_LED_FLAG_EN_Pos            8                                                       /*!< TOUCH MODE: LED_FLAG_EN Position        */
+#define TOUCH_MODE_LED_FLAG_EN_Msk            (0x01UL << TOUCH_MODE_LED_FLAG_EN_Pos)                  /*!< TOUCH MODE: LED_FLAG_EN Mask            */
+#define TOUCH_MODE_SADJ_OPT_Pos               15                                                      /*!< TOUCH MODE: SADJ_OPT Position           */
+#define TOUCH_MODE_SADJ_OPT_Msk               (0x01UL << TOUCH_MODE_SADJ_OPT_Pos)                     /*!< TOUCH MODE: SADJ_OPT Mask               */
+
+/* --------------------------------  TOUCH_SUM_CNT  ------------------------------- */
+#define TOUCH_SUM_CNT_TS_SUM_CNT_Pos          0                                                       /*!< TOUCH SUM_CNT: TS_SUM_CNT Position      */
+#define TOUCH_SUM_CNT_TS_SUM_CNT_Msk          (0x000000ffUL << TOUCH_SUM_CNT_TS_SUM_CNT_Pos)          /*!< TOUCH SUM_CNT: TS_SUM_CNT Mask          */
+
+/* --------------------------------  TOUCH_CH_SEL  -------------------------------- */
+#define TOUCH_CH_SEL_CH0_SEL_Pos              0                                                       /*!< TOUCH CH_SEL: CH0_SEL Position          */
+#define TOUCH_CH_SEL_CH0_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH0_SEL_Pos)                    /*!< TOUCH CH_SEL: CH0_SEL Mask              */
+#define TOUCH_CH_SEL_CH1_SEL_Pos              1                                                       /*!< TOUCH CH_SEL: CH1_SEL Position          */
+#define TOUCH_CH_SEL_CH1_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH1_SEL_Pos)                    /*!< TOUCH CH_SEL: CH1_SEL Mask              */
+#define TOUCH_CH_SEL_CH2_SEL_Pos              2                                                       /*!< TOUCH CH_SEL: CH2_SEL Position          */
+#define TOUCH_CH_SEL_CH2_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH2_SEL_Pos)                    /*!< TOUCH CH_SEL: CH2_SEL Mask              */
+#define TOUCH_CH_SEL_CH3_SEL_Pos              3                                                       /*!< TOUCH CH_SEL: CH3_SEL Position          */
+#define TOUCH_CH_SEL_CH3_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH3_SEL_Pos)                    /*!< TOUCH CH_SEL: CH3_SEL Mask              */
+#define TOUCH_CH_SEL_CH4_SEL_Pos              4                                                       /*!< TOUCH CH_SEL: CH4_SEL Position          */
+#define TOUCH_CH_SEL_CH4_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH4_SEL_Pos)                    /*!< TOUCH CH_SEL: CH4_SEL Mask              */
+#define TOUCH_CH_SEL_CH5_SEL_Pos              5                                                       /*!< TOUCH CH_SEL: CH5_SEL Position          */
+#define TOUCH_CH_SEL_CH5_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH5_SEL_Pos)                    /*!< TOUCH CH_SEL: CH5_SEL Mask              */
+#define TOUCH_CH_SEL_CH6_SEL_Pos              6                                                       /*!< TOUCH CH_SEL: CH6_SEL Position          */
+#define TOUCH_CH_SEL_CH6_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH6_SEL_Pos)                    /*!< TOUCH CH_SEL: CH6_SEL Mask              */
+#define TOUCH_CH_SEL_CH7_SEL_Pos              7                                                       /*!< TOUCH CH_SEL: CH7_SEL Position          */
+#define TOUCH_CH_SEL_CH7_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH7_SEL_Pos)                    /*!< TOUCH CH_SEL: CH7_SEL Mask              */
+#define TOUCH_CH_SEL_CH8_SEL_Pos              8                                                       /*!< TOUCH CH_SEL: CH8_SEL Position          */
+#define TOUCH_CH_SEL_CH8_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH8_SEL_Pos)                    /*!< TOUCH CH_SEL: CH8_SEL Mask              */
+#define TOUCH_CH_SEL_CH9_SEL_Pos              9                                                       /*!< TOUCH CH_SEL: CH9_SEL Position          */
+#define TOUCH_CH_SEL_CH9_SEL_Msk              (0x01UL << TOUCH_CH_SEL_CH9_SEL_Pos)                    /*!< TOUCH CH_SEL: CH9_SEL Mask              */
+#define TOUCH_CH_SEL_CH10_SEL_Pos             10                                                      /*!< TOUCH CH_SEL: CH10_SEL Position         */
+#define TOUCH_CH_SEL_CH10_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH10_SEL_Pos)                   /*!< TOUCH CH_SEL: CH10_SEL Mask             */
+#define TOUCH_CH_SEL_CH11_SEL_Pos             11                                                      /*!< TOUCH CH_SEL: CH11_SEL Position         */
+#define TOUCH_CH_SEL_CH11_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH11_SEL_Pos)                   /*!< TOUCH CH_SEL: CH11_SEL Mask             */
+#define TOUCH_CH_SEL_CH12_SEL_Pos             12                                                      /*!< TOUCH CH_SEL: CH12_SEL Position         */
+#define TOUCH_CH_SEL_CH12_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH12_SEL_Pos)                   /*!< TOUCH CH_SEL: CH12_SEL Mask             */
+#define TOUCH_CH_SEL_CH13_SEL_Pos             13                                                      /*!< TOUCH CH_SEL: CH13_SEL Position         */
+#define TOUCH_CH_SEL_CH13_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH13_SEL_Pos)                   /*!< TOUCH CH_SEL: CH13_SEL Mask             */
+#define TOUCH_CH_SEL_CH14_SEL_Pos             14                                                      /*!< TOUCH CH_SEL: CH14_SEL Position         */
+#define TOUCH_CH_SEL_CH14_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH14_SEL_Pos)                   /*!< TOUCH CH_SEL: CH14_SEL Mask             */
+#define TOUCH_CH_SEL_CH15_SEL_Pos             15                                                      /*!< TOUCH CH_SEL: CH15_SEL Position         */
+#define TOUCH_CH_SEL_CH15_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH15_SEL_Pos)                   /*!< TOUCH CH_SEL: CH15_SEL Mask             */
+#define TOUCH_CH_SEL_CH16_SEL_Pos             16                                                      /*!< TOUCH CH_SEL: CH16_SEL Position         */
+#define TOUCH_CH_SEL_CH16_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH16_SEL_Pos)                   /*!< TOUCH CH_SEL: CH16_SEL Mask             */
+#define TOUCH_CH_SEL_CH17_SEL_Pos             17                                                      /*!< TOUCH CH_SEL: CH17_SEL Position         */
+#define TOUCH_CH_SEL_CH17_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH17_SEL_Pos)                   /*!< TOUCH CH_SEL: CH17_SEL Mask             */
+#define TOUCH_CH_SEL_CH18_SEL_Pos             18                                                      /*!< TOUCH CH_SEL: CH18_SEL Position         */
+#define TOUCH_CH_SEL_CH18_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH18_SEL_Pos)                   /*!< TOUCH CH_SEL: CH18_SEL Mask             */
+#define TOUCH_CH_SEL_CH19_SEL_Pos             19                                                      /*!< TOUCH CH_SEL: CH19_SEL Position         */
+#define TOUCH_CH_SEL_CH19_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH19_SEL_Pos)                   /*!< TOUCH CH_SEL: CH19_SEL Mask             */
+#define TOUCH_CH_SEL_CH20_SEL_Pos             20                                                      /*!< TOUCH CH_SEL: CH20_SEL Position         */
+#define TOUCH_CH_SEL_CH20_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH20_SEL_Pos)                   /*!< TOUCH CH_SEL: CH20_SEL Mask             */
+#define TOUCH_CH_SEL_CH21_SEL_Pos             21                                                      /*!< TOUCH CH_SEL: CH21_SEL Position         */
+#define TOUCH_CH_SEL_CH21_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH21_SEL_Pos)                   /*!< TOUCH CH_SEL: CH21_SEL Mask             */
+#define TOUCH_CH_SEL_CH22_SEL_Pos             22                                                      /*!< TOUCH CH_SEL: CH22_SEL Position         */
+#define TOUCH_CH_SEL_CH22_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH22_SEL_Pos)                   /*!< TOUCH CH_SEL: CH22_SEL Mask             */
+#define TOUCH_CH_SEL_CH23_SEL_Pos             23                                                      /*!< TOUCH CH_SEL: CH23_SEL Position         */
+#define TOUCH_CH_SEL_CH23_SEL_Msk             (0x01UL << TOUCH_CH_SEL_CH23_SEL_Pos)                   /*!< TOUCH CH_SEL: CH23_SEL Mask             */
+
+/* -------------------------------  TOUCH_S1_WIDTH  ------------------------------- */
+#define TOUCH_S1_WIDTH_TS_S1_WIDTH_Pos        0                                                       /*!< TOUCH S1_WIDTH: TS_S1_WIDTH Position    */
+#define TOUCH_S1_WIDTH_TS_S1_WIDTH_Msk        (0x000000ffUL << TOUCH_S1_WIDTH_TS_S1_WIDTH_Pos)        /*!< TOUCH S1_WIDTH: TS_S1_WIDTH Mask        */
+
+/* --------------------------------  TOUCH_SLP_CON  ------------------------------- */
+#define TOUCH_SLP_CON_SLP_R_Pos               0                                                       /*!< TOUCH SLP_CON: SLP_R Position           */
+#define TOUCH_SLP_CON_SLP_R_Msk               (0x0fUL << TOUCH_SLP_CON_SLP_R_Pos)                     /*!< TOUCH SLP_CON: SLP_R Mask               */
+#define TOUCH_SLP_CON_SLP_C_Pos               4                                                       /*!< TOUCH SLP_CON: SLP_C Position           */
+#define TOUCH_SLP_CON_SLP_C_Msk               (0x0fUL << TOUCH_SLP_CON_SLP_C_Pos)                     /*!< TOUCH SLP_CON: SLP_C Mask               */
+
+/* ---------------------------------  TOUCH_TRIM  --------------------------------- */
+#define TOUCH_TRIM_IB_TRIM_Pos                0                                                       /*!< TOUCH TRIM: IB_TRIM Position            */
+#define TOUCH_TRIM_IB_TRIM_Msk                (0x0fUL << TOUCH_TRIM_IB_TRIM_Pos)                      /*!< TOUCH TRIM: IB_TRIM Mask                */
+#define TOUCH_TRIM_HC_Pos                     4                                                       /*!< TOUCH TRIM: HC Position                 */
+#define TOUCH_TRIM_HC_Msk                     (0x01UL << TOUCH_TRIM_HC_Pos)                           /*!< TOUCH TRIM: HC Mask                     */
+
+/* --------------------------------  TOUCH_CLK_CFG  ------------------------------- */
+#define TOUCH_CLK_CFG_TSCLKDIV_Pos            0                                                       /*!< TOUCH CLK_CFG: TSCLKDIV Position        */
+#define TOUCH_CLK_CFG_TSCLKDIV_Msk            (0x07UL << TOUCH_CLK_CFG_TSCLKDIV_Pos)                  /*!< TOUCH CLK_CFG: TSCLKDIV Mask            */
+#define TOUCH_CLK_CFG_TSCLKOE_Pos             3                                                       /*!< TOUCH CLK_CFG: TSCLKOE Position         */
+#define TOUCH_CLK_CFG_TSCLKOE_Msk             (0x01UL << TOUCH_CLK_CFG_TSCLKOE_Pos)                   /*!< TOUCH CLK_CFG: TSCLKOE Mask             */
+#define TOUCH_CLK_CFG_CLKSEL_Pos              4                                                       /*!< TOUCH CLK_CFG: CLKSEL Position          */
+#define TOUCH_CLK_CFG_CLKSEL_Msk              (0x03UL << TOUCH_CLK_CFG_CLKSEL_Pos)                    /*!< TOUCH CLK_CFG: CLKSEL Mask              */
+#define TOUCH_CLK_CFG_SCLK_EN_Pos             7                                                       /*!< TOUCH CLK_CFG: SCLK_EN Position         */
+#define TOUCH_CLK_CFG_SCLK_EN_Msk             (0x01UL << TOUCH_CLK_CFG_SCLK_EN_Pos)                   /*!< TOUCH CLK_CFG: SCLK_EN Mask             */
+
+/* -------------------------------  TOUCH_TRIM_OSC  ------------------------------- */
+#define TOUCH_TRIM_OSC_TRIM_OSC_Pos           0                                                       /*!< TOUCH TRIM_OSC: TRIM_OSC Position       */
+#define TOUCH_TRIM_OSC_TRIM_OSC_Msk           (0x000000ffUL << TOUCH_TRIM_OSC_TRIM_OSC_Pos)           /*!< TOUCH TRIM_OSC: TRIM_OSC Mask           */
+
+/* -------------------------------  TOUCH_DELTA_OSC  ------------------------------ */
+#define TOUCH_DELTA_OSC_TS_DELTA_OSC_Pos      0                                                       /*!< TOUCH DELTA_OSC: TS_DELTA_OSC Position  */
+#define TOUCH_DELTA_OSC_TS_DELTA_OSC_Msk      (0x3fUL << TOUCH_DELTA_OSC_TS_DELTA_OSC_Pos)            /*!< TOUCH DELTA_OSC: TS_DELTA_OSC Mask      */
+
+/* ---------------------------------  TOUCH_TLED  --------------------------------- */
+#define TOUCH_TLED_TLED_Pos                   0                                                       /*!< TOUCH TLED: TLED Position               */
+#define TOUCH_TLED_TLED_Msk                   (0x00000fffUL << TOUCH_TLED_TLED_Pos)                   /*!< TOUCH TLED: TLED Mask                   */
+
+/* ----------------------------------  TOUCH_VHS  --------------------------------- */
+#define TOUCH_VHS_VHS_Pos                     0                                                       /*!< TOUCH VHS: VHS Position                 */
+#define TOUCH_VHS_VHS_Msk                     (0x000003ffUL << TOUCH_VHS_VHS_Pos)                     /*!< TOUCH VHS: VHS Mask                     */
+
+/* ---------------------------------  TOUCH_VREF  --------------------------------- */
+#define TOUCH_VREF_VREF_Pos                   0                                                       /*!< TOUCH VREF: VREF Position               */
+#define TOUCH_VREF_VREF_Msk                   (0x000003ffUL << TOUCH_VREF_VREF_Pos)                   /*!< TOUCH VREF: VREF Mask                   */
+
+/* -------------------------------  TOUCH_SHLD_CON  ------------------------------- */
+#define TOUCH_SHLD_CON_SHLD_Chx_Pos           0                                                       /*!< TOUCH SHLD_CON: SHLD_Chx Position       */
+#define TOUCH_SHLD_CON_SHLD_Chx_Msk           (0x00ffffffUL << TOUCH_SHLD_CON_SHLD_Chx_Pos)           /*!< TOUCH SHLD_CON: SHLD_Chx Mask           */
+#define TOUCH_SHLD_CON_SHLD_EN_Pos            24                                                      /*!< TOUCH SHLD_CON: SHLD_EN Position        */
+#define TOUCH_SHLD_CON_SHLD_EN_Msk            (0x01UL << TOUCH_SHLD_CON_SHLD_EN_Pos)                  /*!< TOUCH SHLD_CON: SHLD_EN Mask            */
+#define TOUCH_SHLD_CON_MODE_Pos               29                                                      /*!< TOUCH SHLD_CON: MODE Position           */
+#define TOUCH_SHLD_CON_MODE_Msk               (0x01UL << TOUCH_SHLD_CON_MODE_Pos)                     /*!< TOUCH SHLD_CON: MODE Mask               */
+#define TOUCH_SHLD_CON_MESH_ADD_Pos           30                                                      /*!< TOUCH SHLD_CON: MESH_ADD Position       */
+#define TOUCH_SHLD_CON_MESH_ADD_Msk           (0x01UL << TOUCH_SHLD_CON_MESH_ADD_Pos)                 /*!< TOUCH SHLD_CON: MESH_ADD Mask           */
+#define TOUCH_SHLD_CON_MESH_Pos               31                                                      /*!< TOUCH SHLD_CON: MESH Position           */
+#define TOUCH_SHLD_CON_MESH_Msk               (0x01UL << TOUCH_SHLD_CON_MESH_Pos)                     /*!< TOUCH SHLD_CON: MESH Mask               */
+
+
+/* ================================================================================ */
+/* ================          struct 'LED' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  LED_COMOE  --------------------------------- */
+#define LED_COMOE_COMOE0_Pos                  0                                                       /*!< LED COMOE: COMOE0 Position              */
+#define LED_COMOE_COMOE0_Msk                  (0x01UL << LED_COMOE_COMOE0_Pos)                        /*!< LED COMOE: COMOE0 Mask                  */
+#define LED_COMOE_COMOE1_Pos                  1                                                       /*!< LED COMOE: COMOE1 Position              */
+#define LED_COMOE_COMOE1_Msk                  (0x01UL << LED_COMOE_COMOE1_Pos)                        /*!< LED COMOE: COMOE1 Mask                  */
+#define LED_COMOE_COMOE2_Pos                  2                                                       /*!< LED COMOE: COMOE2 Position              */
+#define LED_COMOE_COMOE2_Msk                  (0x01UL << LED_COMOE_COMOE2_Pos)                        /*!< LED COMOE: COMOE2 Mask                  */
+#define LED_COMOE_COMOE3_Pos                  3                                                       /*!< LED COMOE: COMOE3 Position              */
+#define LED_COMOE_COMOE3_Msk                  (0x01UL << LED_COMOE_COMOE3_Pos)                        /*!< LED COMOE: COMOE3 Mask                  */
+#define LED_COMOE_COMOE4_Pos                  4                                                       /*!< LED COMOE: COMOE4 Position              */
+#define LED_COMOE_COMOE4_Msk                  (0x01UL << LED_COMOE_COMOE4_Pos)                        /*!< LED COMOE: COMOE4 Mask                  */
+#define LED_COMOE_COMOE5_Pos                  5                                                       /*!< LED COMOE: COMOE5 Position              */
+#define LED_COMOE_COMOE5_Msk                  (0x01UL << LED_COMOE_COMOE5_Pos)                        /*!< LED COMOE: COMOE5 Mask                  */
+#define LED_COMOE_COMOE6_Pos                  6                                                       /*!< LED COMOE: COMOE6 Position              */
+#define LED_COMOE_COMOE6_Msk                  (0x01UL << LED_COMOE_COMOE6_Pos)                        /*!< LED COMOE: COMOE6 Mask                  */
+#define LED_COMOE_COMOE7_Pos                  7                                                       /*!< LED COMOE: COMOE7 Position              */
+#define LED_COMOE_COMOE7_Msk                  (0x01UL << LED_COMOE_COMOE7_Pos)                        /*!< LED COMOE: COMOE7 Mask                  */
+#define LED_COMOE_COMOE8_Pos                  8                                                       /*!< LED COMOE: COMOE8 Position              */
+#define LED_COMOE_COMOE8_Msk                  (0x01UL << LED_COMOE_COMOE8_Pos)                        /*!< LED COMOE: COMOE8 Mask                  */
+#define LED_COMOE_COMOE9_Pos                  9                                                       /*!< LED COMOE: COMOE9 Position              */
+#define LED_COMOE_COMOE9_Msk                  (0x01UL << LED_COMOE_COMOE9_Pos)                        /*!< LED COMOE: COMOE9 Mask                  */
+#define LED_COMOE_COMOE10_Pos                 10                                                      /*!< LED COMOE: COMOE10 Position             */
+#define LED_COMOE_COMOE10_Msk                 (0x01UL << LED_COMOE_COMOE10_Pos)                       /*!< LED COMOE: COMOE10 Mask                 */
+#define LED_COMOE_COMOE11_Pos                 11                                                      /*!< LED COMOE: COMOE11 Position             */
+#define LED_COMOE_COMOE11_Msk                 (0x01UL << LED_COMOE_COMOE11_Pos)                       /*!< LED COMOE: COMOE11 Mask                 */
+#define LED_COMOE_COMOE12_Pos                 12                                                      /*!< LED COMOE: COMOE12 Position             */
+#define LED_COMOE_COMOE12_Msk                 (0x01UL << LED_COMOE_COMOE12_Pos)                       /*!< LED COMOE: COMOE12 Mask                 */
+
+/* ----------------------------------  LED_SEGOE  --------------------------------- */
+#define LED_SEGOE_SEGOE0_Pos                  0                                                       /*!< LED SEGOE: SEGOE0 Position              */
+#define LED_SEGOE_SEGOE0_Msk                  (0x01UL << LED_SEGOE_SEGOE0_Pos)                        /*!< LED SEGOE: SEGOE0 Mask                  */
+#define LED_SEGOE_SEGOE1_Pos                  1                                                       /*!< LED SEGOE: SEGOE1 Position              */
+#define LED_SEGOE_SEGOE1_Msk                  (0x01UL << LED_SEGOE_SEGOE1_Pos)                        /*!< LED SEGOE: SEGOE1 Mask                  */
+#define LED_SEGOE_SEGOE2_Pos                  2                                                       /*!< LED SEGOE: SEGOE2 Position              */
+#define LED_SEGOE_SEGOE2_Msk                  (0x01UL << LED_SEGOE_SEGOE2_Pos)                        /*!< LED SEGOE: SEGOE2 Mask                  */
+#define LED_SEGOE_SEGOE3_Pos                  3                                                       /*!< LED SEGOE: SEGOE3 Position              */
+#define LED_SEGOE_SEGOE3_Msk                  (0x01UL << LED_SEGOE_SEGOE3_Pos)                        /*!< LED SEGOE: SEGOE3 Mask                  */
+#define LED_SEGOE_SEGOE4_Pos                  4                                                       /*!< LED SEGOE: SEGOE4 Position              */
+#define LED_SEGOE_SEGOE4_Msk                  (0x01UL << LED_SEGOE_SEGOE4_Pos)                        /*!< LED SEGOE: SEGOE4 Mask                  */
+#define LED_SEGOE_SEGOE5_Pos                  5                                                       /*!< LED SEGOE: SEGOE5 Position              */
+#define LED_SEGOE_SEGOE5_Msk                  (0x01UL << LED_SEGOE_SEGOE5_Pos)                        /*!< LED SEGOE: SEGOE5 Mask                  */
+#define LED_SEGOE_SEGOE6_Pos                  6                                                       /*!< LED SEGOE: SEGOE6 Position              */
+#define LED_SEGOE_SEGOE6_Msk                  (0x01UL << LED_SEGOE_SEGOE6_Pos)                        /*!< LED SEGOE: SEGOE6 Mask                  */
+#define LED_SEGOE_SEGOE7_Pos                  7                                                       /*!< LED SEGOE: SEGOE7 Position              */
+#define LED_SEGOE_SEGOE7_Msk                  (0x01UL << LED_SEGOE_SEGOE7_Pos)                        /*!< LED SEGOE: SEGOE7 Mask                  */
+#define LED_SEGOE_SEGOE8_Pos                  8                                                       /*!< LED SEGOE: SEGOE8 Position              */
+#define LED_SEGOE_SEGOE8_Msk                  (0x01UL << LED_SEGOE_SEGOE8_Pos)                        /*!< LED SEGOE: SEGOE8 Mask                  */
+#define LED_SEGOE_SEGOE9_Pos                  9                                                       /*!< LED SEGOE: SEGOE9 Position              */
+#define LED_SEGOE_SEGOE9_Msk                  (0x01UL << LED_SEGOE_SEGOE9_Pos)                        /*!< LED SEGOE: SEGOE9 Mask                  */
+#define LED_SEGOE_SEGOE10_Pos                 10                                                      /*!< LED SEGOE: SEGOE10 Position             */
+#define LED_SEGOE_SEGOE10_Msk                 (0x01UL << LED_SEGOE_SEGOE10_Pos)                       /*!< LED SEGOE: SEGOE10 Mask                 */
+#define LED_SEGOE_SEGOE11_Pos                 11                                                      /*!< LED SEGOE: SEGOE11 Position             */
+#define LED_SEGOE_SEGOE11_Msk                 (0x01UL << LED_SEGOE_SEGOE11_Pos)                       /*!< LED SEGOE: SEGOE11 Mask                 */
+#define LED_SEGOE_SEGOE12_Pos                 12                                                      /*!< LED SEGOE: SEGOE12 Position             */
+#define LED_SEGOE_SEGOE12_Msk                 (0x01UL << LED_SEGOE_SEGOE12_Pos)                       /*!< LED SEGOE: SEGOE12 Mask                 */
+#define LED_SEGOE_SEGOE13_Pos                 13                                                      /*!< LED SEGOE: SEGOE13 Position             */
+#define LED_SEGOE_SEGOE13_Msk                 (0x01UL << LED_SEGOE_SEGOE13_Pos)                       /*!< LED SEGOE: SEGOE13 Mask                 */
+#define LED_SEGOE_SEGOE14_Pos                 14                                                      /*!< LED SEGOE: SEGOE14 Position             */
+#define LED_SEGOE_SEGOE14_Msk                 (0x01UL << LED_SEGOE_SEGOE14_Pos)                       /*!< LED SEGOE: SEGOE14 Mask                 */
+#define LED_SEGOE_SEGOE15_Pos                 15                                                      /*!< LED SEGOE: SEGOE15 Position             */
+#define LED_SEGOE_SEGOE15_Msk                 (0x01UL << LED_SEGOE_SEGOE15_Pos)                       /*!< LED SEGOE: SEGOE15 Mask                 */
+
+/* ----------------------------------  LED_PRESD  --------------------------------- */
+#define LED_PRESD_PRESD_Pos                   0                                                       /*!< LED PRESD: PRESD Position               */
+#define LED_PRESD_PRESD_Msk                   (0x000000ffUL << LED_PRESD_PRESD_Pos)                   /*!< LED PRESD: PRESD Mask                   */
+
+/* ----------------------------------  LED_COMER  --------------------------------- */
+#define LED_COMER_COMER0_Pos                  0                                                       /*!< LED COMER: COMER0 Position              */
+#define LED_COMER_COMER0_Msk                  (0x01UL << LED_COMER_COMER0_Pos)                        /*!< LED COMER: COMER0 Mask                  */
+#define LED_COMER_COMER1_Pos                  1                                                       /*!< LED COMER: COMER1 Position              */
+#define LED_COMER_COMER1_Msk                  (0x01UL << LED_COMER_COMER1_Pos)                        /*!< LED COMER: COMER1 Mask                  */
+#define LED_COMER_COMER2_Pos                  2                                                       /*!< LED COMER: COMER2 Position              */
+#define LED_COMER_COMER2_Msk                  (0x01UL << LED_COMER_COMER2_Pos)                        /*!< LED COMER: COMER2 Mask                  */
+#define LED_COMER_COMER3_Pos                  3                                                       /*!< LED COMER: COMER3 Position              */
+#define LED_COMER_COMER3_Msk                  (0x01UL << LED_COMER_COMER3_Pos)                        /*!< LED COMER: COMER3 Mask                  */
+#define LED_COMER_COMER4_Pos                  4                                                       /*!< LED COMER: COMER4 Position              */
+#define LED_COMER_COMER4_Msk                  (0x01UL << LED_COMER_COMER4_Pos)                        /*!< LED COMER: COMER4 Mask                  */
+#define LED_COMER_COMER5_Pos                  5                                                       /*!< LED COMER: COMER5 Position              */
+#define LED_COMER_COMER5_Msk                  (0x01UL << LED_COMER_COMER5_Pos)                        /*!< LED COMER: COMER5 Mask                  */
+#define LED_COMER_COMER6_Pos                  6                                                       /*!< LED COMER: COMER6 Position              */
+#define LED_COMER_COMER6_Msk                  (0x01UL << LED_COMER_COMER6_Pos)                        /*!< LED COMER: COMER6 Mask                  */
+#define LED_COMER_COMER7_Pos                  7                                                       /*!< LED COMER: COMER7 Position              */
+#define LED_COMER_COMER7_Msk                  (0x01UL << LED_COMER_COMER7_Pos)                        /*!< LED COMER: COMER7 Mask                  */
+#define LED_COMER_COMER8_Pos                  8                                                       /*!< LED COMER: COMER8 Position              */
+#define LED_COMER_COMER8_Msk                  (0x01UL << LED_COMER_COMER8_Pos)                        /*!< LED COMER: COMER8 Mask                  */
+#define LED_COMER_COMER9_Pos                  9                                                       /*!< LED COMER: COMER9 Position              */
+#define LED_COMER_COMER9_Msk                  (0x01UL << LED_COMER_COMER9_Pos)                        /*!< LED COMER: COMER9 Mask                  */
+#define LED_COMER_COMER10_Pos                 10                                                      /*!< LED COMER: COMER10 Position             */
+#define LED_COMER_COMER10_Msk                 (0x01UL << LED_COMER_COMER10_Pos)                       /*!< LED COMER: COMER10 Mask                 */
+#define LED_COMER_COMER11_Pos                 11                                                      /*!< LED COMER: COMER11 Position             */
+#define LED_COMER_COMER11_Msk                 (0x01UL << LED_COMER_COMER11_Pos)                       /*!< LED COMER: COMER11 Mask                 */
+#define LED_COMER_COMER12_Pos                 12                                                      /*!< LED COMER: COMER12 Position             */
+#define LED_COMER_COMER12_Msk                 (0x01UL << LED_COMER_COMER12_Pos)                       /*!< LED COMER: COMER12 Mask                 */
+
+/* ---------------------------------  LED_COMPWID  -------------------------------- */
+#define LED_COMPWID_COMPWID_Pos               0                                                       /*!< LED COMPWID: COMPWID Position           */
+#define LED_COMPWID_COMPWID_Msk               (0x000000ffUL << LED_COMPWID_COMPWID_Pos)               /*!< LED COMPWID: COMPWID Mask               */
+
+/* --------------------------------  LED_COMDIMM0  -------------------------------- */
+#define LED_COMDIMM0_COM0DIMM_Pos             0                                                       /*!< LED COMDIMM0: COM0DIMM Position         */
+#define LED_COMDIMM0_COM0DIMM_Msk             (0x000000ffUL << LED_COMDIMM0_COM0DIMM_Pos)             /*!< LED COMDIMM0: COM0DIMM Mask             */
+#define LED_COMDIMM0_COM1DIMM_Pos             8                                                       /*!< LED COMDIMM0: COM1DIMM Position         */
+#define LED_COMDIMM0_COM1DIMM_Msk             (0x000000ffUL << LED_COMDIMM0_COM1DIMM_Pos)             /*!< LED COMDIMM0: COM1DIMM Mask             */
+#define LED_COMDIMM0_COM2DIMM_Pos             16                                                      /*!< LED COMDIMM0: COM2DIMM Position         */
+#define LED_COMDIMM0_COM2DIMM_Msk             (0x000000ffUL << LED_COMDIMM0_COM2DIMM_Pos)             /*!< LED COMDIMM0: COM2DIMM Mask             */
+#define LED_COMDIMM0_COM3DIMM_Pos             24                                                      /*!< LED COMDIMM0: COM3DIMM Position         */
+#define LED_COMDIMM0_COM3DIMM_Msk             (0x000000ffUL << LED_COMDIMM0_COM3DIMM_Pos)             /*!< LED COMDIMM0: COM3DIMM Mask             */
+
+/* --------------------------------  LED_COMDIMM1  -------------------------------- */
+#define LED_COMDIMM1_COM4DIMM_Pos             0                                                       /*!< LED COMDIMM1: COM4DIMM Position         */
+#define LED_COMDIMM1_COM4DIMM_Msk             (0x000000ffUL << LED_COMDIMM1_COM4DIMM_Pos)             /*!< LED COMDIMM1: COM4DIMM Mask             */
+#define LED_COMDIMM1_COM5DIMM_Pos             8                                                       /*!< LED COMDIMM1: COM5DIMM Position         */
+#define LED_COMDIMM1_COM5DIMM_Msk             (0x000000ffUL << LED_COMDIMM1_COM5DIMM_Pos)             /*!< LED COMDIMM1: COM5DIMM Mask             */
+#define LED_COMDIMM1_COM6DIMM_Pos             16                                                      /*!< LED COMDIMM1: COM6DIMM Position         */
+#define LED_COMDIMM1_COM6DIMM_Msk             (0x000000ffUL << LED_COMDIMM1_COM6DIMM_Pos)             /*!< LED COMDIMM1: COM6DIMM Mask             */
+#define LED_COMDIMM1_COM7DIMM_Pos             24                                                      /*!< LED COMDIMM1: COM7DIMM Position         */
+#define LED_COMDIMM1_COM7DIMM_Msk             (0x000000ffUL << LED_COMDIMM1_COM7DIMM_Pos)             /*!< LED COMDIMM1: COM7DIMM Mask             */
+
+/* --------------------------------  LED_COMDIMM2  -------------------------------- */
+#define LED_COMDIMM2_COM8DIMM_Pos             0                                                       /*!< LED COMDIMM2: COM8DIMM Position         */
+#define LED_COMDIMM2_COM8DIMM_Msk             (0x000000ffUL << LED_COMDIMM2_COM8DIMM_Pos)             /*!< LED COMDIMM2: COM8DIMM Mask             */
+#define LED_COMDIMM2_COM9DIMM_Pos             8                                                       /*!< LED COMDIMM2: COM9DIMM Position         */
+#define LED_COMDIMM2_COM9DIMM_Msk             (0x000000ffUL << LED_COMDIMM2_COM9DIMM_Pos)             /*!< LED COMDIMM2: COM9DIMM Mask             */
+#define LED_COMDIMM2_COM10DIMM_Pos            16                                                      /*!< LED COMDIMM2: COM10DIMM Position        */
+#define LED_COMDIMM2_COM10DIMM_Msk            (0x000000ffUL << LED_COMDIMM2_COM10DIMM_Pos)            /*!< LED COMDIMM2: COM10DIMM Mask            */
+#define LED_COMDIMM2_COM11DIMM_Pos            24                                                      /*!< LED COMDIMM2: COM11DIMM Position        */
+#define LED_COMDIMM2_COM11DIMM_Msk            (0x000000ffUL << LED_COMDIMM2_COM11DIMM_Pos)            /*!< LED COMDIMM2: COM11DIMM Mask            */
+
+/* --------------------------------  LED_COMDIMM3  -------------------------------- */
+#define LED_COMDIMM3_COM12DIMM_Pos            0                                                       /*!< LED COMDIMM3: COM12DIMM Position        */
+#define LED_COMDIMM3_COM12DIMM_Msk            (0x000000ffUL << LED_COMDIMM3_COM12DIMM_Pos)            /*!< LED COMDIMM3: COM12DIMM Mask            */
+
+/* ----------------------------------  LED_LEDPD  --------------------------------- */
+#define LED_LEDPD_LEDPD_Pos                   0                                                       /*!< LED LEDPD: LEDPD Position               */
+#define LED_LEDPD_LEDPD_Msk                   (0x000fffffUL << LED_LEDPD_LEDPD_Pos)                   /*!< LED LEDPD: LEDPD Mask                   */
+
+/* -----------------------------------  LED_SR  ----------------------------------- */
+#define LED_SR_LED_ENDF_Pos                   0                                                       /*!< LED SR: LED_ENDF Position               */
+#define LED_SR_LED_ENDF_Msk                   (0x01UL << LED_SR_LED_ENDF_Pos)                         /*!< LED SR: LED_ENDF Mask                   */
+#define LED_SR_LED_INTE_Pos                   1                                                       /*!< LED SR: LED_INTE Position               */
+#define LED_SR_LED_INTE_Msk                   (0x01UL << LED_SR_LED_INTE_Pos)                         /*!< LED SR: LED_INTE Mask                   */
+#define LED_SR_LED_INTF_Pos                   2                                                       /*!< LED SR: LED_INTF Position               */
+#define LED_SR_LED_INTF_Msk                   (0x01UL << LED_SR_LED_INTF_Pos)                         /*!< LED SR: LED_INTF Mask                   */
+#define LED_SR_MATCHF_Pos                     3                                                       /*!< LED SR: MATCHF Position                 */
+#define LED_SR_MATCHF_Msk                     (0x01UL << LED_SR_MATCHF_Pos)                           /*!< LED SR: MATCHF Mask                     */
+
+/* ---------------------------------  LED_LEDCON3  -------------------------------- */
+#define LED_LEDCON3_CLR_TIME_Pos              0                                                       /*!< LED LEDCON3: CLR_TIME Position          */
+#define LED_LEDCON3_CLR_TIME_Msk              (0x0fUL << LED_LEDCON3_CLR_TIME_Pos)                    /*!< LED LEDCON3: CLR_TIME Mask              */
+#define LED_LEDCON3_SET_TIME_Pos              4                                                       /*!< LED LEDCON3: SET_TIME Position          */
+#define LED_LEDCON3_SET_TIME_Msk              (0x0fUL << LED_LEDCON3_SET_TIME_Pos)                    /*!< LED LEDCON3: SET_TIME Mask              */
+
+/* ---------------------------------  LED_LEDCON2  -------------------------------- */
+#define LED_LEDCON2_OVERTS_Pos                0                                                       /*!< LED LEDCON2: OVERTS Position            */
+#define LED_LEDCON2_OVERTS_Msk                (0x07UL << LED_LEDCON2_OVERTS_Pos)                      /*!< LED LEDCON2: OVERTS Mask                */
+#define LED_LEDCON2_OVERLAP_Pos               3                                                       /*!< LED LEDCON2: OVERLAP Position           */
+#define LED_LEDCON2_OVERLAP_Msk               (0x01UL << LED_LEDCON2_OVERLAP_Pos)                     /*!< LED LEDCON2: OVERLAP Mask               */
+#define LED_LEDCON2_SRTEN_Pos                 4                                                       /*!< LED LEDCON2: SRTEN Position             */
+#define LED_LEDCON2_SRTEN_Msk                 (0x01UL << LED_LEDCON2_SRTEN_Pos)                       /*!< LED LEDCON2: SRTEN Mask                 */
+
+/* ---------------------------------  LED_LEDCON1  -------------------------------- */
+#define LED_LEDCON1_LED_ST_Pos                0                                                       /*!< LED LEDCON1: LED_ST Position            */
+#define LED_LEDCON1_LED_ST_Msk                (0x01UL << LED_LEDCON1_LED_ST_Pos)                      /*!< LED LEDCON1: LED_ST Mask                */
+#define LED_LEDCON1_LED_EN_Pos                1                                                       /*!< LED LEDCON1: LED_EN Position            */
+#define LED_LEDCON1_LED_EN_Msk                (0x01UL << LED_LEDCON1_LED_EN_Pos)                      /*!< LED LEDCON1: LED_EN Mask                */
+#define LED_LEDCON1_LED_MODE_Pos              2                                                       /*!< LED LEDCON1: LED_MODE Position          */
+#define LED_LEDCON1_LED_MODE_Msk              (0x07UL << LED_LEDCON1_LED_MODE_Pos)                    /*!< LED LEDCON1: LED_MODE Mask              */
+
+/* --------------------------------  LED_DISPRAM0  -------------------------------- */
+#define LED_DISPRAM0_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM0: SEG0_COMx Position        */
+#define LED_DISPRAM0_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG0_COMx_Pos)                  /*!< LED DISPRAM0: SEG0_COMx Mask            */
+#define LED_DISPRAM0_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM0: SEG1_COMx Position        */
+#define LED_DISPRAM0_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG1_COMx_Pos)                  /*!< LED DISPRAM0: SEG1_COMx Mask            */
+#define LED_DISPRAM0_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM0: SEG2_COMx Position        */
+#define LED_DISPRAM0_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG2_COMx_Pos)                  /*!< LED DISPRAM0: SEG2_COMx Mask            */
+#define LED_DISPRAM0_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM0: SEG3_COMx Position        */
+#define LED_DISPRAM0_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG3_COMx_Pos)                  /*!< LED DISPRAM0: SEG3_COMx Mask            */
+#define LED_DISPRAM0_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM0: SEG4_COMx Position        */
+#define LED_DISPRAM0_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG4_COMx_Pos)                  /*!< LED DISPRAM0: SEG4_COMx Mask            */
+#define LED_DISPRAM0_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM0: SEG5_COMx Position        */
+#define LED_DISPRAM0_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG5_COMx_Pos)                  /*!< LED DISPRAM0: SEG5_COMx Mask            */
+#define LED_DISPRAM0_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM0: SEG6_COMx Position        */
+#define LED_DISPRAM0_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG6_COMx_Pos)                  /*!< LED DISPRAM0: SEG6_COMx Mask            */
+#define LED_DISPRAM0_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM0: SEG7_COMx Position        */
+#define LED_DISPRAM0_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG7_COMx_Pos)                  /*!< LED DISPRAM0: SEG7_COMx Mask            */
+#define LED_DISPRAM0_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM0: SEG8_COMx Position        */
+#define LED_DISPRAM0_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG8_COMx_Pos)                  /*!< LED DISPRAM0: SEG8_COMx Mask            */
+#define LED_DISPRAM0_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM0: SEG9_COMx Position        */
+#define LED_DISPRAM0_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM0_SEG9_COMx_Pos)                  /*!< LED DISPRAM0: SEG9_COMx Mask            */
+#define LED_DISPRAM0_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM0: SEG10_COMx Position       */
+#define LED_DISPRAM0_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM0_SEG10_COMx_Pos)                 /*!< LED DISPRAM0: SEG10_COMx Mask           */
+#define LED_DISPRAM0_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM0: SEG11_COMx Position       */
+#define LED_DISPRAM0_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM0_SEG11_COMx_Pos)                 /*!< LED DISPRAM0: SEG11_COMx Mask           */
+#define LED_DISPRAM0_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM0: SEG12_COMx Position       */
+#define LED_DISPRAM0_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM0_SEG12_COMx_Pos)                 /*!< LED DISPRAM0: SEG12_COMx Mask           */
+#define LED_DISPRAM0_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM0: SEG13_COMx Position       */
+#define LED_DISPRAM0_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM0_SEG13_COMx_Pos)                 /*!< LED DISPRAM0: SEG13_COMx Mask           */
+#define LED_DISPRAM0_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM0: SEG14_COMx Position       */
+#define LED_DISPRAM0_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM0_SEG14_COMx_Pos)                 /*!< LED DISPRAM0: SEG14_COMx Mask           */
+#define LED_DISPRAM0_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM0: SEG15_COMx Position       */
+#define LED_DISPRAM0_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM0_SEG15_COMx_Pos)                 /*!< LED DISPRAM0: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM1  -------------------------------- */
+#define LED_DISPRAM1_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM1: SEG0_COMx Position        */
+#define LED_DISPRAM1_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG0_COMx_Pos)                  /*!< LED DISPRAM1: SEG0_COMx Mask            */
+#define LED_DISPRAM1_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM1: SEG1_COMx Position        */
+#define LED_DISPRAM1_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG1_COMx_Pos)                  /*!< LED DISPRAM1: SEG1_COMx Mask            */
+#define LED_DISPRAM1_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM1: SEG2_COMx Position        */
+#define LED_DISPRAM1_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG2_COMx_Pos)                  /*!< LED DISPRAM1: SEG2_COMx Mask            */
+#define LED_DISPRAM1_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM1: SEG3_COMx Position        */
+#define LED_DISPRAM1_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG3_COMx_Pos)                  /*!< LED DISPRAM1: SEG3_COMx Mask            */
+#define LED_DISPRAM1_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM1: SEG4_COMx Position        */
+#define LED_DISPRAM1_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG4_COMx_Pos)                  /*!< LED DISPRAM1: SEG4_COMx Mask            */
+#define LED_DISPRAM1_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM1: SEG5_COMx Position        */
+#define LED_DISPRAM1_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG5_COMx_Pos)                  /*!< LED DISPRAM1: SEG5_COMx Mask            */
+#define LED_DISPRAM1_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM1: SEG6_COMx Position        */
+#define LED_DISPRAM1_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG6_COMx_Pos)                  /*!< LED DISPRAM1: SEG6_COMx Mask            */
+#define LED_DISPRAM1_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM1: SEG7_COMx Position        */
+#define LED_DISPRAM1_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG7_COMx_Pos)                  /*!< LED DISPRAM1: SEG7_COMx Mask            */
+#define LED_DISPRAM1_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM1: SEG8_COMx Position        */
+#define LED_DISPRAM1_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG8_COMx_Pos)                  /*!< LED DISPRAM1: SEG8_COMx Mask            */
+#define LED_DISPRAM1_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM1: SEG9_COMx Position        */
+#define LED_DISPRAM1_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM1_SEG9_COMx_Pos)                  /*!< LED DISPRAM1: SEG9_COMx Mask            */
+#define LED_DISPRAM1_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM1: SEG10_COMx Position       */
+#define LED_DISPRAM1_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM1_SEG10_COMx_Pos)                 /*!< LED DISPRAM1: SEG10_COMx Mask           */
+#define LED_DISPRAM1_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM1: SEG11_COMx Position       */
+#define LED_DISPRAM1_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM1_SEG11_COMx_Pos)                 /*!< LED DISPRAM1: SEG11_COMx Mask           */
+#define LED_DISPRAM1_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM1: SEG12_COMx Position       */
+#define LED_DISPRAM1_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM1_SEG12_COMx_Pos)                 /*!< LED DISPRAM1: SEG12_COMx Mask           */
+#define LED_DISPRAM1_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM1: SEG13_COMx Position       */
+#define LED_DISPRAM1_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM1_SEG13_COMx_Pos)                 /*!< LED DISPRAM1: SEG13_COMx Mask           */
+#define LED_DISPRAM1_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM1: SEG14_COMx Position       */
+#define LED_DISPRAM1_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM1_SEG14_COMx_Pos)                 /*!< LED DISPRAM1: SEG14_COMx Mask           */
+#define LED_DISPRAM1_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM1: SEG15_COMx Position       */
+#define LED_DISPRAM1_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM1_SEG15_COMx_Pos)                 /*!< LED DISPRAM1: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM2  -------------------------------- */
+#define LED_DISPRAM2_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM2: SEG0_COMx Position        */
+#define LED_DISPRAM2_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG0_COMx_Pos)                  /*!< LED DISPRAM2: SEG0_COMx Mask            */
+#define LED_DISPRAM2_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM2: SEG1_COMx Position        */
+#define LED_DISPRAM2_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG1_COMx_Pos)                  /*!< LED DISPRAM2: SEG1_COMx Mask            */
+#define LED_DISPRAM2_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM2: SEG2_COMx Position        */
+#define LED_DISPRAM2_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG2_COMx_Pos)                  /*!< LED DISPRAM2: SEG2_COMx Mask            */
+#define LED_DISPRAM2_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM2: SEG3_COMx Position        */
+#define LED_DISPRAM2_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG3_COMx_Pos)                  /*!< LED DISPRAM2: SEG3_COMx Mask            */
+#define LED_DISPRAM2_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM2: SEG4_COMx Position        */
+#define LED_DISPRAM2_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG4_COMx_Pos)                  /*!< LED DISPRAM2: SEG4_COMx Mask            */
+#define LED_DISPRAM2_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM2: SEG5_COMx Position        */
+#define LED_DISPRAM2_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG5_COMx_Pos)                  /*!< LED DISPRAM2: SEG5_COMx Mask            */
+#define LED_DISPRAM2_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM2: SEG6_COMx Position        */
+#define LED_DISPRAM2_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG6_COMx_Pos)                  /*!< LED DISPRAM2: SEG6_COMx Mask            */
+#define LED_DISPRAM2_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM2: SEG7_COMx Position        */
+#define LED_DISPRAM2_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG7_COMx_Pos)                  /*!< LED DISPRAM2: SEG7_COMx Mask            */
+#define LED_DISPRAM2_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM2: SEG8_COMx Position        */
+#define LED_DISPRAM2_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG8_COMx_Pos)                  /*!< LED DISPRAM2: SEG8_COMx Mask            */
+#define LED_DISPRAM2_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM2: SEG9_COMx Position        */
+#define LED_DISPRAM2_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM2_SEG9_COMx_Pos)                  /*!< LED DISPRAM2: SEG9_COMx Mask            */
+#define LED_DISPRAM2_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM2: SEG10_COMx Position       */
+#define LED_DISPRAM2_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM2_SEG10_COMx_Pos)                 /*!< LED DISPRAM2: SEG10_COMx Mask           */
+#define LED_DISPRAM2_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM2: SEG11_COMx Position       */
+#define LED_DISPRAM2_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM2_SEG11_COMx_Pos)                 /*!< LED DISPRAM2: SEG11_COMx Mask           */
+#define LED_DISPRAM2_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM2: SEG12_COMx Position       */
+#define LED_DISPRAM2_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM2_SEG12_COMx_Pos)                 /*!< LED DISPRAM2: SEG12_COMx Mask           */
+#define LED_DISPRAM2_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM2: SEG13_COMx Position       */
+#define LED_DISPRAM2_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM2_SEG13_COMx_Pos)                 /*!< LED DISPRAM2: SEG13_COMx Mask           */
+#define LED_DISPRAM2_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM2: SEG14_COMx Position       */
+#define LED_DISPRAM2_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM2_SEG14_COMx_Pos)                 /*!< LED DISPRAM2: SEG14_COMx Mask           */
+#define LED_DISPRAM2_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM2: SEG15_COMx Position       */
+#define LED_DISPRAM2_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM2_SEG15_COMx_Pos)                 /*!< LED DISPRAM2: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM3  -------------------------------- */
+#define LED_DISPRAM3_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM3: SEG0_COMx Position        */
+#define LED_DISPRAM3_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG0_COMx_Pos)                  /*!< LED DISPRAM3: SEG0_COMx Mask            */
+#define LED_DISPRAM3_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM3: SEG1_COMx Position        */
+#define LED_DISPRAM3_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG1_COMx_Pos)                  /*!< LED DISPRAM3: SEG1_COMx Mask            */
+#define LED_DISPRAM3_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM3: SEG2_COMx Position        */
+#define LED_DISPRAM3_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG2_COMx_Pos)                  /*!< LED DISPRAM3: SEG2_COMx Mask            */
+#define LED_DISPRAM3_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM3: SEG3_COMx Position        */
+#define LED_DISPRAM3_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG3_COMx_Pos)                  /*!< LED DISPRAM3: SEG3_COMx Mask            */
+#define LED_DISPRAM3_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM3: SEG4_COMx Position        */
+#define LED_DISPRAM3_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG4_COMx_Pos)                  /*!< LED DISPRAM3: SEG4_COMx Mask            */
+#define LED_DISPRAM3_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM3: SEG5_COMx Position        */
+#define LED_DISPRAM3_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG5_COMx_Pos)                  /*!< LED DISPRAM3: SEG5_COMx Mask            */
+#define LED_DISPRAM3_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM3: SEG6_COMx Position        */
+#define LED_DISPRAM3_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG6_COMx_Pos)                  /*!< LED DISPRAM3: SEG6_COMx Mask            */
+#define LED_DISPRAM3_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM3: SEG7_COMx Position        */
+#define LED_DISPRAM3_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG7_COMx_Pos)                  /*!< LED DISPRAM3: SEG7_COMx Mask            */
+#define LED_DISPRAM3_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM3: SEG8_COMx Position        */
+#define LED_DISPRAM3_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG8_COMx_Pos)                  /*!< LED DISPRAM3: SEG8_COMx Mask            */
+#define LED_DISPRAM3_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM3: SEG9_COMx Position        */
+#define LED_DISPRAM3_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM3_SEG9_COMx_Pos)                  /*!< LED DISPRAM3: SEG9_COMx Mask            */
+#define LED_DISPRAM3_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM3: SEG10_COMx Position       */
+#define LED_DISPRAM3_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM3_SEG10_COMx_Pos)                 /*!< LED DISPRAM3: SEG10_COMx Mask           */
+#define LED_DISPRAM3_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM3: SEG11_COMx Position       */
+#define LED_DISPRAM3_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM3_SEG11_COMx_Pos)                 /*!< LED DISPRAM3: SEG11_COMx Mask           */
+#define LED_DISPRAM3_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM3: SEG12_COMx Position       */
+#define LED_DISPRAM3_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM3_SEG12_COMx_Pos)                 /*!< LED DISPRAM3: SEG12_COMx Mask           */
+#define LED_DISPRAM3_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM3: SEG13_COMx Position       */
+#define LED_DISPRAM3_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM3_SEG13_COMx_Pos)                 /*!< LED DISPRAM3: SEG13_COMx Mask           */
+#define LED_DISPRAM3_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM3: SEG14_COMx Position       */
+#define LED_DISPRAM3_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM3_SEG14_COMx_Pos)                 /*!< LED DISPRAM3: SEG14_COMx Mask           */
+#define LED_DISPRAM3_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM3: SEG15_COMx Position       */
+#define LED_DISPRAM3_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM3_SEG15_COMx_Pos)                 /*!< LED DISPRAM3: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM4  -------------------------------- */
+#define LED_DISPRAM4_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM4: SEG0_COMx Position        */
+#define LED_DISPRAM4_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG0_COMx_Pos)                  /*!< LED DISPRAM4: SEG0_COMx Mask            */
+#define LED_DISPRAM4_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM4: SEG1_COMx Position        */
+#define LED_DISPRAM4_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG1_COMx_Pos)                  /*!< LED DISPRAM4: SEG1_COMx Mask            */
+#define LED_DISPRAM4_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM4: SEG2_COMx Position        */
+#define LED_DISPRAM4_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG2_COMx_Pos)                  /*!< LED DISPRAM4: SEG2_COMx Mask            */
+#define LED_DISPRAM4_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM4: SEG3_COMx Position        */
+#define LED_DISPRAM4_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG3_COMx_Pos)                  /*!< LED DISPRAM4: SEG3_COMx Mask            */
+#define LED_DISPRAM4_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM4: SEG4_COMx Position        */
+#define LED_DISPRAM4_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG4_COMx_Pos)                  /*!< LED DISPRAM4: SEG4_COMx Mask            */
+#define LED_DISPRAM4_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM4: SEG5_COMx Position        */
+#define LED_DISPRAM4_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG5_COMx_Pos)                  /*!< LED DISPRAM4: SEG5_COMx Mask            */
+#define LED_DISPRAM4_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM4: SEG6_COMx Position        */
+#define LED_DISPRAM4_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG6_COMx_Pos)                  /*!< LED DISPRAM4: SEG6_COMx Mask            */
+#define LED_DISPRAM4_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM4: SEG7_COMx Position        */
+#define LED_DISPRAM4_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG7_COMx_Pos)                  /*!< LED DISPRAM4: SEG7_COMx Mask            */
+#define LED_DISPRAM4_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM4: SEG8_COMx Position        */
+#define LED_DISPRAM4_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG8_COMx_Pos)                  /*!< LED DISPRAM4: SEG8_COMx Mask            */
+#define LED_DISPRAM4_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM4: SEG9_COMx Position        */
+#define LED_DISPRAM4_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM4_SEG9_COMx_Pos)                  /*!< LED DISPRAM4: SEG9_COMx Mask            */
+#define LED_DISPRAM4_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM4: SEG10_COMx Position       */
+#define LED_DISPRAM4_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM4_SEG10_COMx_Pos)                 /*!< LED DISPRAM4: SEG10_COMx Mask           */
+#define LED_DISPRAM4_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM4: SEG11_COMx Position       */
+#define LED_DISPRAM4_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM4_SEG11_COMx_Pos)                 /*!< LED DISPRAM4: SEG11_COMx Mask           */
+#define LED_DISPRAM4_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM4: SEG12_COMx Position       */
+#define LED_DISPRAM4_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM4_SEG12_COMx_Pos)                 /*!< LED DISPRAM4: SEG12_COMx Mask           */
+#define LED_DISPRAM4_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM4: SEG13_COMx Position       */
+#define LED_DISPRAM4_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM4_SEG13_COMx_Pos)                 /*!< LED DISPRAM4: SEG13_COMx Mask           */
+#define LED_DISPRAM4_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM4: SEG14_COMx Position       */
+#define LED_DISPRAM4_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM4_SEG14_COMx_Pos)                 /*!< LED DISPRAM4: SEG14_COMx Mask           */
+#define LED_DISPRAM4_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM4: SEG15_COMx Position       */
+#define LED_DISPRAM4_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM4_SEG15_COMx_Pos)                 /*!< LED DISPRAM4: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM5  -------------------------------- */
+#define LED_DISPRAM5_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM5: SEG0_COMx Position        */
+#define LED_DISPRAM5_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG0_COMx_Pos)                  /*!< LED DISPRAM5: SEG0_COMx Mask            */
+#define LED_DISPRAM5_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM5: SEG1_COMx Position        */
+#define LED_DISPRAM5_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG1_COMx_Pos)                  /*!< LED DISPRAM5: SEG1_COMx Mask            */
+#define LED_DISPRAM5_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM5: SEG2_COMx Position        */
+#define LED_DISPRAM5_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG2_COMx_Pos)                  /*!< LED DISPRAM5: SEG2_COMx Mask            */
+#define LED_DISPRAM5_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM5: SEG3_COMx Position        */
+#define LED_DISPRAM5_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG3_COMx_Pos)                  /*!< LED DISPRAM5: SEG3_COMx Mask            */
+#define LED_DISPRAM5_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM5: SEG4_COMx Position        */
+#define LED_DISPRAM5_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG4_COMx_Pos)                  /*!< LED DISPRAM5: SEG4_COMx Mask            */
+#define LED_DISPRAM5_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM5: SEG5_COMx Position        */
+#define LED_DISPRAM5_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG5_COMx_Pos)                  /*!< LED DISPRAM5: SEG5_COMx Mask            */
+#define LED_DISPRAM5_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM5: SEG6_COMx Position        */
+#define LED_DISPRAM5_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG6_COMx_Pos)                  /*!< LED DISPRAM5: SEG6_COMx Mask            */
+#define LED_DISPRAM5_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM5: SEG7_COMx Position        */
+#define LED_DISPRAM5_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG7_COMx_Pos)                  /*!< LED DISPRAM5: SEG7_COMx Mask            */
+#define LED_DISPRAM5_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM5: SEG8_COMx Position        */
+#define LED_DISPRAM5_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG8_COMx_Pos)                  /*!< LED DISPRAM5: SEG8_COMx Mask            */
+#define LED_DISPRAM5_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM5: SEG9_COMx Position        */
+#define LED_DISPRAM5_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM5_SEG9_COMx_Pos)                  /*!< LED DISPRAM5: SEG9_COMx Mask            */
+#define LED_DISPRAM5_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM5: SEG10_COMx Position       */
+#define LED_DISPRAM5_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM5_SEG10_COMx_Pos)                 /*!< LED DISPRAM5: SEG10_COMx Mask           */
+#define LED_DISPRAM5_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM5: SEG11_COMx Position       */
+#define LED_DISPRAM5_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM5_SEG11_COMx_Pos)                 /*!< LED DISPRAM5: SEG11_COMx Mask           */
+#define LED_DISPRAM5_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM5: SEG12_COMx Position       */
+#define LED_DISPRAM5_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM5_SEG12_COMx_Pos)                 /*!< LED DISPRAM5: SEG12_COMx Mask           */
+#define LED_DISPRAM5_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM5: SEG13_COMx Position       */
+#define LED_DISPRAM5_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM5_SEG13_COMx_Pos)                 /*!< LED DISPRAM5: SEG13_COMx Mask           */
+#define LED_DISPRAM5_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM5: SEG14_COMx Position       */
+#define LED_DISPRAM5_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM5_SEG14_COMx_Pos)                 /*!< LED DISPRAM5: SEG14_COMx Mask           */
+#define LED_DISPRAM5_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM5: SEG15_COMx Position       */
+#define LED_DISPRAM5_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM5_SEG15_COMx_Pos)                 /*!< LED DISPRAM5: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM6  -------------------------------- */
+#define LED_DISPRAM6_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM6: SEG0_COMx Position        */
+#define LED_DISPRAM6_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG0_COMx_Pos)                  /*!< LED DISPRAM6: SEG0_COMx Mask            */
+#define LED_DISPRAM6_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM6: SEG1_COMx Position        */
+#define LED_DISPRAM6_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG1_COMx_Pos)                  /*!< LED DISPRAM6: SEG1_COMx Mask            */
+#define LED_DISPRAM6_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM6: SEG2_COMx Position        */
+#define LED_DISPRAM6_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG2_COMx_Pos)                  /*!< LED DISPRAM6: SEG2_COMx Mask            */
+#define LED_DISPRAM6_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM6: SEG3_COMx Position        */
+#define LED_DISPRAM6_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG3_COMx_Pos)                  /*!< LED DISPRAM6: SEG3_COMx Mask            */
+#define LED_DISPRAM6_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM6: SEG4_COMx Position        */
+#define LED_DISPRAM6_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG4_COMx_Pos)                  /*!< LED DISPRAM6: SEG4_COMx Mask            */
+#define LED_DISPRAM6_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM6: SEG5_COMx Position        */
+#define LED_DISPRAM6_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG5_COMx_Pos)                  /*!< LED DISPRAM6: SEG5_COMx Mask            */
+#define LED_DISPRAM6_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM6: SEG6_COMx Position        */
+#define LED_DISPRAM6_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG6_COMx_Pos)                  /*!< LED DISPRAM6: SEG6_COMx Mask            */
+#define LED_DISPRAM6_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM6: SEG7_COMx Position        */
+#define LED_DISPRAM6_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG7_COMx_Pos)                  /*!< LED DISPRAM6: SEG7_COMx Mask            */
+#define LED_DISPRAM6_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM6: SEG8_COMx Position        */
+#define LED_DISPRAM6_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG8_COMx_Pos)                  /*!< LED DISPRAM6: SEG8_COMx Mask            */
+#define LED_DISPRAM6_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM6: SEG9_COMx Position        */
+#define LED_DISPRAM6_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM6_SEG9_COMx_Pos)                  /*!< LED DISPRAM6: SEG9_COMx Mask            */
+#define LED_DISPRAM6_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM6: SEG10_COMx Position       */
+#define LED_DISPRAM6_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM6_SEG10_COMx_Pos)                 /*!< LED DISPRAM6: SEG10_COMx Mask           */
+#define LED_DISPRAM6_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM6: SEG11_COMx Position       */
+#define LED_DISPRAM6_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM6_SEG11_COMx_Pos)                 /*!< LED DISPRAM6: SEG11_COMx Mask           */
+#define LED_DISPRAM6_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM6: SEG12_COMx Position       */
+#define LED_DISPRAM6_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM6_SEG12_COMx_Pos)                 /*!< LED DISPRAM6: SEG12_COMx Mask           */
+#define LED_DISPRAM6_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM6: SEG13_COMx Position       */
+#define LED_DISPRAM6_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM6_SEG13_COMx_Pos)                 /*!< LED DISPRAM6: SEG13_COMx Mask           */
+#define LED_DISPRAM6_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM6: SEG14_COMx Position       */
+#define LED_DISPRAM6_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM6_SEG14_COMx_Pos)                 /*!< LED DISPRAM6: SEG14_COMx Mask           */
+#define LED_DISPRAM6_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM6: SEG15_COMx Position       */
+#define LED_DISPRAM6_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM6_SEG15_COMx_Pos)                 /*!< LED DISPRAM6: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM7  -------------------------------- */
+#define LED_DISPRAM7_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM7: SEG0_COMx Position        */
+#define LED_DISPRAM7_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG0_COMx_Pos)                  /*!< LED DISPRAM7: SEG0_COMx Mask            */
+#define LED_DISPRAM7_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM7: SEG1_COMx Position        */
+#define LED_DISPRAM7_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG1_COMx_Pos)                  /*!< LED DISPRAM7: SEG1_COMx Mask            */
+#define LED_DISPRAM7_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM7: SEG2_COMx Position        */
+#define LED_DISPRAM7_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG2_COMx_Pos)                  /*!< LED DISPRAM7: SEG2_COMx Mask            */
+#define LED_DISPRAM7_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM7: SEG3_COMx Position        */
+#define LED_DISPRAM7_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG3_COMx_Pos)                  /*!< LED DISPRAM7: SEG3_COMx Mask            */
+#define LED_DISPRAM7_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM7: SEG4_COMx Position        */
+#define LED_DISPRAM7_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG4_COMx_Pos)                  /*!< LED DISPRAM7: SEG4_COMx Mask            */
+#define LED_DISPRAM7_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM7: SEG5_COMx Position        */
+#define LED_DISPRAM7_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG5_COMx_Pos)                  /*!< LED DISPRAM7: SEG5_COMx Mask            */
+#define LED_DISPRAM7_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM7: SEG6_COMx Position        */
+#define LED_DISPRAM7_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG6_COMx_Pos)                  /*!< LED DISPRAM7: SEG6_COMx Mask            */
+#define LED_DISPRAM7_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM7: SEG7_COMx Position        */
+#define LED_DISPRAM7_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG7_COMx_Pos)                  /*!< LED DISPRAM7: SEG7_COMx Mask            */
+#define LED_DISPRAM7_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM7: SEG8_COMx Position        */
+#define LED_DISPRAM7_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG8_COMx_Pos)                  /*!< LED DISPRAM7: SEG8_COMx Mask            */
+#define LED_DISPRAM7_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM7: SEG9_COMx Position        */
+#define LED_DISPRAM7_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM7_SEG9_COMx_Pos)                  /*!< LED DISPRAM7: SEG9_COMx Mask            */
+#define LED_DISPRAM7_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM7: SEG10_COMx Position       */
+#define LED_DISPRAM7_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM7_SEG10_COMx_Pos)                 /*!< LED DISPRAM7: SEG10_COMx Mask           */
+#define LED_DISPRAM7_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM7: SEG11_COMx Position       */
+#define LED_DISPRAM7_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM7_SEG11_COMx_Pos)                 /*!< LED DISPRAM7: SEG11_COMx Mask           */
+#define LED_DISPRAM7_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM7: SEG12_COMx Position       */
+#define LED_DISPRAM7_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM7_SEG12_COMx_Pos)                 /*!< LED DISPRAM7: SEG12_COMx Mask           */
+#define LED_DISPRAM7_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM7: SEG13_COMx Position       */
+#define LED_DISPRAM7_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM7_SEG13_COMx_Pos)                 /*!< LED DISPRAM7: SEG13_COMx Mask           */
+#define LED_DISPRAM7_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM7: SEG14_COMx Position       */
+#define LED_DISPRAM7_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM7_SEG14_COMx_Pos)                 /*!< LED DISPRAM7: SEG14_COMx Mask           */
+#define LED_DISPRAM7_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM7: SEG15_COMx Position       */
+#define LED_DISPRAM7_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM7_SEG15_COMx_Pos)                 /*!< LED DISPRAM7: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM8  -------------------------------- */
+#define LED_DISPRAM8_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM8: SEG0_COMx Position        */
+#define LED_DISPRAM8_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG0_COMx_Pos)                  /*!< LED DISPRAM8: SEG0_COMx Mask            */
+#define LED_DISPRAM8_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM8: SEG1_COMx Position        */
+#define LED_DISPRAM8_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG1_COMx_Pos)                  /*!< LED DISPRAM8: SEG1_COMx Mask            */
+#define LED_DISPRAM8_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM8: SEG2_COMx Position        */
+#define LED_DISPRAM8_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG2_COMx_Pos)                  /*!< LED DISPRAM8: SEG2_COMx Mask            */
+#define LED_DISPRAM8_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM8: SEG3_COMx Position        */
+#define LED_DISPRAM8_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG3_COMx_Pos)                  /*!< LED DISPRAM8: SEG3_COMx Mask            */
+#define LED_DISPRAM8_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM8: SEG4_COMx Position        */
+#define LED_DISPRAM8_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG4_COMx_Pos)                  /*!< LED DISPRAM8: SEG4_COMx Mask            */
+#define LED_DISPRAM8_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM8: SEG5_COMx Position        */
+#define LED_DISPRAM8_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG5_COMx_Pos)                  /*!< LED DISPRAM8: SEG5_COMx Mask            */
+#define LED_DISPRAM8_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM8: SEG6_COMx Position        */
+#define LED_DISPRAM8_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG6_COMx_Pos)                  /*!< LED DISPRAM8: SEG6_COMx Mask            */
+#define LED_DISPRAM8_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM8: SEG7_COMx Position        */
+#define LED_DISPRAM8_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG7_COMx_Pos)                  /*!< LED DISPRAM8: SEG7_COMx Mask            */
+#define LED_DISPRAM8_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM8: SEG8_COMx Position        */
+#define LED_DISPRAM8_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG8_COMx_Pos)                  /*!< LED DISPRAM8: SEG8_COMx Mask            */
+#define LED_DISPRAM8_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM8: SEG9_COMx Position        */
+#define LED_DISPRAM8_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM8_SEG9_COMx_Pos)                  /*!< LED DISPRAM8: SEG9_COMx Mask            */
+#define LED_DISPRAM8_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM8: SEG10_COMx Position       */
+#define LED_DISPRAM8_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM8_SEG10_COMx_Pos)                 /*!< LED DISPRAM8: SEG10_COMx Mask           */
+#define LED_DISPRAM8_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM8: SEG11_COMx Position       */
+#define LED_DISPRAM8_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM8_SEG11_COMx_Pos)                 /*!< LED DISPRAM8: SEG11_COMx Mask           */
+#define LED_DISPRAM8_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM8: SEG12_COMx Position       */
+#define LED_DISPRAM8_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM8_SEG12_COMx_Pos)                 /*!< LED DISPRAM8: SEG12_COMx Mask           */
+#define LED_DISPRAM8_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM8: SEG13_COMx Position       */
+#define LED_DISPRAM8_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM8_SEG13_COMx_Pos)                 /*!< LED DISPRAM8: SEG13_COMx Mask           */
+#define LED_DISPRAM8_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM8: SEG14_COMx Position       */
+#define LED_DISPRAM8_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM8_SEG14_COMx_Pos)                 /*!< LED DISPRAM8: SEG14_COMx Mask           */
+#define LED_DISPRAM8_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM8: SEG15_COMx Position       */
+#define LED_DISPRAM8_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM8_SEG15_COMx_Pos)                 /*!< LED DISPRAM8: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM9  -------------------------------- */
+#define LED_DISPRAM9_SEG0_COMx_Pos            0                                                       /*!< LED DISPRAM9: SEG0_COMx Position        */
+#define LED_DISPRAM9_SEG0_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG0_COMx_Pos)                  /*!< LED DISPRAM9: SEG0_COMx Mask            */
+#define LED_DISPRAM9_SEG1_COMx_Pos            1                                                       /*!< LED DISPRAM9: SEG1_COMx Position        */
+#define LED_DISPRAM9_SEG1_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG1_COMx_Pos)                  /*!< LED DISPRAM9: SEG1_COMx Mask            */
+#define LED_DISPRAM9_SEG2_COMx_Pos            2                                                       /*!< LED DISPRAM9: SEG2_COMx Position        */
+#define LED_DISPRAM9_SEG2_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG2_COMx_Pos)                  /*!< LED DISPRAM9: SEG2_COMx Mask            */
+#define LED_DISPRAM9_SEG3_COMx_Pos            3                                                       /*!< LED DISPRAM9: SEG3_COMx Position        */
+#define LED_DISPRAM9_SEG3_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG3_COMx_Pos)                  /*!< LED DISPRAM9: SEG3_COMx Mask            */
+#define LED_DISPRAM9_SEG4_COMx_Pos            4                                                       /*!< LED DISPRAM9: SEG4_COMx Position        */
+#define LED_DISPRAM9_SEG4_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG4_COMx_Pos)                  /*!< LED DISPRAM9: SEG4_COMx Mask            */
+#define LED_DISPRAM9_SEG5_COMx_Pos            5                                                       /*!< LED DISPRAM9: SEG5_COMx Position        */
+#define LED_DISPRAM9_SEG5_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG5_COMx_Pos)                  /*!< LED DISPRAM9: SEG5_COMx Mask            */
+#define LED_DISPRAM9_SEG6_COMx_Pos            6                                                       /*!< LED DISPRAM9: SEG6_COMx Position        */
+#define LED_DISPRAM9_SEG6_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG6_COMx_Pos)                  /*!< LED DISPRAM9: SEG6_COMx Mask            */
+#define LED_DISPRAM9_SEG7_COMx_Pos            7                                                       /*!< LED DISPRAM9: SEG7_COMx Position        */
+#define LED_DISPRAM9_SEG7_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG7_COMx_Pos)                  /*!< LED DISPRAM9: SEG7_COMx Mask            */
+#define LED_DISPRAM9_SEG8_COMx_Pos            8                                                       /*!< LED DISPRAM9: SEG8_COMx Position        */
+#define LED_DISPRAM9_SEG8_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG8_COMx_Pos)                  /*!< LED DISPRAM9: SEG8_COMx Mask            */
+#define LED_DISPRAM9_SEG9_COMx_Pos            9                                                       /*!< LED DISPRAM9: SEG9_COMx Position        */
+#define LED_DISPRAM9_SEG9_COMx_Msk            (0x01UL << LED_DISPRAM9_SEG9_COMx_Pos)                  /*!< LED DISPRAM9: SEG9_COMx Mask            */
+#define LED_DISPRAM9_SEG10_COMx_Pos           10                                                      /*!< LED DISPRAM9: SEG10_COMx Position       */
+#define LED_DISPRAM9_SEG10_COMx_Msk           (0x01UL << LED_DISPRAM9_SEG10_COMx_Pos)                 /*!< LED DISPRAM9: SEG10_COMx Mask           */
+#define LED_DISPRAM9_SEG11_COMx_Pos           11                                                      /*!< LED DISPRAM9: SEG11_COMx Position       */
+#define LED_DISPRAM9_SEG11_COMx_Msk           (0x01UL << LED_DISPRAM9_SEG11_COMx_Pos)                 /*!< LED DISPRAM9: SEG11_COMx Mask           */
+#define LED_DISPRAM9_SEG12_COMx_Pos           12                                                      /*!< LED DISPRAM9: SEG12_COMx Position       */
+#define LED_DISPRAM9_SEG12_COMx_Msk           (0x01UL << LED_DISPRAM9_SEG12_COMx_Pos)                 /*!< LED DISPRAM9: SEG12_COMx Mask           */
+#define LED_DISPRAM9_SEG13_COMx_Pos           13                                                      /*!< LED DISPRAM9: SEG13_COMx Position       */
+#define LED_DISPRAM9_SEG13_COMx_Msk           (0x01UL << LED_DISPRAM9_SEG13_COMx_Pos)                 /*!< LED DISPRAM9: SEG13_COMx Mask           */
+#define LED_DISPRAM9_SEG14_COMx_Pos           14                                                      /*!< LED DISPRAM9: SEG14_COMx Position       */
+#define LED_DISPRAM9_SEG14_COMx_Msk           (0x01UL << LED_DISPRAM9_SEG14_COMx_Pos)                 /*!< LED DISPRAM9: SEG14_COMx Mask           */
+#define LED_DISPRAM9_SEG15_COMx_Pos           15                                                      /*!< LED DISPRAM9: SEG15_COMx Position       */
+#define LED_DISPRAM9_SEG15_COMx_Msk           (0x01UL << LED_DISPRAM9_SEG15_COMx_Pos)                 /*!< LED DISPRAM9: SEG15_COMx Mask           */
+
+/* --------------------------------  LED_DISPRAM10  ------------------------------- */
+#define LED_DISPRAM10_SEG0_COMx_Pos           0                                                       /*!< LED DISPRAM10: SEG0_COMx Position       */
+#define LED_DISPRAM10_SEG0_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG0_COMx_Pos)                 /*!< LED DISPRAM10: SEG0_COMx Mask           */
+#define LED_DISPRAM10_SEG1_COMx_Pos           1                                                       /*!< LED DISPRAM10: SEG1_COMx Position       */
+#define LED_DISPRAM10_SEG1_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG1_COMx_Pos)                 /*!< LED DISPRAM10: SEG1_COMx Mask           */
+#define LED_DISPRAM10_SEG2_COMx_Pos           2                                                       /*!< LED DISPRAM10: SEG2_COMx Position       */
+#define LED_DISPRAM10_SEG2_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG2_COMx_Pos)                 /*!< LED DISPRAM10: SEG2_COMx Mask           */
+#define LED_DISPRAM10_SEG3_COMx_Pos           3                                                       /*!< LED DISPRAM10: SEG3_COMx Position       */
+#define LED_DISPRAM10_SEG3_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG3_COMx_Pos)                 /*!< LED DISPRAM10: SEG3_COMx Mask           */
+#define LED_DISPRAM10_SEG4_COMx_Pos           4                                                       /*!< LED DISPRAM10: SEG4_COMx Position       */
+#define LED_DISPRAM10_SEG4_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG4_COMx_Pos)                 /*!< LED DISPRAM10: SEG4_COMx Mask           */
+#define LED_DISPRAM10_SEG5_COMx_Pos           5                                                       /*!< LED DISPRAM10: SEG5_COMx Position       */
+#define LED_DISPRAM10_SEG5_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG5_COMx_Pos)                 /*!< LED DISPRAM10: SEG5_COMx Mask           */
+#define LED_DISPRAM10_SEG6_COMx_Pos           6                                                       /*!< LED DISPRAM10: SEG6_COMx Position       */
+#define LED_DISPRAM10_SEG6_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG6_COMx_Pos)                 /*!< LED DISPRAM10: SEG6_COMx Mask           */
+#define LED_DISPRAM10_SEG7_COMx_Pos           7                                                       /*!< LED DISPRAM10: SEG7_COMx Position       */
+#define LED_DISPRAM10_SEG7_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG7_COMx_Pos)                 /*!< LED DISPRAM10: SEG7_COMx Mask           */
+#define LED_DISPRAM10_SEG8_COMx_Pos           8                                                       /*!< LED DISPRAM10: SEG8_COMx Position       */
+#define LED_DISPRAM10_SEG8_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG8_COMx_Pos)                 /*!< LED DISPRAM10: SEG8_COMx Mask           */
+#define LED_DISPRAM10_SEG9_COMx_Pos           9                                                       /*!< LED DISPRAM10: SEG9_COMx Position       */
+#define LED_DISPRAM10_SEG9_COMx_Msk           (0x01UL << LED_DISPRAM10_SEG9_COMx_Pos)                 /*!< LED DISPRAM10: SEG9_COMx Mask           */
+#define LED_DISPRAM10_SEG10_COMx_Pos          10                                                      /*!< LED DISPRAM10: SEG10_COMx Position      */
+#define LED_DISPRAM10_SEG10_COMx_Msk          (0x01UL << LED_DISPRAM10_SEG10_COMx_Pos)                /*!< LED DISPRAM10: SEG10_COMx Mask          */
+#define LED_DISPRAM10_SEG11_COMx_Pos          11                                                      /*!< LED DISPRAM10: SEG11_COMx Position      */
+#define LED_DISPRAM10_SEG11_COMx_Msk          (0x01UL << LED_DISPRAM10_SEG11_COMx_Pos)                /*!< LED DISPRAM10: SEG11_COMx Mask          */
+#define LED_DISPRAM10_SEG12_COMx_Pos          12                                                      /*!< LED DISPRAM10: SEG12_COMx Position      */
+#define LED_DISPRAM10_SEG12_COMx_Msk          (0x01UL << LED_DISPRAM10_SEG12_COMx_Pos)                /*!< LED DISPRAM10: SEG12_COMx Mask          */
+#define LED_DISPRAM10_SEG13_COMx_Pos          13                                                      /*!< LED DISPRAM10: SEG13_COMx Position      */
+#define LED_DISPRAM10_SEG13_COMx_Msk          (0x01UL << LED_DISPRAM10_SEG13_COMx_Pos)                /*!< LED DISPRAM10: SEG13_COMx Mask          */
+#define LED_DISPRAM10_SEG14_COMx_Pos          14                                                      /*!< LED DISPRAM10: SEG14_COMx Position      */
+#define LED_DISPRAM10_SEG14_COMx_Msk          (0x01UL << LED_DISPRAM10_SEG14_COMx_Pos)                /*!< LED DISPRAM10: SEG14_COMx Mask          */
+#define LED_DISPRAM10_SEG15_COMx_Pos          15                                                      /*!< LED DISPRAM10: SEG15_COMx Position      */
+#define LED_DISPRAM10_SEG15_COMx_Msk          (0x01UL << LED_DISPRAM10_SEG15_COMx_Pos)                /*!< LED DISPRAM10: SEG15_COMx Mask          */
+
+/* --------------------------------  LED_DISPRAM11  ------------------------------- */
+#define LED_DISPRAM11_SEG0_COMx_Pos           0                                                       /*!< LED DISPRAM11: SEG0_COMx Position       */
+#define LED_DISPRAM11_SEG0_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG0_COMx_Pos)                 /*!< LED DISPRAM11: SEG0_COMx Mask           */
+#define LED_DISPRAM11_SEG1_COMx_Pos           1                                                       /*!< LED DISPRAM11: SEG1_COMx Position       */
+#define LED_DISPRAM11_SEG1_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG1_COMx_Pos)                 /*!< LED DISPRAM11: SEG1_COMx Mask           */
+#define LED_DISPRAM11_SEG2_COMx_Pos           2                                                       /*!< LED DISPRAM11: SEG2_COMx Position       */
+#define LED_DISPRAM11_SEG2_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG2_COMx_Pos)                 /*!< LED DISPRAM11: SEG2_COMx Mask           */
+#define LED_DISPRAM11_SEG3_COMx_Pos           3                                                       /*!< LED DISPRAM11: SEG3_COMx Position       */
+#define LED_DISPRAM11_SEG3_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG3_COMx_Pos)                 /*!< LED DISPRAM11: SEG3_COMx Mask           */
+#define LED_DISPRAM11_SEG4_COMx_Pos           4                                                       /*!< LED DISPRAM11: SEG4_COMx Position       */
+#define LED_DISPRAM11_SEG4_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG4_COMx_Pos)                 /*!< LED DISPRAM11: SEG4_COMx Mask           */
+#define LED_DISPRAM11_SEG5_COMx_Pos           5                                                       /*!< LED DISPRAM11: SEG5_COMx Position       */
+#define LED_DISPRAM11_SEG5_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG5_COMx_Pos)                 /*!< LED DISPRAM11: SEG5_COMx Mask           */
+#define LED_DISPRAM11_SEG6_COMx_Pos           6                                                       /*!< LED DISPRAM11: SEG6_COMx Position       */
+#define LED_DISPRAM11_SEG6_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG6_COMx_Pos)                 /*!< LED DISPRAM11: SEG6_COMx Mask           */
+#define LED_DISPRAM11_SEG7_COMx_Pos           7                                                       /*!< LED DISPRAM11: SEG7_COMx Position       */
+#define LED_DISPRAM11_SEG7_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG7_COMx_Pos)                 /*!< LED DISPRAM11: SEG7_COMx Mask           */
+#define LED_DISPRAM11_SEG8_COMx_Pos           8                                                       /*!< LED DISPRAM11: SEG8_COMx Position       */
+#define LED_DISPRAM11_SEG8_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG8_COMx_Pos)                 /*!< LED DISPRAM11: SEG8_COMx Mask           */
+#define LED_DISPRAM11_SEG9_COMx_Pos           9                                                       /*!< LED DISPRAM11: SEG9_COMx Position       */
+#define LED_DISPRAM11_SEG9_COMx_Msk           (0x01UL << LED_DISPRAM11_SEG9_COMx_Pos)                 /*!< LED DISPRAM11: SEG9_COMx Mask           */
+#define LED_DISPRAM11_SEG10_COMx_Pos          10                                                      /*!< LED DISPRAM11: SEG10_COMx Position      */
+#define LED_DISPRAM11_SEG10_COMx_Msk          (0x01UL << LED_DISPRAM11_SEG10_COMx_Pos)                /*!< LED DISPRAM11: SEG10_COMx Mask          */
+#define LED_DISPRAM11_SEG11_COMx_Pos          11                                                      /*!< LED DISPRAM11: SEG11_COMx Position      */
+#define LED_DISPRAM11_SEG11_COMx_Msk          (0x01UL << LED_DISPRAM11_SEG11_COMx_Pos)                /*!< LED DISPRAM11: SEG11_COMx Mask          */
+#define LED_DISPRAM11_SEG12_COMx_Pos          12                                                      /*!< LED DISPRAM11: SEG12_COMx Position      */
+#define LED_DISPRAM11_SEG12_COMx_Msk          (0x01UL << LED_DISPRAM11_SEG12_COMx_Pos)                /*!< LED DISPRAM11: SEG12_COMx Mask          */
+#define LED_DISPRAM11_SEG13_COMx_Pos          13                                                      /*!< LED DISPRAM11: SEG13_COMx Position      */
+#define LED_DISPRAM11_SEG13_COMx_Msk          (0x01UL << LED_DISPRAM11_SEG13_COMx_Pos)                /*!< LED DISPRAM11: SEG13_COMx Mask          */
+#define LED_DISPRAM11_SEG14_COMx_Pos          14                                                      /*!< LED DISPRAM11: SEG14_COMx Position      */
+#define LED_DISPRAM11_SEG14_COMx_Msk          (0x01UL << LED_DISPRAM11_SEG14_COMx_Pos)                /*!< LED DISPRAM11: SEG14_COMx Mask          */
+#define LED_DISPRAM11_SEG15_COMx_Pos          15                                                      /*!< LED DISPRAM11: SEG15_COMx Position      */
+#define LED_DISPRAM11_SEG15_COMx_Msk          (0x01UL << LED_DISPRAM11_SEG15_COMx_Pos)                /*!< LED DISPRAM11: SEG15_COMx Mask          */
+
+/* --------------------------------  LED_DISPRAM12  ------------------------------- */
+#define LED_DISPRAM12_SEG0_COMx_Pos           0                                                       /*!< LED DISPRAM12: SEG0_COMx Position       */
+#define LED_DISPRAM12_SEG0_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG0_COMx_Pos)                 /*!< LED DISPRAM12: SEG0_COMx Mask           */
+#define LED_DISPRAM12_SEG1_COMx_Pos           1                                                       /*!< LED DISPRAM12: SEG1_COMx Position       */
+#define LED_DISPRAM12_SEG1_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG1_COMx_Pos)                 /*!< LED DISPRAM12: SEG1_COMx Mask           */
+#define LED_DISPRAM12_SEG2_COMx_Pos           2                                                       /*!< LED DISPRAM12: SEG2_COMx Position       */
+#define LED_DISPRAM12_SEG2_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG2_COMx_Pos)                 /*!< LED DISPRAM12: SEG2_COMx Mask           */
+#define LED_DISPRAM12_SEG3_COMx_Pos           3                                                       /*!< LED DISPRAM12: SEG3_COMx Position       */
+#define LED_DISPRAM12_SEG3_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG3_COMx_Pos)                 /*!< LED DISPRAM12: SEG3_COMx Mask           */
+#define LED_DISPRAM12_SEG4_COMx_Pos           4                                                       /*!< LED DISPRAM12: SEG4_COMx Position       */
+#define LED_DISPRAM12_SEG4_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG4_COMx_Pos)                 /*!< LED DISPRAM12: SEG4_COMx Mask           */
+#define LED_DISPRAM12_SEG5_COMx_Pos           5                                                       /*!< LED DISPRAM12: SEG5_COMx Position       */
+#define LED_DISPRAM12_SEG5_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG5_COMx_Pos)                 /*!< LED DISPRAM12: SEG5_COMx Mask           */
+#define LED_DISPRAM12_SEG6_COMx_Pos           6                                                       /*!< LED DISPRAM12: SEG6_COMx Position       */
+#define LED_DISPRAM12_SEG6_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG6_COMx_Pos)                 /*!< LED DISPRAM12: SEG6_COMx Mask           */
+#define LED_DISPRAM12_SEG7_COMx_Pos           7                                                       /*!< LED DISPRAM12: SEG7_COMx Position       */
+#define LED_DISPRAM12_SEG7_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG7_COMx_Pos)                 /*!< LED DISPRAM12: SEG7_COMx Mask           */
+#define LED_DISPRAM12_SEG8_COMx_Pos           8                                                       /*!< LED DISPRAM12: SEG8_COMx Position       */
+#define LED_DISPRAM12_SEG8_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG8_COMx_Pos)                 /*!< LED DISPRAM12: SEG8_COMx Mask           */
+#define LED_DISPRAM12_SEG9_COMx_Pos           9                                                       /*!< LED DISPRAM12: SEG9_COMx Position       */
+#define LED_DISPRAM12_SEG9_COMx_Msk           (0x01UL << LED_DISPRAM12_SEG9_COMx_Pos)                 /*!< LED DISPRAM12: SEG9_COMx Mask           */
+#define LED_DISPRAM12_SEG10_COMx_Pos          10                                                      /*!< LED DISPRAM12: SEG10_COMx Position      */
+#define LED_DISPRAM12_SEG10_COMx_Msk          (0x01UL << LED_DISPRAM12_SEG10_COMx_Pos)                /*!< LED DISPRAM12: SEG10_COMx Mask          */
+#define LED_DISPRAM12_SEG11_COMx_Pos          11                                                      /*!< LED DISPRAM12: SEG11_COMx Position      */
+#define LED_DISPRAM12_SEG11_COMx_Msk          (0x01UL << LED_DISPRAM12_SEG11_COMx_Pos)                /*!< LED DISPRAM12: SEG11_COMx Mask          */
+#define LED_DISPRAM12_SEG12_COMx_Pos          12                                                      /*!< LED DISPRAM12: SEG12_COMx Position      */
+#define LED_DISPRAM12_SEG12_COMx_Msk          (0x01UL << LED_DISPRAM12_SEG12_COMx_Pos)                /*!< LED DISPRAM12: SEG12_COMx Mask          */
+#define LED_DISPRAM12_SEG13_COMx_Pos          13                                                      /*!< LED DISPRAM12: SEG13_COMx Position      */
+#define LED_DISPRAM12_SEG13_COMx_Msk          (0x01UL << LED_DISPRAM12_SEG13_COMx_Pos)                /*!< LED DISPRAM12: SEG13_COMx Mask          */
+#define LED_DISPRAM12_SEG14_COMx_Pos          14                                                      /*!< LED DISPRAM12: SEG14_COMx Position      */
+#define LED_DISPRAM12_SEG14_COMx_Msk          (0x01UL << LED_DISPRAM12_SEG14_COMx_Pos)                /*!< LED DISPRAM12: SEG14_COMx Mask          */
+#define LED_DISPRAM12_SEG15_COMx_Pos          15                                                      /*!< LED DISPRAM12: SEG15_COMx Position      */
+#define LED_DISPRAM12_SEG15_COMx_Msk          (0x01UL << LED_DISPRAM12_SEG15_COMx_Pos)                /*!< LED DISPRAM12: SEG15_COMx Mask          */
+
+/* ----------------------------------  LED_LOGDE  --------------------------------- */
+#define LED_LOGDE_LOGD_EN0_Pos                0                                                       /*!< LED LOGDE: LOGD_EN0 Position            */
+#define LED_LOGDE_LOGD_EN0_Msk                (0x01UL << LED_LOGDE_LOGD_EN0_Pos)                      /*!< LED LOGDE: LOGD_EN0 Mask                */
+#define LED_LOGDE_LOGD_EN1_Pos                1                                                       /*!< LED LOGDE: LOGD_EN1 Position            */
+#define LED_LOGDE_LOGD_EN1_Msk                (0x01UL << LED_LOGDE_LOGD_EN1_Pos)                      /*!< LED LOGDE: LOGD_EN1 Mask                */
+#define LED_LOGDE_LOGD_EN2_Pos                2                                                       /*!< LED LOGDE: LOGD_EN2 Position            */
+#define LED_LOGDE_LOGD_EN2_Msk                (0x01UL << LED_LOGDE_LOGD_EN2_Pos)                      /*!< LED LOGDE: LOGD_EN2 Mask                */
+#define LED_LOGDE_LOGD_EN3_Pos                3                                                       /*!< LED LOGDE: LOGD_EN3 Position            */
+#define LED_LOGDE_LOGD_EN3_Msk                (0x01UL << LED_LOGDE_LOGD_EN3_Pos)                      /*!< LED LOGDE: LOGD_EN3 Mask                */
+#define LED_LOGDE_LOGD_EN4_Pos                4                                                       /*!< LED LOGDE: LOGD_EN4 Position            */
+#define LED_LOGDE_LOGD_EN4_Msk                (0x01UL << LED_LOGDE_LOGD_EN4_Pos)                      /*!< LED LOGDE: LOGD_EN4 Mask                */
+#define LED_LOGDE_LOGD_EN5_Pos                5                                                       /*!< LED LOGDE: LOGD_EN5 Position            */
+#define LED_LOGDE_LOGD_EN5_Msk                (0x01UL << LED_LOGDE_LOGD_EN5_Pos)                      /*!< LED LOGDE: LOGD_EN5 Mask                */
+#define LED_LOGDE_LOGD_EN6_Pos                6                                                       /*!< LED LOGDE: LOGD_EN6 Position            */
+#define LED_LOGDE_LOGD_EN6_Msk                (0x01UL << LED_LOGDE_LOGD_EN6_Pos)                      /*!< LED LOGDE: LOGD_EN6 Mask                */
+#define LED_LOGDE_LOGD_EN7_Pos                7                                                       /*!< LED LOGDE: LOGD_EN7 Position            */
+#define LED_LOGDE_LOGD_EN7_Msk                (0x01UL << LED_LOGDE_LOGD_EN7_Pos)                      /*!< LED LOGDE: LOGD_EN7 Mask                */
+#define LED_LOGDE_LOGD_EN8_Pos                8                                                       /*!< LED LOGDE: LOGD_EN8 Position            */
+#define LED_LOGDE_LOGD_EN8_Msk                (0x01UL << LED_LOGDE_LOGD_EN8_Pos)                      /*!< LED LOGDE: LOGD_EN8 Mask                */
+#define LED_LOGDE_LOGD_EN9_Pos                9                                                       /*!< LED LOGDE: LOGD_EN9 Position            */
+#define LED_LOGDE_LOGD_EN9_Msk                (0x01UL << LED_LOGDE_LOGD_EN9_Pos)                      /*!< LED LOGDE: LOGD_EN9 Mask                */
+#define LED_LOGDE_LOGD_EN10_Pos               10                                                      /*!< LED LOGDE: LOGD_EN10 Position           */
+#define LED_LOGDE_LOGD_EN10_Msk               (0x01UL << LED_LOGDE_LOGD_EN10_Pos)                     /*!< LED LOGDE: LOGD_EN10 Mask               */
+#define LED_LOGDE_LOGD_EN11_Pos               11                                                      /*!< LED LOGDE: LOGD_EN11 Position           */
+#define LED_LOGDE_LOGD_EN11_Msk               (0x01UL << LED_LOGDE_LOGD_EN11_Pos)                     /*!< LED LOGDE: LOGD_EN11 Mask               */
+#define LED_LOGDE_LOGD_EN12_Pos               12                                                      /*!< LED LOGDE: LOGD_EN12 Position           */
+#define LED_LOGDE_LOGD_EN12_Msk               (0x01UL << LED_LOGDE_LOGD_EN12_Pos)                     /*!< LED LOGDE: LOGD_EN12 Mask               */
+
+/* --------------------------------  LED_COMDRIVE  -------------------------------- */
+#define LED_COMDRIVE_COMDRIVE0_Pos            0                                                       /*!< LED COMDRIVE: COMDRIVE0 Position        */
+#define LED_COMDRIVE_COMDRIVE0_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE0_Pos)                  /*!< LED COMDRIVE: COMDRIVE0 Mask            */
+#define LED_COMDRIVE_COMDRIVE1_Pos            1                                                       /*!< LED COMDRIVE: COMDRIVE1 Position        */
+#define LED_COMDRIVE_COMDRIVE1_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE1_Pos)                  /*!< LED COMDRIVE: COMDRIVE1 Mask            */
+#define LED_COMDRIVE_COMDRIVE2_Pos            2                                                       /*!< LED COMDRIVE: COMDRIVE2 Position        */
+#define LED_COMDRIVE_COMDRIVE2_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE2_Pos)                  /*!< LED COMDRIVE: COMDRIVE2 Mask            */
+#define LED_COMDRIVE_COMDRIVE3_Pos            3                                                       /*!< LED COMDRIVE: COMDRIVE3 Position        */
+#define LED_COMDRIVE_COMDRIVE3_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE3_Pos)                  /*!< LED COMDRIVE: COMDRIVE3 Mask            */
+#define LED_COMDRIVE_COMDRIVE4_Pos            4                                                       /*!< LED COMDRIVE: COMDRIVE4 Position        */
+#define LED_COMDRIVE_COMDRIVE4_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE4_Pos)                  /*!< LED COMDRIVE: COMDRIVE4 Mask            */
+#define LED_COMDRIVE_COMDRIVE5_Pos            5                                                       /*!< LED COMDRIVE: COMDRIVE5 Position        */
+#define LED_COMDRIVE_COMDRIVE5_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE5_Pos)                  /*!< LED COMDRIVE: COMDRIVE5 Mask            */
+#define LED_COMDRIVE_COMDRIVE6_Pos            6                                                       /*!< LED COMDRIVE: COMDRIVE6 Position        */
+#define LED_COMDRIVE_COMDRIVE6_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE6_Pos)                  /*!< LED COMDRIVE: COMDRIVE6 Mask            */
+#define LED_COMDRIVE_COMDRIVE7_Pos            7                                                       /*!< LED COMDRIVE: COMDRIVE7 Position        */
+#define LED_COMDRIVE_COMDRIVE7_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE7_Pos)                  /*!< LED COMDRIVE: COMDRIVE7 Mask            */
+#define LED_COMDRIVE_COMDRIVE8_Pos            8                                                       /*!< LED COMDRIVE: COMDRIVE8 Position        */
+#define LED_COMDRIVE_COMDRIVE8_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE8_Pos)                  /*!< LED COMDRIVE: COMDRIVE8 Mask            */
+#define LED_COMDRIVE_COMDRIVE9_Pos            9                                                       /*!< LED COMDRIVE: COMDRIVE9 Position        */
+#define LED_COMDRIVE_COMDRIVE9_Msk            (0x01UL << LED_COMDRIVE_COMDRIVE9_Pos)                  /*!< LED COMDRIVE: COMDRIVE9 Mask            */
+#define LED_COMDRIVE_COMDRIVE10_Pos           10                                                      /*!< LED COMDRIVE: COMDRIVE10 Position       */
+#define LED_COMDRIVE_COMDRIVE10_Msk           (0x01UL << LED_COMDRIVE_COMDRIVE10_Pos)                 /*!< LED COMDRIVE: COMDRIVE10 Mask           */
+#define LED_COMDRIVE_COMDRIVE11_Pos           11                                                      /*!< LED COMDRIVE: COMDRIVE11 Position       */
+#define LED_COMDRIVE_COMDRIVE11_Msk           (0x01UL << LED_COMDRIVE_COMDRIVE11_Pos)                 /*!< LED COMDRIVE: COMDRIVE11 Mask           */
+#define LED_COMDRIVE_COMDRIVE12_Pos           12                                                      /*!< LED COMDRIVE: COMDRIVE12 Position       */
+#define LED_COMDRIVE_COMDRIVE12_Msk           (0x01UL << LED_COMDRIVE_COMDRIVE12_Pos)                 /*!< LED COMDRIVE: COMDRIVE12 Mask           */
+
+/* --------------------------------  LED_PORTCTRL  -------------------------------- */
+#define LED_PORTCTRL_PORTx_DIR_Pos            0                                                       /*!< LED PORTCTRL: PORTx_DIR Position        */
+#define LED_PORTCTRL_PORTx_DIR_Msk            (0x0000ffffUL << LED_PORTCTRL_PORTx_DIR_Pos)            /*!< LED PORTCTRL: PORTx_DIR Mask            */
+
+/* ---------------------------------  LED_DLYCNT  --------------------------------- */
+#define LED_DLYCNT_DLYCNT_Pos                 0                                                       /*!< LED DLYCNT: DLYCNT Position             */
+#define LED_DLYCNT_DLYCNT_Msk                 (0x000000ffUL << LED_DLYCNT_DLYCNT_Pos)                 /*!< LED DLYCNT: DLYCNT Mask                 */
+
+
+/* ================================================================================ */
+/* ================          struct 'LCD' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  LCD_CR  ----------------------------------- */
+#define LCD_CR_DISP_Pos                       0                                                       /*!< LCD CR: DISP Position                   */
+#define LCD_CR_DISP_Msk                       (0x01UL << LCD_CR_DISP_Pos)                             /*!< LCD CR: DISP Mask                       */
+#define LCD_CR_LCLK_Pos                       1                                                       /*!< LCD CR: LCLK Position                   */
+#define LCD_CR_LCLK_Msk                       (0x03UL << LCD_CR_LCLK_Pos)                             /*!< LCD CR: LCLK Mask                       */
+#define LCD_CR_DBS_Pos                        3                                                       /*!< LCD CR: DBS Position                    */
+#define LCD_CR_DBS_Msk                        (0x07UL << LCD_CR_DBS_Pos)                              /*!< LCD CR: DBS Mask                        */
+#define LCD_CR_IRSEL_Pos                      6                                                       /*!< LCD CR: IRSEL Position                  */
+#define LCD_CR_IRSEL_Msk                      (0x03UL << LCD_CR_IRSEL_Pos)                            /*!< LCD CR: IRSEL Mask                      */
+#define LCD_CR_LCDDR_Pos                      8                                                       /*!< LCD CR: LCDDR Position                  */
+#define LCD_CR_LCDDR_Msk                      (0x01UL << LCD_CR_LCDDR_Pos)                            /*!< LCD CR: LCDDR Mask                      */
+
+/* ----------------------------------  LCD_BCCR  ---------------------------------- */
+#define LCD_BCCR_VLCD_Pos                     0                                                       /*!< LCD BCCR: VLCD Position                 */
+#define LCD_BCCR_VLCD_Msk                     (0x0fUL << LCD_BCCR_VLCD_Pos)                           /*!< LCD BCCR: VLCD Mask                     */
+#define LCD_BCCR_LCTEN_Pos                    5                                                       /*!< LCD BCCR: LCTEN Position                */
+#define LCD_BCCR_LCTEN_Msk                    (0x01UL << LCD_BCCR_LCTEN_Pos)                          /*!< LCD BCCR: LCTEN Mask                    */
+#define LCD_BCCR_BMSEL_Pos                    8                                                       /*!< LCD BCCR: BMSEL Position                */
+#define LCD_BCCR_BMSEL_Msk                    (0x07UL << LCD_BCCR_BMSEL_Pos)                          /*!< LCD BCCR: BMSEL Mask                    */
+#define LCD_BCCR_LCDABC_Pos                   12                                                      /*!< LCD BCCR: LCDABC Position               */
+#define LCD_BCCR_LCDABC_Msk                   (0x01UL << LCD_BCCR_LCDABC_Pos)                         /*!< LCD BCCR: LCDABC Mask                   */
+
+/* ----------------------------------  LCD_BSSR  ---------------------------------- */
+#define LCD_BSSR_VLC_PE0_Pos                  4                                                       /*!< LCD BSSR: VLC_PE0 Position              */
+#define LCD_BSSR_VLC_PE0_Msk                  (0x01UL << LCD_BSSR_VLC_PE0_Pos)                        /*!< LCD BSSR: VLC_PE0 Mask                  */
+#define LCD_BSSR_VLC_PE1_Pos                  5                                                       /*!< LCD BSSR: VLC_PE1 Position              */
+#define LCD_BSSR_VLC_PE1_Msk                  (0x01UL << LCD_BSSR_VLC_PE1_Pos)                        /*!< LCD BSSR: VLC_PE1 Mask                  */
+#define LCD_BSSR_VLC_PE2_Pos                  6                                                       /*!< LCD BSSR: VLC_PE2 Position              */
+#define LCD_BSSR_VLC_PE2_Msk                  (0x01UL << LCD_BSSR_VLC_PE2_Pos)                        /*!< LCD BSSR: VLC_PE2 Mask                  */
+#define LCD_BSSR_VLC_PE3_Pos                  7                                                       /*!< LCD BSSR: VLC_PE3 Position              */
+#define LCD_BSSR_VLC_PE3_Msk                  (0x01UL << LCD_BSSR_VLC_PE3_Pos)                        /*!< LCD BSSR: VLC_PE3 Mask                  */
+#define LCD_BSSR_PVLC_OPEN_Pos                8                                                       /*!< LCD BSSR: PVLC_OPEN Position            */
+#define LCD_BSSR_PVLC_OPEN_Msk                (0x01UL << LCD_BSSR_PVLC_OPEN_Pos)                      /*!< LCD BSSR: PVLC_OPEN Mask                */
+#define LCD_BSSR_LCDDR_Pos                    9                                                       /*!< LCD BSSR: LCDDR Position                */
+#define LCD_BSSR_LCDDR_Msk                    (0x01UL << LCD_BSSR_LCDDR_Pos)                          /*!< LCD BSSR: LCDDR Mask                    */
+
+
+/* ================================================================================ */
+/* ================          struct 'CRC' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  CRC_CR  ----------------------------------- */
+#define CRC_CR_CRCRUN_Pos                     0                                                       /*!< CRC CR: CRCRUN Position                 */
+#define CRC_CR_CRCRUN_Msk                     (0x01UL << CRC_CR_CRCRUN_Pos)                           /*!< CRC CR: CRCRUN Mask                     */
+#define CRC_CR_FIRSTBS_Pos                    1                                                       /*!< CRC CR: FIRSTBS Position                */
+#define CRC_CR_FIRSTBS_Msk                    (0x01UL << CRC_CR_FIRSTBS_Pos)                          /*!< CRC CR: FIRSTBS Mask                    */
+#define CRC_CR_POLYS_Pos                      4                                                       /*!< CRC CR: POLYS Position                  */
+#define CRC_CR_POLYS_Msk                      (0x01UL << CRC_CR_POLYS_Pos)                            /*!< CRC CR: POLYS Mask                      */
+#define CRC_CR_MDSEL_Pos                      5                                                       /*!< CRC CR: MDSEL Position                  */
+#define CRC_CR_MDSEL_Msk                      (0x01UL << CRC_CR_MDSEL_Pos)                            /*!< CRC CR: MDSEL Mask                      */
+#define CRC_CR_RLTCLR_Pos                     6                                                       /*!< CRC CR: RLTCLR Position                 */
+#define CRC_CR_RLTCLR_Msk                     (0x01UL << CRC_CR_RLTCLR_Pos)                           /*!< CRC CR: RLTCLR Mask                     */
+#define CRC_CR_MODS_Pos                       7                                                       /*!< CRC CR: MODS Position                   */
+#define CRC_CR_MODS_Msk                       (0x01UL << CRC_CR_MODS_Pos)                             /*!< CRC CR: MODS Mask                       */
+#define CRC_CR_CRCINTF_Pos                    8                                                       /*!< CRC CR: CRCINTF Position                */
+#define CRC_CR_CRCINTF_Msk                    (0x01UL << CRC_CR_CRCINTF_Pos)                          /*!< CRC CR: CRCINTF Mask                    */
+#define CRC_CR_CRCINTEN_Pos                   9                                                       /*!< CRC CR: CRCINTEN Position               */
+#define CRC_CR_CRCINTEN_Msk                   (0x01UL << CRC_CR_CRCINTEN_Pos)                         /*!< CRC CR: CRCINTEN Mask                   */
+
+/* -----------------------------------  CRC_IN  ----------------------------------- */
+#define CRC_IN_INDATA_Pos                     0                                                       /*!< CRC IN: INDATA Position                 */
+#define CRC_IN_INDATA_Msk                     (0xffffffffUL << CRC_IN_INDATA_Pos)                     /*!< CRC IN: INDATA Mask                     */
+
+/* -----------------------------------  CRC_RLT  ---------------------------------- */
+#define CRC_RLT_RLTDATA_Pos                   0                                                       /*!< CRC RLT: RLTDATA Position               */
+#define CRC_RLT_RLTDATA_Msk                   (0x0000ffffUL << CRC_RLT_RLTDATA_Pos)                   /*!< CRC RLT: RLTDATA Mask                   */
+
+/* ----------------------------------  CRC_INIT  ---------------------------------- */
+#define CRC_INIT_INIDATA_Pos                  0                                                       /*!< CRC INIT: INIDATA Position              */
+#define CRC_INIT_INIDATA_Msk                  (0x0000ffffUL << CRC_INIT_INIDATA_Pos)                  /*!< CRC INIT: INIDATA Mask                  */
+
+
+/* ================================================================================ */
+/* ================         struct 'TSENSE' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  TSENSE_CR  --------------------------------- */
+#define TSENSE_CR_START_Pos                   0                                                       /*!< TSENSE CR: START Position               */
+#define TSENSE_CR_START_Msk                   (0x01UL << TSENSE_CR_START_Pos)                         /*!< TSENSE CR: START Mask                   */
+#define TSENSE_CR_INTEN_Pos                   8                                                       /*!< TSENSE CR: INTEN Position               */
+#define TSENSE_CR_INTEN_Msk                   (0x01UL << TSENSE_CR_INTEN_Pos)                         /*!< TSENSE CR: INTEN Mask                   */
+
+/* --------------------------------  TSENSE_RCCNT  -------------------------------- */
+#define TSENSE_RCCNT_RCCV_Pos                 0                                                       /*!< TSENSE RCCNT: RCCV Position             */
+#define TSENSE_RCCNT_RCCV_Msk                 (0xffffffffUL << TSENSE_RCCNT_RCCV_Pos)                 /*!< TSENSE RCCNT: RCCV Mask                 */
+
+/* --------------------------------  TSENSE_SCCNT  -------------------------------- */
+#define TSENSE_SCCNT_SCCV_Pos                 0                                                       /*!< TSENSE SCCNT: SCCV Position             */
+#define TSENSE_SCCNT_SCCV_Msk                 (0xffffffffUL << TSENSE_SCCNT_SCCV_Pos)                 /*!< TSENSE SCCNT: SCCV Mask                 */
+
+/* ----------------------------------  TSENSE_SR  --------------------------------- */
+#define TSENSE_SR_BUSY_Pos                    0                                                       /*!< TSENSE SR: BUSY Position                */
+#define TSENSE_SR_BUSY_Msk                    (0x01UL << TSENSE_SR_BUSY_Pos)                          /*!< TSENSE SR: BUSY Mask                    */
+#define TSENSE_SR_DONE_Pos                    8                                                       /*!< TSENSE SR: DONE Position                */
+#define TSENSE_SR_DONE_Msk                    (0x01UL << TSENSE_SR_DONE_Pos)                          /*!< TSENSE SR: DONE Mask                    */
+
+
+
+/* ================================================================================ */
+/* ================              Peripheral memory map             ================ */
+/* ================================================================================ */
+
+#define SCU_BASE                        0x40000000UL
+#define SCUCC_BASE                      0x4000F000UL
+#define SCULV_BASE                      0x40005100UL
+#define PA_BASE                         0x40001000UL
+#define PB_BASE                         0x40001100UL
+#define PC_BASE                         0x40001200UL
+#define PD_BASE                         0x40001300UL
+#define PE_BASE                         0x40001400UL
+#define PF_BASE                         0x40001500UL
+#define PCU_BASE                        0x40001F00UL
+#define FMC_BASE                        0x40000100UL
+#define DMA0_BASE                       0x40000400UL
+#define DMA1_BASE                       0x40000410UL
+#define DMA2_BASE                       0x40000420UL
+#define DMA3_BASE                       0x40000430UL
+#define WDT_BASE                        0x40001A00UL
+#define WT_BASE                         0x40002000UL
+#define TIMER10_BASE                    0x40002100UL
+#define TIMER11_BASE                    0x40002200UL
+#define TIMER12_BASE                    0x40002300UL
+#define TIMER13_BASE                    0x40002700UL
+#define TIMER20_BASE                    0x40002500UL
+#define TIMER21_BASE                    0x40002600UL
+#define TIMER30_BASE                    0x40002400UL
+#define USART10_BASE                    0x40003800UL
+#define USART11_BASE                    0x40003900UL
+#define UART0_BASE                      0x40004000UL
+#define UART1_BASE                      0x40004100UL
+#define I2C0_BASE                       0x40004800UL
+#define I2C1_BASE                       0x40004900UL
+#define SPI20_BASE                      0x40004C00UL
+#define SPI21_BASE                      0x40004D00UL
+#define ADC_BASE                        0x40003000UL
+#define TOUCH_BASE                      0x40003600UL
+#define LED_BASE                        0x40006000UL
+#define LCD_BASE                        0x40005000UL
+#define CRC_BASE                        0x40000300UL
+#define TSENSE_BASE                     0x40006300UL
+
+
+/* ================================================================================ */
+/* ================             Peripheral declaration             ================ */
+/* ================================================================================ */
+
+#define SCU                             ((SCU_Type                *) SCU_BASE)
+#define SCUCC                           ((SCUCC_Type              *) SCUCC_BASE)
+#define SCULV                           ((SCULV_Type              *) SCULV_BASE)
+#define PA                              ((PORT_Type               *) PA_BASE)
+#define PB                              ((PORT_Type               *) PB_BASE)
+#define PC                              ((PORT_Type               *) PC_BASE)
+#define PD                              ((PORT_Type               *) PD_BASE)
+#define PE                              ((PORT_Type               *) PE_BASE)
+#define PF                              ((PORT_Type               *) PF_BASE)
+#define PCU                             ((PCU_Type                *) PCU_BASE)
+#define FMC                             ((FMC_Type                *) FMC_BASE)
+#define DMA0                            ((DMA0_Type               *) DMA0_BASE)
+#define DMA1                            ((DMA0_Type               *) DMA1_BASE)
+#define DMA2                            ((DMA0_Type               *) DMA2_BASE)
+#define DMA3                            ((DMA0_Type               *) DMA3_BASE)
+#define WDT                             ((WDT_Type                *) WDT_BASE)
+#define WT                              ((WT_Type                 *) WT_BASE)
+#define TIMER10                         ((TIMER1n_Type            *) TIMER10_BASE)
+#define TIMER11                         ((TIMER1n_Type            *) TIMER11_BASE)
+#define TIMER12                         ((TIMER1n_Type            *) TIMER12_BASE)
+#define TIMER13                         ((TIMER1n_Type            *) TIMER13_BASE)
+#define TIMER20                         ((TIMER20_Type            *) TIMER20_BASE)
+#define TIMER21                         ((TIMER20_Type            *) TIMER21_BASE)
+#define TIMER30                         ((TIMER30_Type            *) TIMER30_BASE)
+#define USART10                         ((USART_Type              *) USART10_BASE)
+#define USART11                         ((USART_Type              *) USART11_BASE)
+#define UART0                           ((UART_Type               *) UART0_BASE)
+#define UART1                           ((UART_Type               *) UART1_BASE)
+#define I2C0                            ((I2C_Type                *) I2C0_BASE)
+#define I2C1                            ((I2C_Type                *) I2C1_BASE)
+#define SPI20                           ((SPI20_Type              *) SPI20_BASE)
+#define SPI21                           ((SPI20_Type              *) SPI21_BASE)
+#define ADC                             ((ADC_Type                *) ADC_BASE)
+#define TOUCH                           ((TOUCH_Type              *) TOUCH_BASE)
+#define LED                             ((LED_Type                *) LED_BASE)
+#define LCD                             ((LCD_Type                *) LCD_BASE)
+#define CRC                             ((CRC_Type                *) CRC_BASE)
+#define TSENSE                          ((TSENSE_Type             *) TSENSE_BASE)
+
+
+/** @} */ /* End of group Device_Peripheral_Registers */
+/** @} */ /* End of group A31T21x */
+/** @} */ /* End of group ABOV Semiconductor Co., Ltd. */
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif  /* A31T21x_H */
+

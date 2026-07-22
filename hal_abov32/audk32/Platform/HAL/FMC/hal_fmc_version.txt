@@ -1,0 +1,69 @@
+/**
+ *******************************************************************************
+ * @file        hal_fmc_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for FMC
+ *
+ * Copyright 2022 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_FMC FMC
+ * @{
+ * - Flash Memory Controller (FMC) interfaces an internal code and data flash.
+ * - It is composed of Code Flash Memory Controller (CFCM) and Data Flash Memory Controller (DFMC) for the interfacees.
+ * - The internal code/data flash is supposed to store execution code/data binaries basically.
+ * - For a certain fuctionality, it can access System Flash located at inside of a device.
+ * 
+ * <B> [ FMC version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A31xxxx series\n Cortex-M0+</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 02.01.00 <td> A31G22x
+ * <tr><td> <center>F</center> <td> 01.00.00 <td> A31L21x, A31S13x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+ *     <td> <center><B>A33xxxx series\n Cortex-M3</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A33G52x
+ * <tr><td> <center>V</center> <td> 01.01.00 <td> A33G53x
+ * <tr><td> <center>V</center> <td> 03.00.00 <td> A33M11x
+ * </table>
+ *     <td> <center><B>A34xxxx series\n Cortex-M4</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 03.00.00 <td> A34M41x
+ * <tr><td> <center>V</center> <td> 03.00.01 <td> A34M42x
+ * <tr><td> <center>V</center> <td> 03.00.02 <td> A34L71x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

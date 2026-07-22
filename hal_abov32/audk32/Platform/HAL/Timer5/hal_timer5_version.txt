@@ -1,0 +1,49 @@
+/**
+ *******************************************************************************
+ * @file        hal_timer5_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for Timer5
+ *
+ * Copyright 2024 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_TIMER5 TIMER5
+ * @{
+ * - The source clock prescaled by the dedicated prescaler is fed to Timer5.
+ * - Timer5 receives the prescaled source clock and produces 16bit counter.
+ * - Timer5 has four operation modes below.
+ *  -# Periodic mode
+ *  -# Pulse Width Modulation(PWM) mode
+ *  -# One-shot mode
+ *  -# Capture mode
+ * 
+ * <B> [ Timer5 version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A31xxxx series\n Cortex-M0+</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>F</center> <td> 01.00.00 <td> A31L21x, A31L12x, A31L22x
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

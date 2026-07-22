@@ -1,0 +1,56 @@
+/**
+ *******************************************************************************
+ * @file        hal_mpwm_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for MPWM 
+ *
+ * Copyright 2022 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_MPWM MPWM
+ * @{
+ * - Motor Pulse Width Modulation (MPWM) is a sort of ABOV terminology and a special PWM supporting motor control.
+ * - It has three operation modes below.
+ *  -# Motor PWM mode for Motor control
+ *  -# Normal PWM mode for a variety of PWM applications
+ *  -# Individual PWM mode for specific applications like IH cooker.
+ * - Moreover, dead-time for half-bridge circuit and, detecting external protection and over-voltage event are supported.
+ *
+ * <B> [ MPWM version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A33xxxx series\n Cortex-M3</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A33M11x
+ * </table>
+ *     <td> <center><B>A34xxxx series\n Cortex-M4</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A34M41x
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

@@ -1,0 +1,56 @@
+/**
+ *******************************************************************************
+ * @file        hal_pwm_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for PWM
+ *
+ * Copyright 2023 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_PWM PWM
+ * @{
+ * - Pulse Width Modulation (PWM) refers to a modulation method that changes the pulse width of the signal to be transmitted.
+ * - PWM is used for motor control or voltage regulation.
+ * 
+ * <B> [ PWM version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A33xxxx series\n Cortex-M3</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A33G52x, A33G53x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+  *     <td> <center><B>A34xxxx series\n Cortex-M4</B></center>\n
+ * <table>
+ * <tr>
+ *     <th > <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.01 <td> A34G43x
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * <tr><td> <center>N/A</center> <td><center>N/A</center><td><center>N/A</center>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */

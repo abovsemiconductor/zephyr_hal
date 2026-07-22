@@ -1,0 +1,44 @@
+/**
+ *******************************************************************************
+ * @file        hal_vrefbuf_version.txt
+ * @author      ABOV R&D Division
+ * @brief       specific version for VREFBUF
+ *
+ * Copyright 2022 ABOV Semiconductor Co.,Ltd. All rights reserved.
+ *
+ * This file is licensed under terms that are found in the LICENSE file
+ * located at Document directory.
+ * If this file is delivered or shared without applicable license terms,
+ * the terms of the BSD-3-Clause license shall be applied.
+ * Reference: https://opensource.org/licenses/BSD-3-Clause
+ ******************************************************************************/
+
+/**
+ * @addtogroup  HAL HAL (Hardware Abstraction Layer)
+ * @{
+ * @defgroup    HAL_VREFBUF VREFBUF
+ * @{
+ * - Voltage Reference Buffer (VREFBUF) provides a stable reference voltage for ADC, DAC.
+ * - It improves measurement accuracy by reducing the influence of supply voltage and noise on analog conversions.
+ *
+ * <B> [VREFBUF version per ABOV 32bit chipset] </B>
+ *
+ * <table>
+ * <tr> <td> <center><B> ABOV ARM Cortex-M 32bit </B></center>
+ * <table>
+ * <tr>
+ *     <td> <center><B>A34xxxx series\n Cortex-M0+</B></center>\n
+ * <table>
+ * <tr>
+ *     <th> <center>Type</center> 
+ *     <th> <center>Version</center> 
+ *     <th> <center>Chipset</center>
+ * <tr><td> <center>V</center> <td> 01.00.00 <td> A34L71x
+ * </table>
+ * </table>
+ * </table>
+ *
+ */
+
+/** @} */
+/** @} */
