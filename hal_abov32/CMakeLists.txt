@@ -4,4 +4,4 @@
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
-add_subdirectory_ifdef(CONFIG_HAS_AUDK32 audk32)
+add_subdirectory_ifdef(CONFIG_SOC_FAMILY_ABOV32 audk32)
