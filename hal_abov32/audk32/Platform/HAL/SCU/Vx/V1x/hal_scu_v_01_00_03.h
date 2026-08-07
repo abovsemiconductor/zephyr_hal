@@ -30,6 +30,7 @@
 /* Internal Macro */
 typedef SCU_Type                                      SCUCLK_Type;
 typedef SCULV_Type                                    SCUCONF_Type;
+typedef SCU_Type                                      SCUDB_Type;
 #define SCU_REG_BASE                                  SCU_BASE
 #define SCULV_REG_BASE                                SCULV_BASE
 #define SCUCLK_REG_BASE                               SCU_BASE

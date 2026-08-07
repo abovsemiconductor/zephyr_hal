@@ -22,7 +22,9 @@ typedef PCU_Type                                      GPIO_Type;
 typedef PORTEN_Type                                   PCU_PORTEN_Type;
 
 #define PCU_REG_BASE                                  PA_BASE
+#define PCU_GPIO_REG_BASE                             PCU_REG_BASE
 #define PCU_REG_OFFSET                                0x100
+#define PCU_GPIO_REG_OFFSET                           PCU_REG_OFFSET
 #define PCU_PORT_EN_BASE                              PORTEN_BASE
 #define PCU_IRQ_MAX_COUNT                             3
 
@@ -92,7 +94,7 @@ typedef PORTEN_Type                                   PCU_PORTEN_Type;
 #define SET_SCU_PCU_MCCR_DIV2(Peri,Data)               SET_BIT(Peri,Data,SCU,MCCR5,PGCDCDIV)
 
 
-static void PRV_PCU_IRQHandler(PCU_ID_e eId, PORT_Type *ptPcu, uint32_t un32Status);
+extern void PRV_PCU_IRQHandler(PCU_ID_e eId, PORT_Type *ptPcu, uint32_t un32Status);
 
 static __inline void PCU0_INT_IRQHandler(void)
 {

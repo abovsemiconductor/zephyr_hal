@@ -42,6 +42,156 @@
 
 #define SCUCLK_CLK_OUTPUT_DIV_MAX                     15
 
+#define HLL_SCU_CLK_SET_HSE_ENABLE(Enable)                         \
+    MODIFY_SCU_CSCR_HSE(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_ENABLE_MSK,                                     \
+        ((uint32_t)(Enable) << SCUCLK_SRC_ENABLE_POS))
+
+#define HLL_SCU_CLK_SET_HSI_ENABLE(Enable)                         \
+    MODIFY_SCU_CSCR_HSI(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_ENABLE_MSK,                                     \
+        ((uint32_t)(Enable) << SCUCLK_SRC_ENABLE_POS))
+
+#define HLL_SCU_CLK_SET_LSI_ENABLE(Enable)                         \
+    MODIFY_SCU_CSCR_LSI(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_ENABLE_MSK,                                     \
+        ((uint32_t)(Enable) << SCUCLK_SRC_ENABLE_POS))
+
+#define HLL_SCU_CLK_SET_LSE_ENABLE(Enable)                         \
+    MODIFY_SCU_CSCR_LSE(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_ENABLE_MSK,                                     \
+        ((uint32_t)(Enable) << SCUCLK_SRC_ENABLE_POS))
+
+#define HLL_SCU_CLK_SET_HSE_DIVIDER(Div)                           \
+    MODIFY_SCU_CSCR_HSE(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_MODE_MSK,                                       \
+        ((uint32_t)(Div) & SCUCLK_SRC_MODE_MSK))
+
+#define HLL_SCU_CLK_SET_HSI_DIVIDER(Div)                           \
+    MODIFY_SCU_CSCR_HSI(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_MODE_MSK,                                       \
+        ((uint32_t)(Div) & SCUCLK_SRC_MODE_MSK))
+
+#define HLL_SCU_CLK_SET_LSI_DIVIDER(Div)                           \
+    MODIFY_SCU_CSCR_LSI(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_MODE_MSK,                                       \
+        ((uint32_t)(Div) & SCUCLK_SRC_MODE_MSK))
+
+#define HLL_SCU_CLK_SET_LSE_DIVIDER(Div)                           \
+    MODIFY_SCU_CSCR_LSE(                                           \
+        HLL_SCUCLK_REG,                                            \
+        SCUCLK_SRC_MODE_MSK,                                       \
+        ((uint32_t)(Div) & SCUCLK_SRC_MODE_MSK))
+
+#define HLL_SCU_CLK_SET_HCLK_DIVIDER(Div)                          \
+    ((void)(Div))
+
+#define HLL_SCU_CLK_GET_PCLK_DIVIDER()                             \
+    (0U)
+
+#define HLL_SCU_CLK_SET_MCLK_SOURCE(Source)                        \
+    ((void)(Source))
+
+#define HLL_SCU_CLK_SET_PLL_SOURCE_HSE(UseHSE)                     \
+    ((void)(UseHSE))
+
+#define HLL_SCU_CLK_SET_FLASH_LATENCY_DEFAULT()                    \
+    ((void)0)
+
+#define HLL_SCU_CLK_SET_OUTPUT_DIVIDER(Div)                  \
+    SET_SCU_COR_CLKODIV(                                      \
+        HLL_SCUCLK_REG,                                       \
+        (uint8_t)(Div))
+
+#define HLL_SCU_CLK_SET_OUTPUT_SOURCE(Source)                 \
+    ((void)(Source))
+
+#define HLL_SCU_CLK_SET_OUTPUT_ENABLE(Enable)                 \
+    SET_SCU_COR_CLKOEN(                                       \
+        HLL_SCUCLK_REG,                                       \
+        (bool)(Enable))
+
+#define HLL_SCU_CLK_IS_VALID_OUTPUT_DIV(Div)                  \
+    ((uint8_t)(Div) <= SCUCLK_CLK_OUTPUT_DIV_MAX)
+
+#define HLL_SCU_CLK_GET_OUTPUT_SOURCE_VALUE(Source, Output) \
+    HLL_SCU_CLK_GetOutputSourceValueImpl((P_SCUCLK_SRC_e)(Source), (Output))
+
+#define HLL_SCU_CLK_SET_RESET_SRC_HSE_ENABLE(Enable) \
+    ((void)(Enable))
+
+#define HLL_SCU_CLK_SET_RESET_SRC_MCLK_ENABLE(Enable) \
+    ((void)(Enable))
+
+#define HLL_SCU_CLK_SET_RESET_SRC_LSE_ENABLE(Enable) \
+    ((void)(Enable))
+
+#define HLL_SCU_CLK_GET_RESET_SRC_HSE_ENABLE()          (false)
+#define HLL_SCU_CLK_GET_RESET_SRC_HSE_EVENT()           (false)
+#define HLL_SCU_CLK_CLEAR_RESET_SRC_HSE_EVENT()         ((void)0)
+
+#define HLL_SCU_CLK_GET_RESET_SRC_MCLK_ENABLE()         (false)
+#define HLL_SCU_CLK_GET_RESET_SRC_MCLK_EVENT()          (false)
+#define HLL_SCU_CLK_CLEAR_RESET_SRC_MCLK_EVENT()        ((void)0)
+
+#define HLL_SCU_CLK_GET_RESET_SRC_LSE_ENABLE()          (false)
+#define HLL_SCU_CLK_GET_RESET_SRC_LSE_EVENT()           (false)
+#define HLL_SCU_CLK_CLEAR_RESET_SRC_LSE_EVENT()         ((void)0)
+
+#define HLL_SCU_CLK_SET_PLL_ENABLE(Enable)                      \
+    SET_SCU_PLLCON_PLLEN(                                       \
+        HLL_SCUCLK_REG,                                         \
+        (bool)(Enable))
+
+#define HLL_SCU_CLK_SET_PLL_SOURCE_HSE(UseHSE)                  \
+    SET_SCU_SCCR_PLLCLKSEL(                                     \
+        HLL_SCUCLK_REG,                                         \
+        (bool)(UseHSE))
+
+#define HLL_SCU_CLK_SET_PLL_SOURCE_DIVIDER(Div)                 \
+    ((void)(Div))
+
+#define HLL_SCU_CLK_SET_PLL_HSE_SOURCE(Div)                     \
+    SET_SCU_CSCR_HSE(                                           \
+        HLL_SCUCLK_REG,                                         \
+        ((uint32_t)true << SCUCLK_SRC_ENABLE_POS) |             \
+        ((uint32_t)(Div) & SCUCLK_SRC_MODE_MSK))
+
+#define HLL_SCU_CLK_SET_PLL_HSI_SOURCE(Div)                     \
+    SET_SCU_CSCR_HSI(                                           \
+        HLL_SCUCLK_REG,                                         \
+        ((uint32_t)true << SCUCLK_SRC_ENABLE_POS) |             \
+        ((uint32_t)(Div) & SCUCLK_SRC_MODE_MSK))
+
+#define HLL_SCU_CLK_SET_PLL_CONTROL(Value)                      \
+    SET_SCU_PLLCON(                                             \
+        HLL_SCUCLK_REG,                                         \
+        (uint32_t)(Value))
+
+#define HLL_SCU_CLK_SET_PLL_CONTROL_KEY()                       \
+    SET_SCU_PLLCON(                                             \
+        HLL_SCUCLK_REG,                                         \
+        SCUCLK_PLLCON_KEY_VALUE)
+
+#define HLL_SCU_CLK_GET_PLL_LOCK()                              \
+    GET_SCU_PLLCON_LOCK(HLL_SCUCLK_REG)
+
+#define HLL_SCU_CLK_GET_PLL_READY()                             \
+    ((GET_SCU_PLLCON(HLL_SCUCLK_REG) & (1UL << 30)) != 0UL)
+
+#define HLL_SCU_CLK_GET_PLL_HSE_CLOCK(Div)                      \
+    (HSE_CLOCK / SCUCLK_EXPO2((uint8_t)(Div)))
+
+#define HLL_SCU_CLK_GET_PLL_HSI_CLOCK(Div)                      \
+    (HSI_CLOCK / SCUCLK_EXPO2((uint8_t)(Div)))
+
 static __inline uint32_t PRV_SCUCLK_GetMClk(P_SCUCLK_SRC_e eMClk)
 {
     switch(eMClk)
@@ -300,5 +450,18 @@ static __inline void SCULVD_GetResetSrcEvent(bool *pbEvent)
 
     SET_SCU_LVD_RST_SRC_FLAG(ptScu, true);
 }
+
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+__STATIC_INLINE HAL_ERR_e HLL_SCU_CLK_GetOutputSourceValueImpl(
+    SCUCLK_SRC_e eSrc,
+    uint32_t *pun32Output)
+{
+    (void)eSrc;
+
+    *pun32Output = 0U;
+
+    return HAL_ERR_OK;
+}
+#endif
 
 #endif /* _HAL_SCH_V1X_H_ */

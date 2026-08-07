@@ -18,6 +18,16 @@
 
 #include "abov_config.h"
 
+#define MASK_1BIT                                     0x01
+#define MASK_2BITS                                    0x03
+#define MASK_3BITS                                    0x07
+#define MASK_4BITS                                    0x0F
+#define ALT_OFFSET                                    0x08
+
+#define SET_REG_BIT(Peri,Data,RegName,Msk,Pos)        (Peri->RegName = ((Peri->RegName & ~(Msk << Pos)) \
+                                                      | (Data << Pos)))
+#define GET_REG_BIT(Peri,RegName,Msk,Pos)             ((Peri->RegName & (Msk << Pos)) >> Pos)
+
 /* Configuration Define from config_xxx.h */
 #define PCU_PORT_GROUP_NUM                            CONFIG_PCU_MAX_COUNT
 
@@ -37,8 +47,6 @@
 #include "hal_pcu_v_02_00_05.h"
 #elif (CONFIG_PCU_VER_MINOR == 6)
 #include "hal_pcu_v_02_00_06.h"
-#elif (CONFIG_PCU_VER_MINOR == 7)
-#include "hal_pcu_v_02_00_07.h"
 #else
 #error "define CONFIG_PCU_VER_MINOR of V-type PCU at config_xxx.h"
 #endif
@@ -47,6 +55,9 @@
 #error "define CONFIG_PCU_VER_EXT of V-type PCU at config_xxx.h"
 #endif
 
+/* Configuration Define from config_xxx.h */
+#define PCU_PORT_GROUP_NUM                            CONFIG_PCU_MAX_COUNT
+
 static __inline PORT_Type *PCU_GetReg(uint32_t un32Id)
 {
     return (PORT_Type *)(PCU_REG_BASE + (PCU_REG_OFFSET * un32Id));
@@ -54,7 +65,7 @@ static __inline PORT_Type *PCU_GetReg(uint32_t un32Id)
 
 static __inline GPIO_Type *PCU_GPIO_GetReg(uint32_t un32Id)
 {
-    return (GPIO_Type *)(PCU_REG_BASE + (PCU_REG_OFFSET * un32Id));
+    return (GPIO_Type *)(PCU_GPIO_REG_BASE + (PCU_GPIO_REG_OFFSET * un32Id));
 }
 
 #if defined(PCU_FEATURE_SUPPORT_LOW_VOLTAGE)

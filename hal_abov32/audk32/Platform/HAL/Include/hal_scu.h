@@ -30,19 +30,7 @@ extern "C"
 #endif
 
 #include "hal_common.h"
-
-/*
- * @brief SCU Reset Source
- */
-typedef enum
-{
-    SCU_RST_SW,            /**< Software Reset */
-    SCU_RST_CPU,           /**< CPU Request Reset */
-    SCU_RST_CPU_LOCKUP,    /**< CPU Lock-up Reset */
-    SCU_RST_EXT_PIN,       /**< External Pin Reset */
-    SCU_RST_POR,           /**< Power-on Reset */
-    SCU_RST_MAX
-} SCU_RST_e;
+#include "type/scu_type.h"
 
 /**
  *******************************************************************************

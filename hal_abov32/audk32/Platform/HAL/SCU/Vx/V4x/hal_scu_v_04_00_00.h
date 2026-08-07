@@ -111,7 +111,7 @@ typedef SCU_Type                                      SCUCONF_Type;
 #define SET_SCU_PLLCON_BYPASS(Peri,Data)              (void)Peri
 #define SET_SCU_PLLCON_RESET(Peri,Data)               (void)Peri
 #define SET_SCU_PLLCON(Peri,Data)                     (void)Peri
-#define GET_SCU_PLLCON(Peri)                          (void)Peri
+#define GET_SCU_PLLCON(Peri)                          ((void)Peri, false)
 #define SET_SCU_PLLCON_PLLEN_POS(Data)                0
 #define SET_SCU_PLLCON_OUTDIV_POS(Data)               0
 #define SET_SCU_PLLCON_POSTDIV1_POS(Data)             0
@@ -133,7 +133,7 @@ typedef SCU_Type                                      SCUCONF_Type;
 #define SET_SCU_SCCR_MCLKSEL(Peri,Data)               SET_BIT(Peri,Data,SCU,SCCR,MCLKSEL)
 #define SET_SCU_COR_CLKOINSEL(Peri,Data)              SET_BIT(Peri,Data,SCU,COR,CLKOINSEL)
 #define SET_SCU_SCCR_PLLCLKSEL(Peri,Data)             (void)Peri
-#define GET_SCU_PLLCON_LOCK(Peri)                     (void)Peri
+#define GET_SCU_PLLCON_LOCK(Peri)                     ((void)Peri, false)
 #define SET_SCU_SCCR_PLLPREDIV(Peri,Data)             (void)Peri
 #define SET_SCU_PLLCON_PLLICP(Peri,Data)              (void)Peri
 #define SET_SCU_PLLCON_PLLVCOC(Peri,Data)             (void)Peri
@@ -234,6 +234,7 @@ typedef SCU_Type                                      SCUCONF_Type;
 #define SET_SCU_EOS_LSE_ACCESS(Peri,Data)             (void)Peri
 #define SET_SCU_VDC_DEEPSLEEP(Peri,Data)              (void)Peri
 #define SET_SCU_LVD_RST_ENM(Peri,Data)                (void)Peri
+#define GET_SCU_BOOTPIN_ST(Peri)                      0
 
 /* FMC Macro */
 #define SCU_CFMC_ADDR                                 CFMC_BASE
@@ -241,9 +242,9 @@ typedef SCU_Type                                      SCUCONF_Type;
 #define SCU_FMC_DEFAULT_LATENCY                       1
 
 /* PCU Macro */
-typedef PORTRSTDBCR_Type                              SCU_PCU_RSTDBCR_Type;
-#define SCU_PCU_RSTDBCR_BASE                          PORTRSTDBCR_BASE
-#define SET_SCU_PCU_RSTDB_CNT(Peri,Data)              SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,CLK_CNT)
-#define SET_SCU_PCU_RSTDB_EN(Peri,Data)               SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,EN)
+typedef PORTRSTDBCR_Type                              SCUDB_Type;
+#define SCU_RSTDBCR_BASE                              PORTRSTDBCR_BASE
+#define SET_SCU_RSTDB_CNT(Peri,Data)                  SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,CLK_CNT)
+#define SET_SCU_RSTDB_EN(Peri,Data)                   SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,EN)
 
 #endif /* _HAL_SCH_V_02_00_02_H_ */

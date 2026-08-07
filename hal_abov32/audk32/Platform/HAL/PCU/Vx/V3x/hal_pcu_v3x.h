@@ -40,7 +40,7 @@ static __inline PORT_Type *PCU_GetReg(uint32_t un32Id)
 
 static __inline GPIO_Type *PCU_GPIO_GetReg(uint32_t un32Id)
 {
-    return (GPIO_Type *)(PCU_REG_GPIO_BASE + (PCU_GPIO_REG_OFFSET * un32Id));
+    return (GPIO_Type *)(PCU_GPIO_REG_BASE + (PCU_GPIO_REG_OFFSET * un32Id));
 }
 
 static __inline IRQn_Type PCU_GetIRQNum(P_PCU_ID_e eId)

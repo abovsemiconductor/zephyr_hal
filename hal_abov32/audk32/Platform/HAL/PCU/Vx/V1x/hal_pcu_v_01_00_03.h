@@ -25,7 +25,9 @@ typedef PORT_Type                                     GPIO_Type;
 typedef PCU2_Type                                     PCU_PORTEN_Type;
 #define PCU_PORT_EN_BASE                              PCU2_BASE
 #define PCU_REG_BASE                                  PA_BASE
+#define PCU_GPIO_REG_BASE                             PCU_REG_BASE
 #define PCU_REG_OFFSET                                0x100
+#define PCU_GPIO_REG_OFFSET                           PCU_REG_OFFSET
 #define PCU_PORT_GROUP_NUM                            CONFIG_PCU_MAX_COUNT
 #define PCU_IRQ_MAX_COUNT                             4
 

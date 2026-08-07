@@ -230,9 +230,9 @@ typedef SCU_Type                                      SCUCONF_Type;
 #define SCU_FMC_DEFAULT_LATENCY                       1
 
 /* PCU Macro */
-typedef PORTRSTDBCR_Type                              SCU_PCU_RSTDBCR_Type;
-#define SCU_PCU_RSTDBCR_BASE                          PORTRSTDBCR_BASE
-#define SET_SCU_PCU_RSTDB_CNT(Peri,Data)              SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,CLK_CNT)
-#define SET_SCU_PCU_RSTDB_EN(Peri,Data)               SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,EN)
+typedef PORTRSTDBCR_Type                              SCUDB_Type;
+#define SCU_RSTDBCR_BASE                              PORTRSTDBCR_BASE
+#define SET_SCU_RSTDB_CNT(Peri,Data)                  SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,CLK_CNT)
+#define SET_SCU_RSTDB_EN(Peri,Data)                   SET_BIT_KEY(Peri,0x0514,Data,PORTRSTDBCR,RSTDBCR,EN)
 
 #endif /* _HAL_SCH_V_02_00_02_H_ */

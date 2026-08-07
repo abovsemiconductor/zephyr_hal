@@ -18,6 +18,8 @@
 #include "hal_pcu.h"
 #include "hal_pcu_prv.h"
 
+#include "hll_pcu.h"
+
 #if defined(_NMI) && defined(CONFIG_NMI_ANY_INTERRUPT)
 #include "hpl_nmi.h"
 #endif
@@ -71,7 +73,10 @@ static HAL_ERR_e PRV_PCU_GetVaildPort(PCU_ID_e eId)
 HAL_ERR_e HAL_PCU_SetAltMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_ALT_e eAlt)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     PORT_Type *ptPcu;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -79,6 +84,22 @@ HAL_ERR_e HAL_PCU_SetAltMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_ALT_e eAlt)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetWriteEnable();
+
+    HLL_PCU_SetAltMode(eId, (uint32_t)ePinId);
+
+    if (ePinId < PCU_PIN_ID_8)
+    {
+        HLL_PCU_SetAlt1Type(eId, (uint32_t)ePinId, (uint8_t)eAlt);
+    }
+    else
+    {
+        HLL_PCU_SetAlt2Type(eId, (uint32_t)ePinId, (uint8_t)eAlt);
+    }
+
+    HLL_PCU_SetWriteDisable();
+#else
     ptPcu = PCU_GetReg(eId);
 
     SET_PCU_ACCESS_EN();
@@ -95,6 +116,7 @@ HAL_ERR_e HAL_PCU_SetAltMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_ALT_e eAlt)
     }
 
     SET_PCU_ACCESS_DIS();
+#endif
 
     return HAL_ERR_OK;
 }
@@ -102,7 +124,10 @@ HAL_ERR_e HAL_PCU_SetAltMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_ALT_e eAlt)
 HAL_ERR_e HAL_PCU_SetInOutMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_INOUT_e eInOut)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     PORT_Type *ptPcu;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -110,6 +135,36 @@ HAL_ERR_e HAL_PCU_SetInOutMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_INOUT_e eI
         return HAL_ERR_INVALID_ID;
     }
 
+
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetWriteEnable();
+
+    switch (eInOut) {
+        case PCU_INOUT_INPUT:
+            HLL_PCU_SetInputMode(eId, (uint32_t)ePinId);
+            break;
+
+        case PCU_INOUT_ANG_INPUT:
+            HLL_PCU_SetAnalogInputMode(eId, (uint32_t)ePinId);
+            break;
+
+        case PCU_INOUT_OUTPUT_PUSH_PULL:
+        case PCU_INOUT_OUTPUT_OPEN_DRAIN:
+            HLL_PCU_SetOutputMode(eId, (uint32_t)ePinId, (uint8_t)eInOut);
+            HLL_PCU_SetOutputType(eId, (uint32_t)ePinId, (uint8_t)eInOut);
+            break;
+
+        default:
+            break;
+    }
+
+#if defined(PCU_FEATURE_RTC_PORT)
+    HLL_PCU_SetRTCPortInOutMode(eId, ePinId, eInOut);
+#endif
+
+    HLL_PCU_SetWriteDisable();
+
+#else
     ptPcu = PCU_GetReg(eId);
 
     SET_PCU_ACCESS_EN();
@@ -136,6 +191,7 @@ HAL_ERR_e HAL_PCU_SetInOutMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_INOUT_e eI
 #endif
 
     SET_PCU_ACCESS_DIS();
+#endif
 
     return HAL_ERR_OK;
 }
@@ -143,7 +199,10 @@ HAL_ERR_e HAL_PCU_SetInOutMode(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_INOUT_e eI
 HAL_ERR_e HAL_PCU_SetPullUpDown(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PUPD_e ePupd)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     PORT_Type *ptPcu;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -151,6 +210,13 @@ HAL_ERR_e HAL_PCU_SetPullUpDown(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PUPD_e eP
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetWriteEnable();
+
+    HLL_PCU_SetPullUpDown(eId, (uint32_t)ePinId, (uint8_t)ePupd);
+
+    HLL_PCU_SetWriteDisable();
+#else
     ptPcu = PCU_GetReg(eId);
 
     SET_PCU_ACCESS_EN();
@@ -158,6 +224,7 @@ HAL_ERR_e HAL_PCU_SetPullUpDown(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PUPD_e eP
     SET_PCU_PULL_MODE(ptPcu, PCU_PULLMODE_TYPE((uint8_t)ePupd), PCU_PULLMODE_BIT((uint32_t)ePinId));
 
     SET_PCU_ACCESS_DIS();
+#endif
 
     return HAL_ERR_OK;
 }
@@ -165,7 +232,10 @@ HAL_ERR_e HAL_PCU_SetPullUpDown(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PUPD_e eP
 HAL_ERR_e HAL_PCU_GetInputValue(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PORT_e *peInput)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     GPIO_Type *ptGpio;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -173,9 +243,13 @@ HAL_ERR_e HAL_PCU_GetInputValue(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PORT_e *p
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    *peInput = (PCU_PORT_e)HLL_PCU_GetInputValue(eId, (uint32_t)ePinId);
+#else
     ptGpio = PCU_GPIO_GetReg(eId);
 
     *peInput = (PCU_PORT_e)GET_PCU_INPUT_DATA(ptGpio, (uint8_t)ePinId);
+#endif
 
     return HAL_ERR_OK;
 }
@@ -183,20 +257,31 @@ HAL_ERR_e HAL_PCU_GetInputValue(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PORT_e *p
 HAL_ERR_e HAL_PCU_SetOutputValue(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PORT_e eOutput)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     GPIO_Type *ptGpio;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
     {
         return HAL_ERR_INVALID_ID;
     }
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetOutputValue(eId, (uint32_t)ePinId, (uint8_t)eOutput);
 
+#if defined(PCU_FEATURE_RTC_PORT)
+    PCU_SetRTCPortOutputValue((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId, (P_PCU_PORT_e)eOutput);
+#endif
+
+#else
     ptGpio = PCU_GPIO_GetReg(eId);
 
     SET_PCU_OUTPUT_DATA(ptGpio, (uint8_t)eOutput, (uint32_t)ePinId);
 
 #if defined(PCU_FEATURE_RTC_PORT)
     PCU_SetRTCPortOutputValue((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId, (P_PCU_PORT_e)eOutput);
+#endif
 #endif
 
     return HAL_ERR_OK;
@@ -205,9 +290,10 @@ HAL_ERR_e HAL_PCU_SetOutputValue(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_PORT_e e
 HAL_ERR_e HAL_PCU_SetOutputSustain(PCU_ID_e eId, PCU_PIN_ID_e ePinId, bool bEnable)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     GPIO_Type *ptGpio;
-
-    ptGpio = PCU_GPIO_GetReg(eId);
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -215,7 +301,13 @@ HAL_ERR_e HAL_PCU_SetOutputSustain(PCU_ID_e eId, PCU_PIN_ID_e ePinId, bool bEnab
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetOutputSustain(eId, (uint32_t)ePinId, bEnable);
+#else
+    ptGpio = PCU_GPIO_GetReg(eId);
+
     SET_PCU_OUTPUT_SUSTAIN(ptGpio, bEnable, (uint32_t)ePinId);
+#endif
 
     return HAL_ERR_OK;
 }
@@ -223,7 +315,10 @@ HAL_ERR_e HAL_PCU_SetOutputSustain(PCU_ID_e eId, PCU_PIN_ID_e ePinId, bool bEnab
 HAL_ERR_e HAL_PCU_SetOutputBit(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_OUTPUT_BIT_e eBit)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     GPIO_Type *ptGpio;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -231,6 +326,25 @@ HAL_ERR_e HAL_PCU_SetOutputBit(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_OUTPUT_BIT
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    if (eBit == PCU_OUTPUT_BIT_SET)
+    {
+        HLL_PCU_SetOutputBit(eId, (uint32_t)ePinId);
+
+#if defined(PCU_FEATURE_RTC_PORT)
+        PCU_SetRTCPortOutputValue((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId, P_PCU_PORT_HIGH);
+#endif
+    }
+    else
+    {
+        HLL_PCU_ClearOutputBit(eId, (uint32_t)ePinId);
+
+#if defined(PCU_FEATURE_RTC_PORT)
+        PCU_SetRTCPortOutputValue((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId, P_PCU_PORT_LOW);
+#endif
+    }
+
+#else
     ptGpio = PCU_GPIO_GetReg(eId);
 
     if(eBit == PCU_OUTPUT_BIT_SET)
@@ -247,6 +361,7 @@ HAL_ERR_e HAL_PCU_SetOutputBit(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_OUTPUT_BIT
         PCU_SetRTCPortOutputValue((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId, P_PCU_PORT_LOW);
 #endif
     }
+#endif
 
     return HAL_ERR_OK;
 }
@@ -261,9 +376,22 @@ HAL_ERR_e HAL_PCU_SetIntrPort(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_INTR_MODE_e
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetWriteEnable();
+
+    HLL_PCU_SetInterruptTrigger(eId, (uint32_t)ePinId, (uint32_t)eTrg);
+
+    HLL_PCU_SetInterruptMode(eId, (uint32_t)ePinId, (uint32_t)eMode);
+
+    HLL_PCU_SetWriteDisable();
+   
+    return HAL_ERR_OK;
+#else
+
     return PCU_SetIntrPort((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId,
                            (P_PCU_INTR_MODE_e)eMode, (P_PCU_INTR_TRG_e)eTrg,
                            un8IntNum);
+#endif
 
 }
 
@@ -277,14 +405,29 @@ HAL_ERR_e HAL_PCU_GetIntrStatus(PCU_ID_e eId, PCU_PIN_ID_e ePinId, PCU_INTR_STAT
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    *peStatus = (PCU_INTR_STATUS_e)HLL_PCU_GetInterruptStatus((PCU_ID_e)eId, (uint32_t)ePinId);
+
+    HLL_PCU_SetWriteEnable();
+
+    HLL_PCU_ClearInterruptStatus((PCU_ID_e)eId, (uint32_t)ePinId);
+
+    HLL_PCU_SetWriteDisable();
+
+    return HAL_ERR_OK;
+#else
     return PCU_GetIntrPort((P_PCU_ID_e)eId, (P_PCU_PIN_ID_e)ePinId, (P_PCU_INTR_STATUS_e *)peStatus);
+#endif
 
 }
 
 HAL_ERR_e HAL_PCU_SetPortDebounce(PCU_ID_e eId, PCU_PIN_ID_e ePinId, bool bEnable)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
     PORT_Type *ptPcu;
+#endif
 
     eErr = PRV_PCU_GetVaildPort(eId);
     if(eErr != HAL_ERR_OK)
@@ -292,11 +435,19 @@ HAL_ERR_e HAL_PCU_SetPortDebounce(PCU_ID_e eId, PCU_PIN_ID_e ePinId, bool bEnabl
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_PCU_SetWriteEnable();
+
+    HLL_PCU_SetPortDebounce(eId, (uint32_t)ePinId, bEnable);
+
+    HLL_PCU_SetWriteDisable();
+#else
     ptPcu = PCU_GetReg(eId);
 
     SET_PCU_ACCESS_EN();
     SET_PCU_DEBOUNCE_EN(ptPcu, bEnable, (uint32_t)ePinId);
     SET_PCU_ACCESS_DIS();
+#endif
 
     return HAL_ERR_OK;
 }

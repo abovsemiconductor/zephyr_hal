@@ -196,7 +196,7 @@ typedef COA1_Type                                     SCUCONF_Type;
 #define SET_SCU_PLLCON_BYPASS_POS(Data)               0
 #define SET_SCU_PLLCON_RESET_POS(Data)                0
 #define SET_SCU_PLLCON_PLLMODE_POS(Data)              0
-#define SET_SCU_RSER_SW_EN(Peri,Data)                 (void)Peri
+#define SET_SCU_RSER_SW_EN(Peri,Data)                 ((void)Peri, (void)Data)
 #define GET_SCU_RSER_SW_EN(Peri)                      0 
 #define SET_SCU_RSER_CPU_EN(Peri,Data)                (void)Peri
 #define GET_SCU_RSER_CPU_EN(Peri)                     0
