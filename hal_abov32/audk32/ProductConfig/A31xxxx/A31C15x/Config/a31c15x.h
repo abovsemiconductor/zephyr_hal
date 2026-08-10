@@ -93,8 +93,14 @@ typedef enum {
 #define __VTOR_PRESENT                 1            /*!< Set to 1 if CPU supports Vector Table Offset Register                 */
 /** @} */ /* End of group Configuration_of_CMSIS */
 
+#ifndef __ZEPHYR__
+/* Under Zephyr, the CMSIS core (core_cm0plus.h) and system startup
+ * (system_a31xxxx.h) are provided by the Zephyr build itself; including
+ * them here too would double-define NVIC_EnableIRQ() and friends.
+ */
 #include "core_cm0plus.h"                           /*!< Cortex-M0PLUS processor and core peripherals                          */
 #include "system_a31xxxx.h"                         /*!< A31xxxx System                                                        */
+#endif /* !__ZEPHYR__ */
 
 
 /* ================================================================================ */
