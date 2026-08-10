@@ -94,22 +94,16 @@ typedef enum {
 /** @} */ /* End of group Configuration_of_CMSIS */
 
 #ifndef __ZEPHYR__
-/* Under Zephyr, the CMSIS core (core_cm0plus.h) and system startup
- * (system_a31xxxx.h) are provided by the Zephyr build itself; including
- * them here too would double-define NVIC_EnableIRQ() and friends.
- */
 #include "core_cm0plus.h"                           /*!< Cortex-M0PLUS processor and core peripherals                          */
-#include "system_a31xxxx.h"                         /*!< A31xxxx System                                                        */
 #else
 /* Zephyr already ships an ARM CMSIS-Core (modules/hal/cmsis_6); use that
  * one instead of this HAL's bundled copy so NVIC_EnableIRQ() and friends
  * aren't double-defined. It's still needed here (not just from soc.h)
  * because it must supply __I/__IO/__O before the register structs below.
- * Zephyr's system startup replaces system_a31xxxx.h, so that one is just
- * dropped under __ZEPHYR__.
  */
 #include <core_cm0plus.h>
 #endif /* !__ZEPHYR__ */
+#include "system_a31xxxx.h"                         /*!< A31xxxx System                                                        */
 
 
 /* ================================================================================ */
