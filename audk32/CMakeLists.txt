@@ -13,28 +13,36 @@
 # (core_cm0plus.h, cmsis_compiler.h, ...) are expected to land -- not yet
 # present in this checkout. a31c15x.h and system_a31xxxx.c both need them to
 # compile; nothing in this module can build until they're added.
+#
+# ProductConfig/A31xxxx/{Config,A31C15x/Config} and Framework/CMSIS/Device/
+# ABOV/Include are deliberately NOT listed here even though the vendor tree
+# groups them next to the paths above: audk32 is the common HAL/HLL source
+# tree shared by every ABOV32 product, and those three are A31xxxx-product-
+# line (or A31C15x-series) specific. They're added from the CMakeLists.txt
+# that is only added to the build when that product line/series is selected
+# (zephyr/soc/abov/abov32/a31xxxx/CMakeLists.txt and .../a31xxxx/a31c15x/
+# CMakeLists.txt) -- zephyr_include_directories()/zephyr_compile_definitions()
+# are global regardless of which CMakeLists.txt calls them, so they still
+# reach every translation unit that includes abov_config.h, including the
+# zephyr/drivers wrappers.
 zephyr_include_directories(
   Platform/HAL/Include
   Platform/HAL/HPL/Include
-  ProductConfig/A31xxxx/Config
-  ProductConfig/A31xxxx/A31C15x/Config
-  Framework/CMSIS/Device/ABOV/Include
   Framework/CMSIS/Core/Include
 )
 
-# abov_config.h (ProductConfig/A31xxxx/Config) selects the subfamily/board via
-# these EXTRN_* overrides instead of the hand-edited TARGET_BOARD default meant
-# for Keil's Configuration Wizard. They are needed by every translation unit
-# that (transitively) includes abov_config.h, including the zephyr/drivers
-# wrappers, so they must be global too.
+# _RTE_ just tells abov_config.h to honor its Keil-RTE-style overrides instead
+# of the hand-edited TARGET_BOARD default meant for Keil's Configuration
+# Wizard; it's the same switch for every product line, so it's fine here.
 #
-# TODO: this module currently only wires up A31C15x / STK-A31C156-RLN-A. When a
-# second ABOV32 series or board is added, this selection needs to become
-# conditional on the SoC/board actually being built (e.g. CONFIG_SOC_A31C156).
+# AUDK32_FEATURE_HLL_SUPPORT selects the portable HLL_*() wrapper layer
+# (hll_*.h) over direct SFR-macro access inside the hal_*.c sources -- an
+# implementation choice of this common HAL tree itself, not a per-chip
+# trait, so it belongs here rather than in a per-series CMakeLists.txt like
+# EXTRN_SUBFAMILY_*/EXTRN_VARIANT_* below.
 zephyr_compile_definitions(
   _RTE_
-  EXTRN_SUBFAMILY_A31C15x
-  EXTRN_VARIANT_A31C156RLN
+  AUDK32_FEATURE_HLL_SUPPORT
 )
 
 # Each hal_*.c/hll_*.c/hpl_*.c file guards its entire body with #if defined(_XXX),

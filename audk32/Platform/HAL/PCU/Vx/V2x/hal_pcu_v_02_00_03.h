@@ -94,7 +94,7 @@ typedef PORTEN_Type                                   PCU_PORTEN_Type;
 #define SET_SCU_PCU_MCCR_DIV2(Peri,Data)               SET_BIT(Peri,Data,SCU,MCCR5,PGCDCDIV)
 
 
-extern void PRV_PCU_IRQHandler(PCU_ID_e eId, PORT_Type *ptPcu, uint32_t un32Status);
+static void PRV_PCU_IRQHandler(PCU_ID_e eId, PORT_Type *ptPcu, uint32_t un32Status);
 
 static __inline void PCU0_INT_IRQHandler(void)
 {
