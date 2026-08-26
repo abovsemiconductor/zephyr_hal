@@ -19,6 +19,8 @@
 #include "hal_crc.h"
 #include "hal_crc_prv.h"
 
+#include "hll_crc.h"
+
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
 #include "hpl_dma.h"
 #endif
@@ -63,6 +65,7 @@ static void PRV_CRC_NMIHandler(uint32_t un32Event, void *pContext)
 }
 #endif
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
 static CRC_Type *PRV_CRC_GetReg(P_CRC_ID_e eId)
 {
     return CRC_GetReg((P_CRC_ID_e)eId);
@@ -72,6 +75,7 @@ static HAL_ERR_e PRV_CRC_SetScuEnable(P_CRC_ID_e eId, bool bEnable)
 {
     return CRC_SetScuEnable((P_CRC_ID_e)eId, bEnable);
 }
+#endif
 
 HAL_ERR_e HAL_CRC_Init(CRC_ID_e eId)
 {
@@ -82,7 +86,11 @@ HAL_ERR_e HAL_CRC_Init(CRC_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eErr = HLL_CRC_SetClockEnable(eId, true);
+#else
     eErr = PRV_CRC_SetScuEnable((P_CRC_ID_e)eId, true);
+#endif
     if(eErr != HAL_ERR_OK)
     {
         return eErr;
@@ -103,7 +111,11 @@ HAL_ERR_e HAL_CRC_Uninit(CRC_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eErr = HLL_CRC_SetClockEnable(eId, false);
+#else
     eErr = PRV_CRC_SetScuEnable((P_CRC_ID_e)eId, false);
+#endif
     if(eErr != HAL_ERR_OK)
     {
         return eErr;
@@ -112,7 +124,11 @@ HAL_ERR_e HAL_CRC_Uninit(CRC_ID_e eId)
     memset(&s_tCcb[(uint32_t)eId], 0x00, sizeof(CRC_CTRL_BLK_t));
 
     /* Forcily, disable NVIC Interrupt */
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eIrq = HLL_CRC_GetIRQNum(eId);
+#else
     eIrq = CRC_GetIRQNum((P_CRC_ID_e)eId);
+#endif
     NVIC_ClearPendingIRQ(eIrq);
     NVIC_DisableIRQ(eIrq);
 
@@ -122,7 +138,9 @@ HAL_ERR_e HAL_CRC_Uninit(CRC_ID_e eId)
 HAL_ERR_e HAL_CRC_SetConfig(CRC_ID_e eId, CRC_CFG_t *ptCfg)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     CRC_Type *ptCrc;
+#endif
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     CRC_CTRL_BLK_t *ptCcb;
     P_CRC_DMA_BUS_SIZE_e eBusSize;
@@ -140,7 +158,9 @@ HAL_ERR_e HAL_CRC_SetConfig(CRC_ID_e eId, CRC_CFG_t *ptCfg)
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptCrc = PRV_CRC_GetReg((P_CRC_ID_e)eId);
+#endif
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     ptCcb = &s_tCcb[(uint32_t)eId];
 #endif
@@ -155,15 +175,24 @@ HAL_ERR_e HAL_CRC_SetConfig(CRC_ID_e eId, CRC_CFG_t *ptCfg)
 
     if(ptCfg->eMode == CRC_MODE_CRC)
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        eErr = HLL_CRC_GetSupportPoly(ptCfg->ePoly);
+#else
         eErr = CRC_GetSupportPoly((P_CRC_POLY_e)ptCfg->ePoly);
+#endif
         if(eErr != HAL_ERR_OK)
         {
             return HAL_ERR_NOT_SUPPORTED;
         }
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_CRC_SetMode(eId, ptCfg->eMode);      /* Set CRC or Checksum(if support) */
+    HLL_CRC_SetOpMode(eId, false);           /* Forcibly, disable Auto mode */
+#else
     SET_CRC_CR_MODE(ptCrc, ptCfg->eMode);    /* Set CRC or Checksum(if support) */
     SET_CRC_CR_OP_MODE(ptCrc, false);    /* Forcibly, disable Auto mode */
+#endif
 
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     ptCcb->bDmaEnable = false;
@@ -210,6 +239,16 @@ HAL_ERR_e HAL_CRC_SetConfig(CRC_ID_e eId, CRC_CFG_t *ptCfg)
 #endif
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_CRC_SetPoly(eId, ptCfg->ePoly);          /* Polynomial Mode */
+    HLL_CRC_SetFirstIn(eId, ptCfg->eFirstIn);    /* First-In Mode (LSB or MSB) */
+
+    /* Output Control if Support */
+    HLL_CRC_SetOutputConfig(eId, ptCfg->tOutputCfg.eFirstOut, ptCfg->tOutputCfg.eInv);
+
+    /* Input Config if Support */
+    HLL_CRC_SetInputConfig(eId, ptCfg->tInputCfg.eInDataSize, ptCfg->tInputCfg.bComplement);
+#else
     SET_CRC_CR_POLY(ptCrc, CRC_INT_POLY(ptCfg->ePoly));     /* Polynomial Mode */
     SET_CRC_CR_INP(ptCrc, CRC_INT_INP(ptCfg->eFirstIn));    /* First-In Mode (LSB or MSB) */
 
@@ -220,6 +259,7 @@ HAL_ERR_e HAL_CRC_SetConfig(CRC_ID_e eId, CRC_CFG_t *ptCfg)
 #if defined (CRC_FEATURE_INPUT_CONF_MODE)
     SET_CRC_CR_INDATA_SIZE(ptCrc, ptCfg->tInputCfg.eInDataSize);
     SET_CRC_CR_INDATA_COMPLE(ptCrc, ptCfg->tInputCfg.bComplement);
+#endif
 #endif
 
     return HAL_ERR_OK;
@@ -249,7 +289,16 @@ HAL_ERR_e HAL_CRC_SetIRQ(CRC_ID_e eId, CRC_OPS_e eOps, pfnCRC_IRQ_Handler_t pfnH
     }
 
     ptCcb = &s_tCcb[(uint32_t)eId];
+
+    /*
+     * NVIC setup is always performed here regardless of HLL support: only
+     * the IRQ-number lookup below switches implementation.
+     */
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eIrq = HLL_CRC_GetIRQNum(eId);
+#else
     eIrq = CRC_GetIRQNum((P_CRC_ID_e)eId);
+#endif
 
     switch(eOps)
     {
@@ -303,7 +352,9 @@ HAL_ERR_e HAL_CRC_SetIRQ(CRC_ID_e eId, CRC_OPS_e eOps, pfnCRC_IRQ_Handler_t pfnH
 HAL_ERR_e HAL_CRC_SetCompute(CRC_ID_e eId, uint32_t un32Init, uint8_t *pun8Data, uint32_t un32Len, uint32_t *pun32Out)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     CRC_Type *ptCrc;
+#endif
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     CRC_CTRL_BLK_t *ptCcb;
     uint32_t un32IDR = 0;
@@ -316,25 +367,41 @@ HAL_ERR_e HAL_CRC_SetCompute(CRC_ID_e eId, uint32_t un32Init, uint8_t *pun8Data,
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptCrc = PRV_CRC_GetReg((P_CRC_ID_e)eId);
+#endif
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     ptCcb = &s_tCcb[(uint32_t)eId];
 #endif
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_CRC_ClearOutput(eId);
+    HLL_CRC_SetInitValue(eId, un32Init);
+    HLL_CRC_SetEnable(eId, true);
+#else
     SET_CRC_CR_OUT_CLR(ptCrc, true);
     SET_CRC_DR_INIT(ptCrc, un32Init);
     SET_CRC_CR_EN(ptCrc, true);
+#endif
 
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     if(ptCcb->bDmaEnable)
     {
         ptCcb->pun8Value = pun8Data;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_CRC_SetDmaIntrEnable(eId, true);
+#else
         SET_CRC_IER_DMA_EN(ptCrc, true);
+#endif
         eErr = CRC_GetAlignData(pun8Data, un32Len, &un32AlignData, &un32AlignLen);
         if(eErr != HAL_ERR_OK)
             return eErr;
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        un32IDR = HLL_CRC_GetInputAddr(eId);
+#else
         un32IDR = (uint32_t)GET_CRC_IN_ADDR(ptCrc);
+#endif
 
         if(un32AlignLen == 0)
         {
@@ -350,9 +417,15 @@ HAL_ERR_e HAL_CRC_SetCompute(CRC_ID_e eId, uint32_t un32Init, uint8_t *pun8Data,
     else
 #endif
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_CRC_SetData(eId, pun8Data, un32Len);
+        *pun32Out = HLL_CRC_GetResult(eId);
+        HLL_CRC_SetEnable(eId, false);
+#else
         CRC_SetData(ptCrc, pun8Data, un32Len);
         *pun32Out = GET_CRC_DR_OUT(ptCrc);
         SET_CRC_CR_EN(ptCrc, false);
+#endif
     }
 
     return eErr;
@@ -360,15 +433,21 @@ HAL_ERR_e HAL_CRC_SetCompute(CRC_ID_e eId, uint32_t un32Init, uint8_t *pun8Data,
 
 HAL_ERR_e HAL_CRC_GetResult(CRC_ID_e eId, uint32_t *pun32Out)
 {
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     CRC_Type *ptCrc;
+#endif
 
     if((uint32_t)eId >= CRC_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    *pun32Out = HLL_CRC_GetResult(eId);
+#else
     ptCrc = PRV_CRC_GetReg((P_CRC_ID_e)eId);
     *pun32Out = GET_CRC_DR_OUT(ptCrc);
+#endif
 
      return HAL_ERR_OK;
 }
@@ -401,7 +480,9 @@ HAL_ERR_e HAL_CRC_SetIRQClear(CRC_ID_e eId)
 #if defined(CRC_FEATURE_UNSUPPORT_IRQ)
     return HAL_ERR_NOT_SUPPORTED;
 #else
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     CRC_Type *ptCrc;
+#endif
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     CRC_CTRL_BLK_t *ptCcb;
 #endif
@@ -411,11 +492,17 @@ HAL_ERR_e HAL_CRC_SetIRQClear(CRC_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_CRC_SetDmaIntrEnable(eId, false);
+
+    HLL_CRC_ClearDmaFlag(eId);
+#else
     ptCrc = PRV_CRC_GetReg((P_CRC_ID_e)eId);
 
     SET_CRC_IER_DMA_EN(ptCrc, false);
 
     SET_CRC_IER_DMA_FLAG(ptCrc, true);
+#endif
 
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     ptCcb = &s_tCcb[(uint32_t)eId];
@@ -436,7 +523,9 @@ void PRV_CRC_IRQHandler(CRC_ID_e eId)
 #if defined(CRC_FEATURE_UNSUPPORT_IRQ)
     return;
 #else
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     CRC_Type *ptCrc = (CRC_Type *)CRC_BASE;
+#endif
     CRC_CTRL_BLK_t *ptCcb;
 
     if((uint32_t)eId >= CRC_CH_NUM)
@@ -444,11 +533,17 @@ void PRV_CRC_IRQHandler(CRC_ID_e eId)
         return;
     }
 
-    ptCrc = PRV_CRC_GetReg((P_CRC_ID_e)eId);
     ptCcb = &s_tCcb[(uint32_t)eId];
+
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_CRC_SetDmaIntrEnable(eId, false);
+    HLL_CRC_ClearDmaFlag(eId);
+#else
+    ptCrc = PRV_CRC_GetReg((P_CRC_ID_e)eId);
 
     SET_CRC_IER_DMA_EN(ptCrc, false);
     SET_CRC_IER_DMA_FLAG(ptCrc, true);
+#endif
 
 #if defined(_DMAC) && defined(DMA_CRC_NUM)
     HPL_DMA_SetClear(ptCcb->eDmaId);
