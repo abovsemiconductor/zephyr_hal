@@ -15,6 +15,18 @@
 
 #include "abov_config.h"
 
+/*
+ * This file is picked up unconditionally by the audk32 HAL library's
+ * file(GLOB_RECURSE ... Platform/HAL/*.c) (see modules/hal/abov32/audk32/
+ * CMakeLists.txt) regardless of whether any app actually uses the CRC
+ * driver. hll_crc.h pulls in hal_crc_prv.h's CRC-IP-version dispatch, which
+ * #errors unless _MODULE_CRC (and thus CONFIG_CRC_VER_VENDOR etc.) is
+ * defined -- so, like hal_crc.c below, this whole file must stay inert
+ * unless _CRC is actually set, instead of only compiling correctly by
+ * accident whenever some other translation unit happens to already need
+ * CONFIG_HAL_CRC == 1.
+ */
+#if defined(_CRC)
 #include "hll_crc.h"
 
 void HLL_CRC_SetInputConfig(CRC_ID_e eId, CRC_INP_DATA_e eInDataSize, bool bComplement)
@@ -59,3 +71,5 @@ bool HLL_CRC_GetDmaFlag(CRC_ID_e eId)
     return (bool)GET_CRC_IER_DMA_FLAG(HLL_CRC_REG(eId));
 #endif
 }
+
+#endif /* _CRC */
