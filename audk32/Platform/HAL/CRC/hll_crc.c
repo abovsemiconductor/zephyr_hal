@@ -17,8 +17,9 @@
 
 /*
  * This file is picked up unconditionally by the audk32 HAL library's
- * file(GLOB_RECURSE ... Platform/HAL/*.c) (see modules/hal/abov32/audk32/
- * CMakeLists.txt) regardless of whether any app actually uses the CRC
+ * file(GLOB_RECURSE ...) over every .c file under Platform/HAL/ (see
+ * modules/hal/abov32/audk32/CMakeLists.txt) regardless of whether any app
+ * actually uses the CRC
  * driver. hll_crc.h pulls in hal_crc_prv.h's CRC-IP-version dispatch, which
  * #errors unless _MODULE_CRC (and thus CONFIG_CRC_VER_VENDOR etc.) is
  * defined -- so, like hal_crc.c below, this whole file must stay inert

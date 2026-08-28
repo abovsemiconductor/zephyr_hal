@@ -17,8 +17,9 @@
 
 /*
  * This file is picked up unconditionally by the audk32 HAL library's
- * file(GLOB_RECURSE ... Platform/HAL/*.c) (see modules/hal/abov32/audk32/
- * CMakeLists.txt) regardless of whether any app actually uses the UART
+ * file(GLOB_RECURSE ...) over every .c file under Platform/HAL/ (see
+ * modules/hal/abov32/audk32/CMakeLists.txt) regardless of whether any app
+ * actually uses the UART
  * driver. hll_uart.h pulls in hal_uart_prv.h's UART-IP-version dispatch,
  * which #errors unless _MODULE_UART (and thus CONFIG_UART_VER_VENDOR etc.)
  * is defined -- so, like hal_uart.c, this whole file must stay inert unless
