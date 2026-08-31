@@ -19,6 +19,8 @@
 #include "hal_frt.h"
 #include "hal_frt_prv.h"
 
+#include "hll_frt.h"
+
 #if defined(_NMI) && defined(CONFIG_NMI_ANY_INTERRUPT)
 #include "hpl_nmi.h"
 #endif
@@ -52,6 +54,7 @@ static void PRV_FRT_NMIHandler(uint32_t un32Event, void *pContext)
 }
 #endif
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
 static FRT_Type *PRV_FRT_GetReg(FRT_ID_e eId)
 {
     return FRT_GetReg((P_FRT_ID_e)eId);
@@ -61,6 +64,7 @@ static HAL_ERR_e PRV_FRT_SetScuEnable(P_FRT_ID_e eId, bool bEnable)
 {
     return FRT_SetScuEnable((P_FRT_ID_e)eId, bEnable);
 }
+#endif
 
 HAL_ERR_e HAL_FRT_Init(FRT_ID_e eId)
 {
@@ -71,7 +75,11 @@ HAL_ERR_e HAL_FRT_Init(FRT_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eErr = HLL_FRT_SetClockEnable(eId, true);
+#else
     eErr = PRV_FRT_SetScuEnable((P_FRT_ID_e)eId, true);
+#endif
     if(eErr != HAL_ERR_OK)
     {
         return eErr;
@@ -92,14 +100,19 @@ HAL_ERR_e HAL_FRT_Uninit(FRT_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eErr = HLL_FRT_SetClockEnable(eId, false);
+    eIrq = HLL_FRT_GetIRQNum(eId);
+#else
     eErr = PRV_FRT_SetScuEnable((P_FRT_ID_e)eId, false);
+    eIrq = FRT_GetIRQNum((P_FRT_ID_e)eId);
+#endif
     if(eErr != HAL_ERR_OK)
     {
         return eErr;
     }
 
     /* Forcily, disable NVIC Interrupt */
-    eIrq = FRT_GetIRQNum((P_FRT_ID_e)eId);
     NVIC_ClearPendingIRQ(eIrq);
     NVIC_DisableIRQ(eIrq);
 
@@ -111,7 +124,9 @@ HAL_ERR_e HAL_FRT_Uninit(FRT_ID_e eId)
 HAL_ERR_e HAL_FRT_SetConfig(FRT_ID_e eId, FRT_CFG_t *ptCfg)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     FRT_Type *ptFrt;
+#endif
     FRT_CTRL_BLK_t *ptFcb;
 
     if((uint32_t)eId >= FRT_CH_NUM)
@@ -119,18 +134,32 @@ HAL_ERR_e HAL_FRT_SetConfig(FRT_ID_e eId, FRT_CFG_t *ptCfg)
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptFrt = PRV_FRT_GetReg(eId);
+#endif
     ptFcb = &s_tFcb[(uint32_t)eId];
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_FRT_SetMode(eId, ptCfg->eMode);
+#else
     SET_FRT_CR_MODE(ptFrt, (uint32_t)ptCfg->eMode);
+#endif
 
     switch(ptCfg->eIntr)
     {
         case FRT_INTR_MATCH:
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+            HLL_FRT_SetMatchIntrEnable(eId, true);
+#else
             SET_FRT_IER_MATCH_EN(ptFrt, true);
+#endif
             break;
         case FRT_INTR_OVERFLOW:
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+            HLL_FRT_SetOverflowIntrEnable(eId, true);
+#else
             SET_FRT_IER_OVF_EN(ptFrt, true);
+#endif
             break;
         default:
             eErr = HAL_ERR_PARAMETER;
@@ -144,7 +173,11 @@ HAL_ERR_e HAL_FRT_SetConfig(FRT_ID_e eId, FRT_CFG_t *ptCfg)
 
     ptFcb->eIntr = ptCfg->eIntr;
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_FRT_SetMatchValue(eId, ptCfg->un32MatchCnt);
+#else
     SET_FRT_DR_MATCH_CNT(ptFrt, ptCfg->un32MatchCnt);
+#endif
 
     return HAL_ERR_OK;
 }
@@ -152,13 +185,20 @@ HAL_ERR_e HAL_FRT_SetConfig(FRT_ID_e eId, FRT_CFG_t *ptCfg)
 HAL_ERR_e HAL_FRT_SetClkConfig(FRT_ID_e eId, FRT_CLK_CFG_t *ptClkCfg)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     FRT_Type *ptFrt;
+#endif
 
     if((uint32_t)eId >= FRT_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eErr = HLL_FRT_SetClkSource(eId, ptClkCfg->eClk, ptClkCfg->eMccr, ptClkCfg->un8MccrDiv);
+
+    HLL_FRT_SetClkPreDiv(eId, ptClkCfg->ePreDiv);
+#else
     ptFrt = PRV_FRT_GetReg(eId);
 
     switch (ptClkCfg->eClk)
@@ -176,6 +216,7 @@ HAL_ERR_e HAL_FRT_SetClkConfig(FRT_ID_e eId, FRT_CLK_CFG_t *ptClkCfg)
     }
 
     SET_FRT_CR_CLK_PREDIV(ptFrt, ptClkCfg->ePreDiv);
+#endif
 
     return eErr;
 }
@@ -193,7 +234,16 @@ HAL_ERR_e HAL_FRT_SetIRQ(FRT_ID_e eId, FRT_OPS_e eOps, pfnFRT_IRQ_Handler_t pfnH
     }
 
     ptFcb = &s_tFcb[(uint32_t)eId];
+
+    /*
+     * NVIC setup is always performed here regardless of HLL support: only
+     * the IRQ-number lookup below switches implementation.
+     */
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eIrq = HLL_FRT_GetIRQNum(eId);
+#else
     eIrq = FRT_GetIRQNum((P_FRT_ID_e)eId);
+#endif
 
     switch(eOps)
     {
@@ -242,36 +292,52 @@ HAL_ERR_e HAL_FRT_SetIRQ(FRT_ID_e eId, FRT_OPS_e eOps, pfnFRT_IRQ_Handler_t pfnH
 
 HAL_ERR_e HAL_FRT_Start(FRT_ID_e eId, bool bResume)
 {
-    FRT_Type *ptFrt;
-
     if((uint32_t)eId >= FRT_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptFrt = PRV_FRT_GetReg(eId);
-    SET_FRT_CR_EN(ptFrt, true);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_FRT_SetEnable(eId, true);
 
     /* To clear counter, FRT must be running */
     if(bResume == false)
     {
-        SET_FRT_DR_CNT(ptFrt, 0);
+        HLL_FRT_SetCount(eId, 0);
     }
+#else
+    {
+        FRT_Type *ptFrt = PRV_FRT_GetReg(eId);
+
+        SET_FRT_CR_EN(ptFrt, true);
+
+        /* To clear counter, FRT must be running */
+        if(bResume == false)
+        {
+            SET_FRT_DR_CNT(ptFrt, 0);
+        }
+    }
+#endif
 
     return HAL_ERR_OK;
 }
 
 HAL_ERR_e HAL_FRT_Stop(FRT_ID_e eId)
 {
-    FRT_Type *ptFrt;
-
     if((uint32_t)eId >= FRT_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptFrt = PRV_FRT_GetReg(eId);
-    SET_FRT_CR_EN(ptFrt, false);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_FRT_SetEnable(eId, false);
+#else
+    {
+        FRT_Type *ptFrt = PRV_FRT_GetReg(eId);
+
+        SET_FRT_CR_EN(ptFrt, false);
+    }
+#endif
 
     return HAL_ERR_OK;
 }
@@ -279,7 +345,9 @@ HAL_ERR_e HAL_FRT_Stop(FRT_ID_e eId)
 HAL_ERR_e HAL_FRT_SetWaitComplete(FRT_ID_e eId, uint32_t un32Timeout, uint8_t *pun8Event)
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     FRT_Type *ptFrt;
+#endif
     FRT_CTRL_BLK_t *ptFcb;
     uint32_t un32IntrTimeout;
 
@@ -288,14 +356,20 @@ HAL_ERR_e HAL_FRT_SetWaitComplete(FRT_ID_e eId, uint32_t un32Timeout, uint8_t *p
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptFrt = PRV_FRT_GetReg(eId);
+#endif
     ptFcb = &s_tFcb[(uint32_t)eId];
 
     if(ptFcb->eIntr == FRT_INTR_OVERFLOW)
     {
         un32IntrTimeout = un32Timeout;
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        while(!HLL_FRT_GetOverflowFlag(eId))
+#else
         while(!GET_FRT_IER_OVF_FLAG(ptFrt))
+#endif
         {
             un32IntrTimeout--;
             if(un32IntrTimeout == 0)
@@ -305,7 +379,11 @@ HAL_ERR_e HAL_FRT_SetWaitComplete(FRT_ID_e eId, uint32_t un32Timeout, uint8_t *p
             }
         }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_FRT_ClearOverflowFlag(eId);
+#else
         SET_FRT_IER_OVF_FLAG(ptFrt, true);
+#endif
         if(eErr != HAL_ERR_TIMEOUT)
         {
             *pun8Event |= FRT_EVENT_OVERFLOW;
@@ -316,7 +394,11 @@ HAL_ERR_e HAL_FRT_SetWaitComplete(FRT_ID_e eId, uint32_t un32Timeout, uint8_t *p
     {
         un32IntrTimeout = un32Timeout;
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        while(!HLL_FRT_GetMatchFlag(eId))
+#else
         while(!GET_FRT_IER_MATCH_FLAG(ptFrt))
+#endif
         {
             un32IntrTimeout--;
             if(un32IntrTimeout == 0)
@@ -326,7 +408,11 @@ HAL_ERR_e HAL_FRT_SetWaitComplete(FRT_ID_e eId, uint32_t un32Timeout, uint8_t *p
             }
         }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_FRT_ClearMatchFlag(eId);
+#else
         SET_FRT_IER_MATCH_FLAG(ptFrt, true);
+#endif
 
         if(eErr != HAL_ERR_TIMEOUT)
         {
@@ -339,36 +425,63 @@ HAL_ERR_e HAL_FRT_SetWaitComplete(FRT_ID_e eId, uint32_t un32Timeout, uint8_t *p
 
 HAL_ERR_e HAL_FRT_ReadCount(FRT_ID_e eId, bool bMatch ,uint32_t *pun32Count)
 {
-    FRT_Type *ptFrt;
-
     if((uint32_t)eId >= FRT_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptFrt = PRV_FRT_GetReg(eId);
-
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
     if(bMatch == false)
     {
-        *pun32Count = GET_FRT_DR_CNT(ptFrt);
+        *pun32Count = HLL_FRT_GetCount(eId);
     }
     else
     {
-        *pun32Count = GET_FRT_DR_MATCH_CNT(ptFrt);
+        *pun32Count = HLL_FRT_GetMatchValue(eId);
     }
+#else
+    {
+        FRT_Type *ptFrt = PRV_FRT_GetReg(eId);
+
+        if(bMatch == false)
+        {
+            *pun32Count = GET_FRT_DR_CNT(ptFrt);
+        }
+        else
+        {
+            *pun32Count = GET_FRT_DR_MATCH_CNT(ptFrt);
+        }
+    }
+#endif
 
     return HAL_ERR_OK;
 }
 
 void PRV_FRT_IRQHandler(FRT_ID_e eId)
 {
-    FRT_Type *ptFrt;
     FRT_CTRL_BLK_t *ptFcb;
     uint32_t un32Event = 0;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
+    FRT_Type *ptFrt;
+#endif
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptFrt = PRV_FRT_GetReg(eId);
+#endif
     ptFcb = &s_tFcb[(uint32_t)eId];
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    if(HLL_FRT_GetOverflowFlag(eId))
+    {
+        HLL_FRT_ClearOverflowFlag(eId);
+        un32Event |= FRT_EVENT_OVERFLOW;
+    }
+    if(HLL_FRT_GetMatchFlag(eId))
+    {
+        HLL_FRT_ClearMatchFlag(eId);
+        un32Event |= FRT_EVENT_MATCH;
+    }
+#else
     if(GET_FRT_IER_OVF_FLAG(ptFrt))
     {
         SET_FRT_IER_OVF_FLAG(ptFrt, FRT_CLEAR);
@@ -379,6 +492,7 @@ void PRV_FRT_IRQHandler(FRT_ID_e eId)
         SET_FRT_IER_MATCH_FLAG(ptFrt, FRT_CLEAR);
         un32Event |= FRT_EVENT_MATCH;
     }
+#endif
 
     if(ptFcb->pfnHandler)
     {
