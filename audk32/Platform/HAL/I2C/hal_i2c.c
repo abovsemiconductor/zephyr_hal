@@ -19,6 +19,8 @@
 #include "hal_i2c.h"
 #include "hal_i2c_prv.h"
 
+#include "hll_i2c.h"
+
 #if defined(_DMAC) && defined(DMA_I2C_NUM)
 #include "hpl_dma.h"
 #endif
@@ -47,7 +49,7 @@ typedef struct
     uint32_t                un32RxLen;
     uint32_t                un32TxCnt;
     uint32_t                un32RxCnt;
- 
+
     bool                    bGCDetected;
 
 #if defined(_NMI) && defined(CONFIG_NMI_ANY_INTERRUPT)
@@ -80,15 +82,19 @@ static void PRV_I2C_DMAHandler(uint32_t un32Event, void *pContext)
 }
 #endif
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT) || (defined(_DMAC) && defined(DMA_I2C_NUM) && defined(I2C_FEATURE_DMA_INTERNAL_INTERRUPT))
 static I2C_Type *PRV_I2C_GetReg(I2C_ID_e eId)
 {
     return I2C_GetReg((P_I2C_ID_e)eId);
 }
+#endif
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
 static HAL_ERR_e PRV_I2C_SetScuEnable(P_I2C_ID_e eId, bool bEnable)
 {
     return I2C_SetScuEnable((P_I2C_ID_e)eId, bEnable);
 }
+#endif
 
 #if defined(_DMAC) && defined(DMA_I2C_NUM)
 static HAL_ERR_e PRV_I2C_SetDMA(I2C_ID_e eId)
@@ -124,21 +130,49 @@ static HAL_ERR_e PRV_I2C_SetDMA(I2C_ID_e eId)
 }
 #endif
 
-static uint32_t PRV_I2C_GetOpStatus(I2C_Type *ptI2c)
+/*
+ * Unlike PRV_I2C_GetReg()/PRV_I2C_SetScuEnable(), these two take the
+ * instance id (not a raw register pointer): the whole point of factoring
+ * them out is that HAL_I2C_Transmit()/Receive() can call them without
+ * caring whether HLL support is active.
+ */
+static uint32_t PRV_I2C_GetOpStatus(I2C_ID_e eId)
 {
-    uint32_t un32Status = 0;
+    uint32_t un32Status;
+
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    while(!HLL_I2C_GetIntrFlag(eId))
+    {
+        /* Waiting for Interrupt Event */
+    }
+    un32Status = HLL_I2C_GetStatus(eId);
+#else
+    I2C_Type *ptI2c = PRV_I2C_GetReg(eId);
 
     while(!GET_I2C_IER_FLAG(ptI2c))
     {
         /* Waiting for Interrupt Event */
     }
     un32Status = GET_I2C_SR(ptI2c);
+#endif
 
     return un32Status;
 }
 
-static void PRV_I2C_SetOpStop(I2C_Type *ptI2c)
+static void PRV_I2C_SetOpStop(I2C_ID_e eId)
 {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetStop(eId, true);
+
+    while(!HLL_I2C_GetIntrFlag(eId))
+    {
+        /* Waiting for Interrupt Event */
+    }
+
+    HLL_I2C_SetStop(eId, false);
+#else
+    I2C_Type *ptI2c = PRV_I2C_GetReg(eId);
+
     SET_I2C_CR_STOP(ptI2c, true);
 
     while(!GET_I2C_IER_FLAG(ptI2c))
@@ -147,6 +181,7 @@ static void PRV_I2C_SetOpStop(I2C_Type *ptI2c)
     }
 
     SET_I2C_CR_STOP(ptI2c, false);
+#endif
 }
 
 HAL_ERR_e HAL_I2C_Init(I2C_ID_e eId)
@@ -158,7 +193,11 @@ HAL_ERR_e HAL_I2C_Init(I2C_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eErr = HLL_I2C_SetClockEnable(eId, true);
+#else
     eErr = PRV_I2C_SetScuEnable((P_I2C_ID_e)eId, true);
+#endif
     if(eErr != HAL_ERR_OK)
     {
         return eErr;
@@ -166,7 +205,11 @@ HAL_ERR_e HAL_I2C_Init(I2C_ID_e eId)
 
     memset(&s_tIcb[(uint32_t)eId], 0x00, sizeof(I2C_CTRL_BLK_t));
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetEnable(eId, true);
+#else
     SET_I2C_CR_EN(PRV_I2C_GetReg(eId), true);
+#endif
 
     return eErr;
 }
@@ -181,16 +224,26 @@ HAL_ERR_e HAL_I2C_Uninit(I2C_ID_e eId)
         return HAL_ERR_INVALID_ID;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetEnable(eId, false);
+
+    eErr = HLL_I2C_SetClockEnable(eId, false);
+#else
     SET_I2C_CR_EN(PRV_I2C_GetReg(eId), false);
 
     eErr = PRV_I2C_SetScuEnable((P_I2C_ID_e)eId, false);
+#endif
     if(eErr != HAL_ERR_OK)
     {
         return eErr;
     }
 
     /* Forcily, disable NVIC Interrupt */
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eIrq = HLL_I2C_GetIRQNum(eId);
+#else
     eIrq = I2C_GetIRQNum((P_I2C_ID_e)eId);
+#endif
     NVIC_ClearPendingIRQ(eIrq);
     NVIC_DisableIRQ(eIrq);
 
@@ -201,7 +254,9 @@ HAL_ERR_e HAL_I2C_Uninit(I2C_ID_e eId)
 
 HAL_ERR_e HAL_I2C_SetConfig(I2C_ID_e eId, I2C_CFG_t *ptCfg)
 {
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     I2C_Type *ptI2c;
+#endif
     I2C_CTRL_BLK_t *ptIcb;
     uint16_t un16Scll, un16Sclh;
 
@@ -210,21 +265,35 @@ HAL_ERR_e HAL_I2C_SetConfig(I2C_ID_e eId, I2C_CFG_t *ptCfg)
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptI2c = PRV_I2C_GetReg(eId);
+#endif
     ptIcb = &s_tIcb[(uint32_t)eId];
 
     ptIcb->eMode = ptCfg->eMode;
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetOwnSlaveAddr(eId, ptCfg->un8OwnSlvAddr);
+    HLL_I2C_SetOwnSlaveAddr2(eId, ptCfg->un8OwnSlvAddr2);
+
+    HLL_I2C_SetGeneralCallEnable(eId, ptCfg->bSaGcEnable);
+    HLL_I2C_SetGeneralCallEnable2(eId, ptCfg->bSa2GcEnable);
+#else
     SET_I2C_CR_SLAVEADDR(ptI2c, ptCfg->un8OwnSlvAddr);
     SET_I2C_CR_SLAVEADDR2(ptI2c, ptCfg->un8OwnSlvAddr2);
 
     SET_I2C_CR_GNRLADDR(ptI2c, ptCfg->bSaGcEnable);
     SET_I2C_CR_GNRLADDR2(ptI2c, ptCfg->bSa2GcEnable);
+#endif
 
     if(ptCfg->uPeriod.tFreq.un32Freq != 0)
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_I2C_CalcSclPeriod(ptCfg->uPeriod.tFreq.un32Freq, &un16Scll, &un16Sclh);
+#else
         un16Scll = ((SystemPeriClock / ptCfg->uPeriod.tFreq.un32Freq) / 2) - 2;
         un16Sclh = un16Scll - 1;
+#endif
     }
     else
     {
@@ -232,6 +301,21 @@ HAL_ERR_e HAL_I2C_SetConfig(I2C_ID_e eId, I2C_CFG_t *ptCfg)
         un16Sclh = ptCfg->uPeriod.tDuty.un16High;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetSclLow(eId, un16Scll);
+    HLL_I2C_SetSclHigh(eId, un16Sclh);
+
+    HLL_I2C_SetSdaHoldEnable(eId, ptCfg->tSdht.bEnable);
+
+    if(ptCfg->tSdht.bEnable == true)
+    {
+        HLL_I2C_SetSdaHold(eId, ptCfg->tSdht.un16Hold);
+    }
+    else
+    {
+        HLL_I2C_SetSdaHold(eId, 0);
+    }
+#else
     SET_I2C_CR_SCLL(ptI2c, un16Scll);
     SET_I2C_CR_SCLH(ptI2c, un16Sclh);
 
@@ -245,6 +329,7 @@ HAL_ERR_e HAL_I2C_SetConfig(I2C_ID_e eId, I2C_CFG_t *ptCfg)
     {
         SET_I2C_CR_SDA_HOLD(ptI2c, 0);
     }
+#endif
 
     return HAL_ERR_OK;
 }
@@ -263,7 +348,15 @@ HAL_ERR_e HAL_I2C_SetIRQ(I2C_ID_e eId, I2C_OPS_e eOps, pfnI2C_IRQ_Handler_t pfnH
 
     ptIcb = &s_tIcb[(uint32_t)eId];
 
+    /*
+     * NVIC setup is always performed here regardless of HLL support: only
+     * the IRQ-number lookup below switches implementation.
+     */
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    eIrq = HLL_I2C_GetIRQNum(eId);
+#else
     eIrq = I2C_GetIRQNum((P_I2C_ID_e)eId);
+#endif
 
     switch(eOps)
     {
@@ -345,7 +438,9 @@ HAL_ERR_e HAL_I2C_Transmit(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8Out,
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
     I2C_CTRL_BLK_t *ptIcb;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     I2C_Type *ptI2c;
+#endif
     uint32_t un32Status;
     bool bIntrEnable = true, bSend = false, bCompleted = false;
 #if defined(_DMAC) && defined(DMA_I2C_NUM)
@@ -364,7 +459,9 @@ HAL_ERR_e HAL_I2C_Transmit(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8Out,
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptI2c = PRV_I2C_GetReg(eId);
+#endif
     ptIcb = &s_tIcb[eId];
 
     if (ptIcb->bTxBusy == true)
@@ -382,21 +479,32 @@ HAL_ERR_e HAL_I2C_Transmit(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8Out,
         bIntrEnable = false;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetIntrEnable(eId, bIntrEnable);
+    HLL_I2C_SetAck(eId, true);
+    HLL_I2C_ClearStatus(eId);
+#else
     SET_I2C_IER_EN(ptI2c, bIntrEnable);
     SET_I2C_CR_ACK(ptI2c, true);
     SET_I2C_SR_CLEAR(ptI2c);
+#endif
 
     if(ptIcb->eMode == I2C_MODE_MASTER)
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_I2C_TransmitByte(eId, (un8SlaveAddr << 1));
+        HLL_I2C_SetStart(eId, true);
+#else
         SET_I2C_DR_TX(ptI2c, (un8SlaveAddr << 1));
         SET_I2C_CR_START(ptI2c, true);
+#endif
     }
 
     if(bIntrEnable == false)
     {
         while(!bCompleted)
         {
-            un32Status = PRV_I2C_GetOpStatus(ptI2c);
+            un32Status = PRV_I2C_GetOpStatus(eId);
             switch(un32Status)
             {
                 case I2C_MASTER_TX_ADDR_ACK:
@@ -423,9 +531,13 @@ HAL_ERR_e HAL_I2C_Transmit(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8Out,
                         bSend = false;
                         if(ptIcb->eMode == I2C_MODE_MASTER)
                         {
-                            PRV_I2C_SetOpStop(ptI2c);
+                            PRV_I2C_SetOpStop(eId);
                         }
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                        HLL_I2C_ClearStatus(eId);
+#else
                         SET_I2C_SR_CLEAR(ptI2c);
+#endif
                     }
                     break;
                 default:
@@ -443,10 +555,19 @@ HAL_ERR_e HAL_I2C_Transmit(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8Out,
             {
                 if(ptIcb->un32TxCnt == ptIcb->un32TxLen - 1)
                 {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                HLL_I2C_TransmitByte(eId, ptIcb->pun8TxBuf[ptIcb->un32TxCnt++]);
+                HLL_I2C_ClearStatus(eId);
+#else
                 SET_I2C_DR_TX(ptI2c,ptIcb->pun8TxBuf[ptIcb->un32TxCnt++]);
                 SET_I2C_SR_CLEAR(ptI2c);
+#endif
             }
         }
 
@@ -465,7 +586,11 @@ HAL_ERR_e HAL_I2C_Transmit(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8Out,
             if(eErr == HAL_ERR_OK)
             {
                 HPL_DMA_SetConfig(ptIcb->eDmaId, &tDmaCfg);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                HLL_I2C_SetIntrEnable(eId, true);
+#else
                 SET_I2C_IER_EN(ptI2c, true);
+#endif
             }
         }
 #endif
@@ -479,7 +604,9 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
 {
     HAL_ERR_e eErr = HAL_ERR_OK;
     I2C_CTRL_BLK_t *ptIcb;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     I2C_Type *ptI2c;
+#endif
     uint32_t un32Status;
     bool bIntrEnable = true, bReceive = false, bCompleted = false;
 #if defined(_DMAC) && defined(DMA_I2C_NUM)
@@ -498,7 +625,9 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
         return HAL_ERR_INVALID_ID;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     ptI2c = PRV_I2C_GetReg(eId);
+#endif
     ptIcb = &s_tIcb[eId];
 
     if (ptIcb->bRxBusy == true)
@@ -516,14 +645,25 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
         bIntrEnable = false;
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetIntrEnable(eId, bIntrEnable);
+    HLL_I2C_SetAck(eId, true);
+    HLL_I2C_ClearStatus(eId);
+#else
     SET_I2C_IER_EN(ptI2c, bIntrEnable);
     SET_I2C_CR_ACK(ptI2c, true);
     SET_I2C_SR_CLEAR(ptI2c);
+#endif
 
     if(ptIcb->eMode == I2C_MODE_MASTER)
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_I2C_TransmitByte(eId, (un8SlaveAddr << 1) | 0x01);
+        HLL_I2C_SetStart(eId, true);
+#else
         SET_I2C_DR_TX(ptI2c, (un8SlaveAddr << 1) | 0x01);
         SET_I2C_CR_START(ptI2c, true);
+#endif
     }
 
     if(bIntrEnable == false)
@@ -532,7 +672,7 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
 
         while(!bCompleted)
         {
-            un32Status = PRV_I2C_GetOpStatus(ptI2c);
+            un32Status = PRV_I2C_GetOpStatus(eId);
             switch(un32Status)
             {
                 case I2C_MASTER_RX_ADDR_ACK:
@@ -557,7 +697,7 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
                     }
                     break;
                 case I2C_SLAVE_RX_DONE:
-                    if(ptIcb->un32RxCnt >= ptIcb->un32RxLen 
+                    if(ptIcb->un32RxCnt >= ptIcb->un32RxLen
                        && ptIcb->bGCDetected == true)
                     {
                         bReceive = false;
@@ -579,9 +719,13 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
                         bCompleted = false;
                         if(ptIcb->eMode == I2C_MODE_MASTER)
                         {
-                            PRV_I2C_SetOpStop(ptI2c);
+                            PRV_I2C_SetOpStop(eId);
                         }
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                        HLL_I2C_ClearStatus(eId);
+#else
                         SET_I2C_SR_CLEAR(ptI2c);
+#endif
                     }
                     break;
                 default:
@@ -599,15 +743,27 @@ HAL_ERR_e HAL_I2C_Receive(I2C_ID_e eId, uint8_t un8SlaveAddr, uint8_t *pun8In, u
             {
                 if(ptIcb->un32RxCnt == ptIcb->un32RxLen - 1)
                 {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                ptIcb->pun8RxBuf[ptIcb->un32RxCnt++] = HLL_I2C_ReceiveByte(eId);
+#else
                 ptIcb->pun8RxBuf[ptIcb->un32RxCnt++] = GET_I2C_DR_RX(ptI2c);
+#endif
             }
-            
+
             if(ptIcb->un32RxCnt < ptIcb->un32RxLen)
             {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                HLL_I2C_ClearStatus(eId);
+#else
                 SET_I2C_SR_CLEAR(ptI2c);
+#endif
             }
         }
 
@@ -642,83 +798,118 @@ HAL_ERR_e HAL_I2C_SetWakeupSrc(I2C_ID_e eId, bool bEnable)
         return HAL_ERR_INVALID_ID;
     }
 
-    I2C_SetWkupSrc((P_I2C_ID_e)eId, bEnable); 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetWakeupSrc(eId, bEnable);
+#else
+    I2C_SetWkupSrc((P_I2C_ID_e)eId, bEnable);
+#endif
+
     return HAL_ERR_OK;
 }
 
 HAL_ERR_e HAL_I2C_SetSltpConfig(I2C_ID_e eId, I2C_SLTP_CFG_t *ptCfg)
 {
 #if defined(I2C_FEATURE_LOW_TIMEOUT_PERIOD)
-    I2C_Type *ptI2c;
-
     if((uint32_t)eId >= I2C_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptI2c = PRV_I2C_GetReg(eId);
-
-    SET_I2C_CR_SCL_LOW_TO_EN(ptI2c, ptCfg->bEnable);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetSclLowTimeoutEnable(eId, ptCfg->bEnable);
     if(ptCfg->bEnable == true)
     {
-        SET_I2C_IER_SCL_LOW_TO_EN(ptI2c, ptCfg->bIntrEnable);
-        SET_I2C_DR_SCL_LOW_TO(ptI2c, ptCfg->un32Timeout);
+        HLL_I2C_SetSclLowTimeoutIntrEnable(eId, ptCfg->bIntrEnable);
+        HLL_I2C_SetSclLowTimeoutValue(eId, ptCfg->un32Timeout);
     }
+#else
+    {
+        I2C_Type *ptI2c = PRV_I2C_GetReg(eId);
+
+        SET_I2C_CR_SCL_LOW_TO_EN(ptI2c, ptCfg->bEnable);
+        if(ptCfg->bEnable == true)
+        {
+            SET_I2C_IER_SCL_LOW_TO_EN(ptI2c, ptCfg->bIntrEnable);
+            SET_I2C_DR_SCL_LOW_TO(ptI2c, ptCfg->un32Timeout);
+        }
+    }
+#endif
 
     return HAL_ERR_OK;
 #else
     (void)eId;
     (void)ptCfg;
     return HAL_ERR_NOT_SUPPORTED;
-#endif    
+#endif
 }
 
 HAL_ERR_e HAL_I2C_SetMaulConfig(I2C_ID_e eId, I2C_MAUL_CFG_t *ptCfg)
 {
 #if defined(I2C_FEATURE_MANUAL_BUS_CONTROL)
-    I2C_Type *ptI2c;
-
     if((uint32_t)eId >= I2C_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptI2c = PRV_I2C_GetReg(eId);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetSclManualEnable(eId, ptCfg->bSclMaulEnable);
+    HLL_I2C_SetSdaManualEnable(eId, ptCfg->bSdaMaulEnable);
+#else
+    {
+        I2C_Type *ptI2c = PRV_I2C_GetReg(eId);
 
-    SET_I2C_CR_SCL_MAUL_EN(ptI2c, ptCfg->bSclMaulEnable);
-    SET_I2C_CR_SDA_MAUL_EN(ptI2c, ptCfg->bSdaMaulEnable);
+        SET_I2C_CR_SCL_MAUL_EN(ptI2c, ptCfg->bSclMaulEnable);
+        SET_I2C_CR_SDA_MAUL_EN(ptI2c, ptCfg->bSdaMaulEnable);
+    }
+#endif
 
     return HAL_ERR_OK;
 #else
     (void)eId;
     (void)ptCfg;
     return HAL_ERR_NOT_SUPPORTED;
-#endif    
+#endif
 }
 
 HAL_ERR_e HAL_I2C_SetSclMaul(I2C_ID_e eId, bool bLevel)
 {
 #if defined(I2C_FEATURE_MANUAL_BUS_CONTROL)
-    I2C_Type *ptI2c;
     uint32_t un32Timeout = I2C_MANUAL_TIMEOUT;
+    bool bStatus;
 
     if((uint32_t)eId >= I2C_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptI2c = PRV_I2C_GetReg(eId);
-
-    SET_I2C_CR_SCL_MAUL_OUT(ptI2c, bLevel);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetSclManualOut(eId, bLevel);
 
     while(un32Timeout)
     {
-        if(GET_I2C_SR_SCL_MAUL_STA(ptI2c) == bLevel)
+        bStatus = HLL_I2C_GetSclManualStatus(eId);
+        if(bStatus == bLevel)
         {
             break;
         }
         un32Timeout--;
     }
+#else
+    {
+        I2C_Type *ptI2c = PRV_I2C_GetReg(eId);
+
+        SET_I2C_CR_SCL_MAUL_OUT(ptI2c, bLevel);
+
+        while(un32Timeout)
+        {
+            if(GET_I2C_SR_SCL_MAUL_STA(ptI2c) == bLevel)
+            {
+                break;
+            }
+            un32Timeout--;
+        }
+    }
+#endif
 
     if(un32Timeout == 0)
     {
@@ -730,32 +921,48 @@ HAL_ERR_e HAL_I2C_SetSclMaul(I2C_ID_e eId, bool bLevel)
     (void)eId;
     (void)bLevel;
     return HAL_ERR_NOT_SUPPORTED;
-#endif    
+#endif
 }
 
 HAL_ERR_e HAL_I2C_SetSdaMaul(I2C_ID_e eId, bool bLevel)
 {
 #if defined(I2C_FEATURE_MANUAL_BUS_CONTROL)
-    I2C_Type *ptI2c;
     uint32_t un32Timeout = I2C_MANUAL_TIMEOUT;
+    bool bStatus;
 
     if((uint32_t)eId >= I2C_CH_NUM)
     {
         return HAL_ERR_INVALID_ID;
     }
 
-    ptI2c = PRV_I2C_GetReg(eId);
-
-    SET_I2C_CR_SDA_MAUL_OUT(ptI2c, bLevel);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_SetSdaManualOut(eId, bLevel);
 
     while(un32Timeout)
     {
-        if(GET_I2C_SR_SDA_MAUL_STA(ptI2c) == bLevel)
+        bStatus = HLL_I2C_GetSdaManualStatus(eId);
+        if(bStatus == bLevel)
         {
             break;
         }
         un32Timeout--;
     }
+#else
+    {
+        I2C_Type *ptI2c = PRV_I2C_GetReg(eId);
+
+        SET_I2C_CR_SDA_MAUL_OUT(ptI2c, bLevel);
+
+        while(un32Timeout)
+        {
+            if(GET_I2C_SR_SDA_MAUL_STA(ptI2c) == bLevel)
+            {
+                break;
+            }
+            un32Timeout--;
+        }
+    }
+#endif
 
     if(un32Timeout == 0)
     {
@@ -767,13 +974,15 @@ HAL_ERR_e HAL_I2C_SetSdaMaul(I2C_ID_e eId, bool bLevel)
     (void)eId;
     (void)bLevel;
     return HAL_ERR_NOT_SUPPORTED;
-#endif    
+#endif
 }
 
 static void PRV_I2C_IRQHandler(I2C_ID_e eId)
 {
     I2C_CTRL_BLK_t *ptIcb;
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT) || (defined(_DMAC) && defined(DMA_I2C_NUM) && defined(I2C_FEATURE_DMA_INTERNAL_INTERRUPT))
     I2C_Type *ptI2c;
+#endif
     I2C_Context_t *ptContext;
     volatile uint32_t un32Status;
     volatile uint32_t un32Event = 0;
@@ -784,16 +993,26 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
         return;
     }
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT) || (defined(_DMAC) && defined(DMA_I2C_NUM) && defined(I2C_FEATURE_DMA_INTERNAL_INTERRUPT))
     ptI2c = PRV_I2C_GetReg(eId);
+#endif
     ptIcb = &s_tIcb[eId];
 
     if(ptIcb->pContext != NULL)
     {
         ptContext = (I2C_Context_t *)ptIcb->pContext;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_I2C_GetWakeupEvent(eId, &ptContext->bWakeup);
+#else
         I2C_GetWkupEvent((P_I2C_ID_e)eId, &ptContext->bWakeup);
+#endif
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    un32Status = HLL_I2C_GetStatus(eId);
+#else
     un32Status = GET_I2C_SR(ptI2c);
+#endif
 
 #if defined(I2C_FEATURE_MANUAL_BUS_CONTROL)
     if(un32Status & I2C_STATUS_SLT_TO)
@@ -852,8 +1071,13 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
                 if(ptIcb->un32TxCnt >= ptIcb->un32TxLen)
                 {
                     bSend = false;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetStop(eId, true);
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_STOP(ptI2c, true);
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
             }
 #if defined (_DMAC) && defined (DMA_I2C_NUM)
@@ -873,8 +1097,13 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
                 if(ptIcb->un32TxCnt >= ptIcb->un32TxLen)
                 {
                     bSend = false;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetStop(eId, true);
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_STOP(ptI2c, true);
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
             }
 
@@ -904,8 +1133,13 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
                 if(ptIcb->un32TxCnt >= ptIcb->un32TxLen)
                 {
                     bSend = false;
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetStop(eId, true);
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_STOP(ptI2c, true);
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
             }
             break;
@@ -917,7 +1151,11 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
 
                 if(ptIcb->un32RxCnt + 1 == ptIcb->un32RxLen)
                 {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
             }
 
@@ -955,7 +1193,7 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
             }
             break;
         case I2C_SLAVE_RX_DONE:
-            if(ptIcb->un32RxCnt >= ptIcb->un32RxLen 
+            if(ptIcb->un32RxCnt >= ptIcb->un32RxLen
                && ptIcb->bGCDetected == true)
             {
                 bReceive = false;
@@ -971,13 +1209,21 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
             {
                 if(ptIcb->un32RxCnt + 1 == ptIcb->un32RxLen -1)
                 {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                    HLL_I2C_SetAck(eId, false);
+#else
                     SET_I2C_CR_ACK(ptI2c, false);
+#endif
                 }
                 else
                 {
                     if(ptIcb->un32RxCnt == ptIcb->un32RxLen -1)
                     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                        HLL_I2C_SetStop(eId, true);
+#else
                         SET_I2C_CR_STOP(ptI2c, true);
+#endif
                     }
                 }
             }
@@ -987,7 +1233,11 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
             bSend = false;
             if(ptIcb->eMode == I2C_MODE_MASTER)
             {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+                HLL_I2C_SetStart(eId, true);
+#else
                 SET_I2C_CR_START(ptI2c, true);
+#endif
             }
             break;
         default:
@@ -997,12 +1247,20 @@ static void PRV_I2C_IRQHandler(I2C_ID_e eId)
 
     if(bSend == true)
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        HLL_I2C_TransmitByte(eId, ptIcb->pun8TxBuf[ptIcb->un32TxCnt++]);
+#else
         SET_I2C_DR_TX(ptI2c,ptIcb->pun8TxBuf[ptIcb->un32TxCnt++]);
+#endif
     }
 
     if(bReceive == true && ptIcb->bGCDetected == true)
     {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+        ptIcb->pun8RxBuf[ptIcb->un32RxCnt++] = HLL_I2C_ReceiveByte(eId);
+#else
         ptIcb->pun8RxBuf[ptIcb->un32RxCnt++] = GET_I2C_DR_RX(ptI2c);
+#endif
     }
 
 #if defined (_DMAC) && defined (DMA_I2C_NUM)
@@ -1014,7 +1272,11 @@ done:
         ptIcb->pfnHandler(un32Event, ptIcb->pContext);
     }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_I2C_ClearStatus(eId);
+#else
     SET_I2C_SR_CLEAR(ptI2c);
+#endif
 }
 
 void I2C0_IRQHandler(void)

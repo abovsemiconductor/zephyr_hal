@@ -30,60 +30,7 @@ extern "C"
 #endif
 
 #include "hal_common.h"
-
-/**
- * @brief I2C Instance Id
- */
-typedef enum
-{
-    I2C_ID_0,
-    I2C_ID_1,
-    I2C_ID_2,
-    I2C_ID_3,
-    I2C_ID_4,
-    I2C_ID_5,
-    I2C_ID_6,
-    I2C_ID_7,
-    I2C_ID_8,
-    I2C_ID_9,
-    I2C_ID_MAX
-} I2C_ID_e;
-
-/**
- * @brief I2C Mode
- */
-typedef enum
-{
-    I2C_MODE_MASTER,    /**< Master */
-    I2C_MODE_SLAVE,     /**< Slave */
-    I2C_MODE_MAX
-} I2C_MODE_e;
-
-/**
- * @brief I2C Event
- */
-typedef enum
-{
-    I2C_EVENT_TX_DONE            = BIT(0),    /**< Transmit complete */
-    I2C_EVENT_RX_DONE            = BIT(1),    /**< Receive complete */
-    I2C_EVENT_MASTERSHIP_LOSS    = BIT(2),    /**< Mastership lose */
-    I2C_EVENT_RX_NO_ACK          = BIT(3),    /**< Receive No Ack */
-    I2C_EVENT_SCL_LOW_TIMEOUT    = BIT(4),    /**< SCL low timeout */
-    I2C_EVENT_MAX
-} I2C_EVENT_e;
-
-/**
- * @brief I2C Operation
- */
-typedef enum
-{
-    I2C_OPS_POLL,        /**< Operation Polling */
-    I2C_OPS_INTR,        /**< Operation Interrupt */
-    I2C_OPS_INTR_DMA,    /**< Operation Interrupt with DMA */
-    I2C_OPS_NMI,         /**< Operation NMI */
-    I2C_OPS_NMI_DMA,     /**< Operation NMI with DMA */
-    I2C_OPS_MAX
-} I2C_OPS_e;
+#include "type/i2c_type.h"
 
 /**
  * @brief I2C SDA Hold Time
