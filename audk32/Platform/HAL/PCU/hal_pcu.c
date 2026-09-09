@@ -779,6 +779,8 @@ static void PRV_PCU_IRQHandler(PCU_ID_e eId, PORT_Type *ptPcu, uint32_t un32Stat
     }
 }
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
 void PCU0_IRQHandler(void)
 {
     PCU0_INT_IRQHandler();
@@ -813,4 +815,5 @@ void PCU6_IRQHandler(void)
 {
     PCU6_INT_IRQHandler();
 }
+#endif
 #endif

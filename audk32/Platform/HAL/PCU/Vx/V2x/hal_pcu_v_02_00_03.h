@@ -94,6 +94,8 @@ typedef PORTEN_Type                                   PCU_PORTEN_Type;
 #define SET_SCU_PCU_MCCR_DIV2(Peri,Data)               SET_BIT(Peri,Data,SCU,MCCR5,PGCDCDIV)
 
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+#else
 static void PRV_PCU_IRQHandler(PCU_ID_e eId, PORT_Type *ptPcu, uint32_t un32Status);
 
 static __inline void PCU0_INT_IRQHandler(void)
@@ -166,4 +168,5 @@ static __inline void PCU6_INT_IRQHandler(void)
 {
     ;
 }
+#endif
 #endif /* _HAL_PCU_V_02_00_03_H_ */

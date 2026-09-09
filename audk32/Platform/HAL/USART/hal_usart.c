@@ -64,10 +64,12 @@ static void PRV_USART_DMAHandler(uint32_t un32Event, void *pContext)
 }
 #endif
 
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
 static USART_Type *PRV_USART_GetReg(USART_ID_e eId)
 {
     return USART_GetReg((uint32_t)eId);
 }
+#endif
 
 #if !defined(AUDK32_FEATURE_HLL_SUPPORT)
 static HAL_ERR_e PRV_USART_SetScuEnable(P_USART_ID_e eId, bool bEnable)

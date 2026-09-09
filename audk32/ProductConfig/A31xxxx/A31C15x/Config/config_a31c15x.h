@@ -51,7 +51,7 @@
 #define CONFIG_SCU_REG_NAME              1
 
 #define CONFIG_SCU_NMI_MAX_COUNT         8
-#define CONFIG_SCU_CLK_MON_MAX_COUNT     1
+#define CONFIG_SCU_CLK_MON_MAX_COUNT     3
 
 /* SCU NMI Interrupt Handler */
 #if defined (EXTRN_FPA_CFMC) || defined (EXTRN_FPA_DFMC)
