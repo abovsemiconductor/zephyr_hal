@@ -14,17 +14,6 @@
 # present in this checkout. a31c15x.h and system_a31xxxx.c both need them to
 # compile; nothing in this module can build until they're added.
 #
-# ProductConfig/A31xxxx/{Config,A31C15x/Config} and Framework/CMSIS/Device/
-# ABOV/Include are deliberately NOT listed here even though the vendor tree
-# groups them next to the paths above: audk32 is the common HAL/HLL source
-# tree shared by every ABOV32 product, and those three are A31xxxx-product-
-# line (or A31C15x-series) specific. They're added from the CMakeLists.txt
-# that is only added to the build when that product line/series is selected
-# (zephyr/soc/abov/abov32/a31xxxx/CMakeLists.txt and .../a31xxxx/a31c15x/
-# CMakeLists.txt) -- zephyr_include_directories()/zephyr_compile_definitions()
-# are global regardless of which CMakeLists.txt calls them, so they still
-# reach every translation unit that includes abov_config.h, including the
-# zephyr/drivers wrappers.
 zephyr_include_directories(
   Platform/HAL/Include
   Platform/HAL/HPL/Include
@@ -56,3 +45,12 @@ zephyr_library_sources(
   ${AUDK32_HAL_SOURCES}
   Framework/CMSIS/Device/ABOV/Source/system_a31xxxx.c
 )
+
+# ProductConfig/<product line> is where the product-line/series/soc-specific
+# config headers and CMSIS device headers live (see ProductConfig/A31xxxx/
+# CMakeLists.txt). Each one wires its own include paths/defines directly into
+# the specific zephyr driver targets that need them (gpio/serial/clock_control/
+# pinctrl), so adding a new product line here never touches those drivers.
+add_subdirectory_ifdef(CONFIG_SOC_PRODUCT_LINE_A31XXXX ProductConfig/A31xxxx)
+# add_subdirectory_ifdef(CONFIG_SOC_PRODUCT_LINE_A33XXXX ProductConfig/A33xxxx)
+# add_subdirectory_ifdef(CONFIG_SOC_PRODUCT_LINE_A34XXXX ProductConfig/A34xxxx)
