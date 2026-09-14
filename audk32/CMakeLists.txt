@@ -20,19 +20,16 @@ zephyr_include_directories(
   Framework/CMSIS/Core/Include
 )
 
-# _RTE_ just tells abov_config.h to honor its Keil-RTE-style overrides instead
-# of the hand-edited TARGET_BOARD default meant for Keil's Configuration
-# Wizard; it's the same switch for every product line, so it's fine here.
-#
-# AUDK32_FEATURE_HLL_SUPPORT selects the portable HLL_*() wrapper layer
-# (hll_*.h) over direct SFR-macro access inside the hal_*.c sources -- an
-# implementation choice of this common HAL tree itself, not a per-chip
-# trait, so it belongs here rather than in a per-series CMakeLists.txt like
-# EXTRN_SUBFAMILY_*/EXTRN_VARIANT_* below.
-zephyr_compile_definitions(
-  _RTE_
-  AUDK32_FEATURE_HLL_SUPPORT
-)
+# _RTE_ (tells abov_config.h to honor its Keil-RTE-style overrides instead of
+# the hand-edited TARGET_BOARD default meant for Keil's Configuration Wizard)
+# and AUDK32_FEATURE_HLL_SUPPORT (selects the portable HLL_*() wrapper layer
+# over direct SFR-macro access in the hal_*.c sources) are the same switch
+# for every product line under Zephyr, but are no longer injected as compile
+# definitions from here -- each product line's abov_config.h #defines them
+# itself when __ZEPHYR__ is set (see ProductConfig/A31xxxx/Config/
+# abov_config.h). A product line only gets these once its own abov_config.h
+# has that block, so add it there when giving a new product line Zephyr
+# support.
 
 # Each hal_*.c/hll_*.c/hpl_*.c file guards its entire body with #if defined(_XXX),
 # where _XXX is only defined for the peripherals present on the selected chip
@@ -46,11 +43,14 @@ zephyr_library_sources(
   Framework/CMSIS/Device/ABOV/Source/system_a31xxxx.c
 )
 
-# ProductConfig/<product line> is where the product-line/series/soc-specific
-# config headers and CMSIS device headers live (see ProductConfig/A31xxxx/
-# CMakeLists.txt). Each one wires its own include paths/defines directly into
-# the specific zephyr driver targets that need them (gpio/serial/clock_control/
-# pinctrl), so adding a new product line here never touches those drivers.
+# ProductConfig/<product line> holds the product-line/series/soc-specific
+# config headers and CMSIS device headers (e.g. ProductConfig/A31xxxx/
+# A31C15x/Config/a31c15x.h). Only the product line selected by Kconfig is
+# added, and it recurses the same way down to the selected series -- see
+# ProductConfig/A31xxxx/CMakeLists.txt and .../A31xxxx/A31C15x/CMakeLists.txt.
+# Each level's CMakeLists.txt adds whatever include paths its own config
+# headers need, so adding a new product line or series never requires
+# touching this file or any other product line/series' files.
 add_subdirectory_ifdef(CONFIG_SOC_PRODUCT_LINE_A31XXXX ProductConfig/A31xxxx)
 # add_subdirectory_ifdef(CONFIG_SOC_PRODUCT_LINE_A33XXXX ProductConfig/A33xxxx)
 # add_subdirectory_ifdef(CONFIG_SOC_PRODUCT_LINE_A34XXXX ProductConfig/A34xxxx)
