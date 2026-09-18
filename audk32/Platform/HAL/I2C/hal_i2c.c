@@ -130,12 +130,6 @@ static HAL_ERR_e PRV_I2C_SetDMA(I2C_ID_e eId)
 }
 #endif
 
-/*
- * Unlike PRV_I2C_GetReg()/PRV_I2C_SetScuEnable(), these two take the
- * instance id (not a raw register pointer): the whole point of factoring
- * them out is that HAL_I2C_Transmit()/Receive() can call them without
- * caring whether HLL support is active.
- */
 static uint32_t PRV_I2C_GetOpStatus(I2C_ID_e eId)
 {
     uint32_t un32Status;
@@ -348,10 +342,6 @@ HAL_ERR_e HAL_I2C_SetIRQ(I2C_ID_e eId, I2C_OPS_e eOps, pfnI2C_IRQ_Handler_t pfnH
 
     ptIcb = &s_tIcb[(uint32_t)eId];
 
-    /*
-     * NVIC setup is always performed here regardless of HLL support: only
-     * the IRQ-number lookup below switches implementation.
-     */
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
     eIrq = HLL_I2C_GetIRQNum(eId);
 #else

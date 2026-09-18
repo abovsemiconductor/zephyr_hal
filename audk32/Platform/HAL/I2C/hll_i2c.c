@@ -15,17 +15,6 @@
 
 #include "abov_config.h"
 
-/*
- * This file is picked up unconditionally by the audk32 HAL library's
- * file(GLOB_RECURSE ...) over every .c file under Platform/HAL/ (see
- * modules/hal/abov32/audk32/CMakeLists.txt) regardless of whether any app
- * actually uses the I2C driver. hll_i2c.h pulls in hal_i2c_prv.h's I2C-IP-
- * version dispatch, which #errors unless _MODULE_I2C (and thus
- * CONFIG_I2C_VER_VENDOR etc.) is defined -- so, like hal_i2c.c, this whole
- * file must stay inert unless _I2C is actually set, instead of only
- * compiling correctly by accident whenever some other translation unit
- * happens to already need CONFIG_HAL_I2C == 1.
- */
 #if defined(_I2C)
 #include "hll_i2c.h"
 

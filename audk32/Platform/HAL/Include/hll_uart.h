@@ -20,15 +20,8 @@
  * @{
  * @brief       Universal Asynchronous Receiver Transmitter (UART), Low Level
  *
- * Unlike HAL_UART, this layer does not own an interrupt vector, a control
- * block, or DMA state: it only wraps direct register access. Callers are
- * expected to connect the IRQ returned by HLL_UART_GetIRQNum() to their own
- * handler and drive TX/RX byte-by-byte from it.
- *
- * This IP is a classic 16550-style UART: ELSR (line status) and IIR
- * (interrupt id) are read-to-clear -- reading them acknowledges whatever
- * condition they report, there is no separate write-1-to-clear step like
- * HLL_USART's status register.
+ * This IP is a classic 16550-style UART: ELSR/IIR are read-to-clear, unlike
+ * HLL_USART's write-1-to-clear status register.
  */
 
 #ifndef _HLL_UART_H_

@@ -270,12 +270,6 @@ HAL_ERR_e HAL_UART_SetConfig(UART_ID_e eId, UART_CFG_t *ptCfg)
         return HAL_ERR_PARAMETER;
     }
 
-    /*
-     * Data/parity/stop are only actually written to hardware here, once all
-     * three are known valid -- HLL_UART_SetFormat() applies them together,
-     * so unlike the pre-HLL code below there is no partial write on a late
-     * validation failure.
-     */
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
     HLL_UART_SetFormat(eId, ptCfg->eParity, ptCfg->eData, ptCfg->eStop);
 #else
@@ -335,10 +329,6 @@ HAL_ERR_e HAL_UART_SetIRQ(UART_ID_e eId, UART_OPS_e eOps, pfnUART_IRQ_Handler_t 
 
     ptUcb = &s_tUcb[(uint32_t)eId];
 
-    /*
-     * NVIC setup is always performed here regardless of HLL support: only
-     * the IRQ-number lookup below switches implementation.
-     */
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
     eIrq = HLL_UART_GetIRQNum(eId);
 #else
@@ -603,12 +593,7 @@ HAL_ERR_e HAL_UART_Receive(UART_ID_e eId, uint8_t *pun8In, uint32_t un32Len, boo
             }
 
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
-            /*
-             * HLL_UART_GetLineStatus() returns the raw ELSR register (see
-             * HAL_UART_GetLineStatus()); UART_LINE_STATUS_e mirrors ELSR's
-             * bit layout 1:1, so masking against it here is equivalent to
-             * the individual GET_UART_LSR_FE/PE/OE reads below.
-             */
+            /* UART_LINE_STATUS_e mirrors ELSR's bit layout 1:1. */
             un32Status = HLL_UART_GetLineStatus(eId) &
                          (UART_LINE_STATUS_FRAME_ERROR | UART_LINE_STATUS_PARITY_ERROR |
                           UART_LINE_STATUS_OVERRUN_ERROR);
@@ -836,8 +821,7 @@ static void PRV_UART_IRQHandler(UART_ID_e eId)
         un32Data = HLL_UART_ReceiveByte(eId);
         (void)un32Data;
         /* Full IER reset has no dedicated HLL wrapper; fall back to the
-         * register directly, as HLL_USART_* does for its own DMA-address
-         * edge cases. */
+         * register directly. */
         SET_UART_IER(PRV_UART_GetReg((P_UART_ID_e)eId), 0x00);
 #else
         if (GET_UART_LSR_BI(ptUart))

@@ -20,6 +20,8 @@
 #include "hal_scu_pwr.h"
 #include "hal_scu_prv.h"
 
+#include "hll_scu_pwr.h"
+
 #if defined(_NMI)
 #include "hpl_nmi.h"
 #endif
@@ -106,6 +108,9 @@ HAL_ERR_e HAL_SCU_PWR_SetMode(SCUPWR_MODE_e eMode)
     switch(eMode)
     {
         case SCUPWR_MODE_SLEEP:
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+            HLL_SCU_PWR_EnterSleep();
+#else
             SCB->SCR = 0;
             __WFI();
             __NOP();
@@ -113,6 +118,7 @@ HAL_ERR_e HAL_SCU_PWR_SetMode(SCUPWR_MODE_e eMode)
             __NOP();
             __NOP();
             __NOP();
+#endif
             break;
         case SCUPWR_MODE_DEEPSLEEP:
             SET_SCU_VDC_DEEPSLEEP(ptScu, false);
@@ -123,6 +129,9 @@ HAL_ERR_e HAL_SCU_PWR_SetMode(SCUPWR_MODE_e eMode)
                 SCUPWR_SetPostProcess();
             }
 #endif
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+            HLL_SCU_PWR_EnterDeepSleep();
+#else
             SCB->SCR = 0x04;
             __WFI();
             __NOP();
@@ -130,9 +139,13 @@ HAL_ERR_e HAL_SCU_PWR_SetMode(SCUPWR_MODE_e eMode)
             __NOP();
             __NOP();
             __NOP();
+#endif
             break;
         case SCUPWR_MODE_DEEPSLEEP2:
             SET_SCU_VDC_DEEPSLEEP(ptScu, true);
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+            HLL_SCU_PWR_EnterDeepSleep();
+#else
             SCB->SCR = 0x04;
             __WFI();
             __NOP();
@@ -140,6 +153,7 @@ HAL_ERR_e HAL_SCU_PWR_SetMode(SCUPWR_MODE_e eMode)
             __NOP();
             __NOP();
             __NOP();
+#endif
             break;
         case SCUPWR_MODE_INIT:
         case SCUPWR_MODE_RUN:
@@ -187,7 +201,9 @@ HAL_ERR_e HAL_SCU_PWR_SetAlwaysOn(uint32_t un32Aon, uint32_t un32Enable)
 {
 
 #if defined(SCU_FEATURE_VX_AON_SOURCE)
+#if !defined(AUDK32_FEATURE_HLL_SUPPORT)
     SCU_Type *ptScu = (SCU_Type *)SCU_REG_BASE;
+#endif
     uint32_t un32Data = 0;
 
 #if defined(SCUPWR_AON_VDC_EN)
@@ -246,7 +262,11 @@ HAL_ERR_e HAL_SCU_PWR_SetAlwaysOn(uint32_t un32Aon, uint32_t un32Enable)
     }    
 #endif
 
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_SCU_PWR_SetAlwaysOnMask(un32Data);
+#else
     SET_SCU_SMR(ptScu,un32Data);
+#endif
 #else
     (void)un32Aon;
     (void)un32Enable;
@@ -257,9 +277,13 @@ HAL_ERR_e HAL_SCU_PWR_SetAlwaysOn(uint32_t un32Aon, uint32_t un32Enable)
 
 HAL_ERR_e HAL_SCU_PWR_SetVdcDelay(uint8_t un8VdcDelay)
 {
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_SCU_PWR_SetVdcDelay(un8VdcDelay);
+#else
     SCU_Type *ptScu = (SCU_Type *)SCU_REG_BASE;
 
     SET_SCU_DATA_VDC_DELAY(ptScu, un8VdcDelay);
+#endif
 
     return HAL_ERR_OK;
 }
@@ -267,8 +291,12 @@ HAL_ERR_e HAL_SCU_PWR_SetVdcDelay(uint8_t un8VdcDelay)
 HAL_ERR_e HAL_SCU_PWR_SetPDIndicator(bool bLevel)
 {
 #if defined(SCU_FEATURE_POWER_DOWN_PIN_LEVEL)
+#if defined(AUDK32_FEATURE_HLL_SUPPORT)
+    HLL_SCU_PWR_SetPDIndicator(bLevel);
+#else
     SCU_Type *ptScu = (SCU_Type *)SCU_REG_BASE;
     SET_SCU_PD_IND_LVL(ptScu, bLevel);
+#endif
     return HAL_ERR_OK;
 #else
     (void)bLevel;

@@ -25,17 +25,6 @@
 #ifndef ABOV_CONFIG_H
 #define ABOV_CONFIG_H
 
-/* Zephyr builds select the product/subfamily/variant via Kconfig instead of
- * project settings (Keil RTE / IAR), so derive the EXTRN_SUBFAMILY_xxx/
- * EXTRN_VARIANT_xxx macros below from that instead of requiring them to be
- * set externally. __ZEPHYR__ is defined for every file in a Zephyr build
- * (see zephyr/CMakeLists.txt); Keil/IAR builds never define it, so they are
- * unaffected and keep using their own project-level macro definitions.
- *
- * _RTE_/AUDK32_FEATURE_HLL_SUPPORT are the same switch for every product
- * line under Zephyr (see audk32/CMakeLists.txt), so they're just #defined
- * here rather than derived from Kconfig.
- */
 #if defined(__ZEPHYR__)
 #define _RTE_
 #define AUDK32_FEATURE_HLL_SUPPORT

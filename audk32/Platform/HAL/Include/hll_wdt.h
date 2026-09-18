@@ -20,16 +20,11 @@
  * @{
  * @brief       Watch Dog Timer, Low Level
  *
- * Unlike HAL_WDT, this layer does not own a control block or interrupt
- * vector: it only wraps direct register access. Callers are expected to
- * connect the IRQ returned by HLL_WDT_GetIRQNum() to their own handler.
- *
- * Match-counter (window) mode is not implemented on every WDT IP version --
+ * Match-counter (window) mode is not implemented on every WDT IP version:
  * HLL_WDT_SetMatchValue()/GetMatchValue()/SetMatchIntrEnable()/
- * GetMatchFlag()/ClearMatchFlag() are no-ops (and GetMatchValue()/
- * GetMatchFlag() read back 0) wherever the active version header doesn't
- * back them with real bits (see e.g. hal_wdt_v_01_00_02.h's "Unused Macro"
- * section) -- check WDT_MODE_CNT support before relying on them.
+ * GetMatchFlag()/ClearMatchFlag() are no-ops (Get* read back 0) where the
+ * active version header doesn't back them with real bits -- check
+ * WDT_MODE_CNT support before relying on them.
  */
 
 #ifndef _HLL_WDT_H_
@@ -48,10 +43,6 @@ extern "C"
 
 /**
  * @brief Get the NVIC IRQ number for a WDT instance.
- *
- * The caller owns the vector: connect this IRQ number to its own handler
- * (e.g. via the host RTOS's IRQ_CONNECT-equivalent) instead of relying on
- * a fixed-name weak handler.
  */
 __STATIC_INLINE IRQn_Type HLL_WDT_GetIRQNum(WDT_ID_e eId)
 {
@@ -81,10 +72,8 @@ __STATIC_INLINE void HLL_WDT_SetClkPreDiv(WDT_ID_e eId, WDT_CLK_PREDIV_e ePreDiv
 /**
  * @brief Enable or disable a system-level reset when the WDT underflows.
  *
- * This is an SCU-level bit shared by the whole WDT block, not per-instance
- * (see WDT_SetResetEnable() in the active version header) -- also clears
- * any latched WDT reset-cause flag as a side effect, matching HAL_WDT's own
- * usage.
+ * SCU-level bit shared by the whole WDT block, not per-instance; also
+ * clears any latched WDT reset-cause flag as a side effect.
  */
 __STATIC_INLINE void HLL_WDT_SetResetEnable(bool bEnable)
 {
@@ -94,9 +83,9 @@ __STATIC_INLINE void HLL_WDT_SetResetEnable(bool bEnable)
 /**
  * @brief Enable or disable register write access for a WDT instance.
  *
- * This is the persistent access-enable bit (AEN.ENS), set once at init --
- * distinct from HLL_WDT_SetWriteEnable()/SetWriteDisable(), which unlock
- * individual protected-register writes.
+ * Persistent access-enable bit (AEN.ENS), set once at init -- distinct from
+ * HLL_WDT_SetWriteEnable()/SetWriteDisable(), which unlock individual
+ * protected-register writes.
  */
 __STATIC_INLINE void HLL_WDT_SetAccessEnable(WDT_ID_e eId, bool bEnable)
 {

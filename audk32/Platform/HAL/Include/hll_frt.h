@@ -20,17 +20,10 @@
  * @{
  * @brief       Free Run Timer, Low Level
  *
- * Unlike HAL_FRT, this layer does not own a control block or interrupt
- * vector: it only wraps direct register access. Callers are expected to
- * connect the IRQ returned by HLL_FRT_GetIRQNum() to their own handler.
- *
- * On the IP version this SoC series uses (hal_frt_v_01_00_00.h),
- * SET_FRT_CR_CLK_SEL()/SET_FRT_CR_CLK_PREDIV() are both no-ops -- there is
- * no FRT-block-level clock select or pre-divider register at all. The
- * counter's actual clock comes entirely from the SCU MCCR mux
- * (FRT_SetMccrClk(), wrapped by HLL_FRT_SetClkSource() below): selecting
- * FRT_CLK_PCLK is accepted but configures nothing, so HLL_FRT_SetClkSource()
- * must be called with FRT_CLK_MCCR to get a running counter.
+ * SET_FRT_CR_CLK_SEL()/SET_FRT_CR_CLK_PREDIV() are no-ops on this IP version:
+ * the counter clock comes entirely from the SCU MCCR mux, so
+ * HLL_FRT_SetClkSource() must be called with FRT_CLK_MCCR (not FRT_CLK_PCLK)
+ * to get a running counter.
  */
 
 #ifndef _HLL_FRT_H_
@@ -57,10 +50,6 @@ __STATIC_INLINE HAL_ERR_e HLL_FRT_SetClockEnable(FRT_ID_e eId, bool bEnable)
 
 /**
  * @brief Get the NVIC IRQ number for an FRT instance.
- *
- * The caller owns the vector: connect this IRQ number to its own handler
- * (e.g. via the host RTOS's IRQ_CONNECT-equivalent) instead of relying on
- * a fixed-name weak handler.
  */
 __STATIC_INLINE IRQn_Type HLL_FRT_GetIRQNum(FRT_ID_e eId)
 {
@@ -69,8 +58,7 @@ __STATIC_INLINE IRQn_Type HLL_FRT_GetIRQNum(FRT_ID_e eId)
 
 /**
  * @brief Select the counter clock source (and MCCR mux/divider, if
- *        eClk == FRT_CLK_MCCR -- see the file-level note on why that's the
- *        only source that actually configures anything on this IP version).
+ *        eClk == FRT_CLK_MCCR).
  */
 __STATIC_INLINE HAL_ERR_e HLL_FRT_SetClkSource(FRT_ID_e eId, FRT_CLK_e eClk, FRT_CLK_MCCR_e eMccr,
                                                 uint8_t un8Div)
@@ -95,8 +83,8 @@ __STATIC_INLINE HAL_ERR_e HLL_FRT_SetClkSource(FRT_ID_e eId, FRT_CLK_e eClk, FRT
 }
 
 /**
- * @brief Set the pre-divider applied after the selected clock source, if
- *        supported (see the file-level note -- a no-op on this IP version).
+ * @brief Set the pre-divider applied after the selected clock source
+ *        (a no-op on this IP version).
  */
 __STATIC_INLINE void HLL_FRT_SetClkPreDiv(FRT_ID_e eId, FRT_CLK_PREDIV_e ePreDiv)
 {

@@ -341,13 +341,6 @@ HAL_ERR_e HAL_USART_SetIRQ(USART_ID_e eId, USART_OPS_e eOps, pfnUSART_IRQ_Handle
 
     ptUcb = &s_tUcb[(uint32_t)eId];
 
-    /*
-     * NVIC setup is always performed here regardless of HLL support: only
-     * the IRQ-number lookup below switches implementation. Whether the
-     * fixed-name weak handlers this file installs (USARTx_IRQHandler) are
-     * actually the ones wired into a given vector table is an integration
-     * concern, not a reason to skip HAL-level IRQ setup.
-     */
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
     eIrq = HLL_USART_GetIRQNum(eId);
 #else

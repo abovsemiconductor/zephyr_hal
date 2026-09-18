@@ -290,10 +290,6 @@ HAL_ERR_e HAL_CRC_SetIRQ(CRC_ID_e eId, CRC_OPS_e eOps, pfnCRC_IRQ_Handler_t pfnH
 
     ptCcb = &s_tCcb[(uint32_t)eId];
 
-    /*
-     * NVIC setup is always performed here regardless of HLL support: only
-     * the IRQ-number lookup below switches implementation.
-     */
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
     eIrq = HLL_CRC_GetIRQNum(eId);
 #else

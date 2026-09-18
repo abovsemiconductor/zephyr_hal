@@ -20,30 +20,11 @@
  * @{
  * @brief       Serial Peripheral Interface (SPI), Low Level
  *
- * Unlike HAL_SPI, this layer does not own a control block or interrupt
- * vector: it only wraps direct register access. Callers are expected to
- * connect the IRQ returned by HLL_SPI_GetIRQNum() to their own handler and
- * drive TX/RX byte-by-byte from HLL_SPI_GetTxReady()/HLL_SPI_GetRxReady(),
- * the same way HAL_SPI's own ISR does.
- *
- * There is no clock-source select for this IP (unlike UART/WDT/FRT, and
- * like I2C): HLL_SPI_SetBaudRate() divides the peripheral clock
- * (SystemPeriClock) directly via a 16-bit BR.BR divider. HAL_SPI itself
- * never derives this divider from a target bit rate -- it just clamps the
- * caller-supplied SPI_CFG_t::un16BaudRate to a minimum of 2 and writes it
- * straight through -- so there is no HLL_SPI_CalcBaudDivider() here either;
- * compute BR.BR the same way HAL_SPI's caller is expected to.
- *
- * Every register this file wraps is real on the IP version this SoC series
- * uses (hal_spi_v_01_01_00.h) -- verified against a31c15x.h's SPI_CR_x,
- * SPI_SR_x, SPI_BR_x, SPI_LR_x, SPI_EN_x bitfields, unlike I2C's
- * SET_I2C_CR_MS trap. The one no-op in that version file, GET_SPI_SR_TX_UDR
- * (this IP has no underrun status bit at all), is deliberately not wrapped
- * here: nothing in HAL_SPI ever calls it either, since the version also defines
- * SPI_FEATURE_NOT_SUPPORTED_UNDERRUN_FLAG. DMA-related registers
- * (SET_SPI_IER_DMATX_EN/DMARX_EN, the SR DMA-done flags) are likewise left
- * unwrapped, matching how I2C's DMA/NMI-only raw macros were left
- * unconverted -- dead code on this SoC, not worth speculative HLL coverage.
+ * This layer does not own a control block or interrupt vector: callers
+ * connect the IRQ from HLL_SPI_GetIRQNum() to their own handler and drive
+ * TX/RX byte-by-byte via HLL_SPI_GetTxReady()/HLL_SPI_GetRxReady(). There is
+ * no HLL_SPI_CalcBaudDivider(): HLL_SPI_SetBaudRate() writes the BR.BR
+ * divider directly, same as HAL_SPI's caller is expected to compute it.
  */
 
 #ifndef _HLL_SPI_H_
@@ -69,11 +50,8 @@ __STATIC_INLINE HAL_ERR_e HLL_SPI_SetClockEnable(SPI_ID_e eId, bool bEnable)
 }
 
 /**
- * @brief Get the NVIC IRQ number for an SPI instance.
- *
- * The caller owns the vector: connect this IRQ number to its own handler
- * instead of relying on a fixed-name weak handler. Note this vector is
- * shared with a comparator peripheral on this SoC (CMPn_SPIn_IRQn).
+ * @brief Get the NVIC IRQ number for an SPI instance. Shared with a
+ *        comparator peripheral on this SoC (CMPn_SPIn_IRQn).
  */
 __STATIC_INLINE IRQn_Type HLL_SPI_GetIRQNum(SPI_ID_e eId)
 {
@@ -275,9 +253,6 @@ __STATIC_INLINE uint32_t HLL_SPI_ReceiveData(SPI_ID_e eId)
 
 /**
  * @brief Write the baud-rate divider register directly (BR.BR).
- *
- * See this file's header note: HAL_SPI never derives this from a target bit
- * rate either, so there is no HLL_SPI_CalcBaudDivider() to pair with it.
  */
 __STATIC_INLINE void HLL_SPI_SetBaudRate(SPI_ID_e eId, uint16_t un16BaudRate)
 {

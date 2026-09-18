@@ -20,32 +20,14 @@
  * @{
  * @brief       Inter-Integrated Circuit (I2C), Low Level
  *
- * Unlike HAL_I2C, this layer does not own a control block or interrupt
- * vector: it only wraps direct register access. Callers are expected to
- * connect the IRQ returned by HLL_I2C_GetIRQNum() to their own handler and
- * drive the transfer state machine from it using the I2C_STATUS_,
- * I2C_MASTER_ and I2C_SLAVE_ prefixed status-word constants (transitively
- * visible here via hal_i2c_prv.h -> hal_i2c_v1x.h -- see HLL_I2C_GetStatus()).
+ * This layer does not own a control block or interrupt vector: callers
+ * connect the IRQ from HLL_I2C_GetIRQNum() to their own handler and drive
+ * the transfer state machine using the I2C_STATUS_/I2C_MASTER_/I2C_SLAVE_
+ * status-word constants (see HLL_I2C_GetStatus()).
  *
- * There is no clock-source select for this IP (unlike UART/WDT/FRT): SCLL/
- * SCLH divide the peripheral clock (SystemPeriClock) directly, see
- * HLL_I2C_CalcSclPeriod().
- *
- * There is no HLL_I2C_SetMasterMode(): SET_I2C_CR_MS references a CR bit
- * (IMASTERn) that hal_i2c_v_01_00_00.h's own "Bit/Register Macro" section
- * assumes exists, but this chip's actual I2C_CR/I2C0_CR bitfields
- * (a31c15x.h) have no such bit -- SET_I2C_CR_MS doesn't build on this SoC.
- * HAL_I2C never called it either way: master vs. slave behavior in
- * HAL_I2C_Transmit()/Receive()/the ISR is driven entirely by the
- * caller-supplied I2C_MODE_e in software, not by a hardware mode bit.
- *
- * HLL_I2C_SetSclLowTimeout*() and the HLL_I2C_Set{Scl,Sda}Manual*() /
- * HLL_I2C_Get{Scl,Sda}ManualStatus() functions only exist when this IP version defines
- * I2C_FEATURE_LOW_TIMEOUT_PERIOD / I2C_FEATURE_MANUAL_BUS_CONTROL
- * respectively (see the active version header) -- on the version this SoC
- * series uses (hal_i2c_v_01_00_00.h), neither is defined, so none of those
- * functions are compiled in at all. Callers that need to build against both
- * cases should guard call sites with the same #if.
+ * There is no HLL_I2C_SetMasterMode(): this chip's I2C_CR has no master/
+ * slave mode bit -- HAL_I2C selects master vs. slave in software via the
+ * caller-supplied I2C_MODE_e, not hardware.
  */
 
 #ifndef _HLL_I2C_H_
@@ -72,10 +54,6 @@ __STATIC_INLINE HAL_ERR_e HLL_I2C_SetClockEnable(I2C_ID_e eId, bool bEnable)
 
 /**
  * @brief Get the NVIC IRQ number for an I2C instance.
- *
- * The caller owns the vector: connect this IRQ number to its own handler
- * (e.g. via the host RTOS's IRQ_CONNECT-equivalent) instead of relying on
- * a fixed-name weak handler.
  */
 __STATIC_INLINE IRQn_Type HLL_I2C_GetIRQNum(I2C_ID_e eId)
 {
@@ -83,9 +61,8 @@ __STATIC_INLINE IRQn_Type HLL_I2C_GetIRQNum(I2C_ID_e eId)
 }
 
 /**
- * @brief Enable or disable this instance as a wake-up source, if supported.
- *
- * A no-op on the IP version this SoC series uses.
+ * @brief Enable or disable this instance as a wake-up source (no-op on the
+ *        IP version this SoC series uses).
  */
 __STATIC_INLINE void HLL_I2C_SetWakeupSrc(I2C_ID_e eId, bool bEnable)
 {
@@ -93,9 +70,8 @@ __STATIC_INLINE void HLL_I2C_SetWakeupSrc(I2C_ID_e eId, bool bEnable)
 }
 
 /**
- * @brief Get and clear the latched wake-up event, if supported.
- *
- * Always reports false on the IP version this SoC series uses.
+ * @brief Get and clear the latched wake-up event (always false on the IP
+ *        version this SoC series uses).
  */
 __STATIC_INLINE void HLL_I2C_GetWakeupEvent(I2C_ID_e eId, bool *pbEvent)
 {

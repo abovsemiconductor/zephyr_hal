@@ -249,10 +249,6 @@ HAL_ERR_e HAL_WDT_SetIRQ(WDT_ID_e eId, WDT_OPS_e eOps, pfnWDT_IRQ_Handler_t pfnH
 
     ptWcb = &s_tWcb[(uint32_t)eId];
 
-    /*
-     * NVIC setup is always performed here regardless of HLL support: only
-     * the IRQ-number lookup below switches implementation.
-     */
 #if defined(AUDK32_FEATURE_HLL_SUPPORT)
     eIrq = HLL_WDT_GetIRQNum(eId);
 #else
